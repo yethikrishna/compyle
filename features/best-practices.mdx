@@ -1,0 +1,377 @@
+---
+title: "Best Practices"
+description: "Proven strategies for effective Compyle usage"
+icon: "lightbulb"
+---
+
+# Best Practices Guide
+
+## Writing Effective Task Descriptions
+
+The quality of your task description directly impacts the quality of implementation. Here's how to write great descriptions:
+
+### Good Task Description Template
+
+```
+[Clear Title: What you're building]
+
+[Context: Why this matters, what problem it solves]
+
+[Specific Requirements: What it should do]
+
+[File References: Which files to modify/create]
+
+[Code Patterns: Existing patterns to follow]
+
+[Edge Cases: Scenarios to handle]
+
+[Testing: What tests to add]
+```
+
+### Real Example: Good
+
+```
+Add Google OAuth login integration
+
+Users currently can only log in with username/password. We need to add
+Google OAuth to let users sign in with their Google account. This will
+reduce password reset support requests.
+
+Requirements:
+- Add "Sign in with Google" button on login page
+- Use existing auth service at src/auth/AuthService.ts
+- Store google_id and oauth_provider in users table
+- Redirect to /dashboard after auth
+- Handle auth failures gracefully
+
+Files to modify:
+- src/components/LoginForm.tsx (add Google button)
+- src/services/AuthService.ts (add OAuth logic)
+- src/api/auth.ts (add OAuth endpoint)
+
+Pattern to follow:
+- Use existing JWT token pattern from POST /api/auth/login
+- Match error handling in /api/auth/login
+- Style to match existing button components
+
+Edge cases:
+- Email already exists for different account
+- Google account has no email
+- Token refresh behavior
+
+Tests:
+- Happy path: successful Google login
+- Error path: Google auth fails
+- Existing user with same email
+```
+
+### Real Example: Poor
+
+```
+Add Google login
+
+We need to add Google login so users can sign in with Google.
+```
+
+This description lacks:
+- Context and requirements
+- File references
+- Pattern guidance
+- Edge cases
+- Testing requirements
+
+**Result**: More planning questions, less understanding, worse code.
+
+## Defining Clear Project Rules
+
+<Tip title="Start with 5-10 Core Rules">
+  Define the patterns that matter most:
+  1. Naming conventions (functions, classes, variables)
+  2. File organization
+  3. Import order
+  4. Error handling
+  5. Testing requirement
+  6. Documentation standard
+  7. Security practices
+
+  Add more as patterns emerge.
+</Tip>
+
+### Rule Definition Process
+
+<Steps>
+  <Step title="Identify Core Patterns">
+    Look at your best code. What patterns make it great?
+  </Step>
+  <Step title="Codify the Pattern">
+    Write the rule clearly (regex if complex)
+  </Step>
+  <Step title="Test on Existing Code">
+    Run rule against your codebase
+  </Step>
+  <Step title="Refine if Needed">
+    Adjust for false positives
+  </Step>
+  <Step title="Document Rationale">
+    Explain *why* the rule exists
+  </Step>
+  <Step title="Communicate">
+    Share with team and Compyle
+  </Step>
+</Steps>
+
+## Effective Code Review Strategy
+
+### During Implementation (Not After)
+
+<Tip title="Real-Time Monitoring">
+  **Don't**:
+  - Launch task and wait for PR
+  - Review code after it's merged
+
+  **Do**:
+  - Watch implementation dashboard
+  - Answer questions immediately
+  - Review code as it's written
+  - Test locally after key phases
+</Tip>
+
+### Understanding Before Approving
+
+<Tip title="Read Artifacts First">
+  **Before** approving the PR:
+
+  1. Read research.md → Understand context
+  2. Read planning.md → Know the decisions
+  3. Read the code → Understand implementation
+  4. Verify alignment → Code matches plan?
+</Tip>
+
+### Testing Before Merging
+
+<Tip title="Test Locally">
+  - Don't just trust validation
+  - Run the code in your environment
+  - Test edge cases manually
+  - Check performance if relevant
+  - Verify no side effects on other code
+</Tip>
+
+### Documenting Decisions
+
+<Tip title="Add Comments for Context">
+  If you approved an exception:
+  - Add code comment explaining why
+  - Reference the planning decision
+  - Help future maintainers understand
+
+  ```typescript
+  // Approved exception: Using console.log for debug builds only (Planning: Q3-2024)
+  // This helps with CI/CD visibility in staging
+  if (process.env.NODE_ENV === 'staging') {
+    console.log('Debug:', data);
+  }
+  ```
+</Tip>
+
+## Task Scope Management
+
+### Right Scope
+
+**Good task size:**
+- Clear single goal
+- 30 minutes to 4 hours implementation
+- Fits in one PR
+- Testable and verifiable
+- Small enough to fail fast
+
+**Examples:**
+- Add login form component
+- Create API endpoint for user profile
+- Add unit tests for auth service
+- Fix bug in password reset
+
+### Too Broad
+
+**Examples of too-broad tasks:**
+- "Rebuild authentication system"
+- "Refactor entire API layer"
+- "Create complete checkout flow"
+
+**Problem**: Long execution, many decisions, hard to review, risky
+
+**Solution**: Break into smaller tasks:
+- Task 1: Create auth models
+- Task 2: Build API endpoints
+- Task 3: Implement UI components
+
+### Too Narrow
+
+**Examples of too-narrow:**
+- "Rename variable from X to Y"
+- "Add one import statement"
+- "Fix typo in comment"
+
+**Problem**: Not worth agent overhead, better to do manually
+
+**Solution**: Combine related small tasks or do manually
+
+## Dealing with Ambiguity
+
+### When to Clarify
+
+**Ask for clarification when:**
+- Architectural decision needed
+- Multiple valid approaches exist
+- Design preference matters
+- Affects other systems
+- Security or performance implications
+
+### When to Let Agent Decide
+
+**Let agent decide when:**
+- Following existing patterns
+- Internal implementation detail
+- Already specified clearly
+- No significant tradeoff
+- Agent understands context from codebase
+
+## Iterative Development Workflow
+
+<Steps>
+  <Step title="Create First Task">
+    Start with smallest viable piece
+    Example: User model
+  </Step>
+  <Step title="Review & Merge">
+    Get it right, then move on
+  </Step>
+  <Step title="Create Follow-up Task">
+    Build on previous work
+    Example: API endpoints for user
+  </Step>
+  <Step title="Repeat">
+    Chain related tasks until feature complete
+  </Step>
+</Steps>
+
+**Benefits:**
+- Small tasks = better validation
+- Easier to review and understand
+- Faster feedback loop
+- Lower risk per task
+- Build confidence incrementally
+
+## Handling Common Challenges
+
+<AccordionGroup>
+  <Accordion title="Agent asked too many questions">
+    **Root cause**: Task description too vague
+
+    **Fix**:
+    - Be more specific next time
+    - Include file names and context
+    - Define patterns to follow
+    - Mention edge cases upfront
+  </Accordion>
+  <Accordion title="Generated code doesn't match project style">
+    **Root cause**: Custom rules incomplete
+
+    **Fix**:
+    - Review all style/convention rules
+    - Add missing patterns
+    - Update existing rules if needed
+    - Re-test with new task
+  </Accordion>
+  <Accordion title="Validation kept blocking">
+    **Root cause**: Rules too strict or conflicting
+
+    **Fix**:
+    - Review rule definitions
+    - Adjust scope if too broad
+    - Add exceptions for edge cases
+    - Communicate intent to agent
+  </Accordion>
+  <Accordion title="Feature took longer than expected">
+    **Root cause**: Scope too broad or underestimated complexity
+
+    **Fix**:
+    - Break into smaller tasks
+    - Adjust credit budget estimate
+    - Plan for complexity next time
+  </Accordion>
+</AccordionGroup>
+
+## Maximizing Productivity
+
+### Chain Related Tasks
+
+When features build on each other, create tasks in sequence. Agent retains context and maintains consistency.
+
+### Batch Similar Tasks
+
+Group similar small tasks together. Agent applies learning across tasks, making implementation faster.
+
+### Leverage for Routine Work
+
+Use Compyle for:
+- Boilerplate code (models, migrations)
+- Tests and test suites
+- Documentation and comments
+- Repetitive implementations
+
+You focus on architecture and design decisions.
+
+## Measuring Success
+
+Track these metrics to improve:
+
+- **Tasks completed** - Velocity over time
+- **Review cycles needed** - Usually decreases with better planning
+- **Approval rate** - % of PRs approved on first review
+- **Rework rate** - % needing fixes after merge
+- **Credit efficiency** - Credits used per task
+
+## Team Workflows (When Available)
+
+<Note>
+  Team collaboration features coming Q1 2026. Prepare now:
+  - Document team conventions
+  - Create shareable rule sets
+  - Build process documentation
+  - Record example tasks
+</Note>
+
+## Progressive Mastery
+
+### Week 1: Foundation
+- Create simple tasks
+- Understand workflow
+- Review code carefully
+- Build confidence
+
+### Week 2-3: Optimization
+- Refine task descriptions
+- Add custom rules
+- Speed up review process
+- Chain tasks
+
+### Month 2+: Scaling
+- Handle complex features
+- Trust validation process
+- Build larger systems
+- Mentor team members
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Create Your First Task" href="../getting-started/first-task" icon="lightning-bolt">
+    Apply these practices immediately
+  </Card>
+  <Card title="Set Up Custom Rules" href="./custom-rules" icon="shield">
+    Encode your project's patterns
+  </Card>
+  <Card title="Code Review Guide" href="./code-review" icon="check-circle">
+    Review generated code effectively
+  </Card>
+</CardGroup>
