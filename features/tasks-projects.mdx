@@ -1,0 +1,220 @@
+---
+title: "Tasks & Projects"
+description: "Manage projects and create tasks for the Compyle agent"
+icon: "bookmark"
+---
+
+# Tasks & Projects
+
+## Understanding Projects
+
+Projects are containers for your coding tasks, organized around repositories or logical features.
+
+**One project per codebase** is the typical pattern:
+- Organize all related tasks together
+- Configure project-wide rules and settings
+- Maintain consistent patterns across tasks
+- Track all activity for a repository
+
+## Creating a Project
+
+<Steps>
+  <Step title="Go to Dashboard">
+    From your Compyle dashboard, click "Create Project"
+  </Step>
+  <Step title="Name Your Project">
+    Choose a descriptive name (e.g., "MyApp", "API Backend", "Mobile Client")
+  </Step>
+  <Step title="Select Repository">
+    Choose which repository this project targets
+  </Step>
+  <Step title="Configure Project Rules">
+    (Optional) Add custom rules specific to this project
+  </Step>
+  <Step title="Invite Team">
+    (Coming soon) Add team members to collaborate
+  </Step>
+  <Step title="Save Project">
+    Click "Create" and your project is ready
+  </Step>
+</Steps>
+
+## Project Dashboard
+
+Once created, your project dashboard shows:
+
+**Left Side:**
+- List of all tasks (with status indicators)
+- Recent activity feed
+- Quick shortcuts to settings
+
+**Right Side:**
+- Create new task button
+- Project settings access
+- Team members (when available)
+- Quick stats (tasks completed, credits used)
+
+## Creating Tasks
+
+Tasks are the core unit of work. You define what needs to be built, and Compyle handles the execution.
+
+### Task Anatomy
+
+Every task needs:
+
+1. **Title** - Clear, descriptive name
+2. **Description** - Detailed requirement
+3. **Repository** - Which repo (pre-selected from project)
+4. **Branch** - Target branch (usually `main`)
+5. **Options** - Research phase, etc.
+
+### Task Lifecycle
+
+Tasks go through distinct states:
+
+<CardGroup cols={2}>
+  <Card title="Created" icon="plus">
+    Task defined, not started
+  </Card>
+  <Card title="Researching" icon="search">
+    Agent gathering context
+  </Card>
+  <Card title="Planning" icon="message-square">
+    Agent asking questions
+  </Card>
+  <Card title="Awaiting Response" icon="clock">
+    Waiting for your answers
+  </Card>
+  <Card title="Implementing" icon="code">
+    Agent building code
+  </Card>
+  <Card title="In Review" icon="eye">
+    PR created, awaiting approval
+  </Card>
+  <Card title="Completed" icon="check">
+    Merged to target branch
+  </Card>
+  <Card title="Failed" icon="x">
+    Error occurred
+  </Card>
+</CardGroup>
+
+## Task Options
+
+### Skip Research Phase
+
+For small, simple tasks, you can skip research:
+
+- **When**: Task is straightforward, patterns are well-known
+- **Benefit**: Faster execution (saves 2-5 minutes)
+- **Risk**: Less architectural context, may lead to more planning questions
+- **Recommendation**: Keep research enabled for first tasks
+
+### Select Specific Branch
+
+Choose which branch to target:
+
+- **main** - For direct production updates (use with caution)
+- **develop** - For next release integration
+- **feature-*branch*** - For feature-specific work
+- **hotfix-*branch*** - For urgent fixes
+
+## Task History & Status
+
+View all past tasks and their status:
+
+**Filter by:**
+- Date range
+- Status (completed, failed, in progress)
+- Repository
+- Keywords
+
+**View:**
+- Task title and description
+- Status and completion date
+- Links to artifacts (research.md, planning.md)
+- Pull request links
+- Code changes summary
+
+## Task Description Best Practices
+
+<Tip title="Be Specific">
+  Include file names, existing code patterns, specific requirements. Generic descriptions lead to more planning questions.
+</Tip>
+
+<Tip title="Provide Context">
+  Explain why this task matters. Mention constraints, related features, or architectural concerns.
+</Tip>
+
+<Tip title="Include Examples">
+  Show examples of what you want. For UI tasks, describe layout. For API tasks, show request/response format.
+</Tip>
+
+<Tip title="Mention Edge Cases">
+  Tell Compyle about edge cases that need handling. This prevents incomplete implementation.
+</Tip>
+
+## Project Settings
+
+Project-level configuration includes:
+
+**Rules**
+- Custom rules for this project
+- Naming conventions
+- Forbidden patterns
+- Required patterns
+
+**Repository**
+- Which repo to use
+- Default branch
+- Branch naming patterns
+
+**Team** (Coming Soon)
+- Team members
+- Role-based access
+- Approval workflows
+
+## Organizing Your Tasks
+
+### Small Tasks First
+
+<Tip>
+  Start with small, focused tasks (30min-2 hours). This:
+  - Lets you understand Compyle's workflow
+  - Creates opportunities for quick wins
+  - Reduces risk and rework
+  - Builds confidence for larger tasks
+</Tip>
+
+### Chaining Related Tasks
+
+<Tip>
+  When doing related features, create tasks in sequence:
+
+  1. Task 1: Create user model
+  2. Task 2: Add API endpoints
+  3. Task 3: Build UI components
+
+  Compyle retains context from previous tasks, maintaining consistency.
+</Tip>
+
+### Organizing by Feature
+
+Group tasks by feature rather than by type:
+
+**Good**: "Authentication" project with tasks for login, signup, password reset
+**Less ideal**: "API" project with mixed unrelated endpoints
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Create Your First Task" href="../getting-started/first-task" icon="lightning-bolt">
+    Put this into practice
+  </Card>
+  <Card title="Learn Custom Rules" href="./custom-rules" icon="shield">
+    Set project patterns and conventions
+  </Card>
+  <Card title="Understand Agent Workflow" href="../getting-started/agent-workflow-intro" icon="gitflow">
+    Learn what happens during task execution
+  </Card>
+</CardGroup>

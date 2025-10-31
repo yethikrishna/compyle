@@ -1,0 +1,362 @@
+---
+title: "Agent Workflow Deep Dive"
+description: "Detailed breakdown of Research, Planning, and Implementation phases"
+icon: "arrow-right"
+---
+
+# Agent Workflow Deep Dive
+
+This is the deep dive into Compyle's three-phase workflow. For a quicker overview, see [Agent Workflow 101](/getting-started/agent-workflow-intro).
+
+## Phase 1: Research - Codebase Analysis
+
+### What Compyle Analyzes
+
+During research, Compyle performs a comprehensive analysis of your codebase:
+
+**File Structure & Architecture**
+- Directory organization and naming patterns
+- File types and language composition
+- Module dependencies and structure
+
+**Code Patterns & Conventions**
+- Naming conventions (camelCase, snake_case, PascalCase)
+- Code organization patterns
+- Existing implementations for common problems
+- Library and framework usage patterns
+
+**Key Files & Context**
+- README and documentation
+- Configuration files
+- Database schema or models
+- API endpoint definitions
+- Authentication and authorization patterns
+
+**External Dependencies**
+- Third-party libraries and versions
+- API integrations
+- Environment variables and secrets management
+- Build tools and scripts
+
+### Research Artifacts
+
+<Note>
+  Research produces a **research.md** document that you should review carefully. This document:
+  - Summarizes what Compyle found
+  - Lists identified patterns and conventions
+  - Highlights potential misunderstandings
+  - Provides context for planning
+</Note>
+
+### Customizing Research
+
+Use Custom Rules to guide research focus:
+
+```
+Priority research areas:
+- Authentication patterns in /src/auth/
+- Data models in /src/db/models.ts
+- Naming conventions: camelCase for functions, PascalCase for components
+- Styling approach: Tailwind CSS throughout
+```
+
+### Research Phase Tips
+
+<Tip title="Review Early">
+  Read research.md as soon as it's available. If Compyle analyzed the wrong files or misunderstood your architecture, correct it now before planning.
+</Tip>
+
+<Tip title="Provide Feedback">
+  If you spot misunderstandings, add notes. This helps Compyle calibrate for better planning and implementation.
+</Tip>
+
+## Phase 2: Planning - Specification Creation
+
+### Question Generation
+
+Compyle generates 3-10 focused questions based on:
+
+1. **Task ambiguity** - Anything unclear in your task description
+2. **Architectural decisions** - Choices that shape the implementation
+3. **Edge cases** - Scenarios that need explicit handling
+4. **Integration points** - How this fits with existing code
+5. **Quality requirements** - Testing, documentation, performance expectations
+
+### Example Questions
+
+<CardGroup cols={2}>
+  <Card title="Architectural" icon="building">
+    "Should we create a new service class or extend the existing auth service?"
+  </Card>
+  <Card title="Design" icon="palette">
+    "Should the form use inline validation or validate on submit?"
+  </Card>
+  <Card title="Performance" icon="zap">
+    "Should we cache results or query fresh each time?"
+  </Card>
+  <Card title="Edge Cases" icon="alert-triangle">
+    "How should we handle expired tokens?"
+  </Card>
+</CardGroup>
+
+### Planning Best Practices
+
+<Tip title="Answer Thoroughly">
+  Don't just say "yes" or "no". Explain your reasoning. Mention constraints or preferences. These details become the implementation specification.
+</Tip>
+
+<Tip title="Ask for Clarification">
+  If a question doesn't make sense or seems based on a misunderstanding, ask for clarification. It's better to clarify now than implement the wrong thing.
+</Tip>
+
+<Tip title="Document Decisions">
+  The planning.md serves as a record of your design decisions. Reference it later when reviewing code or explaining to teammates.
+</Tip>
+
+### Planning Artifact Structure
+
+planning.md contains:
+
+```yaml
+---
+title: "[Task Title]"
+description: "[Task Description]"
+status: "completed"
+date: "[Date Completed]"
+---
+
+## Questions & Answers
+
+### Q: [Question from Agent]
+**A**: [Your Answer]
+
+### Q: [Question from Agent]
+**A**: [Your Answer]
+
+## Implementation Plan
+
+### Overview
+[Compyle's understanding of what will be built]
+
+### Components & Changes
+- [File 1]: [What will change]
+- [File 2]: [What will change]
+
+### Testing
+[What tests will be added]
+
+### Edge Cases Handled
+- [Edge case 1]
+- [Edge case 2]
+```
+
+## Phase 3: Implementation - Building with Validation
+
+### Implementation Strategy
+
+Compyle builds in small, logical steps:
+
+1. **Setup** - Create files, imports, basic structure
+2. **Core Logic** - Implement main functionality
+3. **Integration** - Connect to existing code
+4. **Testing** - Add tests and validation
+5. **Polish** - Cleanup, documentation, final checks
+
+### Validation in Action
+
+After each logical change, Compyle validates:
+
+```
+Change Made
+  ↓
+Validate Against Plan → Match? ✓
+  ↓
+Validate Against Rules → No violations? ✓
+  ↓
+Validate Code Quality → Syntax/types OK? ✓
+  ↓
+Validate No Breaking Changes → Existing features OK? ✓
+  ↓
+All Pass → Continue to next change
+```
+
+### When Validation Fails
+
+If any validation fails, Compyle surfaces the issue:
+
+```
+❌ Validation Failed
+
+Rule: "No console.log in production code"
+Location: src/api/users.ts:42
+Issue: console.log("User found") found in implementation
+
+Options:
+1. Skip this line (approve exception)
+2. Modify approach (replan)
+3. Abort task
+```
+
+### Real-Time Problem Solving
+
+<AccordionGroup>
+  <Accordion title="Rule Conflict">
+    **Scenario**: Generated code violates a custom rule
+
+    **Compyle Does**:
+    - Explains the violation
+    - Suggests an alternative approach
+    - Waits for your decision
+
+    **You Can**:
+    - Approve the exception (with documentation)
+    - Request a different implementation
+    - Modify the rule for future tasks
+  </Accordion>
+  <Accordion title="Ambiguous Plan">
+    **Scenario**: Planning didn't clarify something important
+
+    **Compyle Does**:
+    - Surfaces the ambiguity
+    - Explains why it matters
+    - Asks for clarification
+
+    **You Can**:
+    - Provide additional context
+    - Update the planning.md
+    - Choose between options Compyle presents
+  </Accordion>
+  <Accordion title="Multiple Valid Approaches">
+    **Scenario**: Multiple ways to implement, each valid
+
+    **Compyle Does**:
+    - Presents the options
+    - Explains tradeoffs
+    - Waits for your preference
+
+    **You Can**:
+    - Choose based on your architecture
+    - Consider performance, maintainability
+    - Request additional information
+  </Accordion>
+</AccordionGroup>
+
+### Code Review During Implementation
+
+You should actively review during implementation:
+
+<Tip title="Watch in Real-Time">
+  Monitor the implementation dashboard. Review code as it's written, not after. This lets you catch issues early.
+</Tip>
+
+<Tip title="Answer Questions Immediately">
+  When Compyle asks follow-up questions, respond quickly. This keeps momentum and prevents waiting.
+</Tip>
+
+<Tip title="Test as You Go">
+  Some developers test locally after each logical phase. This helps catch issues early.
+</Tip>
+
+## Pull Request Creation
+
+When implementation is complete, Compyle creates a pull request containing:
+
+**PR Description**
+- Summary of what was implemented
+- Link to planning.md and research.md
+- Key changes and files modified
+- Any notes or caveats
+
+**Code Changes**
+- All implementation in feature branch
+- Organized commit history
+- Clear commit messages
+
+**Status Checks**
+- Link to implementation artifacts
+- Any validation warnings or notes
+- Approval status
+
+### Reviewing the PR
+
+Before merging, you should:
+
+1. **Read planning.md** - Understand the design decisions
+2. **Review research.md** - Know the architectural context
+3. **Read the code** - Understand the implementation
+4. **Test locally** - Run the code in your environment
+5. **Check for edge cases** - Verify all scenarios handled
+6. **Approve** - Merge when confident
+
+## Performance Considerations
+
+### Research Phase Duration
+
+- **Small codebase** (< 50 files): 1-2 minutes
+- **Medium codebase** (50-500 files): 2-5 minutes
+- **Large codebase** (500+ files): 5-10 minutes
+
+### Planning Phase Duration
+
+- **Simple task**: 5-15 minutes (3-5 questions)
+- **Medium task**: 15-30 minutes (5-10 questions)
+- **Complex task**: 30+ minutes (10+ questions)
+
+### Implementation Phase Duration
+
+- **Simple task**: 5-15 minutes
+- **Medium task**: 15-60 minutes
+- **Complex task**: 60+ minutes
+
+## Common Issues & Solutions
+
+<AccordionGroup>
+  <Accordion title="Agent asked too many questions">
+    **Cause**: Task description was too vague
+    **Solution**: For next task, be more specific. Include file names, existing patterns, constraints.
+  </Accordion>
+  <Accordion title="Generated code style doesn't match">
+    **Cause**: Missing or incomplete custom rules
+    **Solution**: Add style rules (naming, formatting, patterns) to guide future tasks
+  </Accordion>
+  <Accordion title="Implementation took longer than expected">
+    **Cause**: Task scope was too broad
+    **Solution**: Break into smaller tasks. Aim for 30min-2hour tasks.
+  </Accordion>
+  <Accordion title="Validation kept blocking">
+    **Cause**: Rules might be too strict for edge cases
+    **Solution**: Review rule definitions. Add exceptions for specific scenarios.
+  </Accordion>
+</AccordionGroup>
+
+## Optimization Tips
+
+<Tip title="Minimize Research Phase">
+  Skip research for small, well-defined tasks. For 0→1 features, keep research enabled.
+</Tip>
+
+<Tip title="Prepare for Planning">
+  Before launching a task, clarify in your mind what you want. This leads to better task descriptions and fewer planning questions.
+</Tip>
+
+<Tip title="Chain Related Tasks">
+  One task building on previous means Compyle retains context and maintains consistency.
+</Tip>
+
+<Tip title="Use Rules Effectively">
+  Invest time in good custom rules early. This pays dividends across all future tasks.
+</Tip>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Set Up Custom Rules" href="./custom-rules" icon="shield">
+    Guide Compyle with your project patterns
+  </Card>
+  <Card title="Create Your First Task" href="../getting-started/first-task" icon="lightning-bolt">
+    Put this knowledge into practice
+  </Card>
+  <Card title="Code Review Best Practices" href="./code-review" icon="check-circle">
+    Effectively review generated code
+  </Card>
+</CardGroup>

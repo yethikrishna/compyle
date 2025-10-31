@@ -1,0 +1,294 @@
+---
+title: "FAQ"
+description: "Frequently asked questions about Compyle"
+---
+
+# Frequently Asked Questions
+
+## Product & Features
+
+<AccordionGroup>
+  <Accordion title="What makes Compyle different from Claude Code or Cursor?">
+    Unlike autonomous agents that guess and move forward, Compyle asks clarifying questions before planning and implementing. You stay in the driver's seat throughout the entire process. The agent validates every change in real-time against your custom rules and planning decisions.
+
+    **Compyle**: Questions → Planning → Implementation (with validation)
+    **Autonomous agents**: Execute autonomously, hope it's right
+  </Accordion>
+
+  <Accordion title="Is Compyle free?">
+    Yes, Compyle is completely free during beta. No credit card required.
+
+    After beta, we'll offer paid plans. Details coming soon.
+  </Accordion>
+
+  <Accordion title="Do I need to be a technical expert to use Compyle?">
+    You should be comfortable with code and your project's architecture. Compyle is designed for engineers who understand their codebase and can make architectural decisions.
+
+    If you can code and maintain your project, you can use Compyle effectively.
+  </Accordion>
+
+  <Accordion title="Which programming languages and frameworks does Compyle support?">
+    Compyle works with any programming language and framework. We've tested it extensively with:
+
+    - **JavaScript/TypeScript** - React, Next.js, Express
+    - **Python** - Django, FastAPI, Flask
+    - **Go** - Standard library, web frameworks
+    - **Rust** - Cargo, Actix, Rocket
+    - **Java** - Spring, JUnit
+
+    If it's a GitHub repo with code, Compyle can help.
+  </Accordion>
+
+  <Accordion title="Can I use Compyle with private repositories?">
+    Yes. When you connect Compyle, you authorize it to access your private repositories. Compyle respects GitHub's permission settings.
+
+    Only repositories you explicitly connect are accessed.
+  </Accordion>
+
+  <Accordion title="How long does a typical task take?">
+    Typical timeline:
+    - Research phase: 1-5 minutes
+    - Planning phase: 5-30 minutes (depends on complexity and your response time)
+    - Implementation phase: 5 minutes to several hours (depends on complexity)
+    - Total: Usually 30 minutes to 2 hours for a typical feature
+
+    Larger features might take longer.
+  </Accordion>
+
+  <Accordion title="Can I cancel a task mid-way?">
+    Yes. You can stop a task at any point. Your work and answers are saved, and you can resume later if you want.
+  </Accordion>
+</AccordionGroup>
+
+## Billing & Plans
+
+<AccordionGroup>
+  <Accordion title="How much does Compyle cost after beta?">
+    Pricing details coming soon. We're still in beta, and all current users get early access at no cost.
+
+    After beta, we'll offer tiered pricing based on usage and features.
+  </Accordion>
+
+  <Accordion title="What's the credit system?">
+    Credits represent the computational cost of research, planning, and implementation.
+
+    - Simple tasks: 10-50 credits
+    - Medium tasks: 50-150 credits
+    - Complex tasks: 150-300+ credits
+
+    Your plan includes monthly credits. See [Billing & Plans](/getting-started/billing) for details.
+  </Accordion>
+
+  <Accordion title="Do unused credits roll over to next month?">
+    Policy TBD. We're still determining rollover vs. expiration. Check back soon.
+  </Accordion>
+
+  <Accordion title="Can I buy additional credits?">
+    Contact [founders@compyle.ai](mailto:founders@compyle.ai) for custom credit packages or enterprise pricing.
+  </Accordion>
+</AccordionGroup>
+
+## Code Review & Quality
+
+<AccordionGroup>
+  <Accordion title="How good is the generated code?">
+    Quality depends on several factors:
+
+    1. **Your task description** - Clear descriptions → better code
+    2. **Custom rules** - Well-defined rules → more consistent code
+    3. **Codebase patterns** - Clear existing patterns → agent follows them
+    4. **Your feedback** - Active review and feedback → continuous improvement
+
+    The agent is only as good as the guidance you provide.
+  </Accordion>
+
+  <Accordion title="Do I need to review all generated code?">
+    Yes. All agent-generated code should be reviewed before merging, just like code from a new team member.
+
+    The difference: With Compyle, you review during implementation, not after. This prevents issues from happening in the first place.
+  </Accordion>
+
+  <Accordion title="What if I don't like the generated code?">
+    You have options:
+
+    1. **Modify it** - Edit the PR before merging
+    2. **Reject it** - Abort task and try again with better guidance
+    3. **Provide feedback** - Explain what you'd prefer
+    4. **Add rules** - Define patterns for future tasks
+
+    Use these situations to improve your process.
+  </Accordion>
+
+  <Accordion title="How do I ensure code quality?">
+    Best practices:
+
+    1. Write clear task descriptions
+    2. Define comprehensive custom rules
+    3. Review code during implementation (not after)
+    4. Test locally before merging
+    5. Document exceptions when you approve them
+    6. Continuously refine your rules
+
+    See [Code Review Guide](/features/code-review) for details.
+  </Accordion>
+
+  <Accordion title="Does Compyle write tests?">
+    Yes, if you ask for them in the task description.
+
+    Example: "Add unit tests for all new functions with 80%+ coverage"
+
+    Include testing requirements in your task description.
+  </Accordion>
+</AccordionGroup>
+
+## Integrations & API
+
+<AccordionGroup>
+  <Accordion title="What integrations are available?">
+    Currently available:
+    - **GitHub** - Required for repository connection
+
+    Coming soon:
+    - **Slack** - Q4 2025
+    - **Jira** - Q1 2026
+    - **Linear** - Q1 2026
+    - **GitHub Actions** - Q1 2026
+
+    Vote on integrations you want at [compyle.ai/feedback](https://compyle.ai/feedback)
+  </Accordion>
+
+  <Accordion title="Is there an API for Compyle?">
+    Yes, the Compyle API is in development.
+
+    Current status: Limited availability in beta
+    Full launch: Q2 2026
+
+    See [API Documentation](/api-reference/intro) for details.
+  </Accordion>
+
+  <Accordion title="Can I use my own Anthropic API key?">
+    Yes. Go to Settings → Integrations → "Custom LLM Provider" and add your key.
+
+    This lets you control costs and usage directly.
+  </Accordion>
+
+  <Accordion title="Will Compyle support other LLMs?">
+    Currently Compyle uses Anthropic's Claude. Support for other LLMs is on the roadmap but not confirmed.
+
+    Contact us if this is important to you.
+  </Accordion>
+</AccordionGroup>
+
+## Team & Collaboration
+
+<AccordionGroup>
+  <Accordion title="Can multiple people use Compyle on the same project?">
+    Currently: Compyle is single-user only.
+
+    Coming soon (Q1 2026): Team collaboration with:
+    - Multi-user workspaces
+    - Role-based access
+    - Approval workflows
+    - Team settings
+  </Accordion>
+
+  <Accordion title="How do I share Compyle with my team?">
+    Right now, each team member needs their own account.
+
+    When team features launch (Q1 2026), you'll be able to invite teammates and manage permissions.
+  </Accordion>
+
+  <Accordion title="Is there a team plan?">
+    Pricing details coming after beta. We'll have options for teams, including team management features.
+  </Accordion>
+</AccordionGroup>
+
+## Security & Privacy
+
+<AccordionGroup>
+  <Accordion title="Is my code secure with Compyle?">
+    Yes. Your code security depends on:
+
+    1. **GitHub access** - Compyle only accesses repos you authorize
+    2. **Data transmission** - All data encrypted in transit (HTTPS)
+    3. **Storage** - See Privacy Policy for retention details
+    4. **API keys** - Never shared, stored securely
+
+    See our [Privacy Policy](/privacy) for complete details.
+  </Accordion>
+
+  <Accordion title="What data does Compyle store?">
+    Compyle stores:
+    - Research artifacts (research.md)
+    - Planning artifacts (planning.md)
+    - Task metadata (title, status, timestamps)
+    - Configuration (rules, settings)
+
+    See [Privacy Policy](/privacy) for full details.
+  </Accordion>
+
+  <Accordion title="Can I request data deletion?">
+    Yes. Contact [hi@compyle.ai](mailto:hi@compyle.ai) to request deletion of your data and tasks.
+
+    We'll handle it promptly according to our privacy policy.
+  </Accordion>
+
+  <Accordion title="Does Compyle use my code for training?">
+    No. Your code is never used to train models. See [Terms of Service](/terms) for details.
+  </Accordion>
+</AccordionGroup>
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="The agent asked too many questions">
+    This usually means your task description was too vague.
+
+    **Next time**:
+    - Be more specific about requirements
+    - Include file names and existing patterns
+    - Mention edge cases upfront
+    - Provide examples
+  </Accordion>
+
+  <Accordion title="Generated code doesn't match my style">
+    Add custom rules to enforce your style:
+
+    1. Identify the pattern you want
+    2. Add a rule to enforce it
+    3. Run new task to test
+    4. Refine rule as needed
+
+    See [Custom Rules](/features/custom-rules).
+  </Accordion>
+
+  <Accordion title="I'm out of credits this month">
+    Options:
+
+    1. Wait for next month's allocation
+    2. Upgrade to a higher plan
+    3. Contact support for additional credits
+
+    See [Billing](/getting-started/billing).
+  </Accordion>
+
+  <Accordion title="The agent seems to misunderstand my codebase">
+    This happens during research phase. Options:
+
+    1. **Provide feedback** - Tell the agent what it misunderstood
+    2. **Adjust task description** - Include specific file references
+    3. **Skip research** - For simple, well-defined tasks
+    4. **Add rules** - Define your codebase patterns
+
+    Research should be reviewed carefully. Catch misunderstandings early.
+  </Accordion>
+</AccordionGroup>
+
+## Getting Help
+
+Can't find your answer? We're here to help:
+
+- **Documentation** - Browse [Compyle docs](/getting-started/index)
+- **Discord** - Join our [community](/community)
+- **Email** - [hi@compyle.ai](mailto:hi@compyle.ai)
+- **Twitter** - [@compyle_ai](https://twitter.com/compyle_ai)

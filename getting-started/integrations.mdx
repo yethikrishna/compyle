@@ -1,0 +1,189 @@
+---
+title: "Integrations"
+description: "Connect Compyle with third-party services and tools"
+icon: "zap"
+---
+
+# Integrations
+
+Connect Compyle with tools you already use to enhance your workflow and unlock more automation possibilities.
+
+## What Are Integrations?
+
+Integrations connect Compyle with third-party services and tools, enabling:
+- **Richer context** - Pull information from external systems
+- **Better communication** - Get updates in your preferred channels
+- **More automation** - Trigger tasks from other tools
+- **Seamless workflows** - Keep your existing toolchain
+
+## Currently Available Integrations
+
+<CardGroup cols={2}>
+  <Card title="GitHub" icon="github" href="#github">
+    **Status**: Available Now
+
+    Required for repository connection and pull request management
+  </Card>
+  <Card title="Anthropic API" icon="key" href="#api">
+    **Status**: Available Now
+
+    Use your own API key for cost control and usage limits
+  </Card>
+</CardGroup>
+
+## Coming Soon
+
+We're actively building integrations with:
+
+<CardGroup cols={2}>
+  <Card title="Slack" icon="slack">
+    **Coming**: Q4 2025
+
+    Get task notifications and collaborate in Slack channels
+  </Card>
+  <Card title="Jira" icon="settings">
+    **Coming**: Q1 2026
+
+    Link tasks to Jira issues and auto-update status
+  </Card>
+  <Card title="Linear" icon="arrow-right">
+    **Coming**: Q1 2026
+
+    Sync Compyle tasks with Linear issue tracking
+  </Card>
+  <Card title="GitHub Actions" icon="zap">
+    **Coming**: Q1 2026
+
+    Trigger Compyle tasks from CI/CD workflows
+  </Card>
+  <Card title="Discord" icon="message-circle">
+    **Coming**: Q1 2026
+
+    Discord bot for task notifications and status
+  </Card>
+  <Card title="Webhooks" icon="webhook">
+    **Coming**: Q2 2026
+
+    Custom webhooks for advanced automation
+  </Card>
+</CardGroup>
+
+## Integration Guides
+
+### GitHub <span id="github"></span>
+
+GitHub integration is essential for Compyle. It enables:
+- Reading your code and understanding architecture
+- Creating branches for task implementation
+- Submitting pull requests with changes
+- Validating against your custom rules
+
+**Setup**: Connected during account creation. Manage in Settings → Connected Repositories.
+
+### Anthropic API <span id="api"></span>
+
+Use your own Anthropic API key to:
+- Control your own API costs
+- Set custom rate limits
+- Maintain data privacy
+- Use specific model versions
+
+<Steps>
+  <Step title="Get Your API Key">
+    Visit [Anthropic Console](https://console.anthropic.com) and generate an API key
+  </Step>
+  <Step title="Go to Account Settings">
+    Click your profile → Settings → Integrations
+  </Step>
+  <Step title="Add API Key">
+    Paste your Anthropic API key in the "Custom LLM Provider" field
+  </Step>
+  <Step title="Save and Verify">
+    Compyle will verify the key works before saving
+  </Step>
+</Steps>
+
+<Warning>
+  **Protect Your API Keys**
+
+  Never share your API keys publicly. Store them securely in environment variables or a password manager. If compromised, regenerate immediately in the Anthropic console.
+</Warning>
+
+## API Key Management
+
+<Steps>
+  <Step title="Go to Account Settings">
+    Click your profile icon → Settings
+  </Step>
+  <Step title="Select "API Keys"">
+    View all your generated keys
+  </Step>
+  <Step title="Generate New Key">
+    Click "Create New Key" to generate additional keys
+  </Step>
+  <Step title="Copy Key">
+    Keys are shown only once. Copy and store securely immediately.
+  </Step>
+  <Step title="Regenerate or Revoke">
+    Invalidate compromised keys by regenerating or deleting
+  </Step>
+</Steps>
+
+## Custom Integrations
+
+For developers building custom integrations:
+
+- **Use Compyle's public API** - Full API documentation coming soon
+- **Webhooks** - Receive events about task status changes
+- **Custom scripts** - Build automation with our CLI and SDKs
+
+<Card title="View API Documentation" href="../api-reference/intro" icon="code">
+  Learn about Compyle's API for custom integrations
+</Card>
+
+## Integration Requests
+
+Want a specific integration? Let us know!
+
+<CardGroup>
+  <Card title="Suggest on Feedback Board" href="../community" icon="lightbulb">
+    Vote on requested integrations or suggest new ones
+  </Card>
+  <Card title="Join Discord Community" href="../community" icon="message-circle">
+    Discuss integrations with the Compyle team and community
+  </Card>
+</CardGroup>
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="My API key isn't working">
+    - Verify the key is active in Anthropic console
+    - Ensure you have remaining quota
+    - Check for typos when pasting
+    - Regenerate a new key and try again
+  </Accordion>
+  <Accordion title="GitHub integration failed">
+    - Ensure you're logged into GitHub
+    - Check you have admin access to your repositories
+    - Disconnect and reconnect GitHub access
+    - Contact support if issues persist
+  </Accordion>
+  <Accordion title="How do I disconnect an integration?">
+    Go to Settings → Integrations → [Service Name] → "Disconnect". Changes take effect immediately.
+  </Accordion>
+</AccordionGroup>
+
+## Next Steps
+
+<CardGroup cols={3}>
+  <Card title="Create Your First Task" href="./first-task" icon="lightning-bolt">
+    Start using Compyle with your connected integrations
+  </Card>
+  <Card title="Learn About Custom Rules" href="../features/custom-rules" icon="shield">
+    Define patterns that Compyle follows
+  </Card>
+  <Card title="View API Documentation" href="../api-reference/intro" icon="code">
+    Build custom integrations with Compyle's API
+  </Card>
+</CardGroup>

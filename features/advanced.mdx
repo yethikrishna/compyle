@@ -1,0 +1,298 @@
+---
+title: "Advanced Features"
+description: "Power user features and advanced customization"
+icon: "zap"
+---
+
+# Advanced Features
+
+Advanced features for power users who want to optimize Compyle for their specific needs.
+
+## Custom LLM Provider
+
+Use your own Anthropic API key instead of Compyle's default:
+
+### Why Use Custom Provider?
+
+- **Cost control** - Track spending directly
+- **Usage limits** - Set your own rate limits
+- **Data privacy** - Your API, your data
+- **Model choice** - Use specific model versions
+
+### Setup
+
+<Steps>
+  <Step title="Get Your API Key">
+    Visit [console.anthropic.com](https://console.anthropic.com)
+    Generate an API key with Compyle scope
+  </Step>
+  <Step title="Go to Settings">
+    Account → Integrations → "Custom LLM Provider"
+  </Step>
+  <Step title="Paste Your Key">
+    Add your Anthropic API key
+  </Step>
+  <Step title="Verify">
+    Compyle tests the key before saving
+  </Step>
+  <Step title="Use in Tasks">
+    New tasks will use your API key
+  </Step>
+</Steps>
+
+<Warning>
+  **Security:**
+  - Never share your API key
+  - Store securely in environment variables
+  - Rotate regularly
+  - Regenerate if compromised
+</Warning>
+
+### Cost Optimization
+
+<Tip title="Monitor API Usage">
+  Track usage in Anthropic console:
+  - Daily spend
+  - Token consumption
+  - Rate limit status
+  - Cost per task
+</Tip>
+
+<Tip title="Optimize Task Scope">
+  Smaller tasks use fewer tokens:
+  - 1 hour task = fewer tokens
+  - 4 hour task = many more tokens
+  - Break large tasks into smaller ones
+</Tip>
+
+## Agent Spend Optimization
+
+Optimize token consumption and credits:
+
+### Research Phase Tuning
+
+- **Full Research**: Comprehensive analysis (uses more credits)
+- **Quick Research**: Focused analysis (uses fewer credits)
+- **Skip Research**: For simple tasks (saves 20-30% credits)
+
+**When to skip:**
+- Simple bug fixes
+- Well-defined small tasks
+- Following existing patterns
+
+**When to keep:**
+- New features
+- Architectural changes
+- First tasks in new codebase
+
+### Planning Phase Optimization
+
+- **Ask all questions**: Comprehensive planning
+- **Ask key questions**: Focus on critical decisions
+- **Skip planning**: For very simple tasks (not recommended)
+
+**Results:**
+- More planning questions = better implementation
+- Fewer questions = faster execution, potential ambiguity
+
+### Implementation Batching
+
+Create multiple related tasks to reuse context:
+
+```
+Task 1: Create user model (45 min)
+Task 2: Add API endpoints (1 hour)
+Task 3: Build UI components (1.5 hours)
+
+Total: Faster than one large task
+Reason: Agent learns context in Task 1,
+        applies efficiently in Tasks 2 & 3
+```
+
+## Batch Task Management
+
+Run multiple tasks efficiently:
+
+### Task Chaining
+
+Create dependent tasks in sequence:
+
+1. **First task** - Core functionality
+2. **Second task** - Builds on first
+3. **Third task** - Final polish
+
+Benefits:
+- Agent maintains architectural understanding
+- Consistent patterns across tasks
+- Better resource utilization
+
+### Parallel Tasks
+
+For independent features (not recommended unless experienced):
+
+- Design review required before running in parallel
+- Risk of conflicting changes
+- Requires careful coordination
+- Use chaining instead when possible
+
+## Advanced Project Settings
+
+### Repository Configuration
+
+- **Default branch** - Usually `main`
+- **Branch naming** - Pattern for feature branches
+- **Protected branches** - Cannot merge without review
+- **Auto-delete branches** - Clean up after merge
+
+### Team Settings (Coming Soon)
+
+- Role-based access control
+- Multi-user workspace
+- Approval workflows
+- Audit logging
+
+### Integration Settings
+
+- Custom webhook URLs
+- CI/CD pipeline integration
+- Notification preferences
+- API key management
+
+## Performance Metrics
+
+Track and optimize performance:
+
+### Task Metrics
+
+- **Execution time** - How long each phase takes
+- **Token consumption** - API usage per task
+- **Credit efficiency** - Credits used per task
+- **Questions asked** - Planning clarity metric
+
+### Codebase Metrics
+
+- **Code quality trends** - Over time
+- **Rule violations** - Before vs. after rules
+- **Team velocity** - Tasks completed per week
+- **Rework rate** - % needing fixes after merge
+
+### Learning Dashboard
+
+View these metrics in **Dashboard** → **Metrics**
+
+## Webhook Integrations (Coming Soon)
+
+Set up custom webhooks for:
+
+- **Task events** - Started, completed, failed
+- **Approval events** - PR ready, merged
+- **Error events** - Failures requiring attention
+- **Scheduled reports** - Weekly summaries
+
+### Webhook Payload Example
+
+```json
+{
+  "event": "task_completed",
+  "task_id": "task-123",
+  "task_name": "Add user profile",
+  "project": "MyApp",
+  "status": "completed",
+  "pr_url": "https://github.com/...",
+  "files_changed": 5,
+  "credits_used": 82,
+  "timestamp": "2025-03-15T14:30:00Z"
+}
+```
+
+## API Usage Patterns
+
+### Rate Limiting
+
+Default limits per plan:
+
+| Plan | Requests/min | Concurrent |
+|------|--------------|-----------|
+| Starter | 30 | 1 |
+| Pro | 100 | 3 |
+| Pro+ | 300 | 10 |
+
+### Backoff Strategy
+
+If rate limited:
+- Wait before retrying
+- Exponential backoff recommended
+- Check headers for retry-after
+
+## CLI & Automation
+
+Automate task creation and management:
+
+<Note>
+  CLI tools coming in Q1 2026. Preview available to Pro+ users.
+
+  Planned features:
+  - `compyle task create`
+  - `compyle task status`
+  - `compyle project config`
+  - `compyle artifacts download`
+</Note>
+
+## Troubleshooting Advanced Features
+
+<AccordionGroup>
+  <Accordion title="Custom API key not working">
+    - Verify key is active in Anthropic console
+    - Check you have remaining quota
+    - Ensure no typos in key
+    - Regenerate new key and try
+  </Accordion>
+  <Accordion title="Performance degradation">
+    - Check token usage metrics
+    - Review task complexity
+    - Consider splitting tasks
+    - Check concurrent task limit
+  </Accordion>
+  <Accordion title="Webhook not firing">
+    - Verify URL is correct and accessible
+    - Check firewall/network settings
+    - Review webhook logs
+    - Test webhook manually
+  </Accordion>
+</AccordionGroup>
+
+## Best Practices for Power Users
+
+<Tip title="Monitor Metrics">
+  Check metrics weekly to identify optimization opportunities
+</Tip>
+
+<Tip title="Batch Related Tasks">
+  Group tasks to share agent context and improve efficiency
+</Tip>
+
+<Tip title="Optimize Rules">
+  Keep rules focused and specific to reduce violations
+</Tip>
+
+<Tip title="Use Custom Provider">
+  For production workflows, use custom API key for cost control
+</Tip>
+
+<Tip title="Automate Workflows">
+  When CLI available, automate recurring task creation
+</Tip>
+
+## Next Steps
+
+<CardGroup cols={3}>
+  <Card title="Set Up Custom Provider" href="#" icon="key">
+    Use your own API key for cost control
+  </Card>
+  <Card title="Create Advanced Rules" href="./custom-rules" icon="shield">
+    Define complex patterns for your project
+  </Card>
+  <Card title="View Metrics" href="#" icon="chart-bar">
+    Monitor performance and optimization opportunities
+  </Card>
+</CardGroup>

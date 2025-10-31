@@ -1,0 +1,366 @@
+---
+title: "Custom Rules & Pattern Enforcement"
+description: "Define project rules to guide the Compyle agent"
+icon: "shield"
+---
+
+# Custom Rules & Pattern Enforcement
+
+## What Are Custom Rules?
+
+Custom rules encode your project's conventions, constraints, and best practices. They guide Compyle during research, planning, and implementation.
+
+**Rules prevent:**
+- Unwanted patterns and anti-patterns
+- Inconsistent code style
+- Architectural violations
+- Missing required patterns
+
+**Rules guide:**
+- Naming conventions
+- File organization
+- Error handling patterns
+- Testing requirements
+- Documentation standards
+
+## Types of Rules
+
+<CardGroup cols={2}>
+  <Card title="Naming Conventions" icon="type">
+    Functions, variables, classes must follow patterns
+  </Card>
+  <Card title="Code Structure" icon="folder">
+    File organization, import patterns
+  </Card>
+  <Card title="Forbidden Patterns" icon="x-circle">
+    Patterns to ban or avoid
+  </Card>
+  <Card title="Required Patterns" icon="check-circle">
+    Must-have patterns and practices
+  </Card>
+</CardGroup>
+
+## Creating Rules
+
+<Steps>
+  <Step title="Go to Project Settings">
+    In your project, click Settings → Custom Rules
+  </Step>
+  <Step title="Click 'Add Rule'">
+    Start creating a new rule
+  </Step>
+  <Step title="Choose Rule Type">
+    Select from: Naming, Structure, Forbidden, Required
+  </Step>
+  <Step title="Define the Pattern">
+    Use regex or natural language description
+  </Step>
+  <Step title="Set Scope">
+    Global, file pattern, or specific files
+  </Step>
+  <Step title="Add Description">
+    Explain the rule and why it matters
+  </Step>
+  <Step title="Save & Activate">
+    Rule applies immediately to new tasks
+  </Step>
+</Steps>
+
+## Rule Scopes
+
+### Global Scope
+
+Applies to the entire project:
+
+```
+Rule: All TypeScript files must have type annotations
+Scope: Global (all *.ts files)
+Pattern: No 'any' type, strict mode enabled
+```
+
+### File Pattern Scope
+
+Applies to files matching a glob pattern:
+
+```
+Rule: React Hook Naming Convention
+Scope: src/hooks/**/*.ts
+Pattern: Must start with "use" (e.g., useAuth, useForm)
+```
+
+### Directory Scope
+
+Applies to specific directory:
+
+```
+Rule: Test Files Use Jest Convention
+Scope: tests/ or **/*.test.ts
+Pattern: Tests must use describe/it blocks
+```
+
+## Rule Examples
+
+### Example 1: Naming Convention
+
+```
+Name: React Hook Naming
+Scope: src/hooks/**/*.tsx
+Pattern: ^use[A-Z][a-zA-Z]*$
+Description: All React hooks must start with lowercase "use"
+Enforced: Warn (can override)
+
+Examples:
+✓ useAuth
+✓ useForm
+✓ useLocalStorage
+✗ getAuth (wrong)
+✗ authHook (wrong)
+```
+
+### Example 2: Forbidden Pattern
+
+```
+Name: No Console Logs
+Scope: src/**/*.ts (except src/debug)
+Pattern: console\.(log|debug)
+Enforced: Block (must override to use)
+Reason: Production code should use logger, not console
+
+Compyle will:
+- Block code with console.log in production files
+- Ask user to use logger service instead
+- Allow override with documentation
+```
+
+### Example 3: Required Documentation
+
+```
+Name: Function Documentation
+Scope: src/**/*.ts
+Pattern: JSDoc comment required
+Enforced: Warn
+Requirement: Exported functions must have JSDoc
+
+Format:
+/**
+ * Brief description
+ * @param {type} name - Description
+ * @returns {type} Description
+ */
+```
+
+### Example 4: Code Structure
+
+```
+Name: Component File Organization
+Scope: src/components/**/*.tsx
+Pattern: Enforce structure
+Enforced: Block
+Requirements:
+- Component in separate file
+- Styles in Component.module.css
+- Tests in Component.test.tsx
+- Exports default component
+
+Compyle will enforce this structure automatically
+```
+
+## Rule Enforcement
+
+### When Rules Are Checked
+
+<CardGroup cols={3}>
+  <Card title="Research" icon="search">
+    Identify existing violations in codebase
+  </Card>
+  <Card title="Planning" icon="message-square">
+    Consider rules in design decisions
+  </Card>
+  <Card title="Implementation" icon="code">
+    Enforce rules in real-time during coding
+  </Card>
+</CardGroup>
+
+### What Happens When Rules Are Violated
+
+<Tip title="Rule Violation Flow">
+  1. Compyle detects violation
+  2. Agent explains the violation and why it matters
+  3. You can:
+     - Adjust approach to follow rule
+     - Approve exception (with documentation)
+     - Modify rule for edge case
+</Tip>
+
+### Handling Conflicts
+
+If rules conflict:
+
+<Accordion title="Rule Priority">
+  Set precedence when rules might overlap:
+  - **Critical** - Must follow always
+  - **Important** - Follow unless overridden
+  - **Nice to have** - Guideline, can override
+</Accordion>
+
+<Accordion title="Exceptions">
+  Document exceptions when necessary:
+  - Add comment explaining why exception is needed
+  - Update rule if pattern needs refinement
+  - Only override in specific scenarios
+</Accordion>
+
+<Accordion title="Rule Evolution">
+  Rules should evolve as your project changes:
+  - Review quarterly
+  - Remove rules that aren't needed
+  - Refine rules that cause too many violations
+  - Add new rules as patterns emerge
+</Accordion>
+
+## Built-in Rule Templates
+
+Compyle comes with templates for common patterns:
+
+<CardGroup cols={2}>
+  <Card title="TypeScript Strict Mode" icon="code">
+    Type safety rules for TypeScript projects
+  </Card>
+  <Card title="React Best Practices" icon="react">
+    Hook conventions, component patterns
+  </Card>
+  <Card title="Python PEP 8" icon="python">
+    Python style and naming conventions
+  </Card>
+  <Card title="Testing Conventions" icon="test-tube">
+    Test file organization and patterns
+  </Card>
+  <Card title="Code Documentation" icon="book">
+    Comment and docstring requirements
+  </Card>
+  <Card title="Security Best Practices" icon="shield">
+    Common security patterns to enforce
+  </Card>
+</CardGroup>
+
+## Rule Management
+
+### Viewing All Rules
+
+Go to Project Settings → Custom Rules to see:
+- All active rules
+- Rule scope and enforcement level
+- Last modified date
+- Number of violations (if any)
+
+### Editing Rules
+
+Click on any rule to:
+- Modify pattern or scope
+- Change enforcement level (warn/block)
+- Update description
+- Enable/disable
+
+### Disabling Rules
+
+Temporarily disable rules without deleting:
+- Useful for experimental features
+- Can re-enable anytime
+- Useful during refactoring
+
+### Rule Statistics
+
+View statistics on rule compliance:
+- Violations by rule
+- Files affected
+- Trends over time
+- Most problematic areas
+
+## Best Practices
+
+<Tip title="Start Small">
+  Define 5-10 core rules first. Add more as patterns emerge. Too many rules create friction.
+</Tip>
+
+<Tip title="Test on Existing Code">
+  Run new rules against your existing codebase. Refine if they flag too many false positives.
+</Tip>
+
+<Tip title="Document Rationale">
+  Explain *why* each rule exists. This helps Compyle and your team understand the intent.
+</Tip>
+
+<Tip title="Keep Rules Updated">
+  Review rules quarterly. Remove rules that don't provide value. Refine rules causing excessive violations.
+</Tip>
+
+<Tip title="Communicate with Team">
+  If team members don't understand the rules, violations spike. Explain and document clearly.
+</Tip>
+
+## Advanced Rule Patterns
+
+### Regex Patterns
+
+For complex matching, use regular expressions:
+
+```
+Pattern: ^(get|set|is|has)[A-Z][a-zA-Z]*$
+Matches: getName, setColor, isActive, hasPermission
+```
+
+### Negative Patterns (Forbidden)
+
+To forbid specific patterns:
+
+```
+Pattern: eval\(|innerHTML\s*=|dangerouslySetInnerHTML
+Reason: Security risk - using dangerous APIs
+```
+
+### Structural Patterns
+
+To enforce file/folder structure:
+
+```
+Pattern: All React components must be in src/components/
+Pattern: All utilities must be in src/utils/
+Pattern: All tests must be in tests/ or *.test.ts
+```
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Rules causing too many violations">
+    - Review rule definition - might be too strict
+    - Check exceptions - might need allowlist for edge cases
+    - Reduce scope - limit to specific directories
+    - Warn instead of block - less friction
+  </Accordion>
+  <Accordion title="Rule isn't being enforced">
+    - Check rule is enabled
+    - Verify scope pattern matches your files
+    - Check rule syntax (especially regex)
+    - Re-enable and test with new task
+  </Accordion>
+  <Accordion title="Conflicting rules">
+    - Set priority levels
+    - Create exceptions
+    - Refine scope to avoid overlap
+    - Combine related rules
+  </Accordion>
+</AccordionGroup>
+
+## Next Steps
+
+<CardGroup cols={3}>
+  <Card title="Create Your First Task" href="../getting-started/first-task" icon="lightning-bolt">
+    Use rules to guide your task
+  </Card>
+  <Card title="Code Review Practices" href="./code-review" icon="check-circle">
+    Validate rules during implementation
+  </Card>
+  <Card title="Best Practices Guide" href="./best-practices" icon="lightbulb">
+    Learn effective Compyle usage
+  </Card>
+</CardGroup>

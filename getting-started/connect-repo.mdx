@@ -1,0 +1,108 @@
+---
+title: "Connect Your First Repository"
+description: "Authorize Compyle to access your GitHub repositories"
+icon: "git-branch"
+---
+
+# Connect Your GitHub Repository
+
+Compyle needs authorization to read and write to your repositories. This page walks you through the connection process.
+
+## Prerequisites
+
+Before connecting a repository, you'll need:
+
+<Info>
+  - A GitHub account
+  - Write access to at least one repository
+  - To be logged into Compyle
+</Info>
+
+## Step-by-Step Connection
+
+<Steps>
+  <Step title="Navigate to Repository Settings">
+    From your Compyle dashboard, go to **Settings** → **Connected Repositories** or click "Connect Repository" if this is your first time.
+  </Step>
+  <Step title="Click 'Connect GitHub'">
+    You'll be redirected to GitHub's OAuth authorization screen. This is GitHub's standard security flow.
+  </Step>
+  <Step title="Review Permissions">
+    GitHub will show you what permissions Compyle is requesting. These allow Compyle to:
+    - Read your code and repository structure
+    - Create branches for implementing tasks
+    - Submit pull requests with changes
+    - Validate code against your rules
+  </Step>
+  <Step title="Authorize Compyle">
+    Click "Authorize" to grant Compyle access to your repositories.
+  </Step>
+  <Step title="Select Repositories">
+    Choose which repositories Compyle can access. You can:
+    - Give access to all repositories
+    - Select specific repositories only
+    - Change this later in Settings
+  </Step>
+  <Step title="Verify Connection">
+    After authorization, Compyle will list your connected repositories. Verify the branch structure is correct (usually `main` or `develop` for the default branch).
+  </Step>
+</Steps>
+
+## Understanding Permissions
+
+<AccordionGroup>
+  <Accordion title="Why does Compyle need GitHub access?">
+    Compyle needs GitHub access to:
+    - **Read** your code to understand patterns and architecture
+    - **Create branches** for implementing tasks
+    - **Submit PRs** with the generated code changes
+    - **Validate changes** against your custom rules before submission
+  </Accordion>
+  <Accordion title="What can Compyle do with my repos?">
+    Compyle can:
+    - Read code files and repository structure
+    - Create feature branches from your repository
+    - Write code files and make changes
+    - Create pull requests for review
+    - Validate against your custom rules
+    - Compyle **cannot**: Force-push, delete branches without permission, or modify protected branches without your approval
+  </Accordion>
+  <Accordion title="Can I disconnect a repository later?">
+    Yes. Go to **Settings** → **Connected Repositories**, find the repository, and click "Disconnect". Compyle will immediately lose access.
+  </Accordion>
+  <Accordion title="Which repositories should I connect?">
+    Start with **one repository** to test Compyle's workflow. Once comfortable, add more repositories. We recommend:
+    1. Start with a development/staging repo, not production
+    2. Test Compyle with a small, well-understood task first
+    3. Expand to more repositories as you gain confidence
+  </Accordion>
+</AccordionGroup>
+
+## Troubleshooting
+
+<Tip title="Authorization Failed?">
+  - Ensure you're logged into GitHub in your browser
+  - Check that you have admin rights to the repository
+  - Clear your browser cache and try again
+  - Contact support if the issue persists
+</Tip>
+
+<Tip title="Can't Find Your Repository?">
+  - Private repositories may need explicit permission in GitHub settings
+  - Ensure you have write access to the repository
+  - Check that you authorized Compyle to access the specific repository
+  - Contact GitHub support or your repository administrator
+</Tip>
+
+<Tip title="Want to Change Connected Repositories?">
+  - Go to Settings → Connected Repositories
+  - Click "Manage GitHub Access" to change which repos Compyle can see
+  - Disconnect any repos you no longer want to use
+  - Changes take effect immediately
+</Tip>
+
+## Next Step
+
+<Card title="Ready to create your first task?" href="./first-task" icon="lightning-bolt">
+  Now that your repository is connected, create your first Compyle task
+</Card>

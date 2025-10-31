@@ -1,0 +1,368 @@
+---
+title: "API Endpoints"
+description: "Compyle API endpoint reference"
+icon: "arrow-right"
+---
+
+# API Endpoints Reference
+
+<Warning title="Endpoints in Development">
+  These endpoints are planned for the full API launch. Currently in beta with limited availability.
+
+  Full API launching: Q2 2026
+</Warning>
+
+## Tasks API
+
+### List Tasks
+
+```
+GET /api/v1/tasks
+```
+
+Get all tasks for your account.
+
+**Query Parameters:**
+- `projectId` - Filter by project
+- `status` - Filter by status (researching, planning, implementing, completed, failed)
+- `limit` - Results per page (default: 20)
+- `offset` - Pagination offset
+
+**Response:**
+```json
+{
+  "data": [
+    {
+      "id": "task_123",
+      "title": "Add user authentication",
+      "status": "completed",
+      "projectId": "proj_456",
+      "createdAt": "2025-03-15T10:00:00Z",
+      "completedAt": "2025-03-15T12:30:00Z",
+      "prUrl": "https://github.com/..."
+    }
+  ],
+  "pagination": {
+    "limit": 20,
+    "offset": 0,
+    "total": 145
+  }
+}
+```
+
+### Create Task
+
+```
+POST /api/v1/tasks
+```
+
+Create a new task.
+
+**Request Body:**
+```json
+{
+  "projectId": "proj_456",
+  "title": "Add user authentication",
+  "description": "Implement OAuth login with Google",
+  "repositoryId": "repo_789",
+  "branch": "main",
+  "includeResearch": true
+}
+```
+
+**Response:**
+```json
+{
+  "id": "task_123",
+  "title": "Add user authentication",
+  "status": "created",
+  "projectId": "proj_456",
+  "createdAt": "2025-03-15T10:00:00Z"
+}
+```
+
+### Get Task Details
+
+```
+GET /api/v1/tasks/{id}
+```
+
+Get detailed information about a specific task.
+
+**Response:**
+```json
+{
+  "id": "task_123",
+  "title": "Add user authentication",
+  "description": "Implement OAuth login with Google",
+  "status": "completed",
+  "projectId": "proj_456",
+  "repositoryId": "repo_789",
+  "branch": "main",
+  "createdAt": "2025-03-15T10:00:00Z",
+  "completedAt": "2025-03-15T12:30:00Z",
+  "prUrl": "https://github.com/user/repo/pull/123",
+  "filesChanged": 5,
+  "creditsUsed": 82
+}
+```
+
+### Update Task
+
+```
+PATCH /api/v1/tasks/{id}
+```
+
+Update task details (limited fields).
+
+**Request Body:**
+```json
+{
+  "title": "Updated title",
+  "description": "Updated description"
+}
+```
+
+### Delete Task
+
+```
+DELETE /api/v1/tasks/{id}
+```
+
+Delete a task. Only possible for tasks not yet started.
+
+## Projects API
+
+### List Projects
+
+```
+GET /api/v1/projects
+```
+
+Get all your projects.
+
+**Response:**
+```json
+{
+  "data": [
+    {
+      "id": "proj_456",
+      "name": "MyApp",
+      "repositoryId": "repo_789",
+      "createdAt": "2025-01-01T00:00:00Z",
+      "taskCount": 12
+    }
+  ]
+}
+```
+
+### Create Project
+
+```
+POST /api/v1/projects
+```
+
+Create a new project.
+
+**Request Body:**
+```json
+{
+  "name": "MyApp",
+  "repositoryId": "repo_789",
+  "description": "Main application project"
+}
+```
+
+### Get Project Details
+
+```
+GET /api/v1/projects/{id}
+```
+
+Get project information including settings and rules.
+
+### Update Project
+
+```
+PATCH /api/v1/projects/{id}
+```
+
+Update project name, description, or settings.
+
+### List Project Tasks
+
+```
+GET /api/v1/projects/{id}/tasks
+```
+
+Get all tasks for a specific project.
+
+## Artifacts API
+
+### Get Research Artifact
+
+```
+GET /api/v1/tasks/{id}/artifacts/research
+```
+
+Retrieve the research.md document for a task.
+
+**Response:**
+```
+Content-Type: text/markdown
+
+# Research
+
+## Summary
+...
+```
+
+### Get Planning Artifact
+
+```
+GET /api/v1/tasks/{id}/artifacts/planning
+```
+
+Retrieve the planning.md document for a task.
+
+### Get PR Information
+
+```
+GET /api/v1/tasks/{id}/artifacts/pr
+```
+
+Get pull request details including files changed, commits, status.
+
+## Repositories API
+
+### List Connected Repositories
+
+```
+GET /api/v1/repositories
+```
+
+Get all connected GitHub repositories.
+
+**Response:**
+```json
+{
+  "data": [
+    {
+      "id": "repo_789",
+      "name": "my-app",
+      "owner": "my-username",
+      "url": "https://github.com/my-username/my-app",
+      "defaultBranch": "main",
+      "isPrivate": false
+    }
+  ]
+}
+```
+
+### Connect Repository
+
+```
+POST /api/v1/repositories
+```
+
+Connect a new GitHub repository.
+
+**Request Body:**
+```json
+{
+  "repositoryUrl": "https://github.com/username/repo"
+}
+```
+
+### Disconnect Repository
+
+```
+DELETE /api/v1/repositories/{id}
+```
+
+Disconnect a repository from Compyle.
+
+## Agent Status API
+
+### Get Agent Status
+
+```
+GET /api/v1/agents/{taskId}
+```
+
+Check current status and progress of an agent task.
+
+**Response:**
+```json
+{
+  "taskId": "task_123",
+  "currentPhase": "implementation",
+  "progress": 65,
+  "status": "running",
+  "lastUpdate": "2025-03-15T12:15:00Z",
+  "estimatedCompletion": "2025-03-15T12:30:00Z"
+}
+```
+
+## Error Responses
+
+All endpoints return consistent error responses:
+
+```json
+{
+  "error": "validation_error",
+  "message": "Task title is required",
+  "status": 400,
+  "request_id": "req_123456"
+}
+```
+
+**Common Errors:**
+- `400 Bad Request` - Invalid parameters
+- `401 Unauthorized` - Missing/invalid API key
+- `403 Forbidden` - Insufficient permissions
+- `404 Not Found` - Resource doesn't exist
+- `429 Too Many Requests` - Rate limited
+- `500 Internal Server Error` - Server error
+
+## Rate Limiting Headers
+
+All responses include rate limit information:
+
+```
+X-RateLimit-Limit: 100
+X-RateLimit-Remaining: 42
+X-RateLimit-Reset: 1647361800
+```
+
+## Pagination
+
+List endpoints support pagination:
+
+- `limit` - Results per page (default: 20, max: 100)
+- `offset` - Starting position (default: 0)
+
+**Response includes:**
+```json
+{
+  "pagination": {
+    "limit": 20,
+    "offset": 0,
+    "total": 150
+  }
+}
+```
+
+## Next Steps
+
+<CardGroup cols={3}>
+  <Card title="Authentication" href="./auth" icon="lock">
+    Learn how to authenticate API requests
+  </Card>
+  <Card title="API Introduction" href="./intro" icon="code">
+    Overview of Compyle API capabilities
+  </Card>
+  <Card title="API Roadmap" href="./roadmap" icon="rocket">
+    See planned features
+  </Card>
+</CardGroup>

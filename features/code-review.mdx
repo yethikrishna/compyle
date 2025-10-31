@@ -1,0 +1,307 @@
+---
+title: "Code Review & Validation"
+description: "Understand Compyle's built-in code review and validation system"
+icon: "check-circle"
+---
+
+# Code Review & Validation
+
+## Built-in Validation System
+
+Compyle validates every code change in real-time. This prevents invalid code from reaching your PR, catching issues during implementation instead of after.
+
+**Real-time validation means:**
+- Issues surface immediately, not after
+- You can adjust while agent is building
+- Code quality maintained throughout
+- No surprising problems in the final PR
+
+## What Gets Validated?
+
+<CardGroup cols={2}>
+  <Card title="Pattern Matching" icon="eye">
+    Code matches custom rules and conventions
+  </Card>
+  <Card title="Plan Alignment" icon="align-left">
+    Implementation matches planning decisions
+  </Card>
+  <Card title="Code Quality" icon="sparkles">
+    Syntax correctness, type safety
+  </Card>
+  <Card title="Breaking Changes" icon="shield">
+    Existing functionality remains intact
+  </Card>
+</CardGroup>
+
+## The Validation Process
+
+<Steps>
+  <Step title="Code Change Made">
+    Agent writes a logical piece of code
+  </Step>
+  <Step title="Pattern Analysis">
+    Code checked against custom rules
+  </Step>
+  <Step title="Plan Verification">
+    Change verified against planning.md
+  </Step>
+  <Step title="Quality Checks">
+    Syntax, types, imports validated
+  </Step>
+  <Step title="Decision">
+    Pass → Continue | Fail → Surface issue
+  </Step>
+</Steps>
+
+## When Compyle Stops & Asks
+
+### Scenario 1: Rule Violation Detected
+
+```
+❌ VALIDATION FAILED
+
+Rule: "No console.log in production"
+File: src/api/users.ts:127
+Issue: console.log("User created") violates rule
+
+Options:
+1. Skip this line (approve exception)
+2. Modify approach (use logger instead)
+3. Adjust rule (add exception)
+```
+
+**Your Response:**
+- Approve the exception (document why)
+- Ask agent to use logger service
+- Modify rule if needed
+
+### Scenario 2: Plan Deviation
+
+```
+❌ PLAN MISMATCH
+
+Planned: "Use existing auth service"
+Found: Creating new authentication service
+
+Options:
+1. Confirm this is correct
+2. Go back and adjust plan
+3. Let me choose which approach
+```
+
+**Your Response:**
+- Confirm intent
+- Ask agent to adjust
+- Explain preference
+
+### Scenario 3: Multiple Valid Approaches
+
+```
+⚠️ MULTIPLE APPROACHES
+
+Found 3 ways to implement this feature:
+
+1. Singleton pattern (global instance)
+2. Instance per request (scalable)
+3. Dependency injection (testable)
+
+Which approach do you prefer?
+```
+
+**Your Response:**
+- Choose based on your architecture
+- Explain constraints or preferences
+- Ask for tradeoff comparison
+
+### Scenario 4: Ambiguous Requirements
+
+```
+❌ AMBIGUITY DETECTED
+
+Plan says: "Handle expired tokens"
+But doesn't specify: Redirect to login? Refresh token? Retry?
+
+What should happen when token expires?
+```
+
+**Your Response:**
+- Provide clarification
+- Update planning.md
+- Let agent proceed with your decision
+
+## Handling Validation Issues
+
+When validation fails, you have choices:
+
+<Steps>
+  <Step title="Read the Issue">
+    Understand what was flagged and why
+  </Step>
+  <Step title="Choose Path Forward">
+    Approve exception, modify plan, or adjust rule
+  </Step>
+  <Step title="Document Decision">
+    For exceptions, add comment explaining reasoning
+  </Step>
+  <Step title="Agent Continues">
+    Implementation resumes with your decision documented
+  </Step>
+</Steps>
+
+## PR Creation & Review
+
+After implementation completes, Compyle creates a PR containing:
+
+**PR Description**
+- Summary of implementation
+- Link to planning.md (your decisions)
+- Link to research.md (context)
+- Key changes and files modified
+
+**Code Changes**
+- All code in feature branch
+- Organized commits
+- Clear commit messages
+
+**Status**
+- Validation summary
+- Any notes or caveats
+- Approval status
+
+### Your Code Review Process
+
+Before merging:
+
+<Steps>
+  <Step title="Read Artifacts">
+    Review research.md and planning.md first
+  </Step>
+  <Step title="Review Code">
+    Read the actual implementation in full context
+  </Step>
+  <Step title="Check Edge Cases">
+    Verify all scenarios from planning are handled
+  </Step>
+  <Step title="Test Locally">
+    Run the code in your environment
+  </Step>
+  <Step title="Approve & Merge">
+    Approve when confident
+  </Step>
+</Steps>
+
+## Code Review Best Practices
+
+<Tip title="Review During, Not After">
+  Don't wait for the PR. Watch implementation in real-time. Answer questions immediately. Catch issues as they happen.
+</Tip>
+
+<Tip title="Understand the Plan">
+  Read planning.md before reviewing code. Verify code matches decisions. This prevents "why did it do that?" confusion.
+</Tip>
+
+<Tip title="Test in Context">
+  Don't just merge. Test locally with your full codebase. Verify behavior, performance, and edge cases.
+</Tip>
+
+<Tip title="Document Exceptions">
+  If you approved a rule exception, add a code comment explaining why. Help future reviewers understand the decision.
+</Tip>
+
+<Tip title="Consider Maintainability">
+  Code quality isn't just about style. Consider: Can a new developer understand this? Is it maintainable? Does it follow team conventions?
+</Tip>
+
+## Team Collaboration (Coming Soon)
+
+Currently, code review is single-user. Coming soon:
+
+- **Multiple reviewers** - Team approval workflows
+- **Comment threads** - Discussion on generated code
+- **Approval workflows** - Configurable review requirements
+- **Audit trails** - Track who reviewed and approved what
+
+## Common Review Issues
+
+<AccordionGroup>
+  <Accordion title="Generated code doesn't match my style">
+    **Cause**: Custom rules incomplete or inconsistent
+
+    **Solution**:
+    1. Review all custom rules for completeness
+    2. Ensure rules cover style/formatting
+    3. Add missing conventions
+    4. Run new task to validate fixes
+  </Accordion>
+  <Accordion title="Code quality feels 'off'">
+    **Cause**: Validation passed but something feels wrong
+
+    **Solution**:
+    1. Identify specific concern (naming? structure? logic?)
+    2. Add custom rule if needed
+    3. Update planning for future tasks
+    4. Document in PR review
+  </Accordion>
+  <Accordion title="Implementation goes off-track">
+    **Cause**: Plan ambiguity or rule conflict
+
+    **Solution**:
+    1. Review planning.md for clarity
+    2. Ask agent to re-approach
+    3. Clarify edge cases
+    4. Better planning prevents next time
+  </Accordion>
+  <Accordion title="Tests are missing">
+    **Cause**: Testing requirement wasn't clear in plan
+
+    **Solution**:
+    1. Add testing rule to custom rules
+    2. Update task description template
+    3. Ensure planning questions cover testing
+  </Accordion>
+</AccordionGroup>
+
+## Quality Metrics
+
+Compyle tracks validation metrics to help you improve:
+
+- **Validation pass rate** - % of code changes passing validation
+- **Most common violations** - Frequently flagged issues
+- **Average questions asked** - Ambiguities per task
+- **Trend analysis** - Are things improving over time?
+
+Use these metrics to:
+- Identify rule gaps
+- Improve task descriptions
+- Refine planning questions
+- Celebrate progress
+
+## Continuous Improvement
+
+Your review process should evolve:
+
+<Tip title="Month 1">
+  Understand workflow. Focus on getting comfortable with agents.
+</Tip>
+
+<Tip title="Month 2">
+  Refine rules. Add missing conventions. Reduce violations.
+</Tip>
+
+<Tip title="Month 3+">
+  Optimize and scale. Let agent handle more autonomously with confidence.
+</Tip>
+
+## Next Steps
+
+<CardGroup cols={3}>
+  <Card title="Set Up Custom Rules" href="./custom-rules" icon="shield">
+    Define patterns to validate against
+  </Card>
+  <Card title="Create a Task" href="../getting-started/first-task" icon="lightning-bolt">
+    Experience validation in action
+  </Card>
+  <Card title="Best Practices" href="./best-practices" icon="lightbulb">
+    Tips for effective code review
+  </Card>
+</CardGroup>

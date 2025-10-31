@@ -1,0 +1,204 @@
+---
+title: "Notifications & Alerts"
+description: "Stay updated on task progress and important events"
+icon: "bell"
+---
+
+# Notifications & Alerts
+
+## Notification Types
+
+Compyle sends notifications for important task events:
+
+### In-App Notifications
+
+Appear in the Compyle dashboard:
+- Task started
+- Awaiting your input
+- Phase completed
+- Task finished
+- Errors occurred
+
+### Email Notifications
+
+Sent to your email address (configurable):
+- Task completed
+- Awaiting response (planning questions)
+- Critical errors
+- Weekly summary
+
+### Push Notifications (Coming Soon)
+
+Desktop and mobile alerts for critical events
+
+## Managing Notifications
+
+### Notification Preferences
+
+Go to **Account Settings** → **Notifications** to configure:
+
+**Email Notifications:**
+- ☐ Task completion
+- ☐ Planning questions awaiting response
+- ☐ Errors and failures
+- ☐ Weekly summary
+
+**In-App Notifications:**
+- ☐ Phase started
+- ☐ Phase completed
+- ☐ Awaiting input
+- ☐ Errors
+
+**Frequency:**
+- Immediate
+- Daily digest
+- Weekly summary
+- Never
+
+### Notification Center
+
+Access all notifications from the bell icon:
+- View all recent notifications
+- Mark as read/unread
+- Clear old notifications
+- Archive important ones
+
+## Notification Examples
+
+### Task Started
+
+```
+📋 Task Started
+
+"Add Google OAuth login"
+
+Your task has entered the Research phase.
+You can watch progress on the dashboard.
+```
+
+### Awaiting Response
+
+```
+❓ Awaiting Your Input
+
+"Add Google OAuth login" - Planning Phase
+
+The agent has 3 clarifying questions.
+Answer them to continue implementation.
+
+Answer now → [Link]
+```
+
+### Task Completed
+
+```
+✅ Task Completed
+
+"Add Google OAuth login"
+
+Your task is complete! Pull request is ready for review.
+- 5 files modified
+- 42 new tests added
+- Estimated 2 hours saved
+
+View PR → [Link]
+```
+
+### Error Occurred
+
+```
+❌ Error Occurred
+
+"Add Google OAuth login"
+
+An error occurred during implementation.
+Error: Could not find auth service file
+
+View details → [Link]
+```
+
+## Best Practices
+
+<Tip title="Enable Critical Notifications">
+  Never disable:
+  - Planning questions (you must answer)
+  - Completion notifications (you need to review)
+  - Error alerts (action needed)
+</Tip>
+
+<Tip title="Batch Digest Mode">
+  For teams: Enable daily digest to reduce notification noise while staying informed
+</Tip>
+
+<Tip title="Quick Response">
+  When awaiting response notifications arrive, answer promptly to keep task momentum
+</Tip>
+
+<Tip title="Archive Old Notifications">
+  Keep notification center clean by archiving completed tasks
+</Tip>
+
+## Notification Channels
+
+### In-App Dashboard
+
+Most immediate and visible. Use for:
+- Real-time monitoring
+- Watching implementation
+- Catching issues early
+
+### Email
+
+Good for:
+- Tracking across days
+- Review outside of dashboard
+- Archivable record
+
+### Coming: Slack (Q4 2025)
+
+Enable Slack integration to:
+- Get notifications in Slack
+- Answer planning questions in Slack
+- Post updates to team channel
+
+### Coming: Discord (Q1 2026)
+
+Enable Discord bot for:
+- Discord channel notifications
+- Discord DM alerts
+- Team collaboration
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Not receiving email notifications">
+    - Check notification preferences
+    - Verify email is correct
+    - Check spam folder
+    - Re-enable email notifications
+  </Accordion>
+  <Accordion title="Too many notifications">
+    - Adjust frequency to digest mode
+    - Disable notification types you don't need
+    - Use notification categories
+  </Accordion>
+  <Accordion title="Missing important notification">
+    - Check notification center (bell icon)
+    - Review notification preferences
+    - Check email spam folder
+  </Accordion>
+</AccordionGroup>
+
+## Next Steps
+
+<CardGroup cols={3}>
+  <Card title="Configure Notifications" href="#" icon="settings">
+    Set up your notification preferences
+  </Card>
+  <Card title="Create Your First Task" href="../getting-started/first-task" icon="lightning-bolt">
+    See notifications in action
+  </Card>
+  <Card title="Command Palette" href="./command-palette" icon="command">
+    Quick access to task commands
+  </Card>
+</CardGroup>
