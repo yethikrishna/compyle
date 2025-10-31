@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" fill="none">
+  <defs>
+    <linearGradient id="checkGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0F766E;stop-opacity:0.1" />
+      <stop offset="100%" style="stop-color:#0F766E;stop-opacity:0.05" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="600" fill="#FFFFFF"/>
+  <rect width="1200" height="600" fill="url(#checkGradient)"/>
+
+  <!-- Title -->
+  <text x="100" y="80" font-family="system-ui, -apple-system, sans-serif" font-size="48" font-weight="700" fill="#001F1A">
+    Real-Time Validation
+  </text>
+
+  <!-- Subtitle -->
+  <text x="100" y="130" font-family="system-ui, -apple-system, sans-serif" font-size="20" fill="#4B5563">
+    Every change verified against your custom rules and plan
+  </text>
+
+  <!-- Check 1: Pattern Matching -->
+  <g transform="translate(100, 200)">
+    <rect x="0" y="0" width="300" height="120" rx="8" fill="#F3F4F6" stroke="#0F766E" stroke-width="2"/>
+
+    <!-- Check icon -->
+    <g transform="translate(30, 30)">
+      <circle cx="20" cy="20" r="20" fill="#0F766E" opacity="0.1"/>
+      <polyline points="10,25 18,33 30,21" fill="none" stroke="#0F766E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+
+    <text x="80" y="35" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="700" fill="#001F1A">
+      Pattern Matching
+    </text>
+    <text x="80" y="65" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#666">
+      Code matches your
+    </text>
+    <text x="80" y="85" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#666">
+      custom rules
+    </text>
+  </g>
+
+  <!-- Check 2: Plan Alignment -->
+  <g transform="translate(450, 200)">
+    <rect x="0" y="0" width="300" height="120" rx="8" fill="#F3F4F6" stroke="#0F766E" stroke-width="2"/>
+
+    <!-- Check icon -->
+    <g transform="translate(30, 30)">
+      <circle cx="20" cy="20" r="20" fill="#0F766E" opacity="0.1"/>
+      <polyline points="10,25 18,33 30,21" fill="none" stroke="#0F766E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+
+    <text x="80" y="35" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="700" fill="#001F1A">
+      Plan Alignment
+    </text>
+    <text x="80" y="65" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#666">
+      Implementation matches
+    </text>
+    <text x="80" y="85" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#666">
+      your decisions
+    </text>
+  </g>
+
+  <!-- Check 3: Code Quality -->
+  <g transform="translate(800, 200)">
+    <rect x="0" y="0" width="300" height="120" rx="8" fill="#F3F4F6" stroke="#0F766E" stroke-width="2"/>
+
+    <!-- Check icon -->
+    <g transform="translate(30, 30)">
+      <circle cx="20" cy="20" r="20" fill="#0F766E" opacity="0.1"/>
+      <polyline points="10,25 18,33 30,21" fill="none" stroke="#0F766E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+
+    <text x="80" y="35" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="700" fill="#001F1A">
+      Code Quality
+    </text>
+    <text x="80" y="65" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#666">
+      Syntax & types
+    </text>
+    <text x="80" y="85" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#666">
+      validation
+    </text>
+  </g>
+
+  <!-- Bottom section: Benefits -->
+  <g transform="translate(100, 400)">
+    <text x="0" y="0" font-family="system-ui, -apple-system, sans-serif" font-size="24" font-weight="700" fill="#001F1A">
+      Benefits of Real-Time Validation:
+    </text>
+
+    <!-- Benefit 1 -->
+    <g transform="translate(0, 50)">
+      <circle cx="10" cy="10" r="4" fill="#0F766E"/>
+      <text x="30" y="15" font-family="system-ui, -apple-system, sans-serif" font-size="16" fill="#001F1A">
+        Issues surfaced immediately, not after merging
+      </text>
+    </g>
+
+    <!-- Benefit 2 -->
+    <g transform="translate(0, 90)">
+      <circle cx="10" cy="10" r="4" fill="#0F766E"/>
+      <text x="30" y="15" font-family="system-ui, -apple-system, sans-serif" font-size="16" fill="#001F1A">
+        Agent stops and asks when something doesn't align
+      </text>
+    </g>
+
+    <!-- Benefit 3 -->
+    <g transform="translate(0, 130)">
+      <circle cx="10" cy="10" r="4" fill="#0F766E"/>
+      <text x="30" y="15" font-family="system-ui, -apple-system, sans-serif" font-size="16" fill="#001F1A">
+        You maintain full control over code quality
+      </text>
+    </g>
+  </g>
+</svg>
