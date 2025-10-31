@@ -89,15 +89,15 @@
     "links": [
       {
         "label": "About",
-        "href": "/about"
+        "href": "https://compyle.ai/about"
       },
       {
         "label": "FAQ",
-        "href": "/faq"
+        "href": "https://compyle.ai/faq"
       },
       {
         "label": "Community",
-        "href": "/community"
+        "href": "https://compyle.ai/community"
       }
     ],
     "primary": {
