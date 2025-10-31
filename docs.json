@@ -5,11 +5,7 @@
   "colors": {
     "primary": "#0F766E",
     "light": "#F3F4F6",
-    "dark": "#001F1A",
-    "background": {
-      "light": "#FFFFFF",
-      "dark": "#0A0A0A"
-    }
+    "dark": "#001F1A"
   },
   "favicon": "/favicon.svg",
   "logo": {
@@ -68,40 +64,21 @@
           }
         ]
       }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "About",
-          "href": "/about",
-          "icon": "building-community"
-        },
-        {
-          "anchor": "FAQ",
-          "href": "/faq",
-          "icon": "question"
-        },
-        {
-          "anchor": "Community",
-          "href": "/community",
-          "icon": "users"
-        }
-      ]
-    }
+    ]
   },
   "navbar": {
     "links": [
       {
         "label": "About",
-        "href": "/about"
+        "href": "https://compyle.ai/about"
       },
       {
         "label": "FAQ",
-        "href": "/faq"
+        "href": "https://compyle.ai/faq"
       },
       {
         "label": "Community",
-        "href": "/community"
+        "href": "https://compyle.ai/community"
       }
     ],
     "primary": {
