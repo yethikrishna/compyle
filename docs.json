@@ -70,15 +70,15 @@
     "links": [
       {
         "label": "About",
-        "href": "https://compyle.mintlify.app/about"
+        "href": "https://compyle.ai/about"
       },
       {
         "label": "FAQ",
-        "href": "https://compyle.mintlify.app/faq"
+        "href": "https://compyle.ai/faq"
       },
       {
         "label": "Community",
-        "href": "https://compyle.mintlify.app/community"
+        "href": "https://compyle.ai/community"
       }
     ],
     "primary": {
