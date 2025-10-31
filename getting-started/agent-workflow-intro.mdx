@@ -1,0 +1,248 @@
+---
+title: "Agent Workflow 101"
+description: "Understand the three phases of Compyle's collaborative workflow"
+icon: "gitflow"
+---
+
+# Understanding Compyle's Three-Phase Workflow
+
+Compyle follows a deliberate, collaborative process for every task: **Research** → **Planning** → **Implementation**. This approach keeps you in control and prevents the issues that plague autonomous agents.
+
+## The Three Phases Overview
+
+Compyle's workflow is designed around collaboration, not autonomy. Each phase has a clear purpose:
+
+1. **Research** - Understanding your codebase
+2. **Planning** - Asking clarifying questions
+3. **Implementation** - Building with validation
+
+Let's dive into each phase:
+
+## Phase 1: Research - Understanding Your Codebase
+
+### What Compyle Does
+
+Compyle reads your code files, identifies patterns, and gathers context. This research informs all subsequent planning and implementation decisions. It's like an intelligent codebase analysis.
+
+**During research, Compyle:**
+- Scans your file structure and architecture
+- Identifies naming conventions, code patterns, and existing implementations
+- Reads relevant files (models, services, components, APIs)
+- Checks database schema, API endpoints, and configuration files
+- Analyzes dependencies and external integrations
+
+### Your Research Artifact
+
+After research completes, you get a **research.md** document summarizing what Compyle found. This is crucial—review it carefully:
+
+<Tip>
+  Look for misunderstandings early. If Compyle analyzed the wrong files, misunderstood your architecture, or missed key patterns, point it out now before planning begins.
+</Tip>
+
+### Customizing Research
+
+<Accordion title="Can I control what Compyle researches?">
+  Yes! Use **Custom Rules** to guide research. Tell Compyle which patterns matter most, which files to prioritize, and what your conventions are. (See [Custom Rules](/features/custom-rules) page for details.)
+</Accordion>
+
+## Phase 2: Planning - Asking Clarifying Questions
+
+### Why Planning Matters
+
+This is where Compyle shines. Before writing a single line of code, Compyle creates a plan and asks you clarifying questions. Your answers become the specification for implementation. This prevents misalignment and wasted work.
+
+**Planning phase prevents:**
+- Building the wrong thing
+- Code that doesn't match your architecture
+- Features with unclear requirements
+- Architectural decisions made by the agent instead of you
+
+### How Planning Works
+
+<Steps>
+  <Step title="Compyle generates specific questions">
+    Based on the research and your task description, Compyle generates focused, answerable questions
+  </Step>
+  <Step title="You answer each question">
+    Provide your answer, or skip to let Compyle decide based on patterns in your codebase
+  </Step>
+  <Step title="Answers are documented">
+    All answers are saved in **planning.md**, creating a clear specification
+  </Step>
+  <Step title="Planning artifact finalizes">
+    The planning document details exactly what will be built, reducing ambiguity
+  </Step>
+</Steps>
+
+### Example Planning Questions
+
+Compyle might ask:
+- "Should the user profile be centered or side-by-side layout?"
+- "Should we use the existing authentication pattern or create a new one?"
+- "Error messages as toasts or inline validation?"
+- "Should this be a singleton or instance per request?"
+- "One large component or split into smaller pieces?"
+
+These aren't trivial questions—they're decisions that shape the implementation.
+
+### What If You're Unsure?
+
+<AccordionGroup>
+  <Accordion title="What if I don't know the answer?">
+    Skip it. Compyle will make a decision based on patterns found in your codebase. You can always adjust later if needed.
+  </Accordion>
+  <Accordion title="Can I change my answers?">
+    Yes, during planning phase. Look for a "Back" button or edit planning.md directly. Changes don't affect already-implemented code, so it's best to finalize planning before implementation starts.
+  </Accordion>
+  <Accordion title="What if Compyle misunderstood my task?">
+    This is exactly why planning exists. If the plan doesn't match what you wanted, now is the time to catch it—before implementation wastes effort.
+  </Accordion>
+</AccordionGroup>
+
+## Phase 3: Implementation - Building with Real-Time Validation
+
+### The Building Process
+
+Compyle builds your feature step-by-step, validating every change against the plan. If something doesn't match the plan or violates custom rules, Compyle surfaces the issue and asks you.
+
+**Implementation happens like this:**
+1. Compyle creates a feature branch
+2. Makes targeted code changes (one logical change at a time)
+3. After each change, validates against plan and custom rules
+4. If validation fails, surfaces the issue and asks
+5. You approve, adjust plan, or abort
+6. Creates pull request when complete
+
+### Real-Time Validation Checks
+
+<CardGroup cols={2}>
+  <Card title="Pattern Matching" icon="check">
+    Code matches custom rules and naming conventions
+  </Card>
+  <Card title="Plan Alignment" icon="align-left">
+    Changes align with planning decisions
+  </Card>
+  <Card title="Code Quality" icon="sparkles">
+    Syntax correctness and type safety maintained
+  </Card>
+  <Card title="No Breaking Changes" icon="shield">
+    Existing functionality remains intact
+  </Card>
+</CardGroup>
+
+### When Compyle Stops & Asks
+
+<AccordionGroup>
+  <Accordion title="Rule Violation Detected">
+    If code violates a custom rule:
+    - Agent explains the violation
+    - You can approve an exception or modify the approach
+    - Decision is documented for future reference
+  </Accordion>
+  <Accordion title="Plan Deviation">
+    If code doesn't match the planning decisions:
+    - Agent asks for clarification
+    - You can confirm intent or adjust the plan
+    - Both paths forward are valid
+  </Accordion>
+  <Accordion title="Multiple Valid Approaches">
+    When multiple solutions exist:
+    - Agent presents the options
+    - You choose based on your architecture preferences
+    - Your choice shapes the final implementation
+  </Accordion>
+  <Accordion title="Ambiguous Requirements">
+    If task or planning was unclear:
+    - Agent asks clarifying questions
+    - You provide additional context
+    - Implementation resumes with clarity
+  </Accordion>
+</AccordionGroup>
+
+## The Full Workflow Timeline
+
+Here's what a typical task flow looks like:
+
+```
+Task Created
+   ↓
+[RESEARCH PHASE] - Compyle analyzes your codebase
+   ↓
+research.md created - You review and provide feedback
+   ↓
+[PLANNING PHASE] - Compyle asks clarifying questions
+   ↓
+planning.md created - You review the specification
+   ↓
+[IMPLEMENTATION PHASE] - Compyle builds step-by-step
+   ↓
+Validation checks ← → Agent asks when needed
+   ↓
+[PR CREATED] - All changes in a pull request
+   ↓
+You review, test, approve
+   ↓
+Merge to target branch
+```
+
+## Key Principles
+
+<Info>
+  - **Question-driven**: Plan before building, ask before assuming
+  - **Collaborative**: You make architectural decisions, agent handles implementation
+  - **Validating**: Real-time checks prevent issues, surfaced immediately
+  - **Transparent**: All decisions documented in artifacts
+  - **Human-controlled**: Agent stops and asks, never guesses or forces forward
+</Info>
+
+## Best Practices
+
+<Tip title="Review Research Carefully">
+  Check for misunderstandings early. Provide feedback if analysis is wrong. This sets up planning for success.
+</Tip>
+
+<Tip title="Answer Planning Questions Thoroughly">
+  More detail = better implementation. Mention edge cases, constraints, and your preferences when answering.
+</Tip>
+
+<Tip title="Watch Implementation in Real-Time">
+  Don't wait for the PR. Answer follow-up questions promptly. Spot issues as they happen, not after.
+</Tip>
+
+<Tip title="Test Locally Before Merging">
+  Review code in the context of your full codebase. Ensure it works as expected in your environment.
+</Tip>
+
+## Common Questions
+
+<AccordionGroup>
+  <Accordion title="Can I skip the research phase?">
+    Yes, for simple, well-defined tasks. This speeds up execution but loses architectural context. Not recommended for first tasks.
+  </Accordion>
+  <Accordion title="How long does each phase take?">
+    Depends on task complexity:
+    - **Research**: 1-5 minutes typically
+    - **Planning**: 5-30 minutes (depends on your answer speed)
+    - **Implementation**: 5 minutes to hours (based on complexity)
+  </Accordion>
+  <Accordion title="What if I need to stop mid-task?">
+    You can pause at any point. Your answers and context are saved. Resume when ready.
+  </Accordion>
+  <Accordion title="Can I see what's happening during implementation?">
+    Yes. All code changes are visible in real-time. You can watch the implementation happen, review each change, and answer questions as they arise.
+  </Accordion>
+</AccordionGroup>
+
+## Next Steps
+
+<CardGroup cols={3}>
+  <Card title="Create Your First Task" href="./first-task" icon="lightning-bolt">
+    Put this knowledge into practice
+  </Card>
+  <Card title="Learn About Custom Rules" href="../features/custom-rules" icon="shield">
+    Guide Compyle's behavior with custom patterns
+  </Card>
+  <Card title="Code Review Best Practices" href="../features/code-review" icon="check-circle">
+    Review and validate agent-generated code effectively
+  </Card>
+</CardGroup>
