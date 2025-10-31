@@ -1,0 +1,154 @@
+---
+title: "Create Your First Task"
+description: "Launch your first Compyle agent task"
+icon: "lightning-bolt"
+---
+
+# Create Your First Task
+
+A task is a coding job you want Compyle to help with. Examples include: adding a new feature, fixing a bug, refactoring code, or adding tests. Compyle will research, plan, and implement—with your input every step of the way.
+
+## Step-by-Step Task Creation
+
+<Steps>
+  <Step title="Go to Your Dashboard">
+    Navigate to your Compyle project. You should see your connected repository and a "Create New Task" button.
+  </Step>
+  <Step title="Define Your Task Title">
+    Give your task a clear, descriptive title. Examples:
+    - "Add user authentication with Google OAuth"
+    - "Fix bug in password reset flow"
+    - "Add unit tests for authentication service"
+    - "Refactor API error handling"
+  </Step>
+  <Step title="Write a Detailed Description">
+    Provide context about what you want built. The more specific, the better. Include:
+    - **What**: What feature or fix you want
+    - **Why**: Why it matters
+    - **How**: Any specific requirements or constraints
+    - **Examples**: File names, existing patterns to follow
+
+    **Good example:**
+    ```
+    Add user authentication with Google OAuth
+
+    We need to let users log in with Google. When they click
+    'Sign in with Google' on the login page, they should
+    authorize with Google, then be redirected to the dashboard
+    with their info (email, name) stored.
+
+    Use the existing auth pattern from POST /api/auth/login.
+    Store user info in the users table, use JWT tokens.
+    Add tests for happy path and auth failures.
+    ```
+  </Step>
+  <Step title="Select Repository & Branch">
+    Choose which repository and branch your task should target:
+    - **Repository**: Select from your connected repos
+    - **Branch**: Usually `main`, `develop`, or a feature branch
+  </Step>
+  <Step title="Configure Research Phase">
+    By default, Compyle includes the research phase. This helps Compyle understand your codebase, patterns, and architecture. For your first task, we recommend keeping this enabled.
+
+    You can skip research for simple, well-defined tasks later.
+  </Step>
+  <Step title="Review & Launch">
+    Review all your settings one final time, then click "Launch Agent" to start.
+  </Step>
+</Steps>
+
+## What Happens Next?
+
+<Columns>
+  <Column>
+    ### Agent Timeline
+
+    1. **Research Phase** - Compyle analyzes your codebase
+    2. **Planning Phase** - Compyle asks clarifying questions
+    3. **Awaiting Response** - Wait for your answers
+    4. **Implementation** - Compyle builds the feature
+    5. **Pull Request** - Code is ready for review
+  </Column>
+  <Column>
+    ### What You Should Do
+
+    1. **Watch the progress** - Follow along in real-time
+    2. **Answer questions** - Reply to planning questions completely
+    3. **Review artifacts** - Read research.md and planning.md
+    4. **Review code** - Look at generated code before approval
+    5. **Test locally** - Verify changes work in your environment
+    6. **Approve** - Merge the PR when satisfied
+  </Column>
+</Columns>
+
+## Understanding the Phases
+
+<CardGroup cols={3}>
+  <Card title="Research" href="../features/agent-workflow-deep-dive" icon="microscope">
+    Compyle analyzes your codebase and understands existing patterns
+  </Card>
+  <Card title="Planning" href="../features/agent-workflow-deep-dive" icon="lightbulb">
+    Compyle asks clarifying questions to create a detailed specification
+  </Card>
+  <Card title="Implementation" href="../features/agent-workflow-deep-dive" icon="code">
+    Compyle builds with real-time validation and stops to ask when needed
+  </Card>
+</CardGroup>
+
+## Best Practices for Your First Task
+
+<Tip title="Start Simple">
+  Choose a small, well-defined task for your first try. This helps you understand Compyle's workflow and builds confidence before tackling larger features.
+</Tip>
+
+<Tip title="Be Specific">
+  The more detail in your task description, the better Compyle understands your intent. Include file names, existing code patterns, and edge cases to handle.
+</Tip>
+
+<Tip title="Answer Questions Thoroughly">
+  When Compyle asks clarifying questions, answer them completely. These answers become the specification Compyle uses during implementation.
+</Tip>
+
+<Tip title="Review Before Approving">
+  Read the planning artifact carefully. Review the generated code. Test locally before merging. This ensures the output matches your expectations.
+</Tip>
+
+## Example Task
+
+Here's a real example of setting up a task:
+
+**Task Title:** Add user profile page
+
+**Description:**
+```
+Add a user profile page where authenticated users can view
+and edit their profile information.
+
+Create a new route GET /dashboard/profile that shows:
+- User's name and email
+- Option to update name and email
+- Option to change password
+- Option to log out
+
+Use the existing AuthContext for authentication check.
+Follow the same styling as the dashboard page.
+Add tests for authentication checks and form submission.
+```
+
+**Repository:** my-app
+**Branch:** main
+**Research Phase:** Enabled
+
+## Next Steps
+
+<CardGroup cols={3}>
+  <Card title="Understand the Agent Workflow" href="./agent-workflow-intro" icon="gitflow">
+    Learn about Research, Planning, and Implementation in depth
+  </Card>
+  <Card title="Learn About Custom Rules" href="../features/custom-rules" icon="shield">
+    Define patterns to guide Compyle's behavior
+  </Card>
+  <Card title="Explore Best Practices" href="../features/best-practices" icon="lightbulb">
+    Tips for effective Compyle usage
+  </Card>
+</CardGroup>
