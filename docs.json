@@ -90,8 +90,16 @@
   "navbar": {
     "links": [
       {
-        "label": "Support",
-        "href": "mailto:hi@mintlify.com"
+        "label": "About",
+        "href": "https://compyle.mintlify.app/about"
+      },
+      {
+        "label": "FAQ",
+        "href": "https://compyle.mintlify.app/faq"
+      },
+      {
+        "label": "Community",
+        "href": "https://compyle.mintlify.app/community"
       }
     ],
     "primary": {
