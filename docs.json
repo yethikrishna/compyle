@@ -64,26 +64,7 @@
           }
         ]
       }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "About",
-          "href": "/about",
-          "icon": "building-community"
-        },
-        {
-          "anchor": "FAQ",
-          "href": "/faq",
-          "icon": "question"
-        },
-        {
-          "anchor": "Community",
-          "href": "/community",
-          "icon": "users"
-        }
-      ]
-    }
+    ]
   },
   "navbar": {
     "links": [
