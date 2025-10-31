@@ -1,0 +1,236 @@
+---
+title: "API Roadmap"
+description: "Upcoming Compyle API features and improvements"
+icon: "rocket"
+---
+
+# API Roadmap
+
+Our API is evolving to support more powerful integrations and workflows. Here's what's planned:
+
+## Current Status: Beta (Q4 2025)
+
+Currently available (limited):
+- Task creation and management (basic)
+- Project listing and creation
+- Repository connection
+- Authentication with API keys
+
+## Q4 2025
+
+<CardGroup>
+  <Card title="Core Task Endpoints" icon="play" status="in-progress">
+    GET/POST/PATCH/DELETE tasks - Full CRUD operations
+  </Card>
+  <Card title="Project Management" icon="folder" status="in-progress">
+    Complete project lifecycle endpoints
+  </Card>
+  <Card title="Artifact Retrieval" icon="document" status="in-progress">
+    Get research.md, planning.md, PR information
+  </Card>
+</CardGroup>
+
+## Q1 2026
+
+<CardGroup>
+  <Card title="Webhook Support" icon="webhook">
+    Receive events for task status changes, completions, errors
+  </Card>
+  <Card title="Official SDKs" icon="code">
+    JavaScript/TypeScript, Python, Go SDKs
+  </Card>
+  <Card title="OAuth Authentication" icon="lock">
+    OAuth 2.0 flow for multi-user applications
+  </Card>
+  <Card title="Batch Operations" icon="batch">
+    Create and manage multiple tasks in one request
+  </Card>
+</CardGroup>
+
+## Q2 2026
+
+<CardGroup>
+  <Card title="Advanced Queries" icon="search">
+    Complex filtering and search capabilities
+  </Card>
+  <Card title="Analytics Endpoints" icon="chart">
+    Usage metrics, trends, team analytics
+  </Card>
+  <Card title="Scheduled Tasks" icon="clock">
+    Trigger tasks on schedule (cron-like)
+  </Card>
+  <Card title="Team Management" icon="users">
+    User and permission management via API
+  </Card>
+</CardGroup>
+
+## Planned Features by Category
+
+### Authentication & Security
+
+- ✅ API Keys (current)
+- ⏳ OAuth 2.0 (Q1 2026)
+- ⏳ Scoped API Keys (Q2 2026)
+- ⏳ JWT Tokens (Q2 2026)
+- ⏳ API Key Expiration (Q1 2026)
+
+### Task Management
+
+- ✅ Create, read, update, delete tasks
+- ⏳ Batch create tasks (Q1 2026)
+- ⏳ Task dependencies (Q2 2026)
+- ⏳ Task scheduling (Q2 2026)
+- ⏳ Task resumption (Q2 2026)
+
+### Project Management
+
+- ✅ Create, read, update projects
+- ⏳ Project templates (Q2 2026)
+- ⏳ Project settings API (Q1 2026)
+- ⏳ Custom rules via API (Q2 2026)
+
+### Webhooks & Events
+
+- ⏳ Task events (created, started, completed, failed)
+- ⏳ Error notifications
+- ⏳ Custom webhook filtering
+- ⏳ Webhook retry logic
+
+### Integrations
+
+- ⏳ GitHub Actions integration
+- ⏳ Slack notifications
+- ⏳ Jira sync
+- ⏳ Linear sync
+- ⏳ Custom integrations framework
+
+### Analytics & Reporting
+
+- ⏳ Usage metrics
+- ⏳ Team analytics
+- ⏳ Cost tracking
+- ⏳ Performance trends
+- ⏳ Custom reports
+
+### Developer Tools
+
+- ⏳ JavaScript SDK
+- ⏳ Python SDK
+- ⏳ Go SDK
+- ⏳ CLI tool
+- ⏳ OpenAPI spec download
+- ⏳ Postman collection
+
+## Voting on Features
+
+Your feedback shapes our roadmap. Vote on features:
+
+1. **Feedback Board** - Visit [compyle.ai/feedback](https://compyle.ai/feedback)
+2. **Vote on requests** - Upvote features you want
+3. **Suggest new features** - Post your ideas
+4. **Join Discord** - Discuss with the team
+
+## Early Access Program
+
+Get early access to new API features:
+
+- **Pro+ Plan** - Early access included
+- **Join Beta** - Opt-in to test new endpoints
+- **Report Issues** - Help improve new features
+- **Provide Feedback** - Shape API direction
+
+Contact [founders@compyle.ai](mailto:founders@compyle.ai) to join beta.
+
+## Version History
+
+### Current Version: v1 (Beta)
+
+**Breaking Changes**: None yet (still in beta)
+
+### API Versioning Strategy
+
+- New features added under current version
+- Breaking changes trigger major version bump (v2, v3, etc.)
+- Deprecation warnings issued 6 months before breaking changes
+- Old versions maintained for 12 months
+
+## Rate Limit Improvements
+
+Planned improvements to rate limiting:
+
+| Plan | Current | Q1 2026 | Q2 2026 |
+|------|---------|---------|---------|
+| Starter | 30/min | 50/min | 100/min |
+| Pro | 100/min | 200/min | 500/min |
+| Pro+ | 300/min | 1000/min | 5000/min |
+
+## Documentation Improvements
+
+- ⏳ Interactive API explorer (Q1 2026)
+- ⏳ OpenAPI/Swagger spec (Q1 2026)
+- ⏳ Video tutorials (Q2 2026)
+- ⏳ Sample applications (Q2 2026)
+- ⏳ Migration guides (Q1 2026)
+
+## SDK Roadmap
+
+### JavaScript/TypeScript SDK (Q1 2026)
+
+```typescript
+import { CompyleClient } from '@compyle/sdk';
+
+const client = new CompyleClient({ apiKey });
+const task = await client.tasks.create({...});
+```
+
+### Python SDK (Q1 2026)
+
+```python
+from compyle import CompyleClient
+
+client = CompyleClient(api_key='...')
+task = client.tasks.create(...)
+```
+
+### Go SDK (Q1 2026)
+
+```go
+client, _ := compyle.NewClient(apiKey)
+task, _ := client.Tasks.Create(ctx, req)
+```
+
+## Impact Timeline
+
+How these changes will affect your API usage:
+
+**Q4 2025**: Stable core API endpoints available
+**Q1 2026**: SDKs + Webhooks enable advanced automation
+**Q2 2026**: Analytics and team features unlock enterprise use
+
+## Stay Updated
+
+- **Changelog** - Read updates at [compyle.ai/changelog](/changelog)
+- **Email** - Subscribe to API updates
+- **Discord** - Join announcements channel
+- **Twitter** - Follow [@compyle_ai](https://twitter.com/compyle_ai)
+
+## Get Started Today
+
+<CardGroup cols={3}>
+  <Card title="API Introduction" href="./intro" icon="code">
+    Learn about the Compyle API
+  </Card>
+  <Card title="Authentication" href="./auth" icon="lock">
+    Set up your API key
+  </Card>
+  <Card title="Endpoints" href="./endpoints" icon="arrow-right">
+    Browse available endpoints
+  </Card>
+</CardGroup>
+
+## Questions?
+
+- **Documentation** - Check our docs (you're reading it)
+- **GitHub Issues** - Report bugs and request features
+- **Discord** - Community discussion
+- **Email** - [founders@compyle.ai](mailto:founders@compyle.ai)
