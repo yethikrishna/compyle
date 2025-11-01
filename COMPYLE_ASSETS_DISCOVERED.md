@@ -142,17 +142,39 @@ Already in `/workspace/cmhgc93t203xlooil278ue2e9/compyle/`:
 
 ### Main Domains
 - **Main Site:** https://compyle.ai
+  - Homepage and marketing
+
 - **Application:** https://app.compyle.ai
+  - Compyle dashboard and workspace
+  - Where users create tasks and work with the agent
+
 - **Documentation:** https://compyle.mintlify.app
+  - This documentation site
+
+- **Feedback Board:** https://compyle.ai/feedback
+  - User feature requests and voting
+  - Referenced in community.mdx
+
+- **Privacy Policy:** https://compyle.ai/privacy
+
+- **Terms of Service:** https://compyle.ai/terms
 
 ### Y Combinator
 - **Launch Page:** https://www.ycombinator.com/launches/ObF-compyle-lovable-for-software-engineers
+  - Original YC launch announcement
+  - Contains demo video: https://youtu.be/iNQ8G4k03gc
+
 - **Company Page:** https://www.ycombinator.com/companies/compyle
+  - Official YC company profile
+  - Batch: Fall 2025 (YC F25)
+
 - **Launch Badge SVG:** https://www.ycombinator.com/launches/ObF-compyle-lovable-for-software-engineers/upvote_embed.svg
+  - Embedded in index.mdx and about.mdx
 
 ### Product Hunt
 - **Profile:** https://www.producthunt.com/products/compyle-2
-- **Status:** Listed but not recently launched
+  - Status: Listed but not recently launched
+  - Community support from engineers
 
 ---
 
