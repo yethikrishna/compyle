@@ -16,6 +16,18 @@ Compyle's workflow is designed around collaboration, not autonomy. Each phase ha
 2. **Planning** - Asking clarifying questions
 3. **Implementation** - Building with validation
 
+{/* TODO: Add workflow phases screenshot when ready
+     Image path: /images/screenshots/agent-workflow-phases.png
+     See /images/screenshots/README.md for requirements
+
+## Visual Workflow Overview
+
+![Compyle's three-phase agent workflow showing research, planning, and implementation stages](/images/screenshots/agent-workflow-phases.png)
+
+*Compyle's collaborative workflow keeps you in control at every stage.*
+
+*/}
+
 Let's dive into each phase:
 
 ## Phase 1: Research - Understanding Your Codebase
@@ -84,6 +96,10 @@ Compyle might ask:
 - "One large component or split into smaller pieces?"
 
 These aren't trivial questions—they're decisions that shape the implementation.
+
+<Tip title="See Planning in Action">
+  Want to see the planning phase visually? Check out the [interactive planning demo](https://www.compyle.ai/planning.html) on our homepage, or watch the [video walkthrough](https://youtu.be/iNQ8G4k03gc) to see the three-phase workflow in action with real examples.
+</Tip>
 
 ### What If You're Unsure?
 
@@ -163,26 +179,34 @@ Compyle builds your feature step-by-step, validating every change against the pl
 
 Here's what a typical task flow looks like:
 
-```
-Task Created
-   ↓
-[RESEARCH PHASE] - Compyle analyzes your codebase
-   ↓
-research.md created - You review and provide feedback
-   ↓
-[PLANNING PHASE] - Compyle asks clarifying questions
-   ↓
-planning.md created - You review the specification
-   ↓
-[IMPLEMENTATION PHASE] - Compyle builds step-by-step
-   ↓
-Validation checks ← → Agent asks when needed
-   ↓
-[PR CREATED] - All changes in a pull request
-   ↓
-You review, test, approve
-   ↓
-Merge to target branch
+```mermaid
+graph TD
+    A[Task Created] --> B[Research Phase]
+    B --> C[Compyle analyzes codebase]
+    C --> D[research.md created]
+    D --> E{Review research artifact}
+    E -->|Feedback provided| B
+    E -->|Looks good| F[Planning Phase]
+    F --> G[Compyle asks clarifying questions]
+    G --> H[You answer questions]
+    H --> I[planning.md created]
+    I --> J{Review planning spec}
+    J -->|Adjustments needed| G
+    J -->|Approved| K[Implementation Phase]
+    K --> L[Compyle builds step-by-step]
+    L --> M{Validation checks}
+    M -->|Issue found| N[Agent asks for guidance]
+    N --> L
+    M -->|All checks pass| O[PR Created]
+    O --> P[You review & test]
+    P --> Q{Approve?}
+    Q -->|Changes needed| L
+    Q -->|Approved| R[Merge to target branch]
+
+    style A fill:#e0f2f1
+    style F fill:#fff3e0
+    style K fill:#f3e5f5
+    style R fill:#c8e6c9
 ```
 
 ## Key Principles

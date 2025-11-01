@@ -41,6 +41,7 @@
               "features/agent-workflow-deep-dive",
               "features/tasks-projects",
               "features/custom-rules",
+              "features/pattern-library",
               "features/code-review",
               "features/best-practices",
               "features/command-palette",
@@ -104,7 +105,7 @@
       "x": "https://x.com/compyle_ai",
       "github": "https://github.com/compyle",
       "linkedin": "https://linkedin.com/company/compyle",
-      "discord": "https://discord.gg/compyle"
+      "discord": "https://discord.gg/U9djmRTDB4"
     }
   }
 }
