@@ -12,7 +12,9 @@ Copy-paste ready custom rules for common project patterns. These patterns help C
 
 ---
 
-### TypeScript Strict Mode
+## Ready-to-Use Patterns
+
+<AccordionGroup>
 
 <Accordion title="TypeScript Strict Mode Rules">
 
@@ -51,10 +53,6 @@ function processData(data: { value: string }) {
 
 </Accordion>
 
----
-
-### React Hook Naming
-
 <Accordion title="React Hook Naming Convention">
 
 **Pattern Name:** React Hook Naming
@@ -89,10 +87,6 @@ export const useAuthToken = () => { ... }
 ```
 
 </Accordion>
-
----
-
-### API Endpoint Naming
 
 <Accordion title="RESTful API Endpoint Convention">
 
@@ -130,10 +124,6 @@ router.delete('/users/:id', ...)
 ```
 
 </Accordion>
-
----
-
-### Error Handling Pattern
 
 <Accordion title="Consistent Error Handling">
 
@@ -179,10 +169,6 @@ async function fetchData() {
 
 </Accordion>
 
----
-
-### Testing Convention
-
 <Accordion title="Test File Naming and Structure">
 
 **Pattern Name:** Test File Naming
@@ -222,10 +208,6 @@ describe('UserService', () => {
 ```
 
 </Accordion>
-
----
-
-### File Organization
 
 <Accordion title="Component File Organization">
 
@@ -273,10 +255,6 @@ src/
 
 </Accordion>
 
----
-
-### Import Ordering
-
 <Accordion title="Consistent Import Order">
 
 **Pattern Name:** Import Order Convention
@@ -322,10 +300,6 @@ import styles from './Component.module.css';
 
 </Accordion>
 
----
-
-### Database Query Pattern
-
 <Accordion title="Safe Database Queries">
 
 **Pattern Name:** Parameterized Queries
@@ -367,10 +341,6 @@ const user = await User.findByPk(userId);
 
 </Accordion>
 
----
-
-### Environment Variables
-
 <Accordion title="Environment Variable Naming">
 
 **Pattern Name:** Environment Variable Convention
@@ -410,10 +380,6 @@ REDIS_PORT=6379
 ```
 
 </Accordion>
-
----
-
-### Documentation Comments
 
 <Accordion title="JSDoc/TSDoc Comments">
 
@@ -465,10 +431,6 @@ export function calculateTotal(
 
 </Accordion>
 
----
-
-### Security Headers
-
 <Accordion title="API Response Headers">
 
 **Pattern Name:** Security Response Headers
@@ -513,10 +475,6 @@ app.get('/api/data', (req, res) => {
 ```
 
 </Accordion>
-
----
-
-### Git Commit Messages
 
 <Accordion title="Conventional Commits">
 
@@ -565,10 +523,6 @@ git commit -m "test(users): add integration tests for user creation"
 
 </Accordion>
 
----
-
-### Logging Standard
-
 <Accordion title="Structured Logging">
 
 **Pattern Name:** Structured Logging Pattern
@@ -613,10 +567,6 @@ logger.error('Order processing failed', {
 ```
 
 </Accordion>
-
----
-
-### Async/Await Pattern
 
 <Accordion title="Promise Handling">
 
@@ -665,10 +615,6 @@ async function fetchUserData(userId) {
 ```
 
 </Accordion>
-
----
-
-### Configuration Validation
 
 <Accordion title="Runtime Config Validation">
 
@@ -719,6 +665,8 @@ export const config = configSchema.parse({
 ```
 
 </Accordion>
+
+</AccordionGroup>
 
 ---
 
