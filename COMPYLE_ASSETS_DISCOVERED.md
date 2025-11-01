@@ -497,33 +497,51 @@ These assets can be integrated into the documentation RIGHT NOW:
 
 ## 🚨 Priority Actions Required
 
-### HIGH PRIORITY (Can complete documentation)
+### 🔥 IMMEDIATE PRIORITY (Ready to Integrate NOW - 15 minutes)
 
-1. **Jonathan Miranda Photo:**
-   - Access https://linkedin.com/in/jonathanyamanda directly
+1. **Integrate 2 Product Screenshots:**
+   - ✅ Dashboard screenshot (3456x1868px WebP) → features/overview.mdx, getting-started/agent-workflow-intro.mdx
+   - ✅ Project rules screenshot (3456x1870px WebP) → features/custom-rules.mdx
+   - **Action:** Uncomment TODO blocks and add URLs
+   - **Impact:** Adds professional product visuals to 3 pages
+
+2. **Integrate Mark Nazzaro Photo:**
+   - ✅ LinkedIn profile photo (200x200px) → about.mdx
+   - **Action:** Uncomment TODO block and add URL
+   - **Impact:** Completes CTO bio section with photo
+
+3. **Integrate YouTube Demo Video:**
+   - ✅ YC launch video (iNQ8G4k03gc) → community.mdx
+   - **Action:** Uncomment video CardGroup and add URL
+   - **Impact:** Adds video tutorial content
+
+### HIGH PRIORITY (Can complete more documentation)
+
+4. **Jonathan Miranda Photo:**
+   - Access https://www.linkedin.com/in/miranda-jonathan/ directly
    - OR request photo from Jonathan via hi@compyle.ai
    - **Impact:** Completes CEO bio section in about.mdx
 
-2. **Additional Product Screenshots:**
-   - Log into app.compyle.ai
-   - Capture 5 screenshots per planning.md specifications
-   - **Impact:** Completes features documentation visuals
+5. **Remaining 3 Product Screenshots:**
+   - Log into app.compyle.ai with active account
+   - Capture: Agent workflow phases, Validation UI, Command palette
+   - **Impact:** Completes all features documentation visuals
 
 ### MEDIUM PRIORITY (Enhances documentation)
 
-3. **Yethikrishna R Photo:**
+6. **Yethikrishna R Photo:**
    - Contact directly via email/Discord
    - OR use professional placeholder
-   - **Impact:** Completes contributors section
+   - **Impact:** Completes contributors section in about.mdx
 
-4. **Video Tutorials:**
-   - Script and record 5 additional tutorials
+7. **Video Tutorials (5 additional):**
+   - Script and record 5 more tutorials
    - Upload to YouTube
    - **Impact:** Completes community.mdx video section
 
 ### LOW PRIORITY (Future enhancement)
 
-5. **Testimonial Photos:**
+8. **Testimonial Collection:**
    - Collect 3-5 user testimonials with photos
    - **Impact:** Completes testimonials section in about.mdx
 
