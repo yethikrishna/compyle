@@ -570,10 +570,22 @@ These assets can be integrated into the documentation RIGHT NOW:
 
 ## 🔍 Search Methods Used
 
-1. **Exa AI Web Search** - Found product screenshots, team info, company details
-2. **LinkedIn Profile Searches** - Found Mark Nazzaro photo, company page logo
-3. **Y Combinator Pages** - Found company logo, launch details, demo video
-4. **Compyle.ai Domain Search** - Confirmed favicon and product screenshot paths
+1. **Exa AI Web Search** - Found product screenshots, team info, company details, LinkedIn profiles
+2. **LinkedIn Profile Searches** - Found Mark Nazzaro photo, company page logo, verified correct profiles
+3. **Y Combinator Pages** - Found company logo, launch details, demo video, YC badge
+4. **Compyle.ai Domain Search** - Confirmed favicon and product screenshot paths, discovered assets
+5. **HTML Source Scraping** - Extracted complete asset inventory from compyle.ai homepage:
+   - WebP screenshots (dashboard, project rules)
+   - Favicon complete set (5 variations)
+   - Logo files (SVG, PNG, transparent)
+   - JavaScript bundles (animations, core, analytics)
+   - CSS stylesheets
+   - Mux video player integration
+   - Product Hunt badge details
+   - Planning wireframe assets
+6. **Documentation Files Review** - Verified social links, emails, URLs from docs.json, community.mdx, about.mdx
+
+**Total Assets Discovered:** 29 files/URLs across 7 categories
 
 ---
 
