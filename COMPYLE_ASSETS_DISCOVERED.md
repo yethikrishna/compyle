@@ -302,6 +302,56 @@ Already in `/workspace/cmhgc93t203xlooil278ue2e9/compyle/`:
 
 ---
 
+## 💻 JavaScript, CSS & Animation Assets
+
+### Phase Animation Scripts (Homepage)
+- **Research Animation:** `/_astro/ResearchAnimation.astro_astro_type_script_index_0_lang.DcmEqyeS.js`
+  - Interactive animation showing research phase workflow
+  - Status: ✅ FOUND
+
+- **Planning Animation:** `/_astro/PlanningAnimation.astro_astro_type_script_index_0_lang.vAUe8lYd.js`
+  - Interactive animation showing planning phase workflow
+  - Status: ✅ FOUND
+
+- **Implementation Animation:** `/_astro/ImplementationAnimation.astro_astro_type_script_index_0_lang.CJQv4VSs.js`
+  - Interactive animation showing implementation phase workflow
+  - Status: ✅ FOUND
+
+### Planning Phase Wireframe Assets
+- **Planning Wireframe HTML:** https://www.compyle.ai/planning.html
+  - Embedded iframe showing planning interface
+  - Used in homepage planning phase demonstration
+  - Status: ✅ FOUND
+
+### Core Application Assets
+- **Main JavaScript:** `/_astro/index.DKtf60Sy.js`
+  - Primary application JavaScript bundle
+  - Status: ✅ FOUND
+
+- **Main CSS:** `/_astro/index.9SHdz-R8.css`
+  - Primary stylesheet for compyle.ai
+  - Status: ✅ FOUND
+
+### Analytics & Tracking
+- **PostHog Integration:** `/_astro/PostHogInit.astro_astro_type_script_index_0_lang.CgRxPNSF.js`
+  - PostHog analytics initialization script
+  - API Host: https://us.i.posthog.com
+  - API Key: phc_B0bjrfaY6SjqZnkUZl2U7reMHrYQp4eEt6LXdOpuZpS
+  - Status: ✅ FOUND
+
+---
+
+## 🏆 Product Hunt Badge
+
+### Badge Integration
+- **Post ID:** 1028261
+- **Product URL:** https://www.producthunt.com/products/compyle-2
+- **Badge Image URL:** `https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1028261&theme=light`
+- **Dark Theme Badge:** `https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1028261&theme=dark`
+- **Status:** ✅ FOUND - Ready for integration
+
+---
+
 ## 📊 Summary Statistics
 
 | Asset Type | Found | Missing | Percentage |
