@@ -246,34 +246,36 @@ Already in `/workspace/cmhgc93t203xlooil278ue2e9/compyle/`:
 
 ## 📸 Additional Product Images Needed
 
-### From Planning.md Requirements (NOT YET FOUND):
+### From Planning.md Requirements:
 
 1. **Dashboard Overview**
    - Path: `/images/screenshots/dashboard-overview.png`
    - Size: 1200x800px
-   - Status: ❌ NEED TO CAPTURE
+   - Status: ✅ FOUND - Use WebP from homepage (3456x1868px)
+   - URL: `https://www.compyle.ai/_astro/compyle-screenshot-1.BtSje84T_Z17fKmp.webp`
 
 2. **Agent Workflow Phases**
    - Path: `/images/screenshots/agent-workflow-phases.png`
    - Size: 1200x800px
-   - Status: ❌ NEED TO CAPTURE
+   - Status: ❌ NEED TO CAPTURE from app.compyle.ai
 
 3. **Validation UI**
    - Path: `/images/screenshots/validation-ui.png`
    - Size: 1200x800px
-   - Status: ❌ NEED TO CAPTURE
+   - Status: ❌ NEED TO CAPTURE from app.compyle.ai
 
 4. **Custom Rules Configuration**
    - Path: `/images/screenshots/custom-rules-config.png`
    - Size: 1200x800px
-   - Status: ❌ NEED TO CAPTURE
+   - Status: ✅ FOUND - Use WebP from homepage (3456x1870px)
+   - URL: `https://www.compyle.ai/_astro/project-rules-latest.BBt5O_Ao_2lB1N8.webp`
 
 5. **Command Palette**
    - Path: `/images/screenshots/command-palette.png`
    - Size: 1200x800px
-   - Status: ❌ NEED TO CAPTURE
+   - Status: ❌ NEED TO CAPTURE from app.compyle.ai
 
-**Note:** These require access to app.compyle.ai with an active account to capture screenshots.
+**Note:** 2 of 5 screenshots now available from compyle.ai homepage! Remaining 3 require access to app.compyle.ai with an active account to capture screenshots.
 
 ---
 
