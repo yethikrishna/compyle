@@ -7,12 +7,22 @@
 
 ## 🖼️ Product Screenshots
 
-### Main Dashboard Screenshot
-- **URL:** https://compyle.ai/product-screenshots/compyle-screenshot-1.png
-- **Location:** Compyle.ai website
-- **Confirmed:** Multiple search results confirm this URL
-- **Usage:** Homepage hero image showing the 3-phase workflow interface
-- **Specifications:** Shows research, planning, and implementation phases with UI mockups
+### Main Dashboard Screenshot (WebP - HIGH QUALITY)
+- **URL (WebP):** https://www.compyle.ai/_astro/compyle-screenshot-1.BtSje84T_Z17fKmp.webp
+- **URL (PNG):** https://compyle.ai/product-screenshots/compyle-screenshot-1.png
+- **Format:** 3456x1868px WebP (optimized for web)
+- **Location:** Homepage hero section
+- **Usage:** Shows the main user dashboard with ongoing projects, contributors, and quick actions
+- **Description:** "Compyle interface" - displays research, planning, implementation workflow
+- **Status:** ✅ FOUND - READY TO USE
+
+### Project Rules Configuration Screenshot (NEW!)
+- **URL:** https://www.compyle.ai/_astro/project-rules-latest.BBt5O_Ao_2lB1N8.webp
+- **Format:** 3456x1870px WebP
+- **Location:** compyle.ai homepage (rules section)
+- **Usage:** Shows project rules interface with patterns, testing, and file structure enforcement
+- **Alt Text:** "Compyle project rules interface showing patterns, testing, and file structure enforcement"
+- **Status:** ✅ FOUND - READY TO USE (Perfect for custom-rules.mdx!)
 
 ---
 
