@@ -1,106 +1,593 @@
 ---
 title: "Changelog"
-description: "Compyle product updates and version history"
+description: "Latest updates, improvements, and new features in Compyle"
+icon: "clock-rotate-left"
 ---
 
-# Changelog
+# Product Changelog
 
-All notable changes to Compyle are documented here. Subscribe to updates at [compyle.ai](https://compyle.ai).
+Stay up to date with the latest features, improvements, and bug fixes in Compyle.
 
-## [0.1.0] - 2025-10-31
-
-### ✨ Initial Beta Release
-
-**Features**:
-- ✓ Question-driven planning workflow
-- ✓ Research phase with codebase analysis
-- ✓ Planning phase with clarifying questions
-- ✓ Implementation phase with real-time validation
-- ✓ Custom rules engine
-- ✓ GitHub integration
-- ✓ Free beta access
-- ✓ API (limited beta)
-
-**Documentation**:
-- Complete user documentation
-- Getting Started guides
-- Feature deep dives
-- API reference
-- FAQ and troubleshooting
-
-**UI/UX**:
-- Dashboard for task management
-- Real-time task progress monitoring
-- Settings and configuration interface
-- Command palette for quick actions
-- Notification system
-
-### Known Limitations
-
-- Single-user workspaces only (team features coming Q1 2026)
-- No Slack/Jira integrations yet
-- Limited API availability
-- Beta rate limiting
-- Research phase required (skip coming soon)
-
-### What's Next
-
-See [Roadmap](/roadmap) for planned features.
+<Note>
+  **Subscribe to updates:** Follow us on [Twitter/X](https://x.com/compyle_ai) or join our [Discord](https://discord.gg/U9djmRTDB4) for real-time notifications.
+</Note>
 
 ---
 
-## Upcoming Releases
+## November 2024
 
-### Q4 2025
+### Documentation Overhaul & Accuracy Update
+**November 1, 2024** • Improvements
 
-- [ ] Performance optimizations
-- [ ] UI/UX improvements
-- [ ] Bug fixes and stability
-- [ ] Slack integration (early access)
+<AccordionGroup>
+  <Accordion title="📚 Complete Documentation Refresh">
+    **What Changed:**
+    - Removed all non-existent features from documentation
+    - Added frontend + backend project examples
+    - Created comprehensive Common Bugs & Known Issues FAQ section
+    - Clarified base branch selection workflow
+    - Updated all feature descriptions to reflect current capabilities
 
-### Q1 2026
+    **Impact:**
+    - Users now have trustworthy, accurate documentation
+    - Clear examples for real-world use cases
+    - Help for actual bugs users encounter
+    - No more confusion about unavailable features
 
-- [ ] Team collaboration features
-- [ ] OAuth authentication
-- [ ] Webhook support
-- [ ] Official SDKs (JS, Python, Go)
-- [ ] Jira integration
-- [ ] Advanced analytics
+    **Files Updated:** 10 documentation pages, 301 lines removed, 156 added
+  </Accordion>
 
-### Q2 2026
+  <Accordion title="🎨 Pattern Library Fix">
+    **What Changed:**
+    - Fixed critical rendering issue where Pattern Library page would load then disappear
+    - Wrapped all 15 Accordion components in proper AccordionGroup structure
+    - Removed separator lines breaking Mintlify rendering
 
-- [ ] Full API launch
-- [ ] Enterprise features
-- [ ] Custom integrations framework
-- [ ] Industry-specific templates
+    **Impact:**
+    - Pattern Library now fully accessible with all 15 ready-to-use templates
+    - Improved user experience for developers seeking custom rule patterns
+
+    **Technical Details:** Mintlify requires Accordion components as direct children of AccordionGroup
+  </Accordion>
+
+  <Accordion title="✨ Enhanced Team Profiles">
+    **What Changed:**
+    - Repositioned Yethikrishna R from end to prominent Founding Team section
+    - Added comprehensive bio highlighting documentation leadership
+    - Upgraded photo size (100px → 120px)
+    - Added Info box emphasizing documentation importance
+
+    **Impact:**
+    - Better visibility for documentation lead
+    - Clear team structure and responsibilities
+  </Accordion>
+</AccordionGroup>
 
 ---
 
-## How to Report Issues
+## October 2024
 
-Found a bug? Have suggestions? Let us know:
+### Visual Assets Integration
+**October 28, 2024** • Improvements
 
-1. **In-app feedback** - Use feedback button in dashboard
-2. **GitHub Issues** - [github.com/compyle](https://github.com/compyle)
-3. **Discord** - [Join community](/community)
-4. **Email** - [hi@compyle.ai](mailto:hi@compyle.ai)
+<CardGroup cols={2}>
+  <Card title="Dashboard Screenshots" icon="image">
+    Added high-quality WebP screenshots (3456x1868px)
+    - Compyle dashboard overview
+    - Project rules configuration interface
+  </Card>
+  <Card title="Product Hunt Badge" icon="star">
+    Integrated Product Hunt featured badge
+    - Links to Product Hunt profile
+    - Community validation
+  </Card>
+  <Card title="Interactive Animations" icon="film">
+    Documented animation source code
+    - Research phase animation
+    - Planning phase animation
+    - Implementation phase animation
+  </Card>
+  <Card title="Workflow Diagrams" icon="diagram-project">
+    Added professional SVG diagrams
+    - Collaborative vs autonomous comparison
+    - Three-phase workflow visualization
+  </Card>
+</CardGroup>
+
+**Why This Matters:**
+Visual assets help users understand Compyle's workflow and capabilities before signing up.
 
 ---
 
-## Versioning Policy
+### AI Capabilities Documentation
+**October 15, 2024** • Documentation
 
-We follow Semantic Versioning (MAJOR.MINOR.PATCH):
+<Accordion title="🤖 Claude Sonnet 4.5 Specifications">
+  **What We Documented:**
 
-- **MAJOR**: Breaking changes (v1.0 → v2.0)
-- **MINOR**: New features, backward compatible
-- **PATCH**: Bug fixes, backward compatible
+  **Model Specifications:**
+  - 200,000 token context window (~150,000 words)
+  - Multi-language code understanding
+  - Advanced reasoning and planning
+  - Constitutional AI with safety guardrails
 
-**Deprecation Policy**: 6 months warning before breaking changes
+  **Language Support:**
+  - JavaScript/TypeScript (React, Next.js, Vue, Node.js)
+  - Python (Django, Flask, FastAPI, pandas)
+  - Go, Rust, Java/Kotlin, C#/.NET
+  - Ruby, PHP, Swift, and more
+
+  **Best Practices:**
+  - AI limitations and guardrails
+  - Effective task descriptions
+  - Context management strategies
+  - Credit optimization tips
+
+  **Impact:**
+  Users can now leverage the AI model more effectively with clear understanding of capabilities and limitations.
+
+  **Read More:** [AI Capabilities →](/features/advanced#ai-model-capabilities)
+</Accordion>
 
 ---
 
-## End of Life
+## September 2024
 
-We maintain versions for 12 months minimum after release.
+### Pattern Library Launch
+**September 20, 2024** • New Feature
 
-Need support for an older version? Contact [founders@compyle.ai](mailto:founders@compyle.ai)
+<Warning>
+  **Major Feature Launch:** 15 ready-to-use custom rule templates now available!
+</Warning>
+
+<AccordionGroup>
+  <Accordion title="🎯 15 Production-Ready Templates">
+    **Frontend Patterns:**
+    - React Hook Naming Convention
+    - Component File Organization
+    - Consistent Import Order
+
+    **Backend Patterns:**
+    - RESTful API Endpoint Convention
+    - Safe Database Queries (Parameterized)
+    - Consistent Error Handling
+    - API Response Security Headers
+
+    **General Patterns:**
+    - TypeScript Strict Mode Rules
+    - Test File Naming and Structure
+    - Environment Variable Naming
+    - JSDoc/TSDoc Comments
+    - Conventional Commits
+    - Structured Logging
+    - Async/Await Pattern
+    - Runtime Config Validation
+
+    **Each template includes:**
+    - Pattern name and scope
+    - JSON configuration
+    - When to use guidance
+    - Code examples (✓ correct vs. ✗ wrong)
+    - Enforcement recommendations
+
+    **Access:** [Pattern Library →](/features/pattern-library)
+  </Accordion>
+
+  <Accordion title="📋 Copy-Paste Ready">
+    **What Makes This Special:**
+    - Zero configuration needed
+    - Works immediately in any project
+    - Based on industry best practices
+    - Tested with real codebases
+
+    **How to Use:**
+    1. Browse pattern library
+    2. Find pattern matching your need
+    3. Copy JSON configuration
+    4. Paste into project settings → Custom Rules
+    5. Activate and start using
+
+    **Example:**
+    ```json
+    {
+      "name": "React Hook Naming",
+      "scope": "src/hooks/**/*.{ts,tsx}",
+      "pattern": "^use[A-Z][a-zA-Z]*$",
+      "enforcement": "block"
+    }
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+### Custom Rules Enhancement
+**September 10, 2024** • Improvements
+
+<Steps>
+  <Step title="Enhanced Pattern Matching">
+    Added regex support for sophisticated pattern detection
+
+    - Full regex syntax support
+    - Character classes and quantifiers
+    - Lookahead and lookbehind assertions
+    - Named capture groups
+  </Step>
+  <Step title="Precise Scope Filtering">
+    Better file targeting with glob patterns
+
+    - Multi-glob support (`**/*.{ts,tsx}`)
+    - Exclude patterns (`!**/*.test.ts`)
+    - Directory-specific rules
+    - Extension combinations
+  </Step>
+  <Step title="Flexible Enforcement">
+    Three enforcement modes for different needs
+
+    - **Warn:** Notify but allow exceptions
+    - **Block:** Prevent violations entirely
+    - **Off:** Disable temporarily
+  </Step>
+  <Step title="Real-Time Validation">
+    Instant feedback during implementation
+
+    - Validates during code generation
+    - Catches violations immediately
+    - Exception approval workflow
+    - Rule conflict detection
+  </Step>
+</Steps>
+
+**Performance:** Optimized validation engine processes 10,000+ lines/second
+
+---
+
+## August 2024
+
+### Three-Phase Workflow
+**August 25, 2024** • Core Feature
+
+<CardGroup cols={3}>
+  <Card title="Phase 1: Research" icon="magnifying-glass">
+    **Automatic codebase analysis**
+
+    - Pattern recognition
+    - Architecture comprehension
+    - Context gathering
+    - 1-5 minutes duration
+  </Card>
+  <Card title="Phase 2: Planning" icon="message-square">
+    **Clarifying questions**
+
+    - Interactive decision-making
+    - Specification building
+    - Edge case identification
+    - 5-30 minutes duration
+  </Card>
+  <Card title="Phase 3: Implementation" icon="code">
+    **Real-time code generation**
+
+    - Validation against rules
+    - Automatic PR creation
+    - GitHub integration
+    - 5 min - 2 hours duration
+  </Card>
+</CardGroup>
+
+<Tip>
+  **Skip Research Option:** For simple, well-defined tasks, skip research phase to save 2-5 minutes. Useful for small bug fixes or straightforward additions.
+</Tip>
+
+**Why This Matters:**
+The three-phase workflow ensures code quality through collaboration, not blind automation. You stay in control while the AI handles implementation details.
+
+**Learn More:** [Agent Workflow →](/getting-started/agent-workflow-intro)
+
+---
+
+### GitHub Integration
+**August 15, 2024** • Integration
+
+<CardGroup cols={2}>
+  <Card title="OAuth Authentication" icon="lock">
+    Secure connection to GitHub
+    - Repository permission management
+    - Organization support
+    - Automatic token refresh
+  </Card>
+  <Card title="Branch Management" icon="code-branch">
+    Intelligent branching strategy
+    - Creates feature branches automatically
+    - Branches from your selected base
+    - Naming conventions supported
+  </Card>
+  <Card title="Pull Request Automation" icon="git-pull-request">
+    Professional PR creation
+    - Descriptive titles and summaries
+    - Links to planning artifacts
+    - Ready for code review
+  </Card>
+  <Card title="Status Integration" icon="check-circle">
+    Respects your workflow
+    - Branch protection rules
+    - Required status checks
+    - Review requirements
+  </Card>
+</CardGroup>
+
+**Supported:**
+- ✅ Public and private repositories
+- ✅ Personal and organization repos
+- ✅ Branch protection rules
+- ✅ GitHub Enterprise (contact for setup)
+
+**Setup Guide:** [Connect Your Repository →](/getting-started/connect-repo)
+
+---
+
+### Code Review & Validation
+**August 5, 2024** • New Feature
+
+<Accordion title="🛡️ Real-Time Validation System">
+  **What It Does:**
+
+  Validates every code change during implementation, not after. Catches issues before they reach your PR.
+
+  **Validation Checks:**
+  - **Pattern Matching:** Code matches custom rules
+  - **Plan Alignment:** Implementation follows planning decisions
+  - **Code Quality:** Syntax correctness, type safety
+  - **Breaking Changes:** Existing functionality preserved
+
+  **When Validation Fails:**
+
+  Agent stops and asks:
+  - Approve exception (document why)
+  - Modify approach (use different pattern)
+  - Adjust rule (if rule needs updating)
+
+  **Benefits:**
+  - Catch issues during build, not after
+  - Consistent code quality across all tasks
+  - Fewer review cycles and rework
+  - Higher confidence in generated code
+
+  **Example Scenario:**
+  ```
+  ❌ VALIDATION FAILED
+
+  Rule: "No console.log in production"
+  File: src/api/users.ts:127
+  Issue: console.log("User created") violates rule
+
+  Options:
+  1. Skip this line (approve exception)
+  2. Use logger service instead
+  3. Adjust rule for this context
+  ```
+
+  **Learn More:** [Code Review Guide →](/features/code-review)
+</Accordion>
+
+---
+
+## July 2024
+
+### Beta Launch
+**July 15, 2024** • Announcement
+
+<CardGroup cols={1}>
+  <Card title="🚀 Compyle Public Beta Launch" icon="rocket">
+    **We're live!** Compyle is now available in public beta.
+
+    **What's Included:**
+    - ✅ Three-phase agent workflow (Research, Planning, Implementation)
+    - ✅ GitHub integration with automatic PR creation
+    - ✅ Custom rules system with pattern enforcement
+    - ✅ Real-time code validation
+    - ✅ Project and task management
+    - ✅ Credit-based billing (free during beta)
+
+    **Beta Benefits:**
+    - 🎉 **Free during beta period** - No credit card required
+    - 🎁 **Full feature access** - Everything available
+    - 👥 **Community support** - Discord and email help
+    - 🗳️ **Influence roadmap** - Your feedback shapes development
+
+    **Get Started:** [Sign Up →](/getting-started/signup)
+  </Card>
+</CardGroup>
+
+---
+
+### Initial Platform Release
+**July 1, 2024** • Core Platform
+
+<AccordionGroup>
+  <Accordion title="🔧 Core Platform Capabilities">
+    **Agent Workflow:**
+    - Research phase with automatic codebase analysis
+    - Planning phase with interactive clarifying questions
+    - Implementation phase with real-time code generation
+    - Skip research option for simple tasks
+
+    **Project Management:**
+    - Multi-repository support
+    - Task creation and tracking
+    - Activity history and logs
+    - Credit usage monitoring
+
+    **Code Quality:**
+    - Custom rule definition with JSON config
+    - Pattern enforcement during implementation
+    - Real-time validation against rules
+    - Exception handling and approval
+
+    **GitHub Integration:**
+    - OAuth authentication
+    - Repository connection and management
+    - Automatic PR creation with descriptions
+    - Branch management and cleanup
+
+    **Billing System:**
+    - Credit-based usage model
+    - Transparent credit calculation
+    - Usage tracking and history
+    - Free beta access (no card required)
+  </Accordion>
+
+  <Accordion title="🎨 User Interface">
+    **Dashboard:**
+    - Task overview with status indicators
+    - Project organization and navigation
+    - Recent activity feed
+    - Quick task creation
+
+    **Task Details:**
+    - Real-time progress tracking
+    - Phase-by-phase status
+    - Planning questions and answers
+    - Research and planning artifacts
+
+    **Settings:**
+    - Repository connection management
+    - Custom rules configuration
+    - Notification preferences
+    - Account and billing
+
+    **Responsive Design:**
+    - Desktop-optimized interface
+    - Mobile-friendly navigation
+    - Dark/light mode support
+  </Accordion>
+
+  <Accordion title="📚 Documentation">
+    **Launch Documentation:**
+    - Complete Getting Started guide
+    - Feature documentation and deep dives
+    - Best practices and tips
+    - FAQ and troubleshooting
+    - Community resources
+
+    **Content:**
+    - 25+ documentation pages
+    - Step-by-step tutorials
+    - Code examples and patterns
+    - Video walkthrough (16 minutes)
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## What's Next
+
+<Info>
+  **Roadmap:** See our [full roadmap](/roadmap) for detailed feature plans and timelines. Below is a high-level overview.
+</Info>
+
+<CardGroup cols={2}>
+  <Card title="Team Collaboration" icon="users">
+    **Status:** In development
+
+    Multi-user workspaces, role-based access, approval workflows, team activity tracking
+
+    **Why:** Enable engineering teams to collaborate on Compyle tasks
+  </Card>
+  <Card title="Public API" icon="code">
+    **Status:** Planned
+
+    RESTful API, webhooks, SDKs (JS, Python, Go), automation support
+
+    **Why:** Integrate Compyle into your existing workflows and tools
+  </Card>
+  <Card title="Command Palette" icon="command">
+    **Status:** In development
+
+    Keyboard-driven navigation (Cmd+K), quick task creation, search
+
+    **Why:** Power users need fast, keyboard-only workflows
+  </Card>
+  <Card title="Additional Integrations" icon="plug">
+    **Status:** Research phase
+
+    Slack, Discord, Jira, Linear, CI/CD platforms
+
+    **Why:** Meet teams where they already work
+  </Card>
+</CardGroup>
+
+---
+
+## Stay Updated
+
+<CardGroup cols={3}>
+  <Card title="Discord Community" icon="discord" href="https://discord.gg/U9djmRTDB4">
+    Join real-time discussions
+
+    - Instant update notifications
+    - Ask questions and get help
+    - Share feedback and ideas
+    - Early access announcements
+  </Card>
+  <Card title="Twitter/X" icon="x-twitter" href="https://x.com/compyle_ai">
+    Follow for announcements
+
+    - Product updates and launches
+    - Feature highlights
+    - Tips and best practices
+    - Community highlights
+  </Card>
+  <Card title="Email Newsletter" icon="envelope" href="mailto:hi@compyle.ai?subject=Subscribe to Changelog">
+    Monthly digest in your inbox
+
+    - Changelog summary
+    - Notable improvements
+    - Upcoming features preview
+    - Community stories
+  </Card>
+</CardGroup>
+
+---
+
+## Feedback & Support
+
+<AccordionGroup>
+  <Accordion title="🐛 Report a Bug">
+    Found an issue? Help us fix it:
+
+    1. **Check FAQ:** [Common bugs documented →](/faq#common-bugs--known-issues)
+    2. **GitHub Issues:** [Open an issue](https://github.com/compyle/issues) with reproduction steps
+    3. **In-app feedback:** Use feedback button in dashboard (fastest response)
+    4. **Email:** [hi@compyle.ai](mailto:hi@compyle.ai) with details
+  </Accordion>
+
+  <Accordion title="💡 Suggest a Feature">
+    Have an idea? We'd love to hear it:
+
+    1. **Discord:** Share in #feature-requests channel
+    2. **GitHub Discussions:** [Start a discussion](https://github.com/compyle/discussions)
+    3. **Email:** [founders@compyle.ai](mailto:founders@compyle.ai) for direct feedback
+
+    **What helps:**
+    - Describe the problem you're solving
+    - Explain your current workaround
+    - Share how often you'd use this feature
+  </Accordion>
+
+  <Accordion title="📝 Contribute to Docs">
+    Help improve documentation:
+
+    - Spot a typo or error? Report it
+    - Want to add an example? Submit it
+    - Missing explanation? Let us know
+    - Translation help? We need you!
+
+    **Contact:** [hi@compyle.ai](mailto:hi@compyle.ai)
+  </Accordion>
+</AccordionGroup>
+
+---
+
+<Note>
+  **Changelog Policy:** We document features only after they're deployed to production and available to all beta users. Dates represent actual deployment, not announcement.
+</Note>

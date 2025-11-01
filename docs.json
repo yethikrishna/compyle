@@ -44,23 +44,8 @@
               "features/pattern-library",
               "features/code-review",
               "features/best-practices",
-              "features/command-palette",
               "features/notifications",
               "features/advanced"
-            ]
-          }
-        ]
-      },
-      {
-        "tab": "API Reference",
-        "groups": [
-          {
-            "group": "API Reference",
-            "pages": [
-              "api-reference/intro",
-              "api-reference/auth",
-              "api-reference/endpoints",
-              "api-reference/roadmap"
             ]
           }
         ]

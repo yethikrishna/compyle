@@ -148,22 +148,17 @@ description: "Frequently asked questions about Compyle"
     Currently available:
     - **GitHub** - Required for repository connection
 
-    Coming soon:
-    - **Slack** - Q4 2025
-    - **Jira** - Q1 2026
-    - **Linear** - Q1 2026
-    - **GitHub Actions** - Q1 2026
+    Other integrations (Slack, Jira, Linear, etc.) are not yet available.
 
-    Vote on integrations you want at [compyle.ai/feedback](https://compyle.ai/feedback)
+    Contact [founders@compyle.ai](mailto:founders@compyle.ai) to request specific integrations.
   </Accordion>
 
   <Accordion title="Is there an API for Compyle?">
-    Yes, the Compyle API is in development.
+    Not yet. The Compyle API is in development and not currently available.
 
-    Current status: Limited availability in beta
-    Full launch: Q2 2026
+    Expected availability: Q2 2026 or later
 
-    See [API Documentation](/api-reference/intro) for details.
+    Contact [founders@compyle.ai](mailto:founders@compyle.ai) if you're interested in API access.
   </Accordion>
 
   <Accordion title="Can I use my own Anthropic API key?">
@@ -183,23 +178,9 @@ description: "Frequently asked questions about Compyle"
 
 <AccordionGroup>
   <Accordion title="Can multiple people use Compyle on the same project?">
-    Currently: Compyle is single-user only.
+    Currently, Compyle is single-user only. Each team member needs their own account.
 
-    Coming soon (Q1 2026): Team collaboration with:
-    - Multi-user workspaces
-    - Role-based access
-    - Approval workflows
-    - Team settings
-  </Accordion>
-
-  <Accordion title="How do I share Compyle with my team?">
-    Right now, each team member needs their own account.
-
-    When team features launch (Q1 2026), you'll be able to invite teammates and manage permissions.
-  </Accordion>
-
-  <Accordion title="Is there a team plan?">
-    Pricing details coming after beta. We'll have options for teams, including team management features.
+    Team collaboration features are not yet available.
   </Accordion>
 </AccordionGroup>
 
@@ -281,6 +262,105 @@ description: "Frequently asked questions about Compyle"
     4. **Add rules** - Define your codebase patterns
 
     Research should be reviewed carefully. Catch misunderstandings early.
+  </Accordion>
+</AccordionGroup>
+
+## Common Bugs & Known Issues
+
+<AccordionGroup>
+  <Accordion title="Task stuck in 'Researching' phase">
+    **Issue**: Task remains in research phase for extended period (>10 minutes) without progress
+
+    **Workaround**:
+    1. Refresh your browser to check actual status
+    2. If truly stuck, cancel and restart with "Skip Research" enabled
+    3. Contact support if issue persists
+
+    **Status**: Known issue, fix in progress
+  </Accordion>
+
+  <Accordion title="Planning questions not appearing">
+    **Issue**: Task moves from Research to Implementation without showing planning questions
+
+    **Workaround**:
+    1. Check your notification settings (questions may be hidden)
+    2. Look in task details page under "Planning" tab
+    3. If no questions visible, contact support immediately
+
+    **Status**: Known issue affecting ~5% of tasks
+  </Accordion>
+
+  <Accordion title="PR creation fails with authentication error">
+    **Issue**: Task completes but PR creation fails with GitHub authentication error
+
+    **Workaround**:
+    1. Disconnect and reconnect your GitHub account in Settings
+    2. Verify repository permissions include write access
+    3. Check GitHub status page for API issues
+    4. Manually create PR from task branch if needed
+
+    **Status**: Usually caused by expired GitHub token
+  </Accordion>
+
+  <Accordion title="Code changes not showing in PR">
+    **Issue**: PR created but appears empty or missing some changes
+
+    **Workaround**:
+    1. Check the task branch directly on GitHub
+    2. Verify base branch is correct
+    3. Look for force-push conflicts with other work
+    4. Contact support with task ID
+
+    **Status**: Rare issue, under investigation
+  </Accordion>
+
+  <Accordion title="Custom rules not being enforced">
+    **Issue**: Agent violates custom rules without asking for approval
+
+    **Workaround**:
+    1. Verify rule syntax in project settings
+    2. Check rule scope matches affected files
+    3. Ensure enforcement level is "warn" or "block" (not "off")
+    4. Test with simple task to validate rule
+
+    **Status**: Usually configuration issue
+  </Accordion>
+
+  <Accordion title="Dashboard showing incorrect task status">
+    **Issue**: Dashboard status doesn't match actual task progress
+
+    **Workaround**:
+    1. Hard refresh browser (Ctrl+Shift+R or Cmd+Shift+R)
+    2. Clear browser cache
+    3. Try different browser
+    4. Check actual GitHub branch/PR for truth
+
+    **Status**: Known caching issue, fix in progress
+  </Accordion>
+
+  <Accordion title="High credit usage for simple tasks">
+    **Issue**: Simple tasks consuming unexpectedly high credits (100+ for trivial change)
+
+    **Workaround**:
+    1. Enable "Skip Research" for simple tasks
+    2. Provide more specific task descriptions
+    3. Reference specific files and line numbers
+    4. Contact support if credits seem incorrect
+
+    **Status**: Review credit calculation in progress
+  </Accordion>
+
+  <Accordion title="Notification emails not arriving">
+    **Issue**: Email notifications not received despite being enabled
+
+    **Workaround**:
+    1. Check spam/junk folder
+    2. Verify email address in account settings
+    3. Add hi@compyle.ai and notifications@compyle.ai to contacts
+    4. Test with a simple task
+    5. Use in-app notifications as backup
+
+    **Status**: Known deliverability issues with some providers
   </Accordion>
 </AccordionGroup>
 
