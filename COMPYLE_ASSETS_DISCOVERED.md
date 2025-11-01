@@ -285,6 +285,19 @@ Already in `/workspace/cmhgc93t203xlooil278ue2e9/compyle/`:
 - **Status:** ✅ EXISTS (referenced in YC launch page)
 - **Usage:** Can be embedded in community.mdx video tutorials section
 
+### Mux Video Player (Homepage)
+- **Playback ID:** GLEpOBmgJItFVevV675hTHiHoRDVjX4wbI4ShMhxOR00
+- **Platform:** Mux (mux.com)
+- **Source:** compyle.ai homepage HTML
+- **Usage:** Interactive video player on homepage hero section
+- **Poster Frame:** https://image.mux.com/GLEpOBmgJItFVevV675hTHiHoRDVjX4wbI4ShMhxOR00/thumbnail.webp?time=0
+- **Status:** ✅ FOUND - Embedded in homepage
+
+### Video Player Scripts
+- **Mux Player Script:** `/_astro/MuxPlayer.astro_astro_type_script_index_0_lang.DoxHQsRT.js`
+- **Integration:** Astro component with Mux player
+- **Status:** ✅ FOUND
+
 **Note:** 5 additional tutorial videos needed (see planning.md Phase 5)
 
 ---
