@@ -82,10 +82,11 @@ Already in `/workspace/cmhgc93t203xlooil278ue2e9/compyle/`:
 - **Standardized:** All docs use x.com (Phase 4 complete)
 
 ### Discord
-- **URL:** https://discord.gg/compyle
+- **URL:** https://discord.gg/U9djmRTDB4
+- **Invite Code:** U9djmRTDB4
 - **Members:** 100+ engineers
-- **Status:** ✅ ACTIVE
-- **Source:** docs.json footer, community.mdx, about.mdx
+- **Status:** ✅ ACTIVE - CORRECTED
+- **Source:** Provided by user (correct official invite)
 - **Channels:**
   - #introductions - Meet the community
   - #general - Chat and announcements
@@ -102,16 +103,21 @@ Already in `/workspace/cmhgc93t203xlooil278ue2e9/compyle/`:
 - **Usage:** File issues, view projects, contribute, report bugs
 
 ### LinkedIn
-- **Company Page:** https://linkedin.com/company/compyle
+- **Company Page:** https://www.linkedin.com/company/compyle-ai/
+- **Full URL:** https://www.linkedin.com/company/compyle-ai/
 - **Followers:** 148+ followers
 - **Employees Listed:** 2 (Jonathan Miranda, Mark Nazzaro)
-- **Status:** ✅ ACTIVE
-- **Source:** docs.json footer, community.mdx, about.mdx
-- **Note:** URL in docs is `linkedin.com/company/compyle` (not compyle-ai)
+- **Status:** ✅ ACTIVE - CORRECTED
+- **Source:** Provided by user (correct official company page)
 
 ### LinkedIn Team Profiles
-- **Jonathan Miranda:** https://linkedin.com/in/jonathanyamanda
-- **Mark Nazzaro:** https://linkedin.com/in/mark-nazzaro
+- **Jonathan Miranda (CEO):** https://www.linkedin.com/in/miranda-jonathan/
+  - **Status:** ✅ CORRECTED - This is the correct profile
+  - **Can extract photo from this profile**
+
+- **Mark Nazzaro (CTO):** https://www.linkedin.com/in/mark-nazzaro
+  - **Photo URL:** https://media.licdn.com/dms/image/v2/D4E03AQGUL1rE3NX-cg/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1731693681061?e=2147483647&v=beta&t=Zqs6J-PHoYDrh-mVCPTELKul6_aQrHaoj4xYnZDGklA
+  - **Status:** ✅ FOUND
 
 ---
 
