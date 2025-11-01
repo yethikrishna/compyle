@@ -65,6 +65,340 @@ Use your own Anthropic API key instead of Compyle's default:
   - Break large tasks into smaller ones
 </Tip>
 
+## AI Model Capabilities
+
+Understand what powers Compyle's intelligent agent:
+
+### Claude Sonnet 4.5
+
+Compyle uses **Claude Sonnet 4.5**, Anthropic's most advanced coding model:
+
+**Model Specifications:**
+- **Context Window:** 200,000 tokens (~150,000 words or 600+ pages)
+- **Code Understanding:** Multi-language support with deep comprehension
+- **Reasoning:** Advanced multi-step problem solving
+- **Safety:** Constitutional AI with built-in guardrails
+
+**What This Means for You:**
+- Analyze entire large codebases in single pass
+- Understand complex architectural patterns
+- Maintain context across long conversations
+- Generate production-quality code with proper error handling
+
+### AI Capabilities
+
+<CardGroup cols={2}>
+  <Card title="Code Generation" icon="code">
+    Writes production-ready code following your patterns
+  </Card>
+  <Card title="Code Analysis" icon="magnifying-glass">
+    Understands existing code structure and conventions
+  </Card>
+  <Card title="Pattern Recognition" icon="brain">
+    Identifies and replicates your coding patterns
+  </Card>
+  <Card title="Refactoring" icon="arrows-rotate">
+    Improves code while maintaining functionality
+  </Card>
+  <Card title="Bug Detection" icon="bug">
+    Identifies potential issues before they ship
+  </Card>
+  <Card title="Documentation" icon="book">
+    Generates clear inline and external docs
+  </Card>
+  <Card title="Test Generation" icon="vial">
+    Creates comprehensive test suites
+  </Card>
+  <Card title="Architecture Design" icon="sitemap">
+    Plans scalable system architectures
+  </Card>
+</CardGroup>
+
+### Language & Framework Support
+
+**Compyle's AI excels at:**
+
+<Accordion title="Programming Languages">
+**Full Support:**
+- JavaScript/TypeScript (Node.js, React, Next.js, Vue)
+- Python (Django, Flask, FastAPI, pandas, TensorFlow)
+- Go (standard lib, Gin, Echo)
+- Rust (async/await, tokio, actix)
+- Java/Kotlin (Spring, Android)
+- C#/.NET (ASP.NET, Unity)
+- Ruby (Rails, Sinatra)
+- PHP (Laravel, Symfony)
+- Swift (iOS, SwiftUI)
+
+**Strong Support:**
+- SQL (PostgreSQL, MySQL, SQLite)
+- Shell scripting (Bash, Zsh)
+- HTML/CSS (Tailwind, Bootstrap)
+- GraphQL, REST API design
+- Docker, Kubernetes configs
+</Accordion>
+
+<Accordion title="Frameworks & Tools">
+**Frontend:**
+- React, Next.js, Vue, Nuxt, Svelte
+- Angular, Solid.js
+- Tailwind CSS, styled-components, Emotion
+
+**Backend:**
+- Express, Fastify, NestJS
+- Django, Flask, FastAPI
+- Spring Boot, ASP.NET Core
+- Rails, Laravel
+
+**Databases:**
+- PostgreSQL, MySQL, MongoDB
+- Redis, Prisma, TypeORM
+- Supabase, Firebase
+
+**DevOps:**
+- Docker, Kubernetes
+- GitHub Actions, GitLab CI
+- Terraform, Ansible
+</Accordion>
+
+## AI Guidance & Customization
+
+Teach Compyle's AI to code your way:
+
+### Custom Rules for AI Behavior
+
+Guide the AI agent with project-specific patterns:
+
+```yaml
+# Tell AI to always use specific patterns
+rules:
+  - name: "API Response Format"
+    pattern: "Always return { success, data, error }"
+    scope: "**/*Controller.ts"
+
+  - name: "React Component Structure"
+    pattern: "Use functional components with TypeScript"
+    forbidden: "Class components"
+
+  - name: "Error Handling"
+    pattern: "Use custom ApiError class"
+    enforcement: "strict"
+```
+
+**See [Custom Rules](/features/custom-rules) for complete guide.**
+
+### AI Context Management
+
+Control what the AI knows about your project:
+
+<AccordionGroup>
+  <Accordion title="Context Window Optimization">
+    **How Compyle Uses 200K Tokens:**
+    - **Research Phase:** Reads relevant files (10-30% of window)
+    - **Planning Phase:** Maintains research + conversation (40-60%)
+    - **Implementation:** Full context including code changes (70-90%)
+
+    **Best Practices:**
+    - Let AI read full files vs. snippets
+    - Include relevant documentation in repo
+    - Keep `.gitignore` clean for focused analysis
+  </Accordion>
+
+  <Accordion title="File Priority Signals">
+    **AI automatically prioritizes:**
+    - Recently modified files
+    - Files mentioned in task description
+    - Dependencies of target files
+    - Configuration files (package.json, tsconfig.json)
+    - README and documentation files
+
+    **You can guide priority:**
+    - Mention specific files in task description
+    - Reference line numbers for precision
+    - Link to related PRs or issues
+  </Accordion>
+
+  <Accordion title="Knowledge Cutoff & Current Info">
+    **Claude's training data cutoff:** January 2025
+
+    **What AI knows:**
+    - Programming languages and frameworks up to Jan 2025
+    - Common libraries and their APIs
+    - Software engineering best practices
+    - Security patterns and vulnerabilities
+
+    **What AI doesn't know:**
+    - Your proprietary codebase (until it reads it)
+    - Internal company tools or APIs
+    - Private packages or frameworks
+    - Changes to libraries after Jan 2025
+
+    **Solution:** Provide context in task description or custom rules
+  </Accordion>
+</AccordionGroup>
+
+### AI Learning & Adaptation
+
+**How Compyle's AI learns from your project:**
+
+1. **Pattern Recognition:** Analyzes existing code to identify conventions
+2. **Style Matching:** Replicates your formatting, naming, structure
+3. **Custom Rules:** Remembers project-specific requirements
+4. **Feedback Loop:** Learns from your questions and corrections
+
+<Info>
+**Important:** The AI doesn't permanently "learn" or train on your code. Each task starts fresh, using research phase to understand patterns. Custom rules persist across tasks, providing consistent guidance.
+</Info>
+
+## AI-Powered Features
+
+### Smart Code Completion
+
+AI understands partial implementations and completes logically:
+
+**Example:**
+```typescript
+// You write:
+function calculateUserScore(user: User) {
+  // TODO: Calculate score based on activity, posts, comments
+
+// AI completes:
+function calculateUserScore(user: User): number {
+  const activityScore = user.loginDays * 2;
+  const postScore = user.posts.length * 5;
+  const commentScore = user.comments.length * 1;
+
+  return activityScore + postScore + commentScore;
+}
+```
+
+### Intelligent Refactoring
+
+AI suggests and implements improvements:
+
+<CardGroup cols={2}>
+  <Card title="Extract Patterns" icon="objects-column">
+    Identifies duplicated code and creates reusable functions
+  </Card>
+  <Card title="Type Safety" icon="shield-check">
+    Adds TypeScript types or Python type hints
+  </Card>
+  <Card title="Performance" icon="gauge-high">
+    Optimizes algorithms and reduces complexity
+  </Card>
+  <Card title="Modularity" icon="cubes">
+    Breaks large functions into smaller, testable units
+  </Card>
+</CardGroup>
+
+### Context-Aware Suggestions
+
+AI considers your entire codebase when making suggestions:
+
+**Example Scenario:**
+- **Task:** "Add user authentication"
+- **AI notices:** You already have auth for admin panel
+- **AI suggests:** Reuse existing AuthService with role-based permissions
+- **Result:** Consistent authentication across entire app
+
+### Error Prevention
+
+AI catches issues before they become bugs:
+
+<AccordionGroup>
+  <Accordion title="Type Errors">
+    - Missing null checks
+    - Incorrect function signatures
+    - Type mismatches in assignments
+    - Async/await usage errors
+  </Accordion>
+
+  <Accordion title="Logic Errors">
+    - Off-by-one errors in loops
+    - Missing edge case handling
+    - Incorrect conditional logic
+    - Race conditions in async code
+  </Accordion>
+
+  <Accordion title="Security Vulnerabilities">
+    - SQL injection risks
+    - XSS vulnerabilities
+    - Insecure authentication flows
+    - Missing input validation
+  </Accordion>
+
+  <Accordion title="Performance Issues">
+    - N+1 query problems
+    - Inefficient algorithms
+    - Memory leaks
+    - Unnecessary re-renders
+  </Accordion>
+</AccordionGroup>
+
+## AI Limitations & Best Practices
+
+### What AI Cannot Do
+
+<Warning>
+**Be aware of these limitations:**
+
+1. **No Internet Access:** AI cannot fetch latest docs or package info during task
+2. **Knowledge Cutoff:** May not know about very recent framework changes
+3. **No File System Access:** Cannot test or run code (validates logically instead)
+4. **No External APIs:** Cannot call your staging/production environments
+5. **No Magic:** Cannot guess requirements - needs clear task descriptions
+</Warning>
+
+### Best Practices for Working with AI
+
+<CardGroup cols={2}>
+  <Card title="Be Specific" icon="bullseye">
+    "Add pagination to user list with 20 items per page" beats "improve user list"
+  </Card>
+  <Card title="Provide Context" icon="circle-info">
+    Link to similar code, mention relevant files, explain business logic
+  </Card>
+  <Card title="Answer Planning Questions" icon="messages-question">
+    Detailed answers = better implementation
+  </Card>
+  <Card title="Review Research Artifacts" icon="file-magnifying-glass">
+    Catch misunderstandings early in research phase
+  </Card>
+  <Card title="Use Custom Rules" icon="list-check">
+    Define patterns once, AI follows consistently
+  </Card>
+  <Card title="Iterate in Small Steps" icon="stairs">
+    Smaller tasks = more precise results
+  </Card>
+</CardGroup>
+
+### Optimizing AI Performance
+
+**Get better results faster:**
+
+1. **Clear Task Descriptions:**
+   - ✅ "Add email validation to signup form using regex pattern"
+   - ❌ "Fix signup"
+
+2. **Relevant Context:**
+   - Mention related files
+   - Reference similar implementations
+   - Explain business requirements
+
+3. **Effective Feedback:**
+   - Point to specific issues
+   - Provide examples of desired output
+   - Explain "why" not just "what"
+
+4. **Strategic Custom Rules:**
+   - Document patterns you want consistently
+   - Add rules for common mistakes
+   - Include architectural decisions
+
+<Tip title="Pro Tip: Use Research Artifacts">
+  The research.md file is gold. Review it to see what AI understood about your codebase. Correct any misunderstandings before planning phase.
+</Tip>
+
 ## Agent Spend Optimization
 
 Optimize token consumption and credits:
@@ -282,6 +616,55 @@ Automate task creation and management:
 <Tip title="Automate Workflows">
   When CLI available, automate recurring task creation
 </Tip>
+
+## Technical Resources & Animation Code
+
+For developers interested in the technical implementation of Compyle's workflow:
+
+### Interactive Workflow Animations
+
+<CardGroup cols={2}>
+  <Card title="Planning Interface" icon="window" href="https://www.compyle.ai/planning.html">
+    Interactive wireframe showing planning phase UI
+  </Card>
+  <Card title="Workflow Animations" icon="play" href="https://www.compyle.ai/#workflow">
+    Homepage animations for Research, Planning, Implementation
+  </Card>
+</CardGroup>
+
+### Animation Source Code
+
+Access the animation scripts powering Compyle's homepage:
+
+<Accordion title="Animation Implementation Details">
+
+**Research Phase Animation:**
+- URL: `https://www.compyle.ai/_astro/ResearchAnimation.astro_astro_type_script_index_0_lang.DcmEqyeS.js`
+- Shows codebase analysis and research artifact generation
+
+**Planning Phase Animation:**
+- URL: `https://www.compyle.ai/_astro/PlanningAnimation.astro_astro_type_script_index_0_lang.vAUe8lYd.js`
+- Demonstrates question generation and specification building
+
+**Implementation Phase Animation:**
+- URL: `https://www.compyle.ai/_astro/ImplementationAnimation.astro_astro_type_script_index_0_lang.CJQv4VSs.js`
+- Illustrates code generation with real-time validation
+
+**Video Player Integration:**
+- URL: `https://www.compyle.ai/_astro/MuxPlayer.astro_astro_type_script_index_0_lang.DoxHQsRT.js`
+- Mux Playback ID: `GLEpOBmgJItFVevV675hTHiHoRDVjX4wbI4ShMhxOR00`
+
+</Accordion>
+
+<Info>
+  **For Educational Use:** These animation scripts demonstrate interactive state management and visual workflow representation. Built with Astro for server-side rendering and client-side interactivity.
+</Info>
+
+### Additional Technical Assets
+
+- **Main JavaScript Bundle:** `/_astro/index.DKtf60Sy.js`
+- **Main CSS Stylesheet:** `/_astro/index.9SHdz-R8.css`
+- **Analytics Integration:** PostHog (`/_astro/PostHogInit.astro_astro_type_script_index_0_lang.CgRxPNSF.js`)
 
 ## Next Steps
 
