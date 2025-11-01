@@ -44,7 +44,6 @@
               "features/pattern-library",
               "features/code-review",
               "features/best-practices",
-              "features/command-palette",
               "features/notifications",
               "features/advanced"
             ]
