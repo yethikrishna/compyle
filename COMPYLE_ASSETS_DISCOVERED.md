@@ -361,13 +361,13 @@ Already in `/workspace/cmhgc93t203xlooil278ue2e9/compyle/`:
 | Asset Type | Found | Missing | Percentage |
 |------------|-------|---------|------------|
 | Product Screenshots | 2 | 3 | 40% |
-| Team Photos | 1 | 2 | 33% |
+| Team Photos | 2 | 1 | 67% |
 | Logos/Branding | 12 | 0 | 100% |
 | Social Links | 4 | 0 | 100% |
 | Video Assets | 2 | 5 | 29% |
 | JavaScript/CSS/Animations | 7 | 0 | 100% |
 | Product Hunt Badge | 1 | 0 | 100% |
-| **TOTAL** | **29** | **10** | **74%** |
+| **TOTAL** | **30** | **9** | **77%** |
 
 ### Breakdown of Found Assets:
 
