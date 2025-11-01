@@ -417,7 +417,7 @@ mintlify dev
 
 **For asset contributions or questions:**
 - Email: hi@compyle.ai
-- Discord: https://discord.gg/compyle
+- Discord: https://discord.gg/U9djmRTDB4
 - Documentation team: Yethikrishna R
 
 **Useful tools:**
