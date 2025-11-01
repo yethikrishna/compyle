@@ -50,20 +50,6 @@
             ]
           }
         ]
-      },
-      {
-        "tab": "API Reference",
-        "groups": [
-          {
-            "group": "API Reference",
-            "pages": [
-              "api-reference/intro",
-              "api-reference/auth",
-              "api-reference/endpoints",
-              "api-reference/roadmap"
-            ]
-          }
-        ]
       }
     ]
   },
