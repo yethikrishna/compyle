@@ -133,14 +133,21 @@ For small, simple tasks, you can skip research:
 - **Risk**: Less architectural context, may lead to more planning questions
 - **Recommendation**: Keep research enabled for first tasks
 
-### Select Specific Branch
+### Select Base Branch
 
-Choose which branch to target:
+Choose which branch to branch OFF of. Compyle will:
+1. Create a new feature branch from your selected base branch
+2. Make all changes in the new feature branch
+3. Create a PR back to the base branch when complete
 
-- **main** - For direct production updates (use with caution)
-- **develop** - For next release integration
-- **feature-*branch*** - For feature-specific work
-- **hotfix-*branch*** - For urgent fixes
+**Base branch options:**
+- **main** - Branch off main (most common)
+- **develop** - Branch off develop for release integration
+- **feature-xyz** - Branch off another feature branch for dependent work
+
+<Note>
+  **Important:** The branch you select is the branch Compyle will **branch from**, not the branch it will commit to directly. Compyle always creates a new feature branch for your task and opens a PR when done.
+</Note>
 
 ## Task History & Status
 
