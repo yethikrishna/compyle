@@ -17,25 +17,25 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
-import { signUp } from "@/lib/auth-client";
-import { signupSchema } from "@/schema/signup.schema";
+import { signIn } from "@/lib/auth-client";
+import { loginSchema } from "@/schema/login.schema";
 import { useForm } from "@tanstack/react-form";
 import { GitPullRequestCreateArrow } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 
-export default function Signup() {
+export default function Login() {
   const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm({
-    defaultValues: { name: "", email: "", password: "" },
-    validators: { onSubmit: signupSchema },
+    defaultValues: { email: "", password: "" },
+    validators: { onSubmit: loginSchema },
     onSubmit: async ({ value }) => {
-      await signUp.email(
+      await signIn.email(
         {
-          name: value.name,
           email: value.email,
           password: value.password,
+          rememberMe: true,
         },
         {
           onRequest: () => {
@@ -68,50 +68,23 @@ export default function Signup() {
           <span className="font-semibold text-2xl">Compyle Apps</span>
         </Link>
 
-        {/* Signup Form*/}
+        {/* Login Form */}
         <Card className="md:min-w-md">
           <CardHeader className="text-center">
-            <CardTitle className="text-xl">Create your account</CardTitle>
+            <CardTitle className="text-xl">Login</CardTitle>
             <CardDescription>
-              Enter your info below to create an account
+              Enter your email and password to login
             </CardDescription>
           </CardHeader>
           <CardContent>
             <form
-              id="signup-form"
+              id="login-form"
               className="space-y-6"
               onSubmit={(e) => {
                 e.preventDefault();
                 form.handleSubmit();
               }}
             >
-              <FieldGroup>
-                <form.Field name="name">
-                  {(field) => {
-                    const isInvalid =
-                      field.state.meta.isTouched && !field.state.meta.isValid;
-                    return (
-                      <Field data-invalid={isInvalid}>
-                        <FieldLabel htmlFor={field.name}>Full Name</FieldLabel>
-                        <Input
-                          id={field.name}
-                          name={field.name}
-                          value={field.state.value}
-                          onBlur={field.handleBlur}
-                          onChange={(e) => field.handleChange(e.target.value)}
-                          aria-invalid={isInvalid}
-                          placeholder="John Doe"
-                          autoComplete="off"
-                        />
-                        {isInvalid && (
-                          <FieldError errors={field.state.meta.errors} />
-                        )}
-                      </Field>
-                    );
-                  }}
-                </form.Field>
-              </FieldGroup>
-
               <FieldGroup>
                 <form.Field name="email">
                   {(field) => {
@@ -187,7 +160,7 @@ export default function Signup() {
               </Button>
               <Button
                 type="submit"
-                form="signup-form"
+                form="login-form"
                 className="w-40 cursor-pointer gap-2"
                 disabled={isLoading}
               >
@@ -197,9 +170,9 @@ export default function Signup() {
             </Field>
           </CardFooter>
           <p className="text-center text-muted-foreground">
-            Already have an account?{" "}
-            <Link href="/login" className="underline">
-              Login
+            Don&apos;t have an account?{" "}
+            <Link href="/signup" className="underline">
+              Signup
             </Link>
           </p>
         </Card>
