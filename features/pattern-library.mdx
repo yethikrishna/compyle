@@ -1,0 +1,832 @@
+---
+title: "Pattern Library"
+description: "Ready-made custom rule templates and code patterns for Compyle"
+icon: "book"
+---
+
+# Pattern Library
+
+## Quick Start Patterns
+
+Copy-paste ready custom rules for common project patterns. These patterns help Compyle understand your conventions and enforce consistency across your codebase.
+
+---
+
+### TypeScript Strict Mode
+
+<Accordion title="TypeScript Strict Mode Rules">
+
+**Pattern Name:** TypeScript Strict Mode Enforcement
+
+**Scope:** All .ts and .tsx files
+
+**Rule Configuration:**
+```json
+{
+  "name": "TypeScript Strict Mode",
+  "scope": "**/*.{ts,tsx}",
+  "pattern": "No 'any' type allowed",
+  "enforcement": "warn",
+  "description": "Enforce type safety by preventing 'any' type usage"
+}
+```
+
+**When to use:**
+- TypeScript projects requiring type safety
+- Teams wanting to prevent type escape hatches
+- Code bases being migrated from JavaScript
+
+**Example:**
+```typescript
+// ✗ Wrong
+function processData(data: any) {
+  return data.value;
+}
+
+// ✓ Correct
+function processData(data: { value: string }) {
+  return data.value;
+}
+```
+
+</Accordion>
+
+---
+
+### React Hook Naming
+
+<Accordion title="React Hook Naming Convention">
+
+**Pattern Name:** React Hook Naming
+
+**Scope:** src/hooks/**/*.{ts,tsx}
+
+**Rule Configuration:**
+```json
+{
+  "name": "React Hook Naming",
+  "scope": "src/hooks/**/*.{ts,tsx}",
+  "pattern": "^use[A-Z][a-zA-Z]*$",
+  "enforcement": "block",
+  "description": "React hooks must start with 'use' prefix"
+}
+```
+
+**When to use:**
+- React projects following official conventions
+- Teams wanting consistent hook naming
+- Code reviews requiring adherence to React patterns
+
+**Example:**
+```typescript
+// ✗ Wrong
+export const getAuth = () => { ... }
+export const authHook = () => { ... }
+
+// ✓ Correct
+export const useAuth = () => { ... }
+export const useAuthToken = () => { ... }
+```
+
+</Accordion>
+
+---
+
+### API Endpoint Naming
+
+<Accordion title="RESTful API Endpoint Convention">
+
+**Pattern Name:** RESTful API Endpoint Naming
+
+**Scope:** src/routes/**/*.{ts,js}
+
+**Rule Configuration:**
+```json
+{
+  "name": "RESTful Endpoints",
+  "scope": "src/routes/**/*.{ts,js}",
+  "pattern": "Endpoints must use plural nouns and HTTP verbs",
+  "enforcement": "warn",
+  "description": "Enforce RESTful API naming conventions"
+}
+```
+
+**When to use:**
+- Backend APIs following REST principles
+- Consistent endpoint structure across services
+- API documentation generation
+
+**Example:**
+```typescript
+// ✗ Wrong
+router.get('/getUser/:id', ...)
+router.post('/createUser', ...)
+
+// ✓ Correct
+router.get('/users/:id', ...)
+router.post('/users', ...)
+router.put('/users/:id', ...)
+router.delete('/users/:id', ...)
+```
+
+</Accordion>
+
+---
+
+### Error Handling Pattern
+
+<Accordion title="Consistent Error Handling">
+
+**Pattern Name:** Try-Catch Error Handling
+
+**Scope:** **/*.{ts,js}
+
+**Rule Configuration:**
+```json
+{
+  "name": "Error Handling Pattern",
+  "scope": "**/*.{ts,js}",
+  "pattern": "All async functions must have try-catch blocks",
+  "enforcement": "warn",
+  "description": "Ensure consistent error handling across codebase"
+}
+```
+
+**When to use:**
+- Applications requiring robust error handling
+- Production codebases with error monitoring
+- Teams standardizing on error patterns
+
+**Example:**
+```typescript
+// ✗ Wrong
+async function fetchData() {
+  const response = await api.getData();
+  return response;
+}
+
+// ✓ Correct
+async function fetchData() {
+  try {
+    const response = await api.getData();
+    return response;
+  } catch (error) {
+    logger.error('Failed to fetch data:', error);
+    throw new AppError('Data fetch failed', error);
+  }
+}
+```
+
+</Accordion>
+
+---
+
+### Testing Convention
+
+<Accordion title="Test File Naming and Structure">
+
+**Pattern Name:** Test File Naming
+
+**Scope:** **/*.test.{ts,js,tsx,jsx}
+
+**Rule Configuration:**
+```json
+{
+  "name": "Test File Convention",
+  "scope": "**/*.test.{ts,js,tsx,jsx}",
+  "pattern": "Test files must match source file names with .test suffix",
+  "enforcement": "block",
+  "description": "Maintain consistent test file naming"
+}
+```
+
+**When to use:**
+- Projects with comprehensive test coverage
+- Teams following TDD or BDD practices
+- CI/CD pipelines expecting specific file patterns
+
+**Example:**
+```typescript
+// For UserService.ts
+// ✗ Wrong: userServiceTests.ts, UserService.spec.ts
+
+// ✓ Correct: UserService.test.ts
+
+describe('UserService', () => {
+  describe('createUser', () => {
+    it('should create a new user with valid data', async () => {
+      // Test implementation
+    });
+  });
+});
+```
+
+</Accordion>
+
+---
+
+### File Organization
+
+<Accordion title="Component File Organization">
+
+**Pattern Name:** Component Co-location
+
+**Scope:** src/components/**/*
+
+**Rule Configuration:**
+```json
+{
+  "name": "Component Co-location",
+  "scope": "src/components/**/*",
+  "pattern": "Components should be organized with related files in same directory",
+  "enforcement": "warn",
+  "description": "Keep component files, styles, tests, and types together"
+}
+```
+
+**When to use:**
+- React, Vue, or Angular component-based projects
+- Teams preferring feature-based organization
+- Large applications with many components
+
+**Example:**
+```
+// ✗ Wrong
+src/
+  components/
+    Button.tsx
+  styles/
+    Button.css
+  tests/
+    Button.test.tsx
+
+// ✓ Correct
+src/
+  components/
+    Button/
+      Button.tsx
+      Button.module.css
+      Button.test.tsx
+      Button.types.ts
+      index.ts
+```
+
+</Accordion>
+
+---
+
+### Import Ordering
+
+<Accordion title="Consistent Import Order">
+
+**Pattern Name:** Import Order Convention
+
+**Scope:** **/*.{ts,tsx,js,jsx}
+
+**Rule Configuration:**
+```json
+{
+  "name": "Import Order",
+  "scope": "**/*.{ts,tsx,js,jsx}",
+  "pattern": "External imports, then internal imports, then relative imports",
+  "enforcement": "warn",
+  "description": "Maintain consistent import ordering for readability"
+}
+```
+
+**When to use:**
+- All TypeScript/JavaScript projects
+- Teams using ESLint or Prettier
+- Code review consistency
+
+**Example:**
+```typescript
+// ✗ Wrong
+import { utils } from './utils';
+import React from 'react';
+import { API } from '@/services/api';
+
+// ✓ Correct
+// External libraries
+import React from 'react';
+import { useState } from 'react';
+
+// Internal modules (@/)
+import { API } from '@/services/api';
+import { useAuth } from '@/hooks/useAuth';
+
+// Relative imports
+import { utils } from './utils';
+import styles from './Component.module.css';
+```
+
+</Accordion>
+
+---
+
+### Database Query Pattern
+
+<Accordion title="Safe Database Queries">
+
+**Pattern Name:** Parameterized Queries
+
+**Scope:** src/models/**/*.{ts,js}
+
+**Rule Configuration:**
+```json
+{
+  "name": "Parameterized Queries",
+  "scope": "src/models/**/*.{ts,js}",
+  "pattern": "All database queries must use parameterized statements",
+  "enforcement": "block",
+  "description": "Prevent SQL injection with parameterized queries"
+}
+```
+
+**When to use:**
+- Any project with database interactions
+- Security-critical applications
+- Preventing SQL injection vulnerabilities
+
+**Example:**
+```typescript
+// ✗ Wrong (SQL Injection risk)
+const user = await db.query(
+  `SELECT * FROM users WHERE id = ${userId}`
+);
+
+// ✓ Correct (Parameterized)
+const user = await db.query(
+  'SELECT * FROM users WHERE id = $1',
+  [userId]
+);
+
+// ✓ Also correct (ORM)
+const user = await User.findByPk(userId);
+```
+
+</Accordion>
+
+---
+
+### Environment Variables
+
+<Accordion title="Environment Variable Naming">
+
+**Pattern Name:** Environment Variable Convention
+
+**Scope:** **/.env*, src/config/**/*
+
+**Rule Configuration:**
+```json
+{
+  "name": "Environment Variables",
+  "scope": "**/.env*, src/config/**/*",
+  "pattern": "Environment variables must be UPPER_SNAKE_CASE with descriptive prefixes",
+  "enforcement": "warn",
+  "description": "Maintain consistent environment variable naming"
+}
+```
+
+**When to use:**
+- All applications using environment configuration
+- Multi-environment deployments (dev, staging, prod)
+- Teams with configuration management standards
+
+**Example:**
+```bash
+# ✗ Wrong
+apiKey=abc123
+databaseUrl=postgres://...
+nodeEnv=production
+
+# ✓ Correct
+API_KEY=abc123
+DATABASE_URL=postgres://...
+NODE_ENV=production
+APP_PORT=3000
+REDIS_HOST=localhost
+REDIS_PORT=6379
+```
+
+</Accordion>
+
+---
+
+### Documentation Comments
+
+<Accordion title="JSDoc/TSDoc Comments">
+
+**Pattern Name:** Function Documentation
+
+**Scope:** **/*.{ts,js}
+
+**Rule Configuration:**
+```json
+{
+  "name": "Function Documentation",
+  "scope": "**/*.{ts,js}",
+  "pattern": "All exported functions must have JSDoc/TSDoc comments",
+  "enforcement": "warn",
+  "description": "Document public APIs with JSDoc comments"
+}
+```
+
+**When to use:**
+- Libraries and shared modules
+- Public APIs and SDKs
+- Teams prioritizing code documentation
+
+**Example:**
+```typescript
+// ✗ Wrong (no documentation)
+export function calculateTotal(items, tax) {
+  return items.reduce((sum, item) => sum + item.price, 0) * (1 + tax);
+}
+
+// ✓ Correct
+/**
+ * Calculates the total price of items including tax
+ * @param items - Array of items with price property
+ * @param tax - Tax rate as decimal (e.g., 0.08 for 8%)
+ * @returns Total price including tax
+ * @throws {Error} If items array is empty
+ */
+export function calculateTotal(
+  items: Array<{ price: number }>,
+  tax: number
+): number {
+  if (items.length === 0) {
+    throw new Error('Items array cannot be empty');
+  }
+  return items.reduce((sum, item) => sum + item.price, 0) * (1 + tax);
+}
+```
+
+</Accordion>
+
+---
+
+### Security Headers
+
+<Accordion title="API Response Headers">
+
+**Pattern Name:** Security Response Headers
+
+**Scope:** src/middleware/**/*.{ts,js}
+
+**Rule Configuration:**
+```json
+{
+  "name": "Security Headers",
+  "scope": "src/middleware/**/*.{ts,js}",
+  "pattern": "All API responses must include security headers",
+  "enforcement": "block",
+  "description": "Enforce security headers on all HTTP responses"
+}
+```
+
+**When to use:**
+- Web applications with security requirements
+- APIs exposed to public internet
+- Compliance with security standards (OWASP)
+
+**Example:**
+```typescript
+// ✗ Wrong (no security headers)
+app.get('/api/data', (req, res) => {
+  res.json({ data: 'sensitive' });
+});
+
+// ✓ Correct
+app.use((req, res, next) => {
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'DENY');
+  res.setHeader('X-XSS-Protection', '1; mode=block');
+  res.setHeader('Strict-Transport-Security', 'max-age=31536000');
+  next();
+});
+
+app.get('/api/data', (req, res) => {
+  res.json({ data: 'sensitive' });
+});
+```
+
+</Accordion>
+
+---
+
+### Git Commit Messages
+
+<Accordion title="Conventional Commits">
+
+**Pattern Name:** Commit Message Convention
+
+**Scope:** Git commits
+
+**Rule Configuration:**
+```json
+{
+  "name": "Conventional Commits",
+  "scope": "git-commits",
+  "pattern": "Commit messages must follow conventional commit format",
+  "enforcement": "warn",
+  "description": "Use conventional commit format: type(scope): message"
+}
+```
+
+**When to use:**
+- Projects with automated changelog generation
+- Teams using semantic versioning
+- CI/CD pipelines triggered by commit types
+
+**Example:**
+```bash
+# ✗ Wrong
+git commit -m "fixed bug"
+git commit -m "updates"
+
+# ✓ Correct
+git commit -m "fix(auth): resolve token expiration issue"
+git commit -m "feat(api): add user profile endpoint"
+git commit -m "docs(readme): update installation instructions"
+git commit -m "refactor(utils): simplify date formatting logic"
+git commit -m "test(users): add integration tests for user creation"
+```
+
+**Commit types:**
+- `feat`: New feature
+- `fix`: Bug fix
+- `docs`: Documentation changes
+- `style`: Code style changes (formatting)
+- `refactor`: Code refactoring
+- `test`: Test additions or modifications
+- `chore`: Build process or tooling changes
+
+</Accordion>
+
+---
+
+### Logging Standard
+
+<Accordion title="Structured Logging">
+
+**Pattern Name:** Structured Logging Pattern
+
+**Scope:** **/*.{ts,js}
+
+**Rule Configuration:**
+```json
+{
+  "name": "Structured Logging",
+  "scope": "**/*.{ts,js}",
+  "pattern": "Use structured logging with context objects instead of string interpolation",
+  "enforcement": "warn",
+  "description": "Enable better log parsing and monitoring"
+}
+```
+
+**When to use:**
+- Production applications
+- Systems using log aggregation (ELK, Datadog, Splunk)
+- Applications requiring searchable logs
+
+**Example:**
+```typescript
+// ✗ Wrong
+logger.info(`User ${userId} logged in from ${ipAddress}`);
+logger.error(`Failed to process order: ${error.message}`);
+
+// ✓ Correct
+logger.info('User logged in', {
+  userId,
+  ipAddress,
+  timestamp: new Date().toISOString()
+});
+
+logger.error('Order processing failed', {
+  orderId,
+  error: error.message,
+  stack: error.stack,
+  context: { userId, cartItems }
+});
+```
+
+</Accordion>
+
+---
+
+### Async/Await Pattern
+
+<Accordion title="Promise Handling">
+
+**Pattern Name:** Async/Await over Promises
+
+**Scope:** **/*.{ts,js}
+
+**Rule Configuration:**
+```json
+{
+  "name": "Async/Await Pattern",
+  "scope": "**/*.{ts,js}",
+  "pattern": "Prefer async/await over .then() chains for readability",
+  "enforcement": "warn",
+  "description": "Use modern async/await syntax for asynchronous operations"
+}
+```
+
+**When to use:**
+- Modern JavaScript/TypeScript projects
+- Improving code readability
+- Consistent asynchronous patterns
+
+**Example:**
+```typescript
+// ✗ Wrong (Promise chains)
+function fetchUserData(userId) {
+  return fetchUser(userId)
+    .then(user => fetchPosts(user.id))
+    .then(posts => fetchComments(posts))
+    .then(comments => processComments(comments))
+    .catch(error => handleError(error));
+}
+
+// ✓ Correct (async/await)
+async function fetchUserData(userId) {
+  try {
+    const user = await fetchUser(userId);
+    const posts = await fetchPosts(user.id);
+    const comments = await fetchComments(posts);
+    return processComments(comments);
+  } catch (error) {
+    handleError(error);
+  }
+}
+```
+
+</Accordion>
+
+---
+
+### Configuration Validation
+
+<Accordion title="Runtime Config Validation">
+
+**Pattern Name:** Environment Config Validation
+
+**Scope:** src/config/**/*.{ts,js}
+
+**Rule Configuration:**
+```json
+{
+  "name": "Config Validation",
+  "scope": "src/config/**/*.{ts,js}",
+  "pattern": "Validate all configuration at startup before app initialization",
+  "enforcement": "block",
+  "description": "Fail fast if required configuration is missing or invalid"
+}
+```
+
+**When to use:**
+- All production applications
+- Preventing runtime failures due to misconfiguration
+- Clear error messages for deployment issues
+
+**Example:**
+```typescript
+// ✗ Wrong (no validation)
+export const config = {
+  apiKey: process.env.API_KEY,
+  port: process.env.PORT
+};
+
+// ✓ Correct (with validation)
+import { z } from 'zod';
+
+const configSchema = z.object({
+  apiKey: z.string().min(1, 'API_KEY is required'),
+  port: z.coerce.number().min(1).max(65535),
+  databaseUrl: z.string().url('DATABASE_URL must be valid URL'),
+  nodeEnv: z.enum(['development', 'staging', 'production'])
+});
+
+export const config = configSchema.parse({
+  apiKey: process.env.API_KEY,
+  port: process.env.PORT,
+  databaseUrl: process.env.DATABASE_URL,
+  nodeEnv: process.env.NODE_ENV
+});
+```
+
+</Accordion>
+
+---
+
+## How to Add These Patterns to Compyle
+
+1. **Navigate to your Project Settings** in the Compyle dashboard
+2. **Go to Custom Rules** section
+3. **Click "Add New Rule"**
+4. **Copy pattern configuration** from this page
+5. **Paste and customize** for your specific project
+6. **Save and activate** the rule
+
+Once activated, Compyle will enforce these patterns during implementation and ask you when deviations are needed.
+
+---
+
+## Community Patterns
+
+Want to share your own patterns or suggest improvements?
+
+<CardGroup cols={2}>
+  <Card title="Join Discord" icon="discord" href="https://discord.gg/compyle">
+    Share patterns with the community
+  </Card>
+  <Card title="GitHub Discussions" icon="github" href="https://github.com/compyle">
+    Propose new pattern templates
+  </Card>
+</CardGroup>
+
+---
+
+## Pattern Categories
+
+Patterns organized by technology and use case:
+
+### Frontend Patterns
+- React Hook naming
+- Component organization
+- Import ordering
+- Props typing (TypeScript)
+
+### Backend Patterns
+- API endpoint conventions
+- Error handling
+- Database queries
+- Security headers
+
+### General Patterns
+- Testing conventions
+- Documentation standards
+- Git commit messages
+- Environment variables
+- Logging standards
+
+---
+
+## Creating Your Own Patterns
+
+<Steps>
+  <Step title="Identify the convention">
+    What pattern or convention do you want to enforce across your codebase?
+  </Step>
+  <Step title="Define scope">
+    Which files should this pattern apply to? Use glob patterns to specify.
+  </Step>
+  <Step title="Write the rule">
+    Describe the pattern clearly. Compyle uses this to understand enforcement.
+  </Step>
+  <Step title="Choose enforcement level">
+    **Warn**: Notify but allow exceptions | **Block**: Prevent violations entirely
+  </Step>
+  <Step title="Test and refine">
+    Run a test task to see how the pattern performs. Adjust as needed.
+  </Step>
+</Steps>
+
+---
+
+## Best Practices for Pattern Rules
+
+<Tip title="Start with warnings, not blocks">
+  Use "warn" enforcement initially. Switch to "block" once you're confident the pattern is correct.
+</Tip>
+
+<Tip title="Be specific with scopes">
+  Narrow scopes to relevant files. Avoid overly broad patterns that apply to test files or config.
+</Tip>
+
+<Tip title="Document exceptions">
+  When you approve an exception to a pattern, document why. This helps future team members understand context.
+</Tip>
+
+<Tip title="Review patterns quarterly">
+  Patterns evolve as projects grow. Review and update rules every few months to stay relevant.
+</Tip>
+
+---
+
+## Next Steps
+
+<CardGroup cols={3}>
+  <Card title="Custom Rules Guide" href="./custom-rules" icon="shield">
+    Learn how to create and manage custom rules
+  </Card>
+  <Card title="Best Practices" href="./best-practices" icon="star">
+    Tips for using Compyle effectively
+  </Card>
+  <Card title="Agent Workflow" href="../getting-started/agent-workflow-intro" icon="gitflow">
+    Understand how patterns are enforced
+  </Card>
+</CardGroup>
