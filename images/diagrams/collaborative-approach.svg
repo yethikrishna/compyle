@@ -1,0 +1,108 @@
+<svg width="1200" height="600" viewBox="0 0 1200 600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1200" height="600" fill="#F3F4F6"/>
+
+  <!-- Title -->
+  <text x="600" y="40" font-family="Inter, sans-serif" font-size="28" font-weight="bold" fill="#001F1A" text-anchor="middle">
+    Autonomous vs Collaborative Approach
+  </text>
+
+  <!-- Left Side - Autonomous Agent -->
+  <g id="autonomous">
+    <!-- Background box -->
+    <rect x="50" y="80" width="500" height="480" rx="12" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="2"/>
+
+    <!-- Title -->
+    <text x="300" y="120" font-family="Inter, sans-serif" font-size="22" font-weight="bold" fill="#EF4444" text-anchor="middle">
+      Autonomous Agent
+    </text>
+
+    <!-- Black Box Icon -->
+    <rect x="225" y="150" width="150" height="150" rx="8" fill="#1F2937"/>
+    <text x="300" y="235" font-family="Inter, sans-serif" font-size="48" fill="#FFFFFF" text-anchor="middle">?</text>
+
+    <!-- Characteristics -->
+    <g transform="translate(80, 330)">
+      <!-- Cross icons and text -->
+      <circle cx="10" cy="10" r="12" fill="#FEE2E2"/>
+      <path d="M 5 5 L 15 15 M 15 5 L 5 15" stroke="#EF4444" stroke-width="2"/>
+      <text x="35" y="15" font-family="Inter, sans-serif" font-size="16" fill="#1F2937">Makes decisions without asking</text>
+
+      <circle cx="10" cy="50" r="12" fill="#FEE2E2"/>
+      <path d="M 5 45 L 15 55 M 15 45 L 5 55" stroke="#EF4444" stroke-width="2"/>
+      <text x="35" y="55" font-family="Inter, sans-serif" font-size="16" fill="#1F2937">Black box implementation</text>
+
+      <circle cx="10" cy="90" r="12" fill="#FEE2E2"/>
+      <path d="M 5 85 L 15 95 M 15 85 L 5 95" stroke="#EF4444" stroke-width="2"/>
+      <text x="35" y="95" font-family="Inter, sans-serif" font-size="16" fill="#1F2937">Code you don't understand</text>
+
+      <circle cx="10" cy="130" r="12" fill="#FEE2E2"/>
+      <path d="M 5 125 L 15 135 M 15 125 L 5 135" stroke="#EF4444" stroke-width="2"/>
+      <text x="35" y="135" font-family="Inter, sans-serif" font-size="16" fill="#1F2937">Forced refactoring later</text>
+
+      <circle cx="10" cy="170" r="12" fill="#FEE2E2"/>
+      <path d="M 5 165 L 15 175 M 15 165 L 5 175" stroke="#EF4444" stroke-width="2"/>
+      <text x="35" y="175" font-family="Inter, sans-serif" font-size="16" fill="#1F2937">Loss of control</text>
+    </g>
+  </g>
+
+  <!-- Right Side - Compyle Collaborative -->
+  <g id="collaborative">
+    <!-- Background box -->
+    <rect x="650" y="80" width="500" height="480" rx="12" fill="#FFFFFF" stroke="#0F766E" stroke-width="3"/>
+
+    <!-- Title -->
+    <text x="900" y="120" font-family="Inter, sans-serif" font-size="22" font-weight="bold" fill="#0F766E" text-anchor="middle">
+      Compyle Collaborative
+    </text>
+
+    <!-- Collaborative Icon (person + agent) -->
+    <g transform="translate(825, 150)">
+      <!-- User icon -->
+      <circle cx="40" cy="40" r="25" fill="#0F766E" opacity="0.2"/>
+      <circle cx="40" cy="30" r="12" fill="#0F766E"/>
+      <path d="M 20 55 Q 40 45 60 55" fill="#0F766E"/>
+
+      <!-- Bidirectional arrow -->
+      <path d="M 70 50 L 100 50" stroke="#0F766E" stroke-width="3"/>
+      <path d="M 95 45 L 100 50 L 95 55" fill="#0F766E"/>
+      <path d="M 75 45 L 70 50 L 75 55" fill="#0F766E"/>
+
+      <!-- Agent icon -->
+      <rect x="105" y="25" width="40" height="40" rx="6" fill="#0F766E" opacity="0.2"/>
+      <circle cx="120" cy="40" r="8" fill="#0F766E"/>
+      <circle cx="130" cy="40" r="8" fill="#0F766E"/>
+      <path d="M 115 50 Q 125 55 135 50" stroke="#0F766E" stroke-width="2" fill="none"/>
+    </g>
+
+    <!-- Characteristics -->
+    <g transform="translate(680, 330)">
+      <!-- Check icons and text -->
+      <circle cx="10" cy="10" r="12" fill="#D1FAE5"/>
+      <path d="M 5 10 L 9 14 L 15 6" stroke="#0F766E" stroke-width="2" fill="none"/>
+      <text x="35" y="15" font-family="Inter, sans-serif" font-size="16" fill="#1F2937">Asks clarifying questions first</text>
+
+      <circle cx="10" cy="50" r="12" fill="#D1FAE5"/>
+      <path d="M 5 50 L 9 54 L 15 46" stroke="#0F766E" stroke-width="2" fill="none"/>
+      <text x="35" y="55" font-family="Inter, sans-serif" font-size="16" fill="#1F2937">Plans before implementation</text>
+
+      <circle cx="10" cy="90" r="12" fill="#D1FAE5"/>
+      <path d="M 5 90 L 9 94 L 15 86" stroke="#0F766E" stroke-width="2" fill="none"/>
+      <text x="35" y="95" font-family="Inter, sans-serif" font-size="16" fill="#1F2937">Real-time validation checks</text>
+
+      <circle cx="10" cy="130" r="12" fill="#D1FAE5"/>
+      <path d="M 5 130 L 9 134 L 15 126" stroke="#0F766E" stroke-width="2" fill="none"/>
+      <text x="35" y="135" font-family="Inter, sans-serif" font-size="16" fill="#1F2937">You stay in control</text>
+
+      <circle cx="10" cy="170" r="12" fill="#D1FAE5"/>
+      <path d="M 5 170 L 9 174 L 15 166" stroke="#0F766E" stroke-width="2" fill="none"/>
+      <text x="35" y="175" font-family="Inter, sans-serif" font-size="16" fill="#1F2937">Code you understand</text>
+    </g>
+  </g>
+
+  <!-- VS Divider -->
+  <g transform="translate(575, 280)">
+    <circle cx="25" cy="25" r="30" fill="#FCD34D"/>
+    <text x="25" y="35" font-family="Inter, sans-serif" font-size="20" font-weight="bold" fill="#78350F" text-anchor="middle">VS</text>
+  </g>
+</svg>
