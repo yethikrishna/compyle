@@ -41,6 +41,7 @@
               "features/agent-workflow-deep-dive",
               "features/tasks-projects",
               "features/custom-rules",
+              "features/pattern-library",
               "features/code-review",
               "features/best-practices",
               "features/command-palette",
