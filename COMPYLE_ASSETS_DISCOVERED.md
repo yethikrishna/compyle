@@ -73,6 +73,56 @@
 - **Sizes Available:** Likely 32x32, 16x16, potentially larger
 - **Status:** ✅ CONFIRMED EXISTS
 
+### Compyle Main Logo (SVG)
+- **URL:** https://www.compyle.ai/compyle.svg
+- **Source:** compyle.ai homepage HTML
+- **Format:** SVG (scalable vector)
+- **Usage:** Primary logo for branding
+- **Status:** ✅ FOUND
+
+### YC Logo (PNG)
+- **URL:** https://www.compyle.ai/yc-logo.png
+- **Source:** compyle.ai homepage HTML
+- **Format:** PNG
+- **Usage:** Y Combinator branding integration
+- **Status:** ✅ FOUND
+
+### App Logo Variations
+- **Transparent Logo:** https://app.compyle.ai/compyle_transparent.svg
+  - Format: SVG with transparent background
+  - Usage: App interface branding
+  - Status: ✅ FOUND
+
+- **Discord Logo Icon:** https://app.compyle.ai/discord-logo.svg
+  - Format: SVG
+  - Usage: Discord integration icon
+  - Status: ✅ FOUND
+
+### Favicon Complete Set
+- **Favicon ICO:** https://www.compyle.ai/favicon.ico
+  - Standard .ico format for browsers
+  - Status: ✅ FOUND
+
+- **Favicon SVG:** https://www.compyle.ai/favicon.svg
+  - Scalable vector version
+  - Status: ✅ FOUND
+
+- **Favicon 32x32:** https://www.compyle.ai/favicon-32x32.png
+  - 32x32px PNG
+  - Status: ✅ FOUND
+
+- **Favicon 16x16:** https://www.compyle.ai/favicon-16x16.png
+  - 16x16px PNG
+  - Status: ✅ FOUND
+
+- **Apple Touch Icon:** https://www.compyle.ai/apple-touch-icon.png
+  - 180x180px PNG for iOS devices
+  - Status: ✅ FOUND
+
+- **Web Manifest:** https://www.compyle.ai/site.webmanifest
+  - PWA manifest file
+  - Status: ✅ FOUND
+
 ### Other Logo Files (from existing docs repo)
 Already in `/workspace/cmhgc93t203xlooil278ue2e9/compyle/`:
 - `/logo/light.svg` - Light mode logo
