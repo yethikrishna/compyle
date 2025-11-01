@@ -378,10 +378,10 @@ Already in `/workspace/cmhgc93t203xlooil278ue2e9/compyle/`:
 - ❌ Validation UI (need to capture)
 - ❌ Command palette (need to capture)
 
-**Team Photos (1 of 3):**
+**Team Photos (2 of 3):**
 - ✅ Mark Nazzaro (LinkedIn - 200x200px)
 - ❌ Jonathan Miranda (need to extract from LinkedIn)
-- ❌ Yethikrishna R (need direct request)
+- ✅ Yethikrishna R (PROVIDED - needs to be saved to /images/team/)
 
 **Logos/Branding (12 complete):**
 - ✅ YC Company Logo
