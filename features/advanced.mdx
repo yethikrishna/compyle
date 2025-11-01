@@ -478,13 +478,6 @@ For independent features (not recommended unless experienced):
 - **Protected branches** - Cannot merge without review
 - **Auto-delete branches** - Clean up after merge
 
-### Team Settings (Coming Soon)
-
-- Role-based access control
-- Multi-user workspace
-- Approval workflows
-- Audit logging
-
 ### Integration Settings
 
 - Custom webhook URLs
@@ -513,31 +506,6 @@ Track and optimize performance:
 ### Learning Dashboard
 
 View these metrics in **Dashboard** → **Metrics**
-
-## Webhook Integrations (Coming Soon)
-
-Set up custom webhooks for:
-
-- **Task events** - Started, completed, failed
-- **Approval events** - PR ready, merged
-- **Error events** - Failures requiring attention
-- **Scheduled reports** - Weekly summaries
-
-### Webhook Payload Example
-
-```json
-{
-  "event": "task_completed",
-  "task_id": "task-123",
-  "task_name": "Add user profile",
-  "project": "MyApp",
-  "status": "completed",
-  "pr_url": "https://github.com/...",
-  "files_changed": 5,
-  "credits_used": 82,
-  "timestamp": "2025-03-15T14:30:00Z"
-}
-```
 
 ## API Usage Patterns
 
