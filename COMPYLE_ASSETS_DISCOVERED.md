@@ -42,12 +42,14 @@
 - **Note:** Need to access correct LinkedIn profile directly to get photo
 - **Alternative:** Request photo directly from team
 
-### Yethikrishna R - Documentation Lead
-- **Role:** Documentation & Product Strategy contributor
-- **LinkedIn:** Not discovered in search results
-- **Photo Status:** ❌ NOT FOUND
-- **Note:** Yethikrishna R appears to be a music artist (found on Boomplay) rather than having a public LinkedIn profile
-- **Alternative:** Request photo directly from contributor or use initials/placeholder
+### Yethikrishna R - Documentation Lead & Product Strategy
+- **Role:** Documentation Lead & Product Strategy contributor
+- **LinkedIn:** Not publicly available
+- **Photo Status:** ✅ PROVIDED BY USER
+- **Photo Location:** Image uploaded by user - needs to be saved to `/images/team/yethikrishna-r.webp`
+- **Format:** Professional headshot (portrait orientation)
+- **Status:** ✅ READY TO INTEGRATE - Photo structure added to about.mdx (line 314-331)
+- **Note:** Comprehensive team description added highlighting documentation work, pattern library creation, and product strategy contributions
 
 ---
 
