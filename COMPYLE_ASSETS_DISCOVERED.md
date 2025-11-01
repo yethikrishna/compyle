@@ -422,19 +422,74 @@ Already in `/workspace/cmhgc93t203xlooil278ue2e9/compyle/`:
 
 These assets can be integrated into the documentation RIGHT NOW:
 
-1. ✅ **Product screenshot:** `https://compyle.ai/product-screenshots/compyle-screenshot-1.png`
-   - Add to: `features/overview.mdx` dashboard section
-   - Add to: `getting-started/agent-workflow-intro.mdx` workflow section
+### 1. ✅ Dashboard Screenshot (WebP - HIGH QUALITY)
+- **URL (WebP):** `https://www.compyle.ai/_astro/compyle-screenshot-1.BtSje84T_Z17fKmp.webp`
+- **URL (PNG):** `https://compyle.ai/product-screenshots/compyle-screenshot-1.png`
+- **Format:** 3456x1868px WebP (optimized)
+- **Add to:**
+  - `features/overview.mdx` (line 25 - uncomment TODO block)
+  - `getting-started/agent-workflow-intro.mdx` (line 19 - uncomment TODO block)
+- **Action:** Uncomment image blocks and replace placeholder paths
 
-2. ✅ **Mark Nazzaro photo:** LinkedIn profile image URL
-   - Add to: `about.mdx` line ~104 (Mark Nazzaro section)
-   - Format: 120x120px circular crop
+### 2. ✅ Project Rules Screenshot (WebP - HIGH QUALITY) 🆕
+- **URL:** `https://www.compyle.ai/_astro/project-rules-latest.BBt5O_Ao_2lB1N8.webp`
+- **Format:** 3456x1870px WebP
+- **Add to:** `features/custom-rules.mdx` (line 69 - uncomment TODO block)
+- **Perfect fit:** Shows actual project rules interface with patterns, testing, and enforcement
+- **Action:** Uncomment image block and replace placeholder path
 
-3. ✅ **YC Logo:** Already in use (index.mdx:111, about.mdx:81)
-   - Continue using existing embed SVG from YC
+### 3. ✅ Mark Nazzaro Photo (LinkedIn)
+- **URL:** `https://media.licdn.com/dms/image/v2/D4E03AQGUL1rE3NX-cg/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1731693681061?e=2147483647&v=beta&t=Zqs6J-PHoYDrh-mVCPTELKul6_aQrHaoj4xYnZDGklA`
+- **Format:** 200x200px (LinkedIn standard)
+- **Add to:** `about.mdx` (line ~115 - uncomment TODO block)
+- **Action:** Uncomment image block and replace placeholder path
 
-4. ✅ **YouTube Demo Video:** `https://youtu.be/iNQ8G4k03gc`
-   - Add to: `community.mdx` video tutorials section (one of 6 videos)
+### 4. ✅ YC Logo - Already in use
+- **Location:** `index.mdx` (line 111), `about.mdx` (line 81)
+- **Status:** Already integrated
+- **Action:** No action needed
+
+### 5. ✅ YouTube Demo Video
+- **URL:** `https://youtu.be/iNQ8G4k03gc`
+- **Alternative:** Mux playback ID: `GLEpOBmgJItFVevV675hTHiHoRDVjX4wbI4ShMhxOR00`
+- **Add to:** `community.mdx` (line 210 - uncomment CardGroup and replace first [YOUTUBE_URL])
+- **Action:** Uncomment video tutorial structure and add URL
+
+### 6. ✅ Complete Favicon Set (All Sizes)
+- **Favicon ICO:** `https://www.compyle.ai/favicon.ico`
+- **Favicon SVG:** `https://www.compyle.ai/favicon.svg`
+- **32x32 PNG:** `https://www.compyle.ai/favicon-32x32.png`
+- **16x16 PNG:** `https://www.compyle.ai/favicon-16x16.png`
+- **Apple Touch:** `https://www.compyle.ai/apple-touch-icon.png`
+- **Action:** Reference in documentation if needed
+
+### 7. ✅ Compyle Logo Assets
+- **Main Logo SVG:** `https://www.compyle.ai/compyle.svg`
+- **Transparent Logo:** `https://app.compyle.ai/compyle_transparent.svg`
+- **YC Logo PNG:** `https://www.compyle.ai/yc-logo.png`
+- **Action:** Available for any documentation branding needs
+
+### 8. ✅ Product Hunt Badge
+- **Light Theme:** `https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1028261&theme=light`
+- **Dark Theme:** `https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1028261&theme=dark`
+- **Action:** Can add to about.mdx or community.mdx if desired
+
+---
+
+## 🎯 Quick Integration Actions (Ready NOW)
+
+**Total immediately usable assets: 8 items (29 total files/URLs)**
+
+**Time to integrate:** ~15-20 minutes
+
+**Steps:**
+1. Open `features/custom-rules.mdx` (line 69) - Uncomment and add project rules screenshot
+2. Open `features/overview.mdx` (line 25) - Uncomment and add dashboard screenshot
+3. Open `getting-started/agent-workflow-intro.mdx` (line 19) - Uncomment and add dashboard screenshot
+4. Open `about.mdx` (line ~115) - Uncomment and add Mark Nazzaro photo
+5. Open `community.mdx` (line 210) - Uncomment and add YouTube demo video URL
+
+**Impact:** Visual enhancement to 5 pages, adds 2 screenshots + 1 photo + 1 video
 
 ---
 
