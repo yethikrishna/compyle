@@ -71,29 +71,70 @@ Already in `/workspace/cmhgc93t203xlooil278ue2e9/compyle/`:
 
 ---
 
-## 🔗 Social Media Links (Verified)
+## 🔗 Social Media & Communication Links (From Documentation)
 
 ### X (Twitter)
 - **URL:** https://x.com/compyle_ai
-- **Alternative:** https://twitter.com/compyle_ai (redirects to x.com)
+- **Handle:** @compyle_ai
 - **Status:** ✅ ACTIVE
-- **Standardized:** All docs now use x.com (Phase 4 complete)
+- **Source:** docs.json footer, community.mdx, about.mdx
+- **Usage:** Latest updates, announcements, tips, community updates
+- **Standardized:** All docs use x.com (Phase 4 complete)
+
+### Discord
+- **URL:** https://discord.gg/compyle
+- **Members:** 100+ engineers
+- **Status:** ✅ ACTIVE
+- **Source:** docs.json footer, community.mdx, about.mdx
+- **Channels:**
+  - #introductions - Meet the community
+  - #general - Chat and announcements
+  - #feature-requests - Suggest improvements
+  - #bug-reports - Report issues
+  - #showcases - Share what you've built
+  - #resources - Tips and guides
+  - #support - Direct support from team
 
 ### GitHub
 - **URL:** https://github.com/compyle
 - **Status:** ✅ ACTIVE
-- **Profile:** Company organization page
+- **Source:** docs.json footer, community.mdx, about.mdx
+- **Usage:** File issues, view projects, contribute, report bugs
 
 ### LinkedIn
-- **Company Page:** https://www.linkedin.com/company/compyle-ai
+- **Company Page:** https://linkedin.com/company/compyle
 - **Followers:** 148+ followers
 - **Employees Listed:** 2 (Jonathan Miranda, Mark Nazzaro)
 - **Status:** ✅ ACTIVE
+- **Source:** docs.json footer, community.mdx, about.mdx
+- **Note:** URL in docs is `linkedin.com/company/compyle` (not compyle-ai)
 
-### Discord
-- **URL:** https://discord.gg/compyle
-- **Status:** ✅ ACTIVE (assumed - not directly verified)
-- **Usage:** Community support and discussion
+### LinkedIn Team Profiles
+- **Jonathan Miranda:** https://linkedin.com/in/jonathanyamanda
+- **Mark Nazzaro:** https://linkedin.com/in/mark-nazzaro
+
+---
+
+## 📧 Email Addresses (From Documentation)
+
+### Support & General Contact
+- **General Support:** hi@compyle.ai
+  - Purpose: General support and questions
+  - Response time: 24-48 hours
+
+### Team & Leadership
+- **Founders Direct:** founders@compyle.ai
+  - Purpose: Direct access to founders
+  - Response time: 24-48 hours
+
+### Business Inquiries
+- **Partnerships:** partners@compyle.ai
+  - Purpose: Partnership and integration inquiries
+  - Response time: 2-5 days
+
+- **Press & Media:** press@compyle.ai
+  - Purpose: Press inquiries and media coverage
+  - Response time: 2-5 days
 
 ---
 
