@@ -82,7 +82,7 @@ If you'd like to contribute to Compyle documentation:
 
 For documentation questions or suggestions:
 - Email: [hi@compyle.ai](mailto:hi@compyle.ai)
-- Discord: [Join Community](https://discord.gg/compyle)
+- Discord: [Join Community](https://discord.gg/U9djmRTDB4)
 - GitHub Issues: Report documentation bugs or suggest improvements
 
 ---
