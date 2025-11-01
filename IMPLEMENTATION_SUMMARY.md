@@ -182,13 +182,15 @@ Each pattern includes JSON config, code examples, and usage guidance.
 
 ## Next Steps
 
-1. **Source team photos** → 30 min implementation
-2. **Capture screenshots** → 1 hour implementation
-3. **Collect testimonials** → 1 hour implementation
-4. **Create videos** → 1 hour implementation (once videos ready)
-5. **Design diagrams** → 30 min implementation (once diagrams created)
+**All placeholder structures are now ready!** When assets become available:
 
-**Total remaining:** ~3-4 hours once all assets are ready
+1. **Source team photos** → Uncomment TODO blocks in about.mdx, add 3 image files (10 min)
+2. **Capture screenshots** → Uncomment TODO blocks, add 2 image files (15 min)
+3. **Collect testimonials** → Uncomment CardGroup in about.mdx, fill in content (30 min)
+4. **Create videos** → Uncomment CardGroup in community.mdx, add YouTube URLs (15 min)
+5. **Design diagrams** → Add SVG files to /images/diagrams/ (10 min)
+
+**Total remaining:** ~1-2 hours once all assets are ready (reduced from 3-4 hours thanks to placeholder structures)
 
 ---
 
