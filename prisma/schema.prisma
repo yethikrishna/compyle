@@ -13,6 +13,12 @@ enum UserRole {
   admin
 }
 
+enum AppStatus {
+  draft
+  archived
+  published
+}
+
 model User {
   id            String   @id @default(cuid())
   name          String
@@ -21,57 +27,80 @@ model User {
   image         String?
   role          UserRole
 
-  sessions      Session[]
-  accounts      Account[]
+  sessions Session[]
+  accounts Account[]
+  apps     App[]
 
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Session {
-  id          String   @id @default(cuid())
-  userId      String
-  token       String   @unique
-  expiresAt   DateTime
-  ipAddress   String?
-  userAgent   String?
+  id        String   @id @default(cuid())
+  userId    String
+  token     String   @unique
+  expiresAt DateTime
+  ipAddress String?
+  userAgent String?
 
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Account {
-  id                     String   @id @default(cuid())
-  userId                 String
-  accountId              String
-  providerId             String
-  accessToken            String?
-  refreshToken           String?
-  accessTokenExpiresAt   DateTime?
-  refreshTokenExpiresAt  DateTime?
-  scope                  String?
-  idToken                String?
-  password               String?
+  id                    String    @id @default(cuid())
+  userId                String
+  accountId             String
+  providerId            String
+  accessToken           String?
+  refreshToken          String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  idToken               String?
+  password              String?
 
-  user                   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  createdAt              DateTime @default(now())
-  updatedAt              DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([userId])
   @@index([providerId])
 }
 
 model Verification {
-  id          String   @id @default(cuid())
-  identifier  String
-  value       String
-  expiresAt   DateTime
+  id         String   @id @default(cuid())
+  identifier String
+  value      String
+  expiresAt  DateTime
 
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([identifier])
+}
+
+model App {
+  id          String    @id @default(cuid())
+  name        String
+  slug        String    @unique
+  description String
+  coverImage  String?
+  websiteUrl  String?
+  repoUrl     String?
+  demoUrl     String?
+  tags        String[]  @default([])
+  featured    Boolean   @default(false)
+  verified    Boolean   @default(false)
+  likes       Int       @default(0)
+  status      AppStatus @default(published)
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

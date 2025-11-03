@@ -1,5 +1,6 @@
 "use client";
 
+import { Header } from "@/components/custom/header";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -18,13 +19,15 @@ import {
 import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
 import { signUp } from "@/lib/auth-client";
-import { signupSchema } from "@/schema/signup.schema";
+import { signupSchema } from "@/schema/auth.schema";
 import { useForm } from "@tanstack/react-form";
-import { GitPullRequestCreateArrow } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast } from "sonner";
 
 export default function Signup() {
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm({
@@ -44,11 +47,13 @@ export default function Signup() {
           onSuccess: () => {
             setIsLoading(false);
             form.reset();
+            toast.success("Account created successfully");
+            router.push("/login");
           },
           onError: (ctx) => {
             setIsLoading(false);
             form.reset();
-            alert(ctx.error.message);
+            toast.error(ctx.error.message);
           },
         },
       );
@@ -56,22 +61,12 @@ export default function Signup() {
   });
 
   return (
-    <div className="bg-muted flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
-      <div className="flex w-full max-w-sm flex-col gap-6">
-        <Link
-          href="/"
-          className="flex items-center gap-3 self-center font-medium"
-        >
-          <div className="bg-muted-foreground/25 flex items-center justify-center rounded-md p-1">
-            <GitPullRequestCreateArrow />
-          </div>
-          <span className="font-semibold text-2xl">Compyle Apps</span>
-        </Link>
-
-        {/* Signup Form*/}
+    <div>
+      <Header />
+      <div className="mx-auto max-w-lg">
         <Card className="md:min-w-md">
           <CardHeader className="text-center">
-            <CardTitle className="text-xl">Create your account</CardTitle>
+            <CardTitle className="text-xl">Create Your Account</CardTitle>
             <CardDescription>
               Enter your info below to create an account
             </CardDescription>
