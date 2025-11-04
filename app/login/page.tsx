@@ -66,7 +66,7 @@ export default function Login() {
           onError: (ctx) => {
             setIsLoading(false);
             form.reset();
-            toast.error(ctx.error.message);
+            toast.error(ctx.error.message || "Something went wrong");
           },
         },
       );
