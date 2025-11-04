@@ -1,9 +1,0 @@
-{
-  "buildCommand": "prisma generate && next build",
-  "installCommand": "pnpm install",
-  "functions": {
-    "app/**/*.{js,ts,tsx}": {
-      "includeFiles": "generated/prisma/**"
-    }
-  }
-}
