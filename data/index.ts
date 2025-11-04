@@ -1,0 +1,43 @@
+export const PREDEFINED_TAGS = [
+  "AI",
+  "Machine Learning",
+  "Automation",
+  "Productivity",
+  "Data Analysis",
+  "Content Generation",
+  "Code Assistant",
+  "Chat Bot",
+  "Image Generation",
+  "Voice Processing",
+  "Analytics",
+  "Integration",
+  "No-Code",
+  "API",
+  "Open Source",
+  "Enterprise",
+  "SaaS",
+  "Educational",
+] as const;
+
+export type AppTag = (typeof PREDEFINED_TAGS)[number];
+
+export const TAG_COLORS: Record<AppTag, string> = {
+  AI: "bg-blue-500/20 text-blue-300 border-blue-500/30",
+  "Machine Learning": "bg-purple-500/20 text-purple-300 border-purple-500/30",
+  Automation: "bg-orange-500/20 text-orange-300 border-orange-500/30",
+  Productivity: "bg-green-500/20 text-green-300 border-green-500/30",
+  "Data Analysis": "bg-cyan-500/20 text-cyan-300 border-cyan-500/30",
+  "Content Generation": "bg-pink-500/20 text-pink-300 border-pink-500/30",
+  "Code Assistant": "bg-indigo-500/20 text-indigo-300 border-indigo-500/30",
+  "Chat Bot": "bg-violet-500/20 text-violet-300 border-violet-500/30",
+  "Image Generation": "bg-rose-500/20 text-rose-300 border-rose-500/30",
+  "Voice Processing": "bg-amber-500/20 text-amber-300 border-amber-500/30",
+  Analytics: "bg-sky-500/20 text-sky-300 border-sky-500/30",
+  Integration: "bg-teal-500/20 text-teal-300 border-teal-500/30",
+  "No-Code": "bg-emerald-500/20 text-emerald-300 border-emerald-500/30",
+  API: "bg-fuchsia-500/20 text-fuchsia-300 border-fuchsia-500/30",
+  "Open Source": "bg-lime-500/20 text-lime-300 border-lime-500/30",
+  Enterprise: "bg-slate-500/20 text-slate-300 border-slate-500/30",
+  SaaS: "bg-zinc-500/20 text-zinc-300 border-zinc-500/30",
+  Educational: "bg-yellow-500/20 text-yellow-300 border-yellow-500/30",
+};
