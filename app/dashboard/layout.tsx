@@ -18,7 +18,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <SidebarProvider>
       <AppSidebar />
       <SidebarInset>
-        <header className="flex h-16 shrink-0 items-center gap-2">
+        <header className="flex h-16 shrink-0 items-center gap-2 fixed top-0 w-full bg-background">
           <div className="flex items-center gap-2 px-4 border-b w-full pb-2">
             <SidebarTrigger className="-ml-1" />
             <Separator
@@ -34,7 +34,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </Breadcrumb>
           </div>
         </header>
-        <div className="gap-4 p-4 pt-0">
+        <div className="gap-4 p-4 pt-14">
           <LayoutClient>{children}</LayoutClient>
         </div>
       </SidebarInset>

@@ -1,5 +1,6 @@
 import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
+import { Providers } from "@/utils/provider";
 
 export default function RootLayout({
   children,
@@ -9,8 +10,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <main>{children}</main>
-        <Toaster />
+        <Providers>
+          <main>{children}</main>
+          <Toaster />
+        </Providers>
       </body>
     </html>
   );

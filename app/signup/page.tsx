@@ -18,17 +18,30 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
-import { signUp } from "@/lib/auth-client";
+import { signUp, useSession } from "@/lib/auth-client";
 import { signupSchema } from "@/schema/auth.schema";
 import { useForm } from "@tanstack/react-form";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 export default function Signup() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const { data: session, isPending, error } = useSession();
+
+  useEffect(() => {
+    if (session && !isPending && !error) {
+      router.prefetch("/dashboard");
+      const toastId = toast.loading("Logged in. Redirecting...");
+      const timer = setTimeout(() => {
+        toast.dismiss(toastId);
+        router.push("/dashboard");
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [session, isPending, error, router]);
 
   const form = useForm({
     defaultValues: { name: "", email: "", password: "" },
