@@ -29,19 +29,21 @@ import { toast } from "sonner";
 export default function Login() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const [hasLoggedIn, setHasLoggedIn] = useState(false);
+
   const { data: session, isPending, error } = useSession();
 
   useEffect(() => {
-    if (session && !isPending && !error) {
+    if (session && !isPending && !error && !hasLoggedIn) {
       router.prefetch("/dashboard");
-      const toastId = toast.loading("Logged in. Redirecting...");
+      const toastId = toast.loading("Already logged in. Redirecting...");
       const timer = setTimeout(() => {
         toast.dismiss(toastId);
         router.push("/dashboard");
-      }, 2000);
+      }, 1500);
       return () => clearTimeout(timer);
     }
-  }, [session, isPending, error, router]);
+  }, [session, isPending, error, router, hasLoggedIn]);
 
   const form = useForm({
     defaultValues: { email: "", password: "" },
@@ -58,6 +60,7 @@ export default function Login() {
             setIsLoading(true);
           },
           onSuccess: () => {
+            setHasLoggedIn(true);
             setIsLoading(false);
             form.reset();
             toast.success("Login successful");
