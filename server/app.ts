@@ -1,9 +1,10 @@
 "use server";
 
-import { db } from "@/lib/db";
+import { db } from "@/db";
+import { apps } from "@/db/schemas/app";
 import { createAppSchema } from "@/schema/app.schema";
+import { getUserFromAuth } from "@/server/user";
 import { z, ZodError } from "zod";
-import { getUserFromAuth } from "./user";
 
 export async function createApp(
   values: z.infer<typeof createAppSchema>,
@@ -12,7 +13,11 @@ export async function createApp(
     const data = createAppSchema.parse(values);
     const user = await getUserFromAuth();
 
-    await db.app.create({ data: { ...data, userId: user.id } });
+    await db.insert(apps).values({
+      ...data,
+      userId: user.id,
+    });
+
     return true;
   } catch (error) {
     if (error instanceof ZodError) {
