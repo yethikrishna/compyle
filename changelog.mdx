@@ -82,9 +82,158 @@ Track every new feature, improvement, and update to the Compyle platform.
 
 ---
 
+### Free Credits & Community Rewards
+**November 3, 2024**
+
+<CardGroup cols={2}>
+  <Card title="Invite Friends System" icon="user-plus">
+    Earn credits by inviting others
+
+    - 1,000 credits when friend upgrades to paid plan
+    - Credits for both you and your friend
+    - Bonus credits never expire
+    - Track invites in dashboard
+  </Card>
+
+  <Card title="Social Sharing Rewards" icon="share-nodes">
+    Get credits for spreading the word
+
+    - Share Compyle on social media
+    - Claim bonus credits instantly
+    - Multiple platforms supported
+    - Easy one-click sharing
+  </Card>
+</CardGroup>
+
+<Info>
+  **Founding Crew:** Early community members got 20% off for 3 months + free merch with code FOUNDING20 (Discord exclusive)
+</Info>
+
+---
+
+### Model Selector & Credit Optimization
+**November 2, 2024**
+
+<CardGroup cols={2}>
+  <Card title="Multi-Model Support" icon="brain">
+    Choose the right AI model for your task
+
+    **Available models:**
+    - Claude Sonnet 4.5 (most capable)
+    - Claude Haiku 4.5 (fast, cost-effective)
+    - GLM 4.6 (international, affordable)
+
+    More coming: GPT-5 and Gemini 2.5 families
+  </Card>
+
+  <Card title="Dynamic Credit Pricing" icon="coins">
+    Credits now reflect model costs
+
+    - Haiku and GLM use fewer credits
+    - Get more usage with cost-effective models
+    - Transparent pricing per model
+    - Choose based on task complexity
+  </Card>
+</CardGroup>
+
+<a href="/releases/nov-2-model-selector" style={{display: 'inline-block', marginTop: '1rem', padding: '0.5rem 1.25rem', background: '#6366f1', color: 'white', borderRadius: '6px', textDecoration: 'none', fontSize: '0.875rem', fontWeight: '500'}}>
+  View Full Release Notes →
+</a>
+
+---
+
 <div id="october-2024"></div>
 
 ## October 2024
+
+### Billing & BYOK Launch
+**October 29-31, 2024**
+
+<Warning>
+  **Major Infrastructure Update:** After rapid growth and credit challenges, we introduced sustainable billing and BYOK support.
+</Warning>
+
+<AccordionGroup>
+  <Accordion title="Billing Tiers Introduced">
+    **October 31, 2024**
+
+    Sustainable pricing to keep Compyle running:
+
+    - **Free:** 500 credits for everyone
+    - **Standard:** $10/mo for 2,500 credits
+    - **Pro:** $25/mo for 7,500 credits
+    - **Pro+:** $50/mo for 17,500 credits
+
+    **Why this happened:**
+    - Rapid user growth exceeded startup credits
+    - Service outages from Oct 27-29
+    - Need sustainable infrastructure
+    - Free credits remain available through referrals and social sharing
+  </Accordion>
+
+  <Accordion title="Bring Your Own Key (BYOK)">
+    **October 29, 2024**
+
+    Use your own Anthropic API key:
+
+    - Create key at console.anthropic.com
+    - Connect in Compyle settings
+    - Pay Anthropic directly for usage
+    - Monitor spend in Anthropic console
+
+    **When to use:**
+    - You have existing Anthropic credits
+    - Need predictable billing
+    - Want direct cost control
+    - Temporary solution during credit shortage
+  </Accordion>
+
+  <Accordion title="Community Rules Added">
+    **October 31, 2024**
+
+    Clear guidelines to keep the community healthy:
+
+    - Respectful collaboration principles
+    - Channel organization guidelines
+    - Code of conduct for Discord
+    - Transparency and building responsibly
+  </Accordion>
+</AccordionGroup>
+
+<a href="/releases/oct-31-billing-byok" style={{display: 'inline-block', marginTop: '1rem', padding: '0.5rem 1.25rem', background: '#6366f1', color: 'white', borderRadius: '6px', textDecoration: 'none', fontSize: '0.875rem', fontWeight: '500'}}>
+  View Full Release Notes →
+</a>
+
+---
+
+### Infrastructure Recovery & Stability
+**October 27-30, 2024**
+
+<Accordion title="What Happened: Growth Pains & Recovery">
+  **The Challenge:**
+  - Traffic spike exceeded infrastructure capacity
+  - Redis backlog caused agent unresponsiveness
+  - Anthropic rate limits and credit exhaustion
+  - Service disruptions Oct 27-29
+
+  **The Response:**
+  - Major backend migration for resumable tasks
+  - Server limit increases
+  - Alternative model deployment (Haiku 4.5)
+  - BYOK as stopgap solution
+  - Service fully restored Oct 30
+
+  **What We Learned:**
+  - Need scalable credit management
+  - Importance of multi-model support
+  - Value of transparent communication
+  - Grateful for patient early users
+
+  **Permanent Migration Note:**
+  Tasks created before Oct 26 6PM PST were permanently spun down on Oct 27 6PM PST to complete the resumability migration. Chat history and GitHub code remained accessible.
+</Accordion>
+
+---
 
 ### Resumability & Smart Branch Naming
 **October 26, 2024**
