@@ -17,11 +17,9 @@ Track every new feature, improvement, and update to the Compyle platform.
 ---
 
 ## November 2025
-## October 2025
 
 ### Platform Launch
-
-**October 2025**
+**November 2025**
 
 <Warning>
   **🚀 Compyle is now live!** Our collaborative AI coding platform is officially available.
@@ -30,30 +28,27 @@ Track every new feature, improvement, and update to the Compyle platform.
 <AccordionGroup>
   <Accordion title="Core Features">
     **Three-Phase AI Agent Workflow:**
-
     - **Research:** Automatic codebase analysis
     - **Planning:** Interactive clarifying questions
     - **Implementation:** Real-time code generation with validation
 
     **GitHub Integration:**
-
     - OAuth authentication
     - Automatic PR creation
     - Branch management
     - Multi-repository support
 
     **Custom Rules System:**
-
     - JSON-based pattern configuration
     - Real-time enforcement during implementation
     - Flexible modes (warn/block)
 
     **Project Management:**
-
     - Multi-repo task tracking
     - Activity monitoring
     - Credit usage tracking
   </Accordion>
+
   <Accordion title="What Makes Compyle Different">
     - **Collaborative, not autonomous:** Stay in control through planning questions
     - **Pattern enforcement:** Custom rules ensure code quality
@@ -61,10 +56,301 @@ Track every new feature, improvement, and update to the Compyle platform.
   </Accordion>
 </AccordionGroup>
 
-<a href="https://compyle.ai" style={{ display:"inline-block",marginTop:"1rem",padding:"0.5rem 1rem",background:"#6366f1",color:"white",borderRadius:"6px",textDecoration:"none" }}>
-Get Started →
+[View Full Release Notes →](/releases/platform-launch)
 
-</a>
+---
+
+### Free Credits & Community Rewards
+**November 3, 2025**
+
+<CardGroup cols={2}>
+  <Card title="Invite Friends System" icon="user-plus">
+    Earn credits by inviting others
+
+    - 1,000 credits when friend upgrades to paid plan
+    - Credits for both you and your friend
+    - Bonus credits never expire
+    - Track invites in dashboard
+  </Card>
+
+  <Card title="Social Sharing Rewards" icon="share-nodes">
+    Get credits for spreading the word
+
+    - Share Compyle on social media
+    - Claim bonus credits instantly
+    - Multiple platforms supported
+    - Easy one-click sharing
+  </Card>
+</CardGroup>
+
+<Info>
+  **Founding Crew:** Early community members got 20% off for 3 months + free merch with code FOUNDING20 (Discord exclusive)
+</Info>
+
+---
+
+### Model Selector & Credit Optimization
+**November 2, 2025**
+
+<CardGroup cols={2}>
+  <Card title="Multi-Model Support" icon="brain">
+    Choose the right AI model for your task
+
+    **Available models:**
+    - Claude Sonnet 4.5 (most capable)
+    - Claude Haiku 4.5 (fast, cost-effective)
+    - GLM 4.6 (international, affordable)
+
+    More coming: GPT-5 and Gemini 2.5 families
+  </Card>
+
+  <Card title="Dynamic Credit Pricing" icon="coins">
+    Credits now reflect model costs
+
+    - Haiku and GLM use fewer credits
+    - Get more usage with cost-effective models
+    - Transparent pricing per model
+    - Choose based on task complexity
+  </Card>
+</CardGroup>
+
+[View Full Release Notes →](/releases/nov-2-model-selector)
+
+---
+
+## October 2025
+
+### Billing & BYOK Launch
+**October 29-31, 2025**
+
+<Warning>
+  **Major Infrastructure Update:** After rapid growth and credit challenges, we introduced sustainable billing and BYOK support.
+</Warning>
+
+<AccordionGroup>
+  <Accordion title="Billing Tiers Introduced">
+    **October 31, 2025**
+
+    Sustainable pricing to keep Compyle running:
+
+    - **Free:** 500 credits for everyone
+    - **Standard:** $10/mo for 2,500 credits
+    - **Pro:** $25/mo for 7,500 credits
+    - **Pro+:** $50/mo for 17,500 credits
+
+    **Why this happened:**
+    - Rapid user growth exceeded startup credits
+    - Service outages from Oct 27-29
+    - Need sustainable infrastructure
+    - Free credits remain available through referrals and social sharing
+  </Accordion>
+
+  <Accordion title="Bring Your Own Key (BYOK)">
+    **October 29, 2025**
+
+    Use your own Anthropic API key:
+
+    - Create key at console.anthropic.com
+    - Connect in Compyle settings
+    - Pay Anthropic directly for usage
+    - Monitor spend in Anthropic console
+
+    **When to use:**
+    - You have existing Anthropic credits
+    - Need predictable billing
+    - Want direct cost control
+    - Temporary solution during credit shortage
+  </Accordion>
+
+  <Accordion title="Community Rules Added">
+    **October 31, 2025**
+
+    Clear guidelines to keep the community healthy:
+
+    - Respectful collaboration principles
+    - Channel organization guidelines
+    - Code of conduct for Discord
+    - Transparency and building responsibly
+  </Accordion>
+</AccordionGroup>
+
+[View Full Release Notes →](/releases/oct-31-billing-byok)
+
+---
+
+### Infrastructure Recovery & Stability
+**October 27-30, 2025**
+
+<Accordion title="What Happened: Growth Pains & Recovery">
+  **The Challenge:**
+  - Traffic spike exceeded infrastructure capacity
+  - Redis backlog caused agent unresponsiveness
+  - Anthropic rate limits and credit exhaustion
+  - Service disruptions Oct 27-29
+
+  **The Response:**
+  - Major backend migration for resumable tasks
+  - Server limit increases
+  - Alternative model deployment (Haiku 4.5)
+  - BYOK as stopgap solution
+  - Service fully restored Oct 30
+
+  **What We Learned:**
+  - Need scalable credit management
+  - Importance of multi-model support
+  - Value of transparent communication
+  - Grateful for patient early users
+
+  **Permanent Migration Note:**
+  Tasks created before Oct 26 6PM PST were permanently spun down on Oct 27 6PM PST to complete the resumability migration. Chat history and GitHub code remained accessible.
+</Accordion>
+
+---
+
+### Resumability & Smart Branch Naming
+**October 26, 2025**
+
+<CardGroup cols={2}>
+  <Card title="Resumability" icon="rotate">
+    Durable sessions that can be reused across days or months
+
+    - Continue tasks after days or weeks
+    - Automatic recovery when things break
+    - No need to restart from scratch
+    - Session state persists reliably
+  </Card>
+
+  <Card title="Automatic Branch Naming" icon="code-branch">
+    Descriptive branch names generated automatically
+
+    - Based on task title and description
+    - Follows naming conventions
+    - No more generic branch names
+  </Card>
+</CardGroup>
+
+[View Full Release Notes →](/releases/oct-26-resumability)
+
+---
+
+### Dark Mode & System Improvements
+**October 21, 2025**
+
+<CardGroup cols={2}>
+  <Card title="Dark Mode" icon="moon">
+    Full dark mode support across the platform
+
+    - Easy on the eyes for long coding sessions
+    - System preference detection
+    - Smooth theme switching
+  </Card>
+
+  <Card title="Improvements & Fixes" icon="wrench">
+    **Observability Enhancements:**
+    - Better agent performance monitoring
+    - Improved debugging capabilities
+
+    **Bug Fixes:**
+    - Fixed slow chat issue
+    - Longer token lifetimes (24+ hours)
+    - Git syncing continues working after extended sessions
+  </Card>
+</CardGroup>
+
+[View Full Release Notes →](/releases/oct-21-dark-mode)
+
+---
+
+### Performance & Planning Enhancements
+**October 18, 2025**
+
+<CardGroup cols={2}>
+  <Card title="Performance Improvements" icon="gauge-high">
+    Significant speed improvements across the app
+
+    - Page switching is much faster
+    - Reduced loading times
+    - Smoother navigation experience
+  </Card>
+
+  <Card title="New Features" icon="sparkles">
+    **Image Attachments:**
+    - Attach screenshots and diagrams to tasks
+    - Better visual communication
+
+    **Change Highlighting:**
+    - See changes highlighted in planning document
+    - Easier to review what's being proposed
+
+    **Gitignore Templates:**
+    - Pre-configured templates for new projects
+    - Start clean with proper git exclusions
+  </Card>
+</CardGroup>
+
+[View Full Release Notes →](/releases/oct-18-performance)
+
+---
+
+### GitHub App & Community Features
+**October 15-21, 2025**
+
+<CardGroup cols={2}>
+  <Card title="GitHub App Launch" icon="github">
+    **October 15, 2025**
+
+    New GitHub App for better integration
+
+    - More reliable authentication
+    - Improved permission management
+    - Better repository access
+    - Seamless reconnection flow
+  </Card>
+
+  <Card title="Community Tags & Roles" icon="tags">
+    **October 21, 2025**
+
+    Show your Compyle community membership
+
+    - Discord server tags available
+    - Flaunt your early adopter status
+    - Community role system
+    - Special access and recognition
+  </Card>
+</CardGroup>
+
+---
+
+### Projects Page Improvements
+**October 16, 2025**
+
+<CardGroup cols={2}>
+  <Card title="Performance & UX" icon="rocket">
+    **Performance improvements on `/projects/...` pages:**
+    - Faster page loads
+    - Smoother interactions
+
+    **New loading indicator:**
+    - Clear feedback when actions are processing
+    - Better loading states
+
+    **Display thinking messages:**
+    - See what the agent is thinking in real-time
+    - Better transparency into the process
+  </Card>
+
+  <Card title="UI Improvements" icon="palette">
+    **Improved Write Card UI:**
+    - Better layout and styling
+    - More intuitive controls
+
+    **Message Delivery Fix:**
+    - No need to reload to see new messages
+    - Real-time message updates work properly
+  </Card>
+</CardGroup>
+
+[View Full Release Notes →](/releases/oct-16-projects)
 
 ---
 
@@ -78,6 +364,7 @@ Get Started →
     - Get support
     - Share feedback
   </Card>
+
   <Card title="Twitter/X" icon="x-twitter" href="https://x.com/compyle_ai">
     Follow for updates
 
@@ -85,6 +372,7 @@ Get Started →
     - Tips & tricks
     - Community highlights
   </Card>
+
   <Card title="Email" icon="envelope" href="mailto:hi@compyle.ai?subject=Subscribe">
     Subscribe
 
@@ -105,6 +393,7 @@ Get Started →
     3. Email [hi@compyle.ai](mailto:hi@compyle.ai)
     4. Join [Discord](https://discord.gg/U9djmRTDB4)
   </Accordion>
+
   <Accordion title="💡 Request a Feature">
     1. Share in Discord #feature-requests
     2. Email [founders@compyle.ai](mailto:founders@compyle.ai)
