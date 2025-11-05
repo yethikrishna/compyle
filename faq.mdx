@@ -265,7 +265,1050 @@ description: "Frequently asked questions about Compyle"
   </Accordion>
 </AccordionGroup>
 
-## Common Bugs & Known Issues
+## Agent Issues (Critical Priority)
+
+<AccordionGroup>
+  <Accordion title="Agent died with no response - Recovery procedure">
+    **Problem**: The agent stops responding mid-task, showing no activity or progress updates.
+
+    **Symptoms**:
+    - Agent appears frozen or unresponsive
+    - No new commits or PR updates
+    - Task status shows "In Progress" but nothing happens
+    - No error messages displayed
+
+    **Solution - Agent Death Recovery**:
+    1. Find the pull request associated with the task
+    2. Note the commit hash from the last successful commit
+    3. Copy the "Planning" section from the task details
+    4. Open a new tab and go to [https://app.compyle.ai](https://app.compyle.ai)
+    5. Create a new project with the same requirements
+    6. Paste the planning into the new task
+    7. This allows you to continue where you left off
+
+    **Prevention**:
+    - Save planning artifacts regularly
+    - Monitor task progress actively
+    - Keep notes on task requirements for quick restart
+    - Set up browser bookmarks for quick access to app
+
+    **Technical Notes**: Agent death can be caused by upstream service interruptions, memory issues, or connection timeouts. The recovery procedure preserves your progress and planning decisions.
+  </Accordion>
+
+  <Accordion title="Agent thinks it's a planning agent only, not an implementation agent">
+    **Problem**: Agent provides planning and suggestions but doesn't actually implement code changes.
+
+    **Symptoms**:
+    - Agent responds with plans and suggestions
+    - No code commits or file changes
+    - Task remains in planning phase indefinitely
+    - Agent asks "Would you like me to implement this?"
+
+    **Solution**:
+    1. In your task description, explicitly state: "Implement the following changes..."
+    2. Use action verbs: "Create", "Build", "Modify", "Add", not "Plan" or "Suggest"
+    3. If already stuck, send a message: "Please implement these changes now"
+    4. Restart the task with clearer implementation instructions if needed
+
+    **Prevention**:
+    - Always use implementation-focused language in task descriptions
+    - Start tasks with "Implement...", "Create...", "Build..."
+    - Avoid phrases like "How would I..." or "What do you think about..."
+    - Be explicit that you want code changes, not just suggestions
+
+    **Technical Notes**: The agent's behavior is influenced by the phrasing of your initial request. Implementation-focused language triggers the correct workflow mode.
+  </Accordion>
+
+  <Accordion title="Agent stuck in loading loop">
+    **Problem**: Agent shows continuous loading spinner without progress or completion.
+
+    **Symptoms**:
+    - Infinite loading indicator
+    - Browser tab remains active but shows no updates
+    - No error messages or timeouts
+    - Task status doesn't change
+
+    **Solution**:
+    1. Hard refresh the browser (Ctrl+Shift+R or Cmd+Shift+R)
+    2. Check the task in a different browser or incognito window
+    3. Verify your internet connection is stable
+    4. Check GitHub to see if commits were actually made
+    5. If commits exist, the task may have completed despite UI issues
+    6. Contact support if loading persists beyond 5 minutes
+
+    **Prevention**:
+    - Maintain stable internet connection during tasks
+    - Avoid switching tabs during critical task phases
+    - Keep browser and extensions updated
+    - Clear browser cache regularly
+
+    **Technical Notes**: Loading loops are often UI state issues. The backend may have completed work even if the frontend doesn't reflect it.
+  </Accordion>
+
+  <Accordion title="Agent won't stop/wrap up finished task">
+    **Problem**: Agent continues running or making changes after task appears complete.
+
+    **Symptoms**:
+    - Task shows complete but agent still active
+    - Additional unexpected commits after completion
+    - Cannot start new tasks due to "agent busy" status
+    - PR keeps getting updated with minor changes
+
+    **Solution**:
+    1. Send explicit message: "Task is complete. Please stop and finalize."
+    2. Navigate to task dashboard and click "Complete Task" button
+    3. If button unavailable, refresh page and try again
+    4. Check PR to ensure all desired changes are present
+    5. Close the task manually from task list if agent doesn't respond
+    6. Contact support if unable to stop the agent
+
+    **Prevention**:
+    - Set clear completion criteria in task description
+    - Review PR before final approval
+    - Use "Mark as Complete" promptly when satisfied
+    - Be explicit about scope boundaries in planning phase
+
+    **Technical Notes**: Sometimes the agent continues optimizing or refining beyond the core requirements. Clear acceptance criteria help prevent this.
+  </Accordion>
+
+  <Accordion title="Agent stopped - max_tokens error">
+    **Problem**: Agent halts with "max_tokens" or "context length exceeded" error.
+
+    **Symptoms**:
+    - Error message mentioning tokens or context limit
+    - Task stops abruptly mid-implementation
+    - Partial implementation in PR
+    - Cannot resume from stopping point
+
+    **Solution**:
+    1. Review what was completed before the error
+    2. Break down remaining work into smaller, focused tasks
+    3. Create new task for remaining work, referencing completed changes
+    4. Be more specific about scope to reduce context needs
+    5. If recurring, contact support about token allocation
+
+    **Prevention - Token Management Strategies**:
+    - Break large features into smaller, focused tasks
+    - Limit file scope in task descriptions
+    - Use specific file paths rather than broad searches
+    - Skip research phase for well-defined tasks
+    - Reference specific line numbers when possible
+    - Avoid asking agent to analyze entire large codebases
+
+    **Technical Notes**: Token limits are per-session. Complex tasks with large context (many files, long discussions) exhaust the limit faster. Strategic task scoping is key.
+  </Accordion>
+
+  <Accordion title="Agent not going back to research">
+    **Problem**: Agent proceeds without sufficient research or understanding of codebase.
+
+    **Symptoms**:
+    - Agent makes changes without understanding existing patterns
+    - Code doesn't match project style or architecture
+    - Missing important context from other files
+    - Implements duplicate functionality that already exists
+
+    **Solution**:
+    1. Explicitly request: "Please research [specific area] before implementing"
+    2. Point agent to specific files: "Review [filename] for patterns"
+    3. Ask clarifying questions to verify understanding
+    4. Cancel and restart with "Enable Research Phase" if needed
+    5. Provide examples from codebase in task description
+
+    **Prevention**:
+    - Don't skip research phase for complex or unfamiliar areas
+    - Reference key files in task description
+    - Include "Research existing [pattern/component] first" in requirements
+    - Set up proper custom rules to guide agent
+    - Use pattern library for consistent implementations
+
+    **Technical Notes**: Research phase quality directly impacts implementation quality. For new areas of codebase or complex features, research is essential.
+  </Accordion>
+
+  <Accordion title="Model not showing the planning">
+    **Problem**: Planning phase completes but no planning document or questions are visible.
+
+    **Symptoms**:
+    - Task moves from Research to Implementation
+    - No planning questions were asked
+    - Cannot review what agent is about to do
+    - Planning tab is empty or missing
+
+    **Solution**:
+    1. Check the "Planning" tab in task details page
+    2. Look for notifications that may contain planning questions
+    3. Check your notification settings (questions may be filtered)
+    4. Review PR description - planning may be documented there
+    5. If no planning visible anywhere, stop the task immediately
+    6. Contact support with task ID - this shouldn't happen
+
+    **Prevention**:
+    - Enable all notification types in settings
+    - Check multiple locations (tabs, notifications, PR)
+    - Use browser that supports all Compyle features
+    - Don't skip planning phase for complex tasks
+
+    **Technical Notes**: Planning visibility is critical for validation workflow. This is a serious issue if planning is truly missing.
+  </Accordion>
+
+  <Accordion title="Model not listening to commands">
+    **Problem**: Agent ignores instructions or feedback provided during task execution.
+
+    **Symptoms**:
+    - Agent proceeds despite explicit instructions to stop or change approach
+    - Feedback not reflected in subsequent commits
+    - Agent repeats same mistakes after correction
+    - Commands like "stop", "pause", "change approach" have no effect
+
+    **Solution**:
+    1. Use clear, direct imperative language: "Stop this approach"
+    2. Be very specific: "Do NOT modify file X"
+    3. If agent continues, use the Stop/Cancel button in UI
+    4. Create new task with more explicit constraints
+    5. Add custom rules to prevent unwanted behaviors
+    6. Include constraints in initial task description, not just feedback
+
+    **Prevention**:
+    - Front-load constraints and requirements in task description
+    - Use custom rules for hard constraints
+    - Be explicit about what NOT to do
+    - Monitor first few commits closely
+    - Catch issues early before agent goes too far
+    - Use clear, unambiguous language
+
+    **Technical Notes**: Mid-task feedback is less effective than upfront requirements. The agent's initial planning heavily influences subsequent behavior.
+  </Accordion>
+</AccordionGroup>
+
+## GitHub Integration Issues
+
+<AccordionGroup>
+  <Accordion title="Cannot push changes to GitHub - Permission denied">
+    **Problem**: Agent completes work but fails to push commits to GitHub repository.
+
+    **Symptoms**:
+    - Error: "Permission denied" or "403 Forbidden"
+    - Commits visible in task but not on GitHub
+    - PR creation fails
+    - Authentication errors in task logs
+
+    **Solution**:
+    1. Check GitHub app installation at [GitHub Apps settings](https://github.com/settings/installations)
+    2. Verify Compyle has access to the specific repository
+    3. Ensure repository permissions include "Read and write" for Contents and Pull requests
+    4. Disconnect and reconnect GitHub in Compyle Settings → Integrations
+    5. Try removing and re-installing the Compyle GitHub App
+    6. Verify you have write access to the repository yourself
+
+    **Prevention - GitHub Integration Best Practices**:
+    - Verify repository permissions when connecting new repos
+    - Regularly check token status hasn't expired
+    - Ensure proper repository permissions in GitHub settings
+    - Keep GitHub app updated with latest permission requirements
+    - Use webhooks for real-time synchronization
+    - Regularly refresh authentication
+
+    **Technical Notes**: GitHub tokens can expire or have insufficient scopes. The Compyle GitHub App needs specific permissions to create branches and PRs.
+  </Accordion>
+
+  <Accordion title="Branch creation issues - Branch doesn't appear on GitHub">
+    **Problem**: Compyle creates a branch locally but it doesn't appear on GitHub.
+
+    **Symptoms**:
+    - Task shows branch created
+    - Branch not visible on GitHub repository
+    - Cannot find branch in branch dropdown
+    - PR creation fails due to missing branch
+
+    **Solution**:
+    1. Verify branch name in task details
+    2. Check GitHub repository's branch list (including "All branches")
+    3. Try fetching all branches: `git fetch --all` locally
+    4. Check if branch is protected or has naming restrictions
+    5. Verify Compyle has push permissions (see previous section)
+    6. Look for branch on GitHub under PR tab (may be in open PRs)
+
+    **Prevention**:
+    - Ensure stable internet connection during task execution
+    - Verify GitHub app permissions include branch creation
+    - Avoid special characters in task names (affects branch names)
+    - Check repository settings don't restrict branch creation
+
+    **Technical Notes**: Branch synchronization requires successful push. Network issues or permission problems during push will cause this.
+  </Accordion>
+
+  <Accordion title="Problems with GitHub connection">
+    **Problem**: Compyle repeatedly loses connection to GitHub or shows disconnected status.
+
+    **Symptoms**:
+    - Frequent "GitHub disconnected" messages
+    - Must reconnect GitHub multiple times
+    - Tasks fail mid-execution with connection errors
+    - Repositories disappear from project list
+
+    **Solution**:
+    1. Revoke and reinstall the Compyle GitHub App
+    2. Check GitHub's service status at [GitHub Status](https://www.githubstatus.com)
+    3. Clear browser cache and cookies
+    4. Try different browser to rule out browser-specific issues
+    5. Verify your GitHub account is in good standing
+    6. Check for VPN or network restrictions blocking GitHub API
+    7. Contact support if issue persists after trying above steps
+
+    **Prevention**:
+    - Maintain stable internet connection
+    - Don't revoke Compyle's GitHub access manually
+    - Keep GitHub credentials current
+    - Monitor GitHub API status before large tasks
+    - Report persistent connection issues to support
+
+    **Technical Notes**: GitHub connection requires valid OAuth tokens and proper API access. Network restrictions or GitHub service issues can cause interruptions.
+  </Accordion>
+
+  <Accordion title="Cannot create PR - Validation failed">
+    **Problem**: PR creation fails with validation errors after task completes.
+
+    **Symptoms**:
+    - Error: "Validation failed" or "Failed to create pull request"
+    - Commits exist but no PR created
+    - Task shows complete but no PR link
+    - GitHub API error messages
+
+    **Solution**:
+    1. Check if PR already exists for this branch
+    2. Verify base branch still exists and is up to date
+    3. Ensure branch has new commits (not already merged)
+    4. Check repository settings for PR restrictions
+    5. Manually create PR from the branch on GitHub
+    6. Verify your GitHub account can create PRs on this repository
+
+    **Prevention**:
+    - Ensure base branch is current before starting tasks
+    - Don't manually merge branches Compyle is working on
+    - Check repository branch protection rules
+    - Verify collaborator permissions if repository is not yours
+
+    **Technical Notes**: PR creation can fail due to branch state, permissions, or GitHub repository settings. Manual PR creation is a reliable fallback.
+  </Accordion>
+
+  <Accordion title="Constantly getting redirected to install the bot on GitHub">
+    **Problem**: Every action redirects to GitHub App installation page.
+
+    **Symptoms**:
+    - Endless redirect loop to GitHub
+    - "Install Compyle" page shown repeatedly
+    - Cannot access Compyle dashboard
+    - Authentication never completes
+
+    **Solution**:
+    1. Complete the GitHub App installation if not done
+    2. Accept all requested permissions during installation
+    3. Clear browser cookies and cache completely
+    4. Try incognito/private browsing window
+    5. Ensure you're logged into the correct GitHub account
+    6. Check if browser extensions are interfering
+    7. Try different browser to isolate browser-specific issues
+    8. Contact support if installation appears complete but redirects continue
+
+    **Prevention**:
+    - Complete GitHub App installation fully without interruption
+    - Grant all requested permissions during setup
+    - Use supported browsers (Chrome, Firefox, Safari, Edge)
+    - Disable aggressive cookie/tracker blocking for app.compyle.ai
+
+    **Technical Notes**: This is typically a session state or cookie issue. The authentication flow requires cookies to be enabled and preserved.
+  </Accordion>
+
+  <Accordion title="COMPYLE keeps losing authentication token">
+    **Problem**: Frequent re-authentication required; GitHub token expires unexpectedly.
+
+    **Symptoms**:
+    - "Please reconnect GitHub" messages frequently
+    - Authentication required multiple times per day
+    - Tasks interrupted with authentication errors
+    - Token shown as expired in settings
+
+    **Solution**:
+    1. Fully disconnect GitHub in Settings
+    2. Revoke Compyle access in [GitHub Settings → Applications](https://github.com/settings/applications)
+    3. Reinstall Compyle GitHub App completely
+    4. Reconnect GitHub in Compyle with fresh authentication
+    5. Verify you're not using private/incognito mode regularly
+    6. Check browser settings allow persistent cookies for app.compyle.ai
+    7. Contact support if issue persists after fresh reinstall
+
+    **Prevention - Authentication Token Management**:
+    - Use regular browser windows (not incognito) for Compyle
+    - Allow cookies for app.compyle.ai domain
+    - Don't manually revoke Compyle's GitHub access
+    - Keep browser logged into GitHub
+    - Avoid clearing cookies while tasks are running
+    - Use recommended browsers with proper cookie support
+
+    **Technical Notes**: OAuth tokens have expiration times. Browser cookie settings or privacy tools can interfere with token storage. Regular mode browsing is recommended.
+  </Accordion>
+
+  <Accordion title="How to update PR after accidental creation">
+    **Problem**: Need to modify or update a PR that was created prematurely or with wrong settings.
+
+    **Symptoms**:
+    - PR created but needs changes
+    - Wrong base branch selected
+    - Incomplete implementation in PR
+    - Want to add more changes before review
+
+    **Solution**:
+    1. Don't close the PR - keep it open
+    2. In Compyle, create a new task targeting the same branch
+    3. Or make changes locally and push to the PR's branch
+    4. PR will automatically update with new commits
+    5. Update PR title and description on GitHub as needed
+    6. To change base branch: close PR, change base, reopen
+    7. For major errors, close PR and start over with new task
+
+    **Prevention**:
+    - Review task completion thoroughly before finalizing
+    - Verify base branch in task setup
+    - Use clear task descriptions to avoid incomplete work
+    - Check PR preview before finalizing if available
+
+    **Technical Notes**: PRs are linked to branches. Any new commits to the branch will update the PR. Base branch changes require PR recreation.
+  </Accordion>
+</AccordionGroup>
+
+## API and Resource Issues
+
+<AccordionGroup>
+  <Accordion title="API Error 400 - Usage Limit Reached">
+    **Problem**: Task fails with "Usage Limit Reached" or similar 400 error.
+
+    **Symptoms**:
+    - Error 400 in task logs
+    - Message about rate limits or quotas
+    - Task stops abruptly
+    - Cannot start new tasks
+
+    **Solution**:
+    1. Check your credit balance in Settings → Billing
+    2. Wait if you've hit rate limits (usually resets within an hour)
+    3. If using custom API key, check Anthropic dashboard for limits
+    4. Reduce task scope to use fewer credits
+    5. Upgrade plan if regularly hitting limits
+    6. Contact support if limits seem incorrect
+
+    **Prevention - Usage Limit Management**:
+    - Monitor credit usage regularly
+    - Check rate limits before starting large tasks
+    - Implement exponential backoff for retries (automatic in Compyle)
+    - Use resource-efficient approaches:
+      - Skip research for simple tasks
+      - Provide specific file paths
+      - Break large tasks into smaller ones
+    - Set up usage alerts if available
+    - Plan high-credit tasks during off-peak times
+
+    **Technical Notes**: API rate limits protect service stability. Both Compyle account limits and upstream API (Anthropic) limits can apply.
+  </Accordion>
+
+  <Accordion title="Invalid API key errors">
+    **Problem**: Errors indicating API key is invalid, missing, or malformed.
+
+    **Symptoms**:
+    - "Invalid API key" error message
+    - Authentication failures with AI provider
+    - Tasks fail immediately at start
+    - 401 Unauthorized errors
+
+    **Solution**:
+    1. If using custom API key:
+       - Verify key in Settings → Integrations
+       - Check key in Anthropic dashboard
+       - Ensure key has required permissions
+       - Try regenerating key in Anthropic console
+    2. If using Compyle-provided credits:
+       - This shouldn't happen - contact support immediately
+    3. Remove and re-add API key
+    4. Check for extra spaces or characters in key
+    5. Verify key hasn't expired or been revoked
+
+    **Prevention - API Key Validation and Configuration**:
+    - Copy-paste API keys carefully (no extra spaces)
+    - Store keys securely and don't share
+    - Use environment-specific keys (dev vs prod)
+    - Set up key rotation reminders
+    - Validate key format before saving
+    - Test with simple task after adding key
+    - Monitor key usage in provider dashboard
+
+    **Technical Notes**: API keys must match the format expected by the provider (Anthropic Claude). Keys can be revoked or expire based on provider settings.
+  </Accordion>
+
+  <Accordion title="Claude API errors">
+    **Problem**: Specific errors from Claude API during task execution.
+
+    **Symptoms**:
+    - Errors mentioning "Claude" or "Anthropic"
+    - 429, 500, 502, 503 errors
+    - "Service unavailable" messages
+    - Timeout errors
+
+    **Solution**:
+    1. Check [Anthropic Status](https://status.anthropic.com/) for service issues
+    2. Wait a few minutes and try again (may be temporary outage)
+    3. If using custom API key, verify key is active
+    4. Check your Anthropic account status
+    5. Reduce concurrent requests if running multiple tasks
+    6. For 429 errors, wait for rate limit reset
+    7. Contact support if errors persist beyond 30 minutes
+
+    **Prevention - Claude API Integration Best Practices**:
+    - Monitor Anthropic status page before large tasks
+    - Implement retry logic (automatic in Compyle)
+    - Don't run excessive concurrent tasks
+    - Use appropriate model tiers for task complexity
+    - Keep API keys updated and valid
+    - Report persistent API issues to support
+
+    **Technical Notes**: Claude API can experience temporary outages or rate limiting. Most 5xx errors are transient and resolve within minutes.
+  </Accordion>
+
+  <Accordion title="Credit balance too low">
+    **Problem**: Insufficient credits to complete or start tasks.
+
+    **Symptoms**:
+    - "Insufficient credits" warning or error
+    - Cannot start new tasks
+    - Task stopped mid-execution due to credit depletion
+    - Credit balance shows 0 or very low number
+
+    **Solution**:
+    1. Check current balance in Settings → Billing
+    2. Review credit allocation and usage history
+    3. Wait for monthly credit refresh if applicable
+    4. Upgrade to higher tier plan if available
+    5. Contact support about additional credits or custom plans
+    6. Complete in-progress tasks that are near completion
+    7. Prioritize most important tasks with remaining credits
+
+    **Prevention - Credit Management and Optimization**:
+    - Monitor credit usage throughout month
+    - Estimate credits needed before starting tasks
+    - Use credit-efficient practices:
+      - Skip research when possible
+      - Provide specific file paths
+      - Use clear, detailed task descriptions
+      - Break large features into smaller tasks
+    - Set up low-balance alerts
+    - Plan high-credit tasks early in billing cycle
+    - Track which types of tasks use most credits
+
+    **Technical Notes**: Credit consumption varies by task complexity, model used, and context size. Research phase and iterative refinement consume additional credits.
+  </Accordion>
+
+  <Accordion title="WebFetch tool requires permissions">
+    **Problem**: Agent needs to fetch external resources but lacks permissions.
+
+    **Symptoms**:
+    - "WebFetch requires permissions" error
+    - Agent cannot access external documentation
+    - Task blocked waiting for permission approval
+    - Cannot proceed with research that needs external data
+
+    **Solution**:
+    1. Review the permission request in the task interface
+    2. Verify the URL/domain being requested is safe and expected
+    3. Grant permission if appropriate for the task
+    4. Deny if the request seems suspicious or unnecessary
+    5. If permission request is stuck, refresh the page
+    6. Consider whether external fetch is actually needed for the task
+
+    **Prevention**:
+    - Understand which tasks might need external resources
+    - Review domain whitelist in settings if available
+    - Pre-approve trusted domains
+    - Provide documentation directly in task description when possible
+    - Use internal resources instead of external ones when feasible
+
+    **Technical Notes**: WebFetch permissions are a security feature. The agent requests permission to access external URLs during research or implementation.
+  </Accordion>
+
+  <Accordion title="Environment errors - OOM kill, memory limits">
+    **Problem**: Tasks fail due to memory exhaustion or resource limits.
+
+    **Symptoms**:
+    - "Out of Memory" or "OOM" errors
+    - "Memory limit exceeded"
+    - Task killed by system
+    - Container or sandbox crashes
+    - Build or test failures due to resources
+
+    **Solution**:
+    1. Reduce task scope to smaller, focused changes
+    2. Avoid processing large files or datasets in tasks
+    3. Break complex tasks into smaller subtasks
+    4. Skip unnecessary build or test steps if possible
+    5. Contact support if limits seem unreasonably low
+    6. Check if specific files or operations cause the issue
+
+    **Prevention - Resource Allocation Strategies**:
+    - Keep tasks focused and scoped appropriately
+    - Avoid operations on very large files
+    - Don't ask agent to analyze entire large repositories
+    - Use streaming or chunked processing approaches
+    - Provide specific file paths rather than broad searches
+    - Monitor task resource usage patterns
+    - Report consistent memory issues to support
+
+    **Technical Notes**: Execution environments have memory and CPU limits for stability and fairness. Very large operations can exceed these limits.
+  </Accordion>
+</AccordionGroup>
+
+## Task and Project Issues
+
+<AccordionGroup>
+  <Accordion title="Errors when creating tasks">
+    **Problem**: Task creation fails or shows errors during setup.
+
+    **Symptoms**:
+    - "Failed to create task" error
+    - Form submission doesn't work
+    - Validation errors on task form
+    - Task doesn't appear in task list after creation
+
+    **Solution**:
+    1. Verify all required fields are filled in
+    2. Check task description meets minimum length requirements
+    3. Ensure repository is properly connected
+    4. Try creating task with simpler description first
+    5. Refresh page and try again
+    6. Try different browser if issue persists
+    7. Check browser console for specific error messages
+    8. Contact support with exact error message
+
+    **Prevention - Task Creation Best Practices**:
+    - Use clear, descriptive task titles
+    - Provide sufficient detail in task description
+    - Verify repository connection before creating tasks
+    - Use supported characters in task names
+    - Ensure stable internet connection during creation
+    - Save task description in notepad before submitting (backup)
+
+    **Technical Notes**: Task creation requires valid project/repository context, proper authentication, and correctly formatted input data.
+  </Accordion>
+
+  <Accordion title="Project stuck after creating a task">
+    **Problem**: Project becomes unresponsive or stuck after task is created.
+
+    **Symptoms**:
+    - Project dashboard doesn't load
+    - Cannot view or interact with newly created task
+    - Spinner shows indefinitely
+    - Other projects work fine
+
+    **Solution**:
+    1. Refresh the browser page
+    2. Navigate away and back to project
+    3. Check task list directly (skip project dashboard)
+    4. Try accessing project from different device/browser
+    5. Verify task was actually created (check GitHub for branch)
+    6. Clear browser cache and reload
+    7. Contact support with project and task IDs
+
+    **Prevention**:
+    - Ensure stable internet connection during task creation
+    - Don't navigate away during task setup
+    - Wait for confirmation before refreshing
+    - Avoid creating multiple tasks simultaneously
+
+    **Technical Notes**: This may be a frontend state synchronization issue. The backend likely has the correct state even if frontend is stuck.
+  </Accordion>
+
+  <Accordion title="Task won't create">
+    **Problem**: Repeated failures when attempting to create new tasks.
+
+    **Symptoms**:
+    - Create button doesn't work
+    - Form resets after submission
+    - No error message shown
+    - Task never appears in list
+
+    **Solution**:
+    1. Check browser console for JavaScript errors
+    2. Disable browser extensions temporarily
+    3. Try incognito/private browsing mode
+    4. Verify you have sufficient credits
+    5. Ensure you have permissions on the repository
+    6. Try different repository to isolate issue
+    7. Clear all Compyle-related cookies and cache
+    8. Contact support if issue persists across browsers
+
+    **Prevention**:
+    - Use supported browsers (latest Chrome, Firefox, Safari, Edge)
+    - Keep browser updated
+    - Maintain stable internet connection
+    - Verify repository permissions before attempting task creation
+    - Check credit balance before creating tasks
+
+    **Technical Notes**: Persistent creation failures often indicate authentication, permission, or browser compatibility issues.
+  </Accordion>
+
+  <Accordion title="Can't create another PR after merge">
+    **Problem**: Unable to create new PR after previous PR was merged.
+
+    **Symptoms**:
+    - New task fails at PR creation step
+    - Error about conflicting PR or branch
+    - "Branch already exists" errors
+    - Cannot push to new branch
+
+    **Solution**:
+    1. Ensure previous PR was fully merged and closed
+    2. Sync your base branch with latest changes
+    3. Delete old task branches if they weren't auto-deleted
+    4. Create task with different/unique name
+    5. Verify repository settings for branch auto-deletion
+    6. Manually delete conflicting branches on GitHub
+    7. Try force-refreshing GitHub connection in Compyle
+
+    **Prevention - PR Management Workflow**:
+    - Enable automatic branch deletion after merge
+    - Use descriptive, unique task names
+    - Keep base branch up to date
+    - Clean up old branches periodically
+    - Don't manually manipulate task branches
+    - Wait for merge to complete fully before new tasks
+
+    **Technical Notes**: GitHub doesn't allow multiple open PRs from the same source branch. Branch name conflicts can also prevent PR creation.
+  </Accordion>
+
+  <Accordion title="Project stuck on 'Planning Steps'">
+    **Problem**: Project/task remains in planning phase indefinitely.
+
+    **Symptoms**:
+    - Status shows "Planning" for extended period (>30 minutes)
+    - No planning questions or prompts appear
+    - Cannot proceed to implementation
+    - No error messages
+
+    **Solution**:
+    1. Refresh browser to check actual status
+    2. Check for planning questions in notifications
+    3. Look in task details under "Planning" tab
+    4. Try sending a message to the agent to prompt response
+    5. If truly stuck (>1 hour), cancel and restart task
+    6. Enable "Skip Planning" for simple, well-defined tasks
+    7. Contact support with task ID if issue persists
+
+    **Prevention - Planning Phase Optimization**:
+    - Provide detailed task descriptions to reduce planning time
+    - Include file paths and specific requirements upfront
+    - Reference existing patterns in task description
+    - Use "Skip Planning" option for straightforward tasks
+    - Respond promptly to planning questions when they appear
+    - Set up notifications to catch planning questions quickly
+
+    **Technical Notes**: Planning phase requires agent analysis and may need user input. Lack of response may indicate agent is waiting for user feedback.
+  </Accordion>
+</AccordionGroup>
+
+## UI and Functionality Issues
+
+<AccordionGroup>
+  <Accordion title="System spinning without response">
+    **Problem**: Loading spinner shows continuously with no progress or completion.
+
+    **Symptoms**:
+    - Perpetual loading indicator
+    - No status updates
+    - Page remains interactive but shows no progress
+    - No error or timeout messages
+
+    **Solution**:
+    1. Check browser network tab for failed requests
+    2. Hard refresh page (Ctrl+Shift+R or Cmd+Shift+R)
+    3. Clear browser cache and cookies
+    4. Check internet connection stability
+    5. Try different browser or incognito mode
+    6. Verify Compyle service status
+    7. Check actual task status on GitHub (may have completed despite UI)
+    8. Contact support if spinning persists beyond 5 minutes
+
+    **Prevention - UI Responsiveness Troubleshooting**:
+    - Maintain stable internet connection
+    - Use supported browsers with latest updates
+    - Disable aggressive ad blockers for app.compyle.ai
+    - Clear cache regularly
+    - Don't use VPN unless necessary
+    - Avoid switching tabs during critical operations
+
+    **Technical Notes**: UI state synchronization issues can cause loading indicators to persist even after backend operations complete.
+  </Accordion>
+
+  <Accordion title="Edit agent offline issues">
+    **Problem**: Cannot access or use edit functionality; shown as offline.
+
+    **Symptoms**:
+    - "Edit agent offline" message
+    - Edit features disabled or grayed out
+    - Cannot make modifications to tasks
+    - Feature unavailable during specific times
+
+    **Solution**:
+    1. Check Compyle status page or Discord for maintenance notices
+    2. Wait 10-15 minutes and retry
+    3. Refresh page to check current status
+    4. Use alternative workflows (create new task instead of editing)
+    5. Check if edit feature is in maintenance mode
+    6. Contact support if consistently offline
+
+    **Prevention - Offline Functionality Limitations**:
+    - Understand edit feature has separate availability
+    - Plan task descriptions carefully to minimize need for edits
+    - Use GitHub's edit capabilities as fallback
+    - Check status before attempting edits
+    - Save work externally before attempting major edits
+
+    **Technical Notes**: Some features may have separate service components with independent uptime. Edit functionality may be in different deployment state than core features.
+  </Accordion>
+
+  <Accordion title="Problems with making mockups">
+    **Problem**: Mockup generation fails or produces unexpected results.
+
+    **Symptoms**:
+    - Mockup creation fails
+    - Generated mockups don't match requirements
+    - UI components missing or incorrect
+    - Style issues in mockups
+
+    **Solution**:
+    1. Provide more specific mockup requirements
+    2. Reference existing UI patterns in your codebase
+    3. Include design system or component library details
+    4. Provide example images or links to similar UIs
+    5. Specify exact component libraries to use
+    6. Break complex mockups into smaller pieces
+    7. Review and iterate with specific feedback
+
+    **Prevention - Mockup Tool Best Practices**:
+    - Be very specific about UI requirements
+    - Reference design systems or component libraries
+    - Provide visual examples or links
+    - Specify exact frameworks and libraries
+    - Include responsive behavior requirements
+    - Mention accessibility requirements upfront
+    - Provide brand guidelines or style requirements
+
+    **Technical Notes**: Mockup quality depends heavily on specificity of requirements and context about existing design patterns.
+  </Accordion>
+
+  <Accordion title="Need bugfix on the chat area">
+    **Problem**: Chat interface has issues or doesn't work correctly.
+
+    **Symptoms**:
+    - Messages not sending
+    - Chat history not loading
+    - Formatting issues in chat
+    - Cannot scroll or view full conversations
+    - Input field not responsive
+
+    **Solution**:
+    1. Refresh the page
+    2. Clear browser cache
+    3. Check browser console for errors
+    4. Try different browser
+    5. Verify internet connection
+    6. Check if messages are actually sending (check task logs)
+    7. Report specific issue to support with screenshots
+
+    **Prevention - Chat Area Optimization**:
+    - Use supported browsers
+    - Keep browser updated
+    - Don't use chat for very long messages (use task description)
+    - Avoid special characters that might cause formatting issues
+    - Save important messages before refreshing
+
+    **Technical Notes**: Chat functionality relies on WebSocket or similar real-time connection. Network issues or browser incompatibilities can cause problems.
+  </Accordion>
+
+  <Accordion title="Endless buffering">
+    **Problem**: Content or pages buffer indefinitely without loading.
+
+    **Symptoms**:
+    - Continuous buffering indicator
+    - Content never appears
+    - Page partially loads but not fully
+    - Some elements load, others don't
+
+    **Solution**:
+    1. Check internet connection speed and stability
+    2. Hard refresh (Ctrl+Shift+R or Cmd+Shift+R)
+    3. Clear browser cache completely
+    4. Disable browser extensions temporarily
+    5. Try incognito/private browsing
+    6. Use different browser to isolate issue
+    7. Check browser console for specific errors
+    8. Verify no VPN or proxy issues
+
+    **Prevention - Buffering Resolution Techniques**:
+    - Maintain fast, stable internet connection
+    - Use modern browsers with good performance
+    - Clear cache regularly
+    - Disable unnecessary browser extensions
+    - Avoid concurrent high-bandwidth activities
+    - Use wired connection if WiFi is unstable
+
+    **Technical Notes**: Buffering can be caused by slow network, large payloads, or browser performance issues. Check network tab in browser dev tools.
+  </Accordion>
+
+  <Accordion title="Unexpected JSON parse error">
+    **Problem**: Application shows JSON parsing errors.
+
+    **Symptoms**:
+    - "JSON parse error" or "Unexpected token" errors
+    - Page crashes or shows error screen
+    - Data doesn't load correctly
+    - API responses failing
+
+    **Solution**:
+    1. Refresh the page
+    2. Clear browser cache and cookies completely
+    3. Check browser console for full error details
+    4. Try different browser
+    5. Verify no browser extensions are interfering
+    6. Check if issue is consistent or intermittent
+    7. Report to support with full error message and steps to reproduce
+
+    **Prevention**:
+    - Keep browser updated
+    - Clear cache regularly
+    - Use supported browsers
+    - Avoid modifying network requests (some extensions do this)
+    - Report JSON errors immediately - they often indicate backend issues
+
+    **Technical Notes**: JSON parse errors usually indicate malformed data from API or corrupted cache. These are often backend issues requiring support investigation.
+  </Accordion>
+</AccordionGroup>
+
+## System Performance Issues
+
+<AccordionGroup>
+  <Accordion title="System running slow">
+    **Problem**: Overall application performance is sluggish and responsive.
+
+    **Symptoms**:
+    - Slow page loads
+    - Delayed responses to clicks
+    - Laggy interface
+    - Tasks take longer than expected
+
+    **Solution**:
+    1. Close unnecessary browser tabs
+    2. Clear browser cache and cookies
+    3. Restart browser completely
+    4. Check system resources (CPU, RAM usage)
+    5. Disable heavy browser extensions
+    6. Check internet connection speed
+    7. Try different browser
+    8. Verify no other applications consuming resources
+    9. Check Compyle status page for performance issues
+
+    **Prevention - Performance Optimization Strategies**:
+    - Use modern, performant browsers
+    - Keep sufficient free RAM available
+    - Close unnecessary applications
+    - Use stable, fast internet connection
+    - Clear cache regularly
+    - Limit number of concurrent tasks
+    - Restart browser periodically
+
+    **Technical Notes**: Client-side performance can be affected by browser state, system resources, or network latency. Backend performance issues are typically service-wide.
+  </Accordion>
+
+  <Accordion title="Disk space issues / Virtual machine running out of resources">
+    **Problem**: Execution environment runs out of disk space or resources.
+
+    **Symptoms**:
+    - "No space left on device" errors
+    - Disk space or quota exceeded messages
+    - Build failures due to disk space
+    - Tasks fail during file operations
+
+    **Solution**:
+    1. Reduce task scope to minimize file generation
+    2. Avoid operations that generate large temporary files
+    3. Skip unnecessary build artifacts in tasks
+    4. Clean up previous task artifacts if possible
+    5. Contact support if disk limits seem unreasonably low
+    6. Break large tasks into smaller sequential tasks
+
+    **Prevention - Resource Management Best Practices**:
+    - Keep tasks focused and scoped appropriately
+    - Avoid generating unnecessary large files
+    - Don't include build artifacts in commits
+    - Use .gitignore appropriately
+    - Monitor task resource patterns
+    - Report consistent resource issues
+
+    **Technical Notes**: Execution sandboxes have disk quotas for isolation and fairness. Large builds or file generation can exhaust these limits.
+  </Accordion>
+
+  <Accordion title="API Error 502 - Failed to reach upstream">
+    **Problem**: 502 Bad Gateway errors when using Compyle.
+
+    **Symptoms**:
+    - "502 Bad Gateway" error page
+    - "Failed to reach upstream" messages
+    - Intermittent connection failures
+    - Service temporarily unavailable
+
+    **Solution**:
+    1. Wait a few minutes - 502 errors are usually temporary
+    2. Check Compyle status page or Discord for known issues
+    3. Refresh the page
+    4. Check [Anthropic Status](https://status.anthropic.com/) for Claude API issues
+    5. Try again in 5-10 minutes
+    6. If persistent beyond 30 minutes, report to support
+
+    **Prevention - Error Handling for Upstream Issues**:
+    - Save work frequently (planning, task descriptions)
+    - Implement patience for transient errors
+    - Check status pages before reporting issues
+    - Retry after brief wait for 502/503 errors
+    - Plan critical tasks when services are stable
+    - Monitor status channels for maintenance windows
+
+    **Technical Notes**: 502 errors indicate proxy/gateway issues between Compyle and upstream services (like Claude API). Usually resolve automatically within minutes.
+  </Accordion>
+
+  <Accordion title="Latency issues when creating and validating projects">
+    **Problem**: Significant delays during project creation and validation steps.
+
+    **Symptoms**:
+    - Long wait times (>1 minute) for project creation
+    - Validation steps take excessive time
+    - Progress seems stalled but eventually completes
+    - No error messages but very slow
+
+    **Solution**:
+    1. Be patient - some validation steps are legitimately slow
+    2. Ensure stable internet connection
+    3. Don't interrupt validation process
+    4. Check if repository is very large (affects validation time)
+    5. Try during off-peak hours
+    6. If latency is consistent and excessive, report to support
+
+    **Prevention - Latency Reduction Techniques**:
+    - Use fast, stable internet connection
+    - Create projects during off-peak times
+    - Keep repositories reasonably sized
+    - Provide specific context to reduce analysis needs
+    - Use clear, structured repository organization
+    - Report consistent latency patterns to support
+
+    **Technical Notes**: Project validation involves repository analysis, which scales with repository size and complexity. Large monorepos will have longer validation times.
+  </Accordion>
+</AccordionGroup>
+
+## Common Bugs & Known Issues (Legacy Section)
 
 <AccordionGroup>
   <Accordion title="Task stuck in 'Researching' phase">
