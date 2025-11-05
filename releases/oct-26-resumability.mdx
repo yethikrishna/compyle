@@ -1,0 +1,211 @@
+---
+title: "Resumability & Smart Branch Naming - Oct 26, 2025"
+description: "Durable sessions and intelligent branch naming"
+icon: "rotate"
+---
+
+# Resumability & Smart Branch Naming
+
+**October 26, 2025** • Feature Release
+
+Introducing durable sessions that survive interruptions and intelligent branch naming that makes your git history readable.
+
+---
+
+## Resumability
+
+### Continue Tasks Across Days or Months
+
+<CardGroup cols={2}>
+  <Card title="What Changed" icon="sparkles">
+    Tasks are now persistent and recoverable
+
+    - Continue work after days or weeks
+    - Automatic recovery when things break
+    - Session state persists reliably
+    - No need to restart from scratch
+  </Card>
+
+  <Card title="Why This Matters" icon="lightbulb">
+    Real-world reliability
+
+    - Work interrupted? Pick up where you left off
+    - Browser crash? Task continues
+    - Network issues? Agent recovers
+    - Long-running tasks? No problem
+  </Card>
+</CardGroup>
+
+### How It Works
+
+<Steps>
+  <Step title="Durable Session Storage">
+    Every task state is continuously saved:
+    - Research findings
+    - Planning decisions
+    - Implementation progress
+    - File changes and history
+  </Step>
+
+  <Step title="Automatic Recovery">
+    If something breaks, Compyle detects and recovers:
+    - Restores exact agent state
+    - Resumes from last checkpoint
+    - No data loss
+    - Transparent to you
+  </Step>
+
+  <Step title="Long-Term Persistence">
+    Tasks remain accessible:
+    - Review planning decisions months later
+    - Reference research findings
+    - Understand implementation rationale
+    - Complete audit trail
+  </Step>
+</Steps>
+
+---
+
+## Automatic Branch Naming
+
+### Descriptive Branches Generated from Task Details
+
+<CardGroup cols={2}>
+  <Card title="What Changed" icon="sparkles">
+    Intelligent branch name generation
+
+    - Based on task title and description
+    - Follows git naming conventions
+    - Readable and descriptive
+    - No more `feature/task-123`
+  </Card>
+
+  <Card title="Why This Matters" icon="lightbulb">
+    Better git history
+
+    - Know what a branch does at a glance
+    - Easier PR reviews
+    - Clear git logs
+    - Professional branch naming
+  </Card>
+</CardGroup>
+
+### Examples
+
+<Accordion title="See Examples">
+  **Task:** "Add user profile page"
+  **Branch:** `feature/add-user-profile-page`
+
+  **Task:** "Fix memory leak in data processing"
+  **Branch:** `fix/memory-leak-data-processing`
+
+  **Task:** "Refactor authentication to use OAuth 2.0"
+  **Branch:** `refactor/auth-oauth2`
+
+  **Task:** "Update dependencies and fix breaking changes"
+  **Branch:** `chore/update-dependencies-fix-breaking`
+
+  **Naming conventions:**
+  - Follows git-flow style prefixes (`feature/`, `fix/`, `refactor/`, etc.)
+  - Kebab-case for readability
+  - Truncated to reasonable length (max 50 chars)
+  - Special characters removed
+  - Duplicate branch names handled automatically
+</Accordion>
+
+---
+
+## Technical Details
+
+<AccordionGroup>
+  <Accordion title="Resumability Architecture">
+    **State Checkpointing:**
+    - Continuous state snapshots every 30 seconds
+    - Incremental saves for efficiency
+    - Compressed storage for performance
+    - Distributed backup for reliability
+
+    **Recovery Process:**
+    - Automatic detection of interrupted sessions
+    - State validation before resumption
+    - Conflict resolution for concurrent edits
+    - Fallback to last known good state
+
+    **Data Persistence:**
+    - Stored encrypted at rest
+    - Accessible across devices
+    - Retained for 90 days minimum
+    - Compliant with data retention policies
+  </Accordion>
+
+  <Accordion title="Branch Naming Algorithm">
+    **Generation Process:**
+    1. Extract key terms from task title
+    2. Classify task type (feature/fix/refactor/chore)
+    3. Generate kebab-case name
+    4. Validate uniqueness in repository
+    5. Fallback to numbered suffix if duplicate
+
+    **Customization:**
+    - Project-level naming templates (coming soon)
+    - Custom prefix patterns (coming soon)
+    - Length limits configurable (coming soon)
+
+    **Git Integration:**
+    - Creates branch immediately after research
+    - Updates remote tracking
+    - Handles merge conflicts gracefully
+    - Cleans up after PR merge
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## User Impact
+
+<Steps>
+  <Step title="No More Lost Work">
+    Browser crash? Computer restart? Network outage? Your task continues exactly where it left off.
+  </Step>
+
+  <Step title="Work at Your Pace">
+    Start a task today, review tomorrow, continue next week. The session waits for you.
+  </Step>
+
+  <Step title="Cleaner Git History">
+    Branches have meaningful names that explain what they do. No more decoding cryptic branch names.
+  </Step>
+
+  <Step title="Better Collaboration">
+    Team members can understand branch purposes instantly. PRs are easier to review with descriptive branch names.
+  </Step>
+</Steps>
+
+---
+
+## Feedback & Known Issues
+
+<Accordion title="Known Limitations">
+  **Resumability:**
+  - Sessions older than 90 days may be archived
+  - Very large tasks (>10GB file changes) may have slower recovery
+  - Multi-user conflicts require manual resolution
+
+  **Branch Naming:**
+  - Custom templates not yet available
+  - Some edge cases may generate generic names
+  - Very long task titles are truncated
+
+  **Working on improvements:**
+  - Faster recovery for large sessions
+  - Smarter conflict resolution
+  - Customizable naming templates
+</Accordion>
+
+<Note>
+  Found a bug or have feedback? Email [hi@compyle.ai](mailto:hi@compyle.ai) or share in [Discord](https://discord.gg/U9djmRTDB4)
+</Note>
+
+---
+
+[← Back to Changelog](/changelog)

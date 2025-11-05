@@ -1,0 +1,286 @@
+---
+title: "Platform Launch - November 2025"
+description: "Compyle officially launches - collaborative AI coding platform now available"
+icon: "rocket"
+---
+
+# Platform Launch
+
+**November 2025** • Major Release
+
+<Warning>
+  **🚀 Compyle is officially live!** Our collaborative AI coding platform is now available to all users.
+</Warning>
+
+## Overview
+
+After months of development and beta testing, Compyle is now publicly available. We're introducing a new approach to AI-assisted coding that keeps you in control through collaboration, not blind automation.
+
+---
+
+## Core Features
+
+### Three-Phase AI Agent Workflow
+
+<AccordionGroup>
+  <Accordion title="Phase 1: Research">
+    **Automatic codebase analysis**
+    - Pattern recognition across your repositories
+    - Architecture comprehension
+    - Context gathering from existing code
+    - Duration: 1-5 minutes
+
+    The agent explores your codebase to understand:
+    - Existing patterns and conventions
+    - File structure and organization
+    - Technology stack and dependencies
+    - Similar implementations to learn from
+  </Accordion>
+
+  <Accordion title="Phase 2: Planning">
+    **Interactive clarifying questions**
+    - Collaborative specification building
+    - Decision-making through questions
+    - Edge case identification
+    - Duration: 5-30 minutes
+
+    Instead of guessing, Compyle asks:
+    - Layout preferences (with visual mockups)
+    - Technical approach choices
+    - Edge case handling
+    - Integration details
+  </Accordion>
+
+  <Accordion title="Phase 3: Implementation">
+    **Real-time code generation with validation**
+    - Validation against custom rules
+    - Continuous plan alignment checks
+    - Automatic PR creation
+    - Duration: 5 minutes - 2 hours
+
+    The agent implements while:
+    - Following your custom rules
+    - Staying aligned with the plan
+    - Asking when unclear
+    - Creating clean, reviewable PRs
+  </Accordion>
+</AccordionGroup>
+
+---
+
+### GitHub Integration
+
+<CardGroup cols={2}>
+  <Card title="OAuth Authentication" icon="lock">
+    Secure connection to your GitHub account
+
+    - Repository permission management
+    - Organization support
+    - Automatic token refresh
+    - Respects branch protection rules
+  </Card>
+
+  <Card title="Branch Management" icon="code-branch">
+    Intelligent branching strategy
+
+    - Creates feature branches automatically
+    - Branches from your selected base
+    - Descriptive naming conventions
+    - Clean branch cleanup after merge
+  </Card>
+
+  <Card title="Pull Request Automation" icon="git-pull-request">
+    Professional PR creation
+
+    - Descriptive titles and summaries
+    - Links to planning artifacts
+    - Ready for code review
+    - Includes context and rationale
+  </Card>
+
+  <Card title="Repository Support" icon="folder">
+    Flexible repo management
+
+    - Public and private repositories
+    - Personal and organization repos
+    - Multi-repository projects
+    - GitHub Enterprise support (contact for setup)
+  </Card>
+</CardGroup>
+
+---
+
+### Custom Rules System
+
+Define your project's patterns and best practices once. Compyle ensures the agent follows them every time.
+
+<AccordionGroup>
+  <Accordion title="JSON-Based Configuration">
+    Simple, powerful rule definition:
+
+    ```json
+    {
+      "name": "React Hook Naming",
+      "scope": "src/hooks/**/*.{ts,tsx}",
+      "pattern": "^use[A-Z][a-zA-Z]*$",
+      "enforcement": "block",
+      "message": "Hooks must start with 'use' followed by PascalCase"
+    }
+    ```
+
+    - Full regex pattern support
+    - Glob-based file scoping
+    - Custom error messages
+    - Easy to version control
+  </Accordion>
+
+  <Accordion title="Real-Time Enforcement">
+    **During Implementation:**
+    - Agent validates code as it writes
+    - Catches violations immediately
+    - Stops and asks when rules conflict
+    - Shows you exactly what violated
+
+    **Three enforcement modes:**
+    - **Warn:** Notify but allow exceptions
+    - **Block:** Prevent violations entirely
+    - **Off:** Temporarily disable
+  </Accordion>
+
+  <Accordion title="Pattern Library">
+    15+ ready-to-use templates:
+
+    **Frontend:**
+    - React Hook Naming Convention
+    - Component File Organization
+    - Consistent Import Order
+
+    **Backend:**
+    - RESTful API Endpoint Convention
+    - Safe Database Queries
+    - Consistent Error Handling
+
+    **General:**
+    - TypeScript Strict Mode
+    - Test File Naming
+    - Conventional Commits
+    - Structured Logging
+
+    [Browse Pattern Library →](/features/pattern-library)
+  </Accordion>
+</AccordionGroup>
+
+---
+
+### Project Management
+
+<CardGroup cols={2}>
+  <Card title="Multi-Repository Support" icon="folders">
+    Organize work across multiple repos
+
+    - Frontend and backend projects together
+    - Shared task management
+    - Cross-repo context awareness
+  </Card>
+
+  <Card title="Task Tracking" icon="list-check">
+    Clear visibility into agent progress
+
+    - Real-time phase indicators
+    - Planning questions and answers
+    - Research and planning artifacts
+    - Activity history
+  </Card>
+
+  <Card title="Activity Monitoring" icon="activity">
+    Understand what the agent is doing
+
+    - Tool usage visibility
+    - Thinking messages
+    - File changes in real-time
+    - Progress indicators
+  </Card>
+
+  <Card title="Credit Usage Tracking" icon="chart-line">
+    Transparent billing
+
+    - Credit consumption per task
+    - Usage history and analytics
+    - Project-level cost tracking
+    - Free during beta period
+  </Card>
+</CardGroup>
+
+---
+
+## What Makes Compyle Different
+
+<Steps>
+  <Step title="Collaborative, Not Autonomous">
+    You stay in control through planning questions. No more 20-minute builds that do the wrong thing.
+  </Step>
+
+  <Step title="Pattern Enforcement">
+    Custom rules ensure code quality automatically. Define once, enforce forever.
+  </Step>
+
+  <Step title="Real-Time Validation">
+    Catch issues during generation, not after. Built-in review that guides the agent as it codes.
+  </Step>
+
+  <Step title="Full Transparency">
+    See exactly what the agent is thinking and doing. No black box automation.
+  </Step>
+</Steps>
+
+---
+
+## Getting Started
+
+<CardGroup cols={1}>
+  <Card title="Quick Start (2 minutes)" icon="bolt">
+    1. Sign up at [compyle.ai](https://compyle.ai)
+    2. Connect your GitHub repository
+    3. Create your first project
+    4. Start your first task
+
+    **Resources:**
+    - [Getting Started Guide](/getting-started/signup)
+    - [Video Tutorial (16 min)](https://www.youtube.com/watch?v=VjfVQ6y39x0)
+    - [Join Discord](https://discord.gg/U9djmRTDB4)
+  </Card>
+</CardGroup>
+
+---
+
+## Feedback & Support
+
+We're just getting started. Your feedback shapes the future of Compyle.
+
+<AccordionGroup>
+  <Accordion title="Report Bugs">
+    - In-app feedback button (fastest)
+    - Email [hi@compyle.ai](mailto:hi@compyle.ai)
+    - Discord support channel
+  </Accordion>
+
+  <Accordion title="Request Features">
+    - Share in Discord #feature-requests
+    - Email [founders@compyle.ai](mailto:founders@compyle.ai)
+    - Vote on [roadmap](/roadmap)
+  </Accordion>
+
+  <Accordion title="Join Community">
+    - [Discord](https://discord.gg/U9djmRTDB4) - Real-time discussions
+    - [Twitter/X](https://x.com/compyle_ai) - Updates and tips
+    - [LinkedIn](https://www.linkedin.com/company/compyle-ai/) - Professional network
+  </Accordion>
+</AccordionGroup>
+
+---
+
+<Note>
+  **Thank you** to everyone who participated in our beta testing and provided feedback. This launch wouldn't be possible without you.
+</Note>
+
+[← Back to Changelog](/changelog)
