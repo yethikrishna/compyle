@@ -6,8 +6,10 @@ export default function Home() {
   return (
     <div className="mx-auto w-full">
       <Header />
-      <HomeHero />
-      <HomeStats />
+      <div className="px-6">
+        <HomeHero />
+        <HomeStats />
+      </div>
     </div>
   );
 }

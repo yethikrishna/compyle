@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Accordion,
   AccordionContent,
@@ -23,6 +25,8 @@ import {
 import { ArrowUpRight, GitPullRequestCreateArrow, Menu } from "lucide-react";
 import Link from "next/link";
 import { Separator } from "../ui/separator";
+import { useSession } from "@/lib/auth-client";
+import { Spinner } from "../ui/spinner";
 
 interface MenuItem {
   title: string;
@@ -124,9 +128,11 @@ const Header = ({
     signup: { title: "Sign up", url: "/signup" },
   },
 }: HeaderProps) => {
+  const { data: session, isPending, error } = useSession();
+
   return (
     <section className="py-4">
-      <div className="container mx-auto">
+      <div className="container mx-auto px-6">
         {/* Desktop Menu */}
         <nav className="hidden items-center justify-between lg:flex">
           <div className="flex items-center gap-6">
@@ -160,14 +166,22 @@ const Header = ({
               </NavigationMenu>
             </div>
           </div>
-          <div className="flex gap-2">
-            <Button asChild variant="outline" size="sm">
-              <a href={auth.login.url}>{auth.login.title}</a>
-            </Button>
+          {isPending && !session && <Spinner className="size-5" />}
+          {!isPending && !session && (
+            <div className="flex gap-2">
+              <Button asChild variant="outline" size="sm">
+                <Link href={auth.login.url}>{auth.login.title}</Link>
+              </Button>
+              <Button asChild size="sm">
+                <Link href={auth.signup.url}>{auth.signup.title}</Link>
+              </Button>
+            </div>
+          )}
+          {!isPending && !error && session && (
             <Button asChild size="sm">
-              <a href={auth.signup.url}>{auth.signup.title}</a>
+              <Link href="/dashboard">Dashboard</Link>
             </Button>
-          </div>
+          )}
         </nav>
 
         {/* Mobile Menu */}
@@ -210,14 +224,22 @@ const Header = ({
                     {menu.map((item) => renderMobileMenuItem(item))}
                   </Accordion>
 
-                  <div className="flex flex-col gap-3">
-                    <Button asChild variant="outline">
-                      <a href={auth.login.url}>{auth.login.title}</a>
+                  {isPending && !session && <Spinner className="size-5" />}
+                  {!isPending && !session && (
+                    <div className="flex flex-col gap-3">
+                      <Button asChild variant="outline">
+                        <Link href={auth.login.url}>{auth.login.title}</Link>
+                      </Button>
+                      <Button asChild>
+                        <Link href={auth.signup.url}>{auth.signup.title}</Link>
+                      </Button>
+                    </div>
+                  )}
+                  {!isPending && !error && session && (
+                    <Button asChild size="sm">
+                      <Link href="/dashboard">Dashboard</Link>
                     </Button>
-                    <Button asChild>
-                      <a href={auth.signup.url}>{auth.signup.title}</a>
-                    </Button>
-                  </div>
+                  )}
                 </div>
               </SheetContent>
             </Sheet>

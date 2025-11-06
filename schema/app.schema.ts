@@ -1,4 +1,4 @@
-import { PREDEFINED_TAGS } from "@/data";
+import { VALID_CATEGORIES, VALID_TECHNOLOGIES } from "@/data";
 import * as z from "zod";
 
 export const createAppSchema = z.object({
@@ -16,16 +16,25 @@ export const createAppSchema = z.object({
     .string()
     .min(15, "Description must be at least 15 characters.")
     .max(1000, "Description must be at most 1000 characters."),
-  tags: z
+  category: z
+    .string()
+    .min(1, "Please select a category.")
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    .refine((cat) => VALID_CATEGORIES.includes(cat as any), {
+      message: "Invalid category selected.",
+    }),
+  builtWith: z
     .array(z.string())
-    .min(1, "Select at least one tag.")
+    .min(1, "Select at least one technology.")
+    .max(10, "You can select up to 10 technologies.")
     .refine(
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (tags) => tags.every((tag) => PREDEFINED_TAGS.includes(tag as any)),
-      { message: "Invalid tag selected." },
+      (techs) =>
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        techs.every((tech) => VALID_TECHNOLOGIES.includes(tech as any)),
+      { message: "Invalid technology selected." },
     )
-    .refine((tags) => new Set(tags).size === tags.length, {
-      message: "Tags must be unique.",
+    .refine((techs) => new Set(techs).size === techs.length, {
+      message: "Technologies must be unique.",
     }),
   websiteUrl: z
     .url("Must be a valid URL")

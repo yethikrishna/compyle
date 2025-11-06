@@ -76,7 +76,7 @@ export default function Signup() {
   return (
     <div>
       <Header />
-      <div className="mx-auto max-w-lg">
+      <div className="mx-auto max-w-lg px-6">
         <Card className="md:min-w-md">
           <CardHeader className="text-center">
             <CardTitle className="text-xl">Create Your Account</CardTitle>
