@@ -19,18 +19,27 @@ import {
 } from "@/components/ui/select";
 import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
-import { PREDEFINED_TAGS, TAG_COLORS } from "@/data";
+import { TECH_COLORS, VALID_CATEGORIES, VALID_TECHNOLOGIES } from "@/data";
 import { createAppSchema } from "@/schema/app.schema";
 import { createApp } from "@/server/app";
 import { useForm } from "@tanstack/react-form";
 import { useMutation } from "@tanstack/react-query";
-import { ArrowLeft, BookCheck, FileText, LinkIcon, Tags } from "lucide-react";
+import {
+  ArrowLeft,
+  BookCheck,
+  FileText,
+  Layers,
+  LinkIcon,
+  X,
+} from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { toast } from "sonner";
 
 export default function CreateApp() {
   const router = useRouter();
+  const [techSearch, setTechSearch] = useState("");
 
   const { mutate, isPending } = useMutation({
     mutationFn: createApp,
@@ -49,7 +58,8 @@ export default function CreateApp() {
       name: "",
       slug: "",
       description: "",
-      tags: [] as string[],
+      category: "",
+      builtWith: [] as string[],
       websiteUrl: "",
       repoUrl: "",
       demoUrl: "",
@@ -63,6 +73,10 @@ export default function CreateApp() {
       });
     },
   });
+
+  const filteredTechnologies = VALID_TECHNOLOGIES.filter((tech) =>
+    tech.toLowerCase().includes(techSearch.toLowerCase()),
+  );
 
   return (
     <div className="flex-1 mt-2">
@@ -92,6 +106,7 @@ export default function CreateApp() {
           form.handleSubmit();
         }}
       >
+        {/* Basic Information */}
         <Card>
           <CardContent>
             <div className="flex items-start gap-4 mb-6">
@@ -155,6 +170,9 @@ export default function CreateApp() {
                         {isInvalid && (
                           <FieldError errors={field.state.meta.errors} />
                         )}
+                        <p className="text-xs text-muted-foreground mt-1">
+                          Use only lowercase letters and underscores
+                        </p>
                       </Field>
                     );
                   }}
@@ -193,66 +211,190 @@ export default function CreateApp() {
           </CardContent>
         </Card>
 
+        {/* Category */}
         <Card>
           <CardContent>
             <div className="flex items-start gap-4 mb-6">
               <div className="bg-secondary/50 p-3 rounded-lg">
-                <Tags className="w-6 h-6 text-foreground" />
+                <Layers className="w-6 h-6 text-foreground" />
               </div>
               <div>
-                <h2 className="text-lg lg:text-xl font-semibold mb-1">Tags</h2>
+                <h2 className="text-lg lg:text-xl font-semibold mb-1">
+                  Category
+                </h2>
                 <p className="text-muted-foreground text-sm">
-                  Select tags that describe your app
+                  Select the primary category for your app
+                </p>
+              </div>
+            </div>
+            <div className="pl-16 mt-2 space-y-6">
+              <FieldGroup>
+                <form.Field name="category">
+                  {(field) => {
+                    const isInvalid =
+                      field.state.meta.isTouched && !field.state.meta.isValid;
+                    return (
+                      <Field orientation="vertical" data-invalid={isInvalid}>
+                        <FieldContent>
+                          <FieldLabel htmlFor="category-select">
+                            Select Category
+                          </FieldLabel>
+                          {isInvalid && (
+                            <FieldError errors={field.state.meta.errors} />
+                          )}
+                        </FieldContent>
+                        <Select
+                          name={field.name}
+                          value={field.state.value}
+                          onValueChange={field.handleChange}
+                        >
+                          <SelectTrigger
+                            id="category-select"
+                            aria-invalid={isInvalid}
+                            className="w-full"
+                          >
+                            <SelectValue placeholder="Choose a category..." />
+                          </SelectTrigger>
+                          <SelectContent position="item-aligned">
+                            {VALID_CATEGORIES.map((cat) => (
+                              <SelectItem key={cat} value={cat}>
+                                {cat}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </Field>
+                    );
+                  }}
+                </form.Field>
+              </FieldGroup>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Built With */}
+        <Card>
+          <CardContent>
+            <div className="flex items-start gap-4 mb-6">
+              <div className="bg-secondary/50 p-3 rounded-lg">
+                <Layers className="w-6 h-6 text-foreground" />
+              </div>
+              <div>
+                <h2 className="text-lg lg:text-xl font-semibold mb-1">
+                  Built With
+                </h2>
+                <p className="text-muted-foreground text-sm">
+                  Select the technologies and frameworks used in your app
                 </p>
               </div>
             </div>
 
             <div className="pl-16 mt-2 space-y-4">
-              <form.Field name="tags">
+              <form.Field name="builtWith">
                 {(field) => {
-                  const toggleTag = (tag: string) => {
-                    const tags = field.state.value || [];
-                    if (tags.includes(tag)) {
-                      field.handleChange(tags.filter((t) => t !== tag));
-                    } else {
-                      field.handleChange([...tags, tag]);
-                    }
-                  };
-
+                  const selectedTechs = field.state.value || [];
                   const isInvalid =
                     field.state.meta.isTouched && !field.state.meta.isValid;
 
+                  const addTech = (tech: string) => {
+                    if (!selectedTechs.includes(tech)) {
+                      field.handleChange([...selectedTechs, tech]);
+                      setTechSearch("");
+                    }
+                  };
+
+                  const removeTech = (tech: string) => {
+                    field.handleChange(selectedTechs.filter((t) => t !== tech));
+                  };
+
                   return (
                     <Field data-invalid={isInvalid}>
-                      <div className="flex flex-wrap gap-3">
-                        {PREDEFINED_TAGS.map((tag) => {
-                          const isSelected = (field.state.value || []).includes(
-                            tag,
-                          );
-                          return (
-                            <button
-                              key={tag}
-                              type="button"
-                              onClick={() => toggleTag(tag)}
-                              className={`px-4 py-2 rounded-lg border transition-all font-medium text-sm ${
-                                isSelected
-                                  ? `${TAG_COLORS[tag as keyof typeof TAG_COLORS]} border-current scale-105`
-                                  : "bg-muted/10 text-muted-foreground border-border hover:border-primary/50"
-                              }`}
-                            >
-                              {tag}
-                            </button>
-                          );
-                        })}
+                      {/* Selected Technologies Display */}
+                      {selectedTechs.length > 0 && (
+                        <div className="mb-4">
+                          <p className="text-sm font-medium mb-2">
+                            Selected Technologies ({selectedTechs.length})
+                          </p>
+                          <div className="flex flex-wrap gap-2">
+                            {selectedTechs.map((tech) => {
+                              const colorClass =
+                                TECH_COLORS[tech] ||
+                                "bg-primary/20 text-primary border-primary/50";
+                              return (
+                                <div
+                                  key={tech}
+                                  className={`px-3 py-1.5 rounded-lg border font-medium text-sm flex items-center gap-2 ${colorClass}`}
+                                >
+                                  {tech}
+                                  <button
+                                    type="button"
+                                    onClick={() => removeTech(tech)}
+                                    className="hover:opacity-70 transition-opacity"
+                                    aria-label={`Remove ${tech}`}
+                                  >
+                                    <X className="w-3.5 h-3.5 cursor-pointer" />
+                                  </button>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Search Input */}
+                      <div className="space-y-2">
+                        <FieldLabel htmlFor="tech-search">
+                          Search Technologies
+                        </FieldLabel>
+                        <Input
+                          id="tech-search"
+                          type="text"
+                          value={techSearch}
+                          onChange={(e) => setTechSearch(e.target.value)}
+                          placeholder="Search for technologies..."
+                          autoComplete="off"
+                        />
                       </div>
+
+                      {/* Technology Selection Grid */}
+                      <div className="mt-4 max-h-64 overflow-y-auto border rounded-lg p-4">
+                        {filteredTechnologies.length > 0 ? (
+                          <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+                            {filteredTechnologies.map((tech) => {
+                              const isSelected = selectedTechs.includes(tech);
+
+                              return (
+                                <button
+                                  key={tech}
+                                  type="button"
+                                  onClick={() => addTech(tech)}
+                                  disabled={isSelected}
+                                  className={`px-3 py-2 rounded-lg border transition-all font-medium text-sm text-left ${
+                                    isSelected
+                                      ? "opacity-50 cursor-not-allowed bg-muted"
+                                      : "hover:scale-105 bg-muted/10 text-muted-foreground border-border hover:border-primary/50"
+                                  }`}
+                                >
+                                  {tech}
+                                  {isSelected && " ✓"}
+                                </button>
+                              );
+                            })}
+                          </div>
+                        ) : (
+                          <p className="text-center text-muted-foreground py-8">
+                            No technologies found matching &quot;{techSearch}
+                            &quot;
+                          </p>
+                        )}
+                      </div>
+
                       {isInvalid && (
                         <FieldError errors={field.state.meta.errors} />
                       )}
-                      <p className="text-muted-foreground text-sm mt-2">
-                        Selected:{" "}
-                        {(field.state.value || []).length > 0
-                          ? (field.state.value || []).join(", ")
-                          : "None"}
+                      <p className="text-xs text-muted-foreground mt-2">
+                        Click on technologies to add them. Select at least one
+                        technology.
                       </p>
                     </Field>
                   );
@@ -262,6 +404,7 @@ export default function CreateApp() {
           </CardContent>
         </Card>
 
+        {/* Links */}
         <Card>
           <CardContent>
             <div className="flex items-start gap-4 mb-6">
@@ -365,6 +508,7 @@ export default function CreateApp() {
           </CardContent>
         </Card>
 
+        {/* Publish Status */}
         <Card>
           <CardContent>
             <div className="flex items-start gap-4 mb-6">
@@ -389,7 +533,7 @@ export default function CreateApp() {
                     return (
                       <Field orientation="vertical" data-invalid={isInvalid}>
                         <FieldContent>
-                          <FieldLabel htmlFor="form-tanstack-select-language">
+                          <FieldLabel htmlFor="form-tanstack-select-status">
                             Select Status
                           </FieldLabel>
                           {isInvalid && (
@@ -402,7 +546,7 @@ export default function CreateApp() {
                           onValueChange={field.handleChange}
                         >
                           <SelectTrigger
-                            id="form-tanstack-select-language"
+                            id="form-tanstack-select-status"
                             aria-invalid={isInvalid}
                             className="w-full"
                           >
@@ -433,7 +577,10 @@ export default function CreateApp() {
                 type="button"
                 variant="outline"
                 className="cursor-pointer"
-                onClick={() => form.reset()}
+                onClick={() => {
+                  form.reset();
+                  setTechSearch("");
+                }}
                 disabled={isPending}
               >
                 Cancel

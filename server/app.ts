@@ -4,6 +4,7 @@ import { db } from "@/db";
 import { apps } from "@/db/schemas/app";
 import { createAppSchema } from "@/schema/app.schema";
 import { getUserFromAuth } from "@/server/user";
+import { eq } from "drizzle-orm";
 import { z, ZodError } from "zod";
 
 export async function createApp(
@@ -29,5 +30,45 @@ export async function createApp(
     }
 
     throw new Error("Failed to submit app");
+  }
+}
+
+export async function getDashboardApps() {
+  try {
+    const user = await getUserFromAuth();
+    const res = await db.select().from(apps).where(eq(apps.userId, user.id));
+
+    if (!res) {
+      throw new Error("No submitted apps found");
+    }
+
+    return res;
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+
+    throw new Error("Failed to fetch apps");
+  }
+}
+
+export async function getPublicApps() {
+  try {
+    const res = await db
+      .select()
+      .from(apps)
+      .where(eq(apps.status, "published"));
+
+    if (!res) {
+      throw new Error("No apps found");
+    }
+
+    return res;
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+
+    throw new Error("Failed to fetch apps");
   }
 }
