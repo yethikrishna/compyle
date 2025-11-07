@@ -12,7 +12,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Providers>
-          <NextTopLoader color="#0326FF" />
+          <NextTopLoader color="#0326FF" showSpinner={false} />
           <main>{children}</main>
           <Toaster />
         </Providers>
