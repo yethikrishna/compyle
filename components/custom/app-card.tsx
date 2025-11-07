@@ -13,7 +13,7 @@ export interface AppCardProps {
 
 export default function AppCard({ app }: { app: AppCardProps }) {
   return (
-    <Link href="/apps">
+    <Link href={`/apps/${app.id}`}>
       <div className="h-full p-6 rounded-lg bg-card border border-border hover:border-primary/50 transition-all hover:shadow-xl hover:shadow-primary/10 group cursor-pointer">
         {/* Image Placeholder */}
         <div className="w-full h-40 rounded-lg bg-linear-to-br from-primary/30 via-secondary/20 to-accent/30 mb-4 overflow-hidden group-hover:from-primary/40 group-hover:via-secondary/30 group-hover:to-accent/40 transition-all"></div>

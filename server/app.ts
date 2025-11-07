@@ -4,7 +4,7 @@ import { db } from "@/db";
 import { apps } from "@/db/schemas/app";
 import { createAppSchema } from "@/schema/app.schema";
 import { getUserFromAuth } from "@/server/user";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { z, ZodError } from "zod";
 
 export async function createApp(
@@ -33,7 +33,9 @@ export async function createApp(
   }
 }
 
-export async function getDashboardApps() {
+export async function getDashboardApps(): Promise<
+  Array<typeof apps.$inferSelect>
+> {
   try {
     const user = await getUserFromAuth();
     const res = await db.select().from(apps).where(eq(apps.userId, user.id));
@@ -52,7 +54,9 @@ export async function getDashboardApps() {
   }
 }
 
-export async function getPublicApps() {
+export async function getPublicApps(): Promise<
+  Array<typeof apps.$inferSelect>
+> {
   try {
     const res = await db
       .select()
@@ -70,5 +74,34 @@ export async function getPublicApps() {
     }
 
     throw new Error("Failed to fetch apps");
+  }
+}
+
+export async function getPublicAppDetails({
+  id,
+}: {
+  id: string;
+}): Promise<typeof apps.$inferSelect> {
+  try {
+    if (!id) {
+      throw new Error("Invalid app ID");
+    }
+
+    const res = await db
+      .select()
+      .from(apps)
+      .where(and(eq(apps.id, id), eq(apps.status, "published")));
+
+    if (res.length < 1) {
+      throw new Error("No app found with the provided ID");
+    }
+
+    return res[0];
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+
+    throw new Error("Failed to fetch app");
   }
 }
