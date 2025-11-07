@@ -14,7 +14,6 @@ export async function sendEmailVerificationEmail({
   url,
   name,
 }: SendEmailVerificationEmailProps) {
-  console.log(email, url, name);
   await resend.emails.send({
     to: [email],
     from: `Luzin Team <auth@${process.env.NEXT_PUBLIC_EMAIL_DOMAIN}>`,

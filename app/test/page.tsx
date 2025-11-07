@@ -1,266 +1,316 @@
-"use client";
-
-import { useState, useEffect } from "react";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+  Heart,
+  MessageCircle,
+  ExternalLink,
+  Github,
+  Globe,
+} from "lucide-react";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { CheckCircle2, Clock, Mail } from "lucide-react";
+import AppDetailClient from "./client";
 
-interface EmailVerificationState {
-  id: string;
-  email: string;
-  isVerified: boolean;
-  sentAt: Date;
-  canResendAt?: Date;
-}
+// Demo data
+const demoApp = {
+  id: "1",
+  name: "TaskFlow Pro",
+  slug: "taskflow-pro",
+  description:
+    "An AI-powered task management app that automatically prioritizes your work and suggests optimal workflows based on your productivity patterns.",
+  coverImage: "/placeholder.svg?key=vv1rw",
+  websiteUrl: "https://taskflow.dev",
+  repoUrl: "https://github.com/taskflow/pro",
+  demoUrl: "https://demo.taskflow.dev",
+  category: "Productivity",
+  builtWith: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Drizzle ORM"],
+  featured: true,
+  verified: true,
+  likes: 2847,
+  status: "published",
+  createdAt: "2025-01-15",
+  user: {
+    id: "user-1",
+    name: "Sarah Chen",
+    email: "sarah@taskflow.dev",
+    image: "/placeholder.svg?key=gg0fk",
+    role: "creator",
+  },
+};
 
-const DEMO_STATES: EmailVerificationState[] = [
+const demoComments = [
   {
-    id: "1",
-    email: "verified.user@example.com",
-    isVerified: true,
-    sentAt: new Date(Date.now() - 24 * 60 * 60 * 1000),
+    id: "comment-1",
+    content:
+      "This is exactly what I needed! The AI suggestions have saved me hours on planning.",
+    likes: 245,
+    createdAt: "2025-01-20",
+    user: {
+      id: "user-2",
+      name: "Alex Rodriguez",
+      image: "/placeholder.svg?key=jjppd",
+    },
+    replies: 3,
   },
   {
-    id: "2",
-    email: "pending.user@example.com",
-    isVerified: false,
-    sentAt: new Date(Date.now() - 5 * 60 * 1000),
-    canResendAt: new Date(Date.now() + 55 * 1000),
+    id: "comment-2",
+    content:
+      "Amazing work on the UI! Really smooth animations and great attention to detail.",
+    likes: 128,
+    createdAt: "2025-01-19",
+    user: {
+      id: "user-3",
+      name: "Jordan Lee",
+      image: "/placeholder.svg?key=o2ygd",
+    },
+    replies: 1,
   },
   {
-    id: "3",
-    email: "ready.to.resend@example.com",
-    isVerified: false,
-    sentAt: new Date(Date.now() - 61 * 1000),
-    canResendAt: new Date(Date.now() - 1 * 1000),
+    id: "comment-3",
+    content: "Would love to see mobile sync across all devices.",
+    likes: 89,
+    createdAt: "2025-01-18",
+    user: {
+      id: "user-4",
+      name: "Morgan Smith",
+      image: "/placeholder.svg?key=z6j3j",
+    },
+    replies: 2,
   },
 ];
 
-export default function VerifyEmailPage() {
-  const [selectedState, setSelectedState] = useState<EmailVerificationState>(
-    DEMO_STATES[1],
-  );
-  const [timeRemaining, setTimeRemaining] = useState<number | null>(null);
-  const [isResending, setIsResending] = useState(false);
-
-  // Calculate cooldown timer
-  useEffect(() => {
-    if (!selectedState.canResendAt) return;
-
-    const updateTimer = () => {
-      const now = new Date();
-      const remaining = Math.max(
-        0,
-        Math.ceil(
-          (selectedState.canResendAt!.getTime() - now.getTime()) / 1000,
-        ),
-      );
-      setTimeRemaining(remaining);
-    };
-
-    updateTimer();
-    const interval = setInterval(updateTimer, 1000);
-
-    return () => clearInterval(interval);
-  }, [selectedState.canResendAt]);
-
-  const handleResend = async () => {
-    setIsResending(true);
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    setIsResending(false);
-    // Update the state to show new cooldown
-    setSelectedState({
-      ...selectedState,
-      sentAt: new Date(),
-      canResendAt: new Date(Date.now() + 60 * 1000),
-    });
-    setTimeRemaining(60);
-  };
-
-  const canResend = timeRemaining === 0 && !selectedState.isVerified;
-
+export default function AppDetailPage() {
   return (
-    <main className="min-h-screen bg-gradient-to-b from-blue-50 to-white dark:from-slate-950 dark:to-slate-900 p-4 sm:p-6 lg:p-8">
-      <div className="max-w-2xl mx-auto">
-        {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white mb-2">
-            Email Verification
-          </h1>
-          <p className="text-slate-600 dark:text-slate-400">
-            Manage your email verification status
-          </p>
-        </div>
-
-        {/* Demo Selector */}
-        <div className="mb-8 flex flex-col sm:flex-row gap-2 justify-center">
-          {DEMO_STATES.map((state, index) => (
-            <Button
-              key={state.id}
-              onClick={() => {
-                setSelectedState(state);
-                setTimeRemaining(
-                  state.canResendAt
-                    ? Math.max(
-                        0,
-                        Math.ceil(
-                          (state.canResendAt.getTime() - new Date().getTime()) /
-                            1000,
-                        ),
-                      )
-                    : null,
-                );
-              }}
-              variant={selectedState.id === state.id ? "default" : "outline"}
-              className="text-xs sm:text-sm"
-            >
-              {index === 0
-                ? "✓ Verified"
-                : index === 1
-                  ? "⏱ Pending (5s ago)"
-                  : "→ Ready to Resend"}
-            </Button>
-          ))}
-        </div>
-
-        {/* Main Card */}
-        <Card className="border-2 shadow-lg">
-          <CardHeader className="space-y-2">
+    <main className="min-h-screen bg-background">
+      {/* Header */}
+      <div className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="mx-auto max-w-4xl px-4 py-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              {selectedState.isVerified ? (
-                <>
-                  <CheckCircle2 className="w-8 h-8 text-green-500" />
-                  <div>
-                    <CardTitle className="text-2xl">Email Verified</CardTitle>
-                    <CardDescription>
-                      Your email address has been confirmed
-                    </CardDescription>
+              <div className="h-10 w-10 rounded-lg bg-primary"></div>
+              <span className="text-sm font-semibold text-foreground">
+                Compyle Showcase
+              </span>
+            </div>
+            <Button variant="outline" size="sm">
+              Sign In
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
+        {/* Cover Image */}
+        <div className="mb-8 overflow-hidden rounded-xl border border-border">
+          <img
+            src={demoApp.coverImage || "/placeholder.svg"}
+            alt={demoApp.name}
+            className="h-96 w-full object-cover"
+          />
+        </div>
+
+        {/* Content Grid */}
+        <div className="grid gap-8 lg:grid-cols-3">
+          {/* Main Content */}
+          <div className="lg:col-span-2 space-y-8">
+            {/* App Header */}
+            <div>
+              <div className="mb-4 flex items-start justify-between">
+                <div>
+                  <h1 className="text-3xl font-bold text-foreground sm:text-4xl">
+                    {demoApp.name}
+                  </h1>
+                  <p className="mt-2 text-base text-muted-foreground">
+                    {demoApp.description}
+                  </p>
+                </div>
+                {demoApp.verified && (
+                  <div className="rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
+                    ✓ Verified
                   </div>
-                </>
-              ) : (
-                <>
-                  <Mail className="w-8 h-8 text-blue-500" />
-                  <div>
-                    <CardTitle className="text-2xl">
-                      Verify Your Email
-                    </CardTitle>
-                    <CardDescription>
-                      Check your inbox to verify your email address
-                    </CardDescription>
-                  </div>
-                </>
+                )}
+              </div>
+
+              {/* Tags */}
+              <div className="flex flex-wrap gap-2">
+                <span className="rounded-full bg-secondary px-3 py-1 text-xs font-medium text-secondary-foreground">
+                  {demoApp.category}
+                </span>
+                {demoApp.builtWith.map((tech) => (
+                  <span
+                    key={tech}
+                    className="rounded-full bg-muted px-3 py-1 text-xs font-medium text-muted-foreground"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Links Section */}
+            <div className="flex flex-wrap gap-3 border-t border-b border-border py-6">
+              {demoApp.demoUrl && (
+                <Button variant="default" size="sm" className="gap-2">
+                  <Globe className="h-4 w-4" />
+                  View Demo
+                </Button>
+              )}
+              {demoApp.websiteUrl && (
+                <Button variant="outline" size="sm" className="gap-2">
+                  <ExternalLink className="h-4 w-4" />
+                  Visit Site
+                </Button>
+              )}
+              {demoApp.repoUrl && (
+                <Button variant="outline" size="sm" className="gap-2">
+                  <Github className="h-4 w-4" />
+                  Source Code
+                </Button>
               )}
             </div>
-          </CardHeader>
 
-          <CardContent className="space-y-6">
-            {/* Email Display */}
-            <div className="p-4 bg-slate-50 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700">
-              <p className="text-sm text-slate-600 dark:text-slate-400 mb-1">
-                Email Address
-              </p>
-              <p className="font-mono text-lg font-semibold text-slate-900 dark:text-white">
-                {selectedState.email}
-              </p>
-            </div>
+            {/* Comments Section */}
+            <div>
+              <h2 className="mb-6 text-2xl font-bold text-foreground">
+                Comments ({demoComments.length})
+              </h2>
 
-            {/* Status Messages */}
-            {selectedState.isVerified && (
-              <Alert className="border-green-200 dark:border-green-900 bg-green-50 dark:bg-green-950">
-                <CheckCircle2 className="h-4 w-4 text-green-600 dark:text-green-400" />
-                <AlertDescription className="text-green-800 dark:text-green-200">
-                  Your email has been successfully verified. You now have full
-                  access to your account.
-                </AlertDescription>
-              </Alert>
-            )}
+              {/* Add Comment Form */}
+              <div className="mb-8 rounded-lg border border-border bg-card p-4">
+                <div className="flex gap-4">
+                  <Avatar className="h-10 w-10 flex-shrink-0">
+                    <AvatarImage src="/placeholder.svg?key=lgul8" />
+                    <AvatarFallback>You</AvatarFallback>
+                  </Avatar>
+                  <div className="flex-1">
+                    <input
+                      type="text"
+                      placeholder="Share your thoughts..."
+                      className="w-full rounded-lg border border-border bg-background px-4 py-2 text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
+                    />
+                  </div>
+                </div>
+              </div>
 
-            {!selectedState.isVerified && (
-              <>
-                <Alert className="border-blue-200 dark:border-blue-900 bg-blue-50 dark:bg-blue-950">
-                  <Mail className="h-4 w-4 text-blue-600 dark:text-blue-400" />
-                  <AlertDescription className="text-blue-800 dark:text-blue-200">
-                    A verification link has been sent to your email. Please
-                    check your inbox (and spam folder) and click the link to
-                    verify your address.
-                  </AlertDescription>
-                </Alert>
+              {/* Comments List */}
+              <div className="space-y-6">
+                {demoComments.map((comment) => (
+                  <div
+                    key={comment.id}
+                    className="border-b border-border pb-6 last:border-b-0"
+                  >
+                    <div className="flex gap-4">
+                      <Avatar className="h-10 w-10 flex-shrink-0">
+                        <AvatarImage
+                          src={comment.user.image || "/placeholder.svg"}
+                        />
+                        <AvatarFallback>
+                          {comment.user.name.charAt(0)}
+                        </AvatarFallback>
+                      </Avatar>
 
-                {/* Cooldown Timer or Resend Button */}
-                <div className="p-4 bg-slate-50 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700">
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="flex items-center gap-2">
-                      <Clock className="w-5 h-5 text-slate-500 dark:text-slate-400" />
-                      <p className="text-sm font-medium text-slate-700 dark:text-slate-300">
-                        Resend Email
-                      </p>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center justify-between gap-2 mb-1">
+                          <h3 className="font-semibold text-foreground text-sm">
+                            {comment.user.name}
+                          </h3>
+                          <span className="text-xs text-muted-foreground">
+                            {comment.createdAt}
+                          </span>
+                        </div>
+                        <p className="mb-3 text-sm text-foreground text-pretty">
+                          {comment.content}
+                        </p>
+
+                        <div className="flex items-center gap-4">
+                          <AppDetailClient
+                            commentId={comment.id}
+                            initialLikes={comment.likes}
+                          />
+                          <button className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors">
+                            <MessageCircle className="h-4 w-4" />
+                            Reply
+                          </button>
+                          {comment.replies > 0 && (
+                            <button className="text-xs font-semibold text-primary hover:underline">
+                              {comment.replies}{" "}
+                              {comment.replies === 1 ? "reply" : "replies"}
+                            </button>
+                          )}
+                        </div>
+                      </div>
                     </div>
                   </div>
-
-                  {timeRemaining && timeRemaining > 0 ? (
-                    <div className="space-y-3">
-                      <div className="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-2 overflow-hidden">
-                        <div
-                          className="bg-blue-500 h-full transition-all duration-1000"
-                          style={{
-                            width: `${((60 - timeRemaining) / 60) * 100}%`,
-                          }}
-                        />
-                      </div>
-                      <p className="text-sm text-slate-600 dark:text-slate-400">
-                        You can send a new verification email in{" "}
-                        <span className="font-bold text-slate-900 dark:text-white">
-                          {timeRemaining}
-                        </span>{" "}
-                        second
-                        {timeRemaining !== 1 ? "s" : ""}
-                      </p>
-                    </div>
-                  ) : (
-                    <div className="space-y-3">
-                      <p className="text-sm text-slate-600 dark:text-slate-400">
-                        Didn't receive the email? You can send a new
-                        verification link.
-                      </p>
-                      <Button
-                        onClick={handleResend}
-                        disabled={!canResend || isResending}
-                        className="w-full"
-                        size="lg"
-                      >
-                        {isResending
-                          ? "Sending..."
-                          : "Send New Verification Email"}
-                      </Button>
-                    </div>
-                  )}
-                </div>
-              </>
-            )}
-
-            {/* Help Text */}
-            <div className="text-sm text-slate-600 dark:text-slate-400 space-y-2">
-              <p>
-                <strong>Tips:</strong>
-              </p>
-              <ul className="list-disc list-inside space-y-1">
-                <li>
-                  Check your spam or junk folder if you don't see the email
-                </li>
-                <li>Verification links typically expire after 24 hours</li>
-                <li>You can only request a new email every 60 seconds</li>
-              </ul>
+                ))}
+              </div>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+
+          {/* Sidebar */}
+          <div className="space-y-6">
+            {/* Upvote Card */}
+            <div className="rounded-lg border border-border bg-card p-6">
+              <div className="mb-4 text-center">
+                <div className="text-4xl font-bold text-foreground">
+                  {demoApp.likes}
+                </div>
+                <p className="text-xs text-muted-foreground mt-1">upvotes</p>
+              </div>
+              <button className="w-full flex items-center justify-center gap-2 rounded-lg bg-primary px-4 py-3 font-semibold text-primary-foreground hover:opacity-90 transition-opacity">
+                <Heart className="h-5 w-5" />
+                Upvote
+              </button>
+            </div>
+
+            {/* Creator Info */}
+            <div className="rounded-lg border border-border bg-card p-6">
+              <p className="mb-4 text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+                Created by
+              </p>
+              <div className="flex flex-col items-center text-center">
+                <Avatar className="mb-3 h-16 w-16">
+                  <AvatarImage src={demoApp.user.image || "/placeholder.svg"} />
+                  <AvatarFallback>{demoApp.user.name.charAt(0)}</AvatarFallback>
+                </Avatar>
+                <h3 className="font-bold text-foreground text-lg">
+                  {demoApp.user.name}
+                </h3>
+                <p className="text-xs text-muted-foreground mt-1">
+                  {demoApp.user.email}
+                </p>
+                <Button variant="outline" size="sm" className="mt-4 w-full">
+                  View Profile
+                </Button>
+              </div>
+            </div>
+
+            {/* App Stats */}
+            <div className="rounded-lg border border-border bg-card p-6">
+              <p className="mb-4 text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+                Details
+              </p>
+              <div className="space-y-3 text-sm">
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Status</span>
+                  <span className="font-semibold text-foreground capitalize">
+                    {demoApp.status}
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Posted</span>
+                  <span className="font-semibold text-foreground">
+                    {demoApp.createdAt}
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Comments</span>
+                  <span className="font-semibold text-foreground">
+                    {demoComments.length}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </main>
   );

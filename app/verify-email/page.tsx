@@ -42,8 +42,7 @@ export default function VerifyEmail() {
       });
 
       toast.success("Email sent successfully");
-    } catch (error) {
-      console.log(error);
+    } catch {
       toast.error("Failed to send email");
     }
 
