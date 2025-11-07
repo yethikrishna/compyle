@@ -1,6 +1,7 @@
 import { Toaster } from "@/components/ui/sonner";
-import "./globals.css";
 import { Providers } from "@/utils/provider";
+import NextTopLoader from "nextjs-toploader";
+import "./globals.css";
 
 export default function RootLayout({
   children,
@@ -11,6 +12,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Providers>
+          <NextTopLoader color="#0326FF" />
           <main>{children}</main>
           <Toaster />
         </Providers>
