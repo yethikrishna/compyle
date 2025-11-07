@@ -1,6 +1,7 @@
 import { db } from "@/db";
 import { accounts, sessions, verifications } from "@/db/schemas/auth";
 import { users } from "@/db/schemas/user";
+import { sendEmailVerificationEmail } from "@/emails";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 
@@ -19,6 +20,16 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
     autoSignIn: false,
+  },
+  emailVerification: {
+    sendOnSignUp: true,
+    sendVerificationEmail: async ({ user, url }) => {
+      await sendEmailVerificationEmail({
+        url,
+        email: user.email,
+        name: user.name,
+      });
+    },
   },
   user: {
     additionalFields: {

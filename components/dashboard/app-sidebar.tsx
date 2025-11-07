@@ -89,7 +89,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
-              <Link href="/dashboard">
+              <Link href="/">
                 <div className="bg-primary/25 flex items-center justify-center rounded-md p-1 border border-primary/50">
                   <GitPullRequestCreateArrow />
                 </div>

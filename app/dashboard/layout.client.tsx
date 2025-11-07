@@ -2,6 +2,7 @@
 
 import { Spinner } from "@/components/ui/spinner";
 import { useSession } from "@/lib/auth-client";
+import { useAuthStore } from "@/providers/auth.provider";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { toast } from "sonner";
@@ -11,14 +12,19 @@ export default function LayoutClient({
 }: {
   children: React.ReactNode;
 }) {
-  const { data: session, isPending, error } = useSession();
   const router = useRouter();
+  const { data: session, isPending, error } = useSession();
+
+  const { setUser } = useAuthStore();
 
   useEffect(() => {
+    if (!isPending && !error && session) {
+      setUser(session.user);
+    }
     if (!isPending && !session) {
       router.push("/login");
     }
-  }, [isPending, session, router]);
+  }, [isPending, session, router, error, setUser]);
 
   if (isPending) {
     return (
