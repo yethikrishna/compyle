@@ -2,6 +2,8 @@
 
 import { NavMain } from "@/components/custom/nav-main";
 import {
+  ArrowUpRight,
+  CornerUpLeft,
   Frame,
   GitPullRequestCreateArrow,
   House,
@@ -26,6 +28,7 @@ import {
 } from "@/components/ui/sidebar";
 import Link from "next/link";
 import { NavUser } from "./nav-user";
+import { NavSecondary } from "../custom/nav-secondary";
 
 const data = {
   user: {
@@ -54,14 +57,14 @@ const data = {
   ],
   navSecondary: [
     {
-      title: "Support",
-      url: "#",
-      icon: LifeBuoy,
+      title: "All Apps",
+      url: "/apps",
+      icon: CornerUpLeft,
     },
     {
-      title: "Feedback",
-      url: "#",
-      icon: Send,
+      title: "Compyle.ai",
+      url: "https://www.compyle.ai",
+      icon: ArrowUpRight,
     },
   ],
   projects: [
@@ -105,8 +108,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        {/*<NavProjects projects={data.projects} />
-        <NavSecondary items={data.navSecondary} className="mt-auto" />*/}
+        {/*<NavProjects projects={data.projects} /> */}
+        <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
         <NavUser />
