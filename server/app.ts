@@ -2,6 +2,7 @@
 
 import { db } from "@/db";
 import { apps } from "@/db/schemas/app";
+import { users } from "@/db/schemas/user";
 import { createAppSchema } from "@/schema/app.schema";
 import { getUserFromAuth } from "@/server/user";
 import { and, eq } from "drizzle-orm";
@@ -77,26 +78,40 @@ export async function getPublicApps(): Promise<
   }
 }
 
-export async function getPublicAppDetails({
-  id,
-}: {
-  id: string;
-}): Promise<typeof apps.$inferSelect> {
+export async function getPublicAppDetails({ id }: { id: string }): Promise<{
+  appDetails: typeof apps.$inferSelect;
+  userDetails: {
+    id: string;
+    name: string;
+    image: string | null;
+  };
+}> {
   try {
     if (!id) {
       throw new Error("Invalid app ID");
     }
 
     const res = await db
-      .select()
+      .select({
+        app: apps,
+        user: {
+          id: users.id,
+          name: users.name,
+          image: users.image,
+        },
+      })
       .from(apps)
-      .where(and(eq(apps.id, id), eq(apps.status, "published")));
+      .where(and(eq(apps.id, id), eq(apps.status, "published")))
+      .innerJoin(users, eq(users.id, apps.userId));
 
     if (res.length < 1) {
       throw new Error("No app found with the provided ID");
     }
 
-    return res[0];
+    return {
+      appDetails: res[0].app,
+      userDetails: res[0].user,
+    };
   } catch (error) {
     if (error instanceof Error) {
       throw new Error(error.message);
