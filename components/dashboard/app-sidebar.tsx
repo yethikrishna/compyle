@@ -25,6 +25,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import Link from "next/link";
+import { NavUser } from "./nav-user";
 
 const data = {
   user: {
@@ -107,7 +108,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         {/*<NavProjects projects={data.projects} />
         <NavSecondary items={data.navSecondary} className="mt-auto" />*/}
       </SidebarContent>
-      <SidebarFooter>{/*<NavUser user={data.user} />*/}</SidebarFooter>
+      <SidebarFooter>
+        <NavUser />
+      </SidebarFooter>
     </Sidebar>
   );
 }
