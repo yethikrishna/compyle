@@ -84,6 +84,7 @@ export async function getPublicAppDetails({ id }: { id: string }): Promise<{
     id: string;
     name: string;
     image: string | null;
+    username: string;
   };
 }> {
   try {
@@ -98,6 +99,7 @@ export async function getPublicAppDetails({ id }: { id: string }): Promise<{
           id: users.id,
           name: users.name,
           image: users.image,
+          username: users.username,
         },
       })
       .from(apps)

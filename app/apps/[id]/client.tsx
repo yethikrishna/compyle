@@ -286,12 +286,21 @@ export default function AppDetailsClient({ id }: { id: string }) {
                   <h3 className="font-bold text-foreground text-lg">
                     {data.userDetails.name}
                   </h3>
-                  {/*<p className="text-xs text-muted-foreground mt-1">
-                    {demoApp.user.email}
-                  </p>*/}
-                  <Button variant="outline" size="sm" className="mt-4 w-full">
-                    View Profile
-                  </Button>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    u/{data.userDetails.username}
+                  </p>
+                  <Link
+                    href={`/u/${data.userDetails.username}`}
+                    className="w-full"
+                  >
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="mt-4 w-full cursor-pointer"
+                    >
+                      View Profile
+                    </Button>
+                  </Link>
                 </div>
               </div>
 
