@@ -90,10 +90,11 @@ export default function Apps() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {data.map((app) => {
                 const item: AppCardProps = {
-                  id: app.id,
-                  name: app.name,
-                  description: app.description,
-                  category: app.category,
+                  id: app.app.id,
+                  name: app.app.name,
+                  description: app.app.description,
+                  category: app.app.category,
+                  upvotes: app.upvoteCount,
                 };
                 return <AppCard key={item.id} app={item} />;
               })}

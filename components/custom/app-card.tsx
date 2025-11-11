@@ -1,14 +1,15 @@
 "use client";
 
+import { Badge } from "@/components/ui/badge";
+import { Heart } from "lucide-react";
 import Link from "next/link";
-import { Star, Users, ExternalLink } from "lucide-react";
-import { Badge } from "../ui/badge";
 
 export interface AppCardProps {
   id: string;
   name: string;
   description: string;
   category: string;
+  upvotes: number;
 }
 
 export default function AppCard({ app }: { app: AppCardProps }) {
@@ -35,15 +36,13 @@ export default function AppCard({ app }: { app: AppCardProps }) {
         </p>
 
         <div className="flex items-center justify-between pt-4 border-t border-border">
-          <div className="flex items-center gap-1">
-            <Star className="w-4 h-4 text-secondary fill-secondary" />
-            <span className="text-sm font-semibold">0.0</span>
+          <div className="flex items-center gap-1"></div>
+          <div className="flex items-center gap-1 text-muted-foreground"></div>
+          <div className="flex gap-5">
+            <p className="text-foreground/50">upvotes</p>
+            <Heart className="text-destructive fill-destructive size-5 mt-0.5 -mr-3" />
+            <p className="text-foreground/50">{app.upvotes}</p>
           </div>
-          <div className="flex items-center gap-1 text-muted-foreground">
-            <Users className="w-4 h-4" />
-            <span className="text-sm">0</span>
-          </div>
-          <ExternalLink className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
         </div>
       </div>
     </Link>
