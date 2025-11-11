@@ -2,10 +2,11 @@
 
 import { db } from "@/db";
 import { apps } from "@/db/schemas/app";
+import { upvotes } from "@/db/schemas/upvote";
 import { users } from "@/db/schemas/user";
 import { createAppSchema } from "@/schema/app.schema";
 import { getUserFromAuth } from "@/server/user";
-import { and, eq } from "drizzle-orm";
+import { and, eq, sql } from "drizzle-orm";
 import { z, ZodError } from "zod";
 
 export async function createApp(
@@ -35,11 +36,22 @@ export async function createApp(
 }
 
 export async function getDashboardApps(): Promise<
-  Array<typeof apps.$inferSelect>
+  Array<{
+    app: typeof apps.$inferSelect;
+    upvoteCount: number;
+  }>
 > {
   try {
     const user = await getUserFromAuth();
-    const res = await db.select().from(apps).where(eq(apps.userId, user.id));
+    const res = await db
+      .select({
+        app: apps,
+        upvoteCount: sql<number>`cast(count(${upvotes.userId}) as int)`,
+      })
+      .from(apps)
+      .leftJoin(upvotes, eq(apps.id, upvotes.appId))
+      .where(eq(apps.userId, user.id))
+      .groupBy(apps.id);
 
     if (!res) {
       throw new Error("No submitted apps found");
@@ -56,11 +68,23 @@ export async function getDashboardApps(): Promise<
 }
 
 export async function getPublicApps(): Promise<
-  Array<typeof apps.$inferSelect>
+  Array<{
+    app: typeof apps.$inferSelect;
+    upvoteCount: number;
+  }>
 > {
   try {
     const res = await db
-      .select()
+      .select({
+        app: apps,
+        upvoteCount: sql<number>`
+          (
+            SELECT count(*)
+            FROM ${upvotes}
+            WHERE ${upvotes.appId} = ${apps.id}
+          )
+        `,
+      })
       .from(apps)
       .where(eq(apps.status, "published"));
 
@@ -86,6 +110,7 @@ export async function getPublicAppDetails({ id }: { id: string }): Promise<{
     image: string | null;
     username: string;
   };
+  upvoteCount: number;
 }> {
   try {
     if (!id) {
@@ -101,6 +126,13 @@ export async function getPublicAppDetails({ id }: { id: string }): Promise<{
           image: users.image,
           username: users.username,
         },
+        upvoteCount: sql<number>`
+          (
+            SELECT count(*)
+            FROM ${upvotes}
+            WHERE ${upvotes.appId} = ${apps.id}
+          )
+        `,
       })
       .from(apps)
       .where(and(eq(apps.id, id), eq(apps.status, "published")))
@@ -113,6 +145,7 @@ export async function getPublicAppDetails({ id }: { id: string }): Promise<{
     return {
       appDetails: res[0].app,
       userDetails: res[0].user,
+      upvoteCount: res[0].upvoteCount,
     };
   } catch (error) {
     if (error instanceof Error) {

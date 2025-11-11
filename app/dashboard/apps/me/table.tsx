@@ -4,13 +4,30 @@ import { ColumnDef } from "@tanstack/react-table";
 import clsx from "clsx";
 import { InferSelectModel } from "drizzle-orm";
 
-export const columns: ColumnDef<InferSelectModel<typeof apps>>[] = [
+type AppWithUpvotes = {
+  app: InferSelectModel<typeof apps>;
+  upvoteCount: number;
+};
+
+export const columns: ColumnDef<AppWithUpvotes>[] = [
   {
-    accessorKey: "name",
+    accessorKey: "app.name",
     header: "App Name",
   },
   {
-    accessorKey: "status",
+    accessorKey: "upvoteCount",
+    header: "Upvotes",
+    cell: ({ getValue }) => {
+      const count = getValue() as number;
+      return (
+        <div className="flex items-center gap-1">
+          <span className="font-medium">{count}</span>
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "app.status",
     header: "Status",
     cell: ({ getValue }) => {
       const status = getValue() as string;

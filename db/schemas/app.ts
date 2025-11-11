@@ -1,5 +1,6 @@
 import { appStatusEnum } from "@/db/schemas/enums";
 import { timestamps } from "@/db/schemas/timestamps";
+import { upvotes } from "@/db/schemas/upvote";
 import { users } from "@/db/schemas/user";
 import { relations } from "drizzle-orm";
 import { boolean, integer, pgTable, text } from "drizzle-orm/pg-core";
@@ -27,9 +28,10 @@ export const apps = pgTable("app", {
   ...timestamps,
 });
 
-export const appsRelations = relations(apps, ({ one }) => ({
+export const appsRelations = relations(apps, ({ one, many }) => ({
   user: one(users, {
     fields: [apps.userId],
     references: [users.id],
   }),
+  upvotes: many(upvotes),
 }));

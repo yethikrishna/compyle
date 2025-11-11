@@ -8,6 +8,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -20,7 +21,11 @@ import {
 } from "@/components/ui/empty";
 import { Spinner } from "@/components/ui/spinner";
 import { getPublicAppDetails } from "@/server/app";
-import { useQuery } from "@tanstack/react-query";
+import { checkUserUpvote, toggleUpvote } from "@/server/upvote";
+import { getInitials } from "@/utils/helpers";
+import { queryClient } from "@/utils/provider";
+import { useMutation, useQueries } from "@tanstack/react-query";
+import { format } from "date-fns";
 import {
   ExternalLink,
   FilePlusCorner,
@@ -30,19 +35,55 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
-import { format } from "date-fns";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { getInitials } from "@/utils/helpers";
+import { toast } from "sonner";
 
 export default function AppDetailsClient({ id }: { id: string }) {
   const [alertOpen, setAlertOpen] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
 
-  const { isPending, data } = useQuery({
-    queryKey: ["public-app", id],
-    queryFn: () => getPublicAppDetails({ id }),
-    meta: { showError: true },
+  const results = useQueries({
+    queries: [
+      {
+        queryKey: ["public-app", id],
+        queryFn: () => getPublicAppDetails({ id }),
+        meta: { showError: true },
+      },
+      {
+        queryKey: ["upvote-status", id],
+        queryFn: () => checkUserUpvote({ appId: id }),
+      },
+    ],
   });
+
+  const [appResult, upvoteResult] = results;
+
+  const app = appResult.data ?? null;
+  const upvoteStatus = upvoteResult.data ?? { hasUpvoted: false };
+
+  const upvoteMutation = useMutation({
+    mutationFn: () => toggleUpvote({ appId: id }),
+    onError: () => {
+      toast.error("Failed to upvote. Please try again");
+    },
+    onSuccess: (result) => {
+      if (result.success) {
+        queryClient.invalidateQueries({ queryKey: ["public-app", id] });
+        queryClient.invalidateQueries({ queryKey: ["upvote-status", id] });
+
+        if (result.action === "added") {
+          toast.success("Upvoted successfully!");
+        } else {
+          toast.success("Upvote removed");
+        }
+      } else {
+        toast.error("Failed to upvote. Please try again");
+      }
+    },
+  });
+
+  const handleUpvote = () => {
+    upvoteMutation.mutate();
+  };
 
   const handleLinksButtonClick = (url: string | null, message: string) => {
     if (url) {
@@ -55,12 +96,12 @@ export default function AppDetailsClient({ id }: { id: string }) {
 
   return (
     <>
-      {isPending && (
+      {appResult.isPending && (
         <div>
           <Spinner className="mx-auto size-6" />
         </div>
       )}
-      {!isPending && !data && (
+      {!appResult.isPending && !app && (
         <Empty className="border max-w-4xl mx-auto">
           <EmptyHeader>
             <EmptyMedia variant="icon">
@@ -87,7 +128,7 @@ export default function AppDetailsClient({ id }: { id: string }) {
           </EmptyContent>
         </Empty>
       )}
-      {!isPending && data && (
+      {!appResult.isPending && app && (
         <div className="mx-auto max-w-6xl px-6">
           {/*Make height resposive*/}
           <div className="w-full h-96 rounded-lg bg-linear-to-br from-primary/30 via-secondary/20 to-accent/30 mb-4 overflow-hidden group-hover:from-primary/40 group-hover:via-secondary/30 group-hover:to-accent/40 transition-all"></div>
@@ -98,10 +139,10 @@ export default function AppDetailsClient({ id }: { id: string }) {
                 <div className="mb-4 flex items-start justify-between">
                   <div>
                     <h1 className="text-3xl font-bold text-foreground sm:text-4xl">
-                      {data.appDetails.name}
+                      {app.appDetails.name}
                     </h1>
                     <p className="mt-2 text-base text-muted-foreground">
-                      {data.appDetails.description}
+                      {app.appDetails.description}
                     </p>
                   </div>
                 </div>
@@ -109,9 +150,9 @@ export default function AppDetailsClient({ id }: { id: string }) {
                 {/* Tags */}
                 <div className="flex flex-wrap gap-2">
                   <Badge className="rounded-xs">
-                    {data.appDetails.category}
+                    {app.appDetails.category}
                   </Badge>
-                  {data.appDetails.builtWith.map((tech) => (
+                  {app.appDetails.builtWith.map((tech) => (
                     <Badge
                       key={tech}
                       variant="secondary"
@@ -130,7 +171,7 @@ export default function AppDetailsClient({ id }: { id: string }) {
                   className="gap-2 cursor-pointer"
                   onClick={() =>
                     handleLinksButtonClick(
-                      data.appDetails.demoUrl,
+                      app.appDetails.demoUrl,
                       "Demo URL is not available.",
                     )
                   }
@@ -144,7 +185,7 @@ export default function AppDetailsClient({ id }: { id: string }) {
                   className="gap-2 cursor-pointer"
                   onClick={() =>
                     handleLinksButtonClick(
-                      data.appDetails.websiteUrl,
+                      app.appDetails.websiteUrl,
                       "Website URL is not available.",
                     )
                   }
@@ -158,7 +199,7 @@ export default function AppDetailsClient({ id }: { id: string }) {
                   className="gap-2 cursor-pointer"
                   onClick={() =>
                     handleLinksButtonClick(
-                      data.appDetails.repoUrl,
+                      app.appDetails.repoUrl,
                       "Repository URL is not available.",
                     )
                   }
@@ -263,13 +304,35 @@ export default function AppDetailsClient({ id }: { id: string }) {
             <div className="space-y-6">
               <div className="rounded-lg border border-border bg-card p-6">
                 <div className="mb-4 text-center">
-                  <div className="text-4xl font-bold text-foreground">0</div>
+                  <div className="text-4xl font-bold text-foreground">
+                    {app.upvoteCount}
+                  </div>
                   <p className="text-xs text-muted-foreground mt-1">upvotes</p>
                 </div>
-                <button className="w-full flex items-center justify-center gap-2 rounded-lg bg-primary px-4 py-3 font-semibold text-primary-foreground hover:opacity-90 transition-opacity">
-                  <Heart className="h-5 w-5" />
-                  Upvote
-                </button>
+                <Button
+                  disabled={upvoteResult.isPending || upvoteMutation.isPending}
+                  className="w-full cursor-pointer"
+                  onClick={handleUpvote}
+                >
+                  {upvoteResult.isPending ? (
+                    <>
+                      <Spinner className="size-4" />
+                      Loading...
+                    </>
+                  ) : upvoteMutation.isPending ? (
+                    "Updating..."
+                  ) : upvoteStatus.hasUpvoted ? (
+                    <>
+                      <Heart className="h-5 w-5 fill-current" />
+                      Upvoted
+                    </>
+                  ) : (
+                    <>
+                      <Heart className="h-5 w-5" />
+                      Upvote
+                    </>
+                  )}
+                </Button>
               </div>
 
               <div className="rounded-lg border border-border bg-card p-6">
@@ -278,19 +341,19 @@ export default function AppDetailsClient({ id }: { id: string }) {
                 </p>
                 <div className="flex flex-col items-center text-center">
                   <Avatar className="mb-3 h-16 w-16">
-                    <AvatarImage src={data.userDetails.image || undefined} />
+                    <AvatarImage src={app.userDetails.image || undefined} />
                     <AvatarFallback>
-                      {getInitials(data.userDetails.name)}
+                      {getInitials(app.userDetails.name)}
                     </AvatarFallback>
                   </Avatar>
                   <h3 className="font-bold text-foreground text-lg">
-                    {data.userDetails.name}
+                    {app.userDetails.name}
                   </h3>
                   <p className="text-xs text-muted-foreground mt-1">
-                    u/{data.userDetails.username}
+                    u/{app.userDetails.username}
                   </p>
                   <Link
-                    href={`/u/${data.userDetails.username}`}
+                    href={`/u/${app.userDetails.username}`}
                     className="w-full"
                   >
                     <Button
@@ -313,14 +376,14 @@ export default function AppDetailsClient({ id }: { id: string }) {
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Status</span>
                     <span className="font-semibold text-foreground capitalize">
-                      {data.appDetails.status}
+                      {app.appDetails.status}
                     </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Posted</span>
                     <span className="font-semibold text-foreground">
                       {format(
-                        new Date(data.appDetails.createdAt),
+                        new Date(app.appDetails.createdAt),
                         "MMM d, yyyy",
                       )}
                     </span>
