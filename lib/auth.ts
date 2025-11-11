@@ -4,6 +4,7 @@ import { users } from "@/db/schemas/user";
 import { sendEmailVerificationEmail } from "@/emails";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
+import { username } from "better-auth/plugins";
 
 const drizzleSchemas = {
   user: users,
@@ -46,4 +47,5 @@ export const auth = betterAuth({
       generateId: false,
     },
   },
+  plugins: [username()],
 });

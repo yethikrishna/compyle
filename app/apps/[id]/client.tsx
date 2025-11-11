@@ -31,6 +31,8 @@ import {
 import Link from "next/link";
 import { useState } from "react";
 import { format } from "date-fns";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { getInitials } from "@/utils/helpers";
 
 export default function AppDetailsClient({ id }: { id: string }) {
   const [alertOpen, setAlertOpen] = useState(false);
@@ -86,7 +88,7 @@ export default function AppDetailsClient({ id }: { id: string }) {
         </Empty>
       )}
       {!isPending && data && (
-        <div className="mx-auto max-w-4xl px-6">
+        <div className="mx-auto max-w-6xl px-6">
           {/*Make height resposive*/}
           <div className="w-full h-96 rounded-lg bg-linear-to-br from-primary/30 via-secondary/20 to-accent/30 mb-4 overflow-hidden group-hover:from-primary/40 group-hover:via-secondary/30 group-hover:to-accent/40 transition-all"></div>
 
@@ -96,18 +98,20 @@ export default function AppDetailsClient({ id }: { id: string }) {
                 <div className="mb-4 flex items-start justify-between">
                   <div>
                     <h1 className="text-3xl font-bold text-foreground sm:text-4xl">
-                      {data.name}
+                      {data.appDetails.name}
                     </h1>
                     <p className="mt-2 text-base text-muted-foreground">
-                      {data.description}
+                      {data.appDetails.description}
                     </p>
                   </div>
                 </div>
 
                 {/* Tags */}
                 <div className="flex flex-wrap gap-2">
-                  <Badge className="rounded-xs">{data.category}</Badge>
-                  {data.builtWith.map((tech) => (
+                  <Badge className="rounded-xs">
+                    {data.appDetails.category}
+                  </Badge>
+                  {data.appDetails.builtWith.map((tech) => (
                     <Badge
                       key={tech}
                       variant="secondary"
@@ -126,7 +130,7 @@ export default function AppDetailsClient({ id }: { id: string }) {
                   className="gap-2 cursor-pointer"
                   onClick={() =>
                     handleLinksButtonClick(
-                      data.demoUrl,
+                      data.appDetails.demoUrl,
                       "Demo URL is not available.",
                     )
                   }
@@ -140,7 +144,7 @@ export default function AppDetailsClient({ id }: { id: string }) {
                   className="gap-2 cursor-pointer"
                   onClick={() =>
                     handleLinksButtonClick(
-                      data.websiteUrl,
+                      data.appDetails.websiteUrl,
                       "Website URL is not available.",
                     )
                   }
@@ -154,7 +158,7 @@ export default function AppDetailsClient({ id }: { id: string }) {
                   className="gap-2 cursor-pointer"
                   onClick={() =>
                     handleLinksButtonClick(
-                      data.repoUrl,
+                      data.appDetails.repoUrl,
                       "Repository URL is not available.",
                     )
                   }
@@ -268,31 +272,37 @@ export default function AppDetailsClient({ id }: { id: string }) {
                 </button>
               </div>
 
-              {/* Creator Info */}
-              {/*<div className="rounded-lg border border-border bg-card p-6">
+              <div className="rounded-lg border border-border bg-card p-6">
                 <p className="mb-4 text-xs font-semibold text-muted-foreground uppercase tracking-wide">
                   Created by
                 </p>
                 <div className="flex flex-col items-center text-center">
                   <Avatar className="mb-3 h-16 w-16">
-                    <AvatarImage
-                      src={demoApp.user.image || "/placeholder.svg"}
-                    />
+                    <AvatarImage src={data.userDetails.image || undefined} />
                     <AvatarFallback>
-                      {demoApp.user.name.charAt(0)}
+                      {getInitials(data.userDetails.name)}
                     </AvatarFallback>
                   </Avatar>
                   <h3 className="font-bold text-foreground text-lg">
-                    {demoApp.user.name}
+                    {data.userDetails.name}
                   </h3>
                   <p className="text-xs text-muted-foreground mt-1">
-                    {demoApp.user.email}
+                    u/{data.userDetails.username}
                   </p>
-                  <Button variant="outline" size="sm" className="mt-4 w-full">
-                    View Profile
-                  </Button>
+                  <Link
+                    href={`/u/${data.userDetails.username}`}
+                    className="w-full"
+                  >
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="mt-4 w-full cursor-pointer"
+                    >
+                      View Profile
+                    </Button>
+                  </Link>
                 </div>
-              </div>*/}
+              </div>
 
               {/* App Stats */}
               <div className="rounded-lg border border-border bg-card p-6">
@@ -303,13 +313,16 @@ export default function AppDetailsClient({ id }: { id: string }) {
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Status</span>
                     <span className="font-semibold text-foreground capitalize">
-                      {data.status}
+                      {data.appDetails.status}
                     </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Posted</span>
                     <span className="font-semibold text-foreground">
-                      {format(new Date(data.createdAt), "MMM d, yyyy")}
+                      {format(
+                        new Date(data.appDetails.createdAt),
+                        "MMM d, yyyy",
+                      )}
                     </span>
                   </div>
                   <div className="flex justify-between">

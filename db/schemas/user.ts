@@ -12,5 +12,7 @@ export const users = pgTable("user", {
   emailVerified: boolean("emailVerified").notNull().default(false),
   image: text("image"),
   role: userRoleEnum("role").notNull().default("user"),
+  username: text("username").notNull(),
+  displayUsername: text("displayUsername").notNull(),
   ...timestamps,
 });
