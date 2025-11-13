@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compyle Documentation</title>
+    <link rel="stylesheet" href="documentation-styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div class="header-left">
+                <button id="mobile-menu-toggle" class="mobile-menu-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+                <a href="#" class="logo">
+                    <span class="logo-text">Compyle</span>
+                </a>
+            </div>
+            
+            <div class="header-center">
+                <div class="search-container">
+                    <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                    <input type="text" placeholder="Search documentation..." class="search-input">
+                </div>
+            </div>
+            
+            <div class="header-right">
+                <button class="theme-toggle">
+                    <svg class="theme-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+                <button class="account-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <!-- Sidebar Navigation -->
+        <aside id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <div class="version-selector">
+                    <select>
+                        <option>v1.0</option>
+                        <option>v1.1 (beta)</option>
+                    </select>
+                </div>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-header">QUICK START</div>
+                    <ul class="nav-list">
+                        <li><a href="#" class="nav-link active">Getting Started</a></li>
+                        <li><a href="#" class="nav-link">Installation</a></li>
+                        <li><a href="#" class="nav-link">First Project</a></li>
+                    </ul>
+                </div>
+                
+                <div class="nav-section">
+                    <div class="nav-section-header">CORE CONCEPTS</div>
+                    <ul class="nav-list">
+                        <li><a href="#" class="nav-link">Architecture</a></li>
+                        <li><a href="#" class="nav-link">Components</a></li>
+                        <li><a href="#" class="nav-link">Configuration</a></li>
+                        <li class="nav-dropdown">
+                            <a href="#" class="nav-link toggle-dropdown">Advanced Usage</a>
+                            <ul class="nav-dropdown-list">
+                                <li><a href="#" class="nav-link">Extending Components</a></li>
+                                <li><a href="#" class="nav-link">Custom Plugins</a></li>
+                                <li><a href="#" class="nav-link">Performance Optimization</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="nav-section">
+                    <div class="nav-section-header">API REFERENCE</div>
+                    <ul class="nav-list">
+                        <li><a href="#" class="nav-link">Client API</a></li>
+                        <li><a href="#" class="nav-link">Server API</a></li>
+                        <li><a href="#" class="nav-link">CLI Commands</a></li>
+                    </ul>
+                </div>
+                
+                <div class="nav-section">
+                    <div class="nav-section-header">GUIDES</div>
+                    <ul class="nav-list">
+                        <li><a href="#" class="nav-link">Authentication</a></li>
+                        <li><a href="#" class="nav-link">Deployment</a></li>
+                        <li><a href="#" class="nav-link">Troubleshooting</a></li>
+                        <li><a href="#" class="nav-link">FAQ</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="content-wrapper">
+                <article class="doc-content">
+                    <h1>Welcome to Compyle Documentation</h1>
+                    
+                    <p>Compyle is a powerful, flexible platform designed to help developers build and deploy modern applications with ease. This documentation provides comprehensive guides, API references, and best practices to help you get the most out of Compyle.</p>
+                    
+                    <h2>What is Compyle?</h2>
+                    <p>Compyle is an open-source framework that simplifies the development of complex applications by providing a modular architecture, powerful components, and intuitive APIs. Whether you're building a small project or a large-scale enterprise application, Compyle has the tools you need to succeed.</p>
+                    
+                    <h2>Key Features</h2>
+                    <ul>
+                        <li><strong>Modular Architecture</strong>: Build applications from reusable, interchangeable components</li>
+                        <li><strong>Powerful API</strong>: Comprehensive client and server APIs for seamless integration</li>
+                        <li><strong>Extensible Plugins</strong>: Customize and extend functionality with a robust plugin system</li>
+                        <li><strong>Performance Optimization</strong>: Built-in tools to ensure your applications run efficiently</li>
+                        <li><strong>Comprehensive Documentation</strong>: Extensive guides and reference materials</li>
+                    </ul>
+                    
+                    <div class="info-box">
+                        <div class="info-box-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="16" x2="12" y2="12"></line>
+                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                            </svg>
+                        </div>
+                        <div class="info-box-content">
+                            <h3>Getting Help</h3>
+                            <p>If you need assistance or have questions, please visit our <a href="#">Community Forum</a> or join our <a href="#">Discord Server</a>.</p>
+                        </div>
+                    </div>
+                    
+                    <h2>Quick Start</h2>
+                    <p>Ready to get started with Compyle? Follow these steps to set up your first project:</p>
+                    
+                    <ol>
+                        <li><a href="#">Install Compyle</a> using our CLI or package manager</li>
+                        <li><a href="#">Create a new project</a> with the template that best fits your needs</li>
+                        <li><a href="#">Configure your project</a> settings and environment</li>
+                        <li><a href="#">Start building</a> using our components and APIs</li>
+                    </ol>
+                    
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-language">bash</span>
+                            <button class="copy-button">Copy</button>
+                        </div>
+                        <pre><code># Install Compyle CLI
+npm install -g @compyle/cli
+
+# Create a new project
+compyle create my-project
+
+# Navigate to the project directory
+cd my-project
+
+# Start the development server
+compyle dev</code></pre>
+                    </div>
+                    
+                    <h2>Next Steps</h2>
+                    <p>After setting up your project, you might want to explore:</p>
+                    
+                    <ul>
+                        <li><a href="#">Core Components</a>: Learn about the building blocks of Compyle</li>
+                        <li><a href="#">API Reference</a>: Detailed documentation of our APIs</li>
+                        <li><a href="#">Deployment Guide</a>: How to deploy your Compyle applications</li>
+                    </ul>
+                </article>
+            </div>
+        </main>
+
+        <!-- Table of Contents -->
+        <aside class="toc">
+            <div class="toc-title">On this page</div>
+            <ul class="toc-list">
+                <li><a href="#" class="toc-link">What is Compyle?</a></li>
+                <li><a href="#" class="toc-link">Key Features</a></li>
+                <li><a href="#" class="toc-link">Quick Start</a></li>
+                <li><a href="#" class="toc-link">Next Steps</a></li>
+            </ul>
+        </aside>
+    </div>
+
+    <script src="documentation-scripts.js"></script>
+</body>
+</html>
