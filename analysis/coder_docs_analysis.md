@@ -89,13 +89,13 @@
 
 ## 6. Responsive Design Characteristics
 
-### Mobile Layout (~<768px):
+### Mobile Layout (~`<768px`):
 - Header: Stacked elements, mobile menu toggle
 - Sidebar: Hidden by default, slide-in from left
 - Content: Full-width, optimized for readability
 - TOC: Hidden or moved to bottom of page
 
-### Tablet Layout (~768px-1024px):
+### Tablet Layout (~`768px-1024px`):
 - Condensed sidebar
 - Adjusted spacing
 - Responsive images and code blocks

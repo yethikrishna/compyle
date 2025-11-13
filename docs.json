@@ -3,9 +3,7 @@
   "theme": "mint",
   "name": "Compyle",
   "colors": {
-    "primary": "#0F766E",
-    "light": "#F3F4F6",
-    "dark": "#001F1A"
+    "primary": "#6b46c1"
   },
   "favicon": "/favicon.svg",
   "logo": {
@@ -16,77 +14,126 @@
     "tabs": [
       {
         "tab": "Getting Started",
-        "groups": [
+        "url": "/",
+        "items": [
           {
-            "group": "Getting Started",
-            "pages": [
-              "getting-started/index",
-              "getting-started/signup",
-              "getting-started/connect-repo",
-              "getting-started/first-task",
-              "getting-started/agent-workflow-intro",
-              "getting-started/billing",
-              "getting-started/integrations"
-            ]
+            "name": "Sign Up",
+            "url": "/getting-started/signup"
+          },
+          {
+            "name": "Connect Repository",
+            "url": "/getting-started/connect-repo"
+          },
+          {
+            "name": "First Task",
+            "url": "/getting-started/first-task"
+          },
+          {
+            "name": "Agent Workflow",
+            "url": "/getting-started/agent-workflow-intro"
+          },
+          {
+            "name": "Integrations",
+            "url": "/getting-started/integrations"
+          },
+          {
+            "name": "Billing",
+            "url": "/getting-started/billing"
           }
         ]
       },
       {
         "tab": "Features",
-        "groups": [
+        "url": "/features",
+        "items": [
           {
-            "group": "Features",
-            "pages": [
-              "features/overview",
-              "features/agent-workflow-deep-dive",
-              "features/tasks-projects",
-              "features/custom-rules",
-              "features/pattern-library",
-              "features/code-review",
-              "features/best-practices",
-              "features/notifications",
-              "features/advanced"
-            ]
+            "name": "Overview",
+            "url": "/features/overview"
+          },
+          {
+            "name": "Agent Workflow Deep Dive",
+            "url": "/features/agent-workflow-deep-dive"
+          },
+          {
+            "name": "Tasks & Projects",
+            "url": "/features/tasks-projects"
+          },
+          {
+            "name": "Code Review",
+            "url": "/features/code-review"
+          },
+          {
+            "name": "Pattern Library",
+            "url": "/features/pattern-library"
+          },
+          {
+            "name": "Advanced Features",
+            "url": "/features/advanced"
+          },
+          {
+            "name": "Best Practices",
+            "url": "/features/best-practices"
+          },
+          {
+            "name": "Custom Rules",
+            "url": "/features/custom-rules"
+          },
+          {
+            "name": "Command Palette",
+            "url": "/features/command-palette"
+          },
+          {
+            "name": "Notifications",
+            "url": "/features/notifications"
+          }
+        ]
+      },
+      {
+        "tab": "API Reference",
+        "url": "/api-reference",
+        "items": [
+          {
+            "name": "Introduction",
+            "url": "/api-reference/intro"
+          },
+          {
+            "name": "Authentication",
+            "url": "/api-reference/auth"
+          },
+          {
+            "name": "Endpoints",
+            "url": "/api-reference/endpoints"
+          },
+          {
+            "name": "Roadmap",
+            "url": "/api-reference/roadmap"
           }
         ]
       }
-    ]
+    ],
+    "dropdowns": [],
+    "anchors": [],
+    "groups": [],
+    "pages": [],
+    "toc": true,
+    "collapsibleSections": true,
+    "versionSelector": {
+      "versions": ["latest"]
+    }
   },
   "navbar": {
-    "links": [
-      {
-        "label": "About",
-        "href": "https://compyle.mintlify.app/about"
-      },
-      {
-        "label": "Changelog",
-        "href": "https://compyle.mintlify.app/changelog"
-      },
-      {
-        "label": "FAQ",
-        "href": "https://compyle.mintlify.app/faq"
-      },
-      {
-        "label": "Community",
-        "href": "https://compyle.mintlify.app/community"
-      }
-    ],
     "primary": {
       "type": "button",
       "label": "Dashboard",
       "href": "https://app.compyle.ai"
-    }
+    },
+    "search": true,
+    "themeToggle": true
   },
   "contextual": {
     "options": [
       "copy",
-      "view",
-      "chatgpt",
-      "claude",
-      "perplexity",
-      "mcp",
-      "cursor",
-      "vscode"
+      "view"
     ]
   },
   "footer": {

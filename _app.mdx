@@ -3,525 +3,226 @@ title: "Compyle Documentation"
 description: "The comprehensive guide to Compyle - AI-powered development that collaborates with you"
 ---
 
-<script>
-  // Professional styling and navigation structure
-  document.addEventListener('DOMContentLoaded', function() {
-    // Add professional navigation behavior
-    const sidebar = document.querySelector('nav[aria-label="Sidebar"]');
-    const mainContent = document.querySelector('main');
-    
-    // Mobile menu toggle
-    const mobileMenuButton = document.querySelector('[data-mobile-menu-button]');
-    if (mobileMenuButton) {
-      mobileMenuButton.addEventListener('click', function() {
-        sidebar?.classList.toggle('mobile-open');
-      });
-    }
-    
-    // Auto-expand active section in sidebar
-    const activeLink = document.querySelector('nav a[aria-current="page"]');
-    if (activeLink) {
-      const section = activeLink.closest('details');
-      if (section) {
-        section.setAttribute('open', '');
-      }
-    }
-  });
-</script>
-
 <style>{`
   :root {
-    --compyle-primary: #6366f1;
-    --compyle-primary-hover: #4f46e5;
-    --compyle-primary-50: #eef2ff;
-    --compyle-gray-50: #f9fafb;
-    --compyle-gray-100: #f3f4f6;
-    --compyle-gray-200: #e5e7eb;
-    --compyle-gray-300: #d1d5db;
-    --compyle-gray-400: #9ca3af;
-    --compyle-gray-500: #6b7280;
-    --compyle-gray-600: #4b5563;
-    --compyle-gray-700: #374151;
-    --compyle-gray-800: #1f2937;
-    --compyle-gray-900: #111827;
-    --compyle-border-radius: 8px;
-    --compyle-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-    --compyle-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    /* Coder.com color palette */
+    --coder-primary: #6b46c1;
+    --coder-secondary: #4a5568;
+    --coder-accent-green: #38a169;
+    --coder-accent-blue: #3182ce;
+    --coder-accent-orange: #dd6b20;
+    --coder-light-bg: #f7fafc;
+    --coder-light-text: #1a202c;
+    --coder-dark-bg: #1a202c;
+    --coder-dark-text: #f7fafc;
+    --coder-border: #e2e8f0;
+    --coder-sidebar-bg: #ffffff;
+    --coder-sidebar-border: #e2e8f0;
+    --coder-header-bg: #ffffff;
+    --coder-header-border: #e2e8f0;
+    --coder-content-bg: #ffffff;
+    --coder-toc-bg: #f7fafc;
+    --coder-code-bg: #f7fafc;
+    --coder-code-text: #1a202c;
+    --coder-link-color: #6b46c1;
+    --coder-link-hover: #553c9a;
+    --coder-button-bg: #6b46c1;
+    --coder-button-hover: #553c9a;
+    --coder-button-text: #ffffff;
+    --coder-transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    --coder-border-radius: 8px;
+    --coder-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+    --coder-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+    
+    /* Coder.com typography */
+    --coder-font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    --coder-font-size-xs: 12px;
+    --coder-font-size-sm: 14px;
+    --coder-font-size-base: 16px;
+    --coder-font-size-lg: 18px;
+    --coder-font-size-xl: 24px;
+    --coder-font-size-2xl: 32px;
+    --coder-font-size-3xl: 48px;
+    
+    --coder-font-weight-light: 300;
+    --coder-font-weight-normal: 400;
+    --coder-font-weight-medium: 500;
+    --coder-font-weight-semibold: 600;
+    --coder-font-weight-bold: 700;
+    
+    --coder-line-height-tight: 1.25;
+    --coder-line-height-normal: 1.5;
+    --coder-line-height-relaxed: 1.75;
+    
+    /* Coder.com spacing */
+    --coder-space-1: 4px;
+    --coder-space-2: 8px;
+    --coder-space-3: 12px;
+    --coder-space-4: 16px;
+    --coder-space-5: 24px;
+    --coder-space-6: 32px;
+    --coder-space-8: 48px;
+    --coder-space-10: 64px;
   }
   
+  /* Dark theme variables */
+  [data-theme="dark"] {
+    --coder-primary: #805ad5;
+    --coder-secondary: #cbd5e0;
+    --coder-accent-green: #48bb78;
+    --coder-accent-blue: #4299e1;
+    --coder-accent-orange: #ed8936;
+    --coder-light-bg: #1a202c;
+    --coder-light-text: #f7fafc;
+    --coder-dark-bg: #1a202c;
+    --coder-dark-text: #f7fafc;
+    --coder-border: #2d3748;
+    --coder-sidebar-bg: #1a202c;
+    --coder-sidebar-border: #2d3748;
+    --coder-header-bg: #1a202c;
+    --coder-header-border: #2d3748;
+    --coder-content-bg: #1a202c;
+    --coder-toc-bg: #1a202c;
+    --coder-code-bg: #2d3748;
+    --coder-code-text: #f7fafc;
+    --coder-link-color: #805ad5;
+    --coder-link-hover: #9f7aea;
+    --coder-button-bg: #805ad5;
+    --coder-button-hover: #9f7aea;
+    --coder-button-text: #ffffff;
+  }
+  
+  /* Global styles */
   * {
     box-sizing: border-box;
   }
   
   body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-    line-height: 1.6;
-    color: var(--compyle-gray-900);
-    background-color: white;
+    font-family: var(--coder-font-family) !important;
+    line-height: var(--coder-line-height-normal) !important;
+    font-size: var(--coder-font-size-base) !important;
   }
   
-  .docs-container {
-    display: flex;
-    min-height: 100vh;
+  /* Sidebar styles */
+  nav[aria-label="Sidebar"] {
+    background-color: var(--coder-sidebar-bg) !important;
+    border-right: 1px solid var(--coder-sidebar-border) !important;
   }
   
-  .docs-sidebar {
-    width: 280px;
-    background-color: var(--compyle-gray-50);
-    border-right: 1px solid var(--compyle-gray-200);
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    overflow-y: auto;
-    z-index: 40;
-    transition: transform 0.3s ease;
+  /* Navigation link styles */
+  nav[aria-label="Sidebar"] a {
+    color: var(--coder-secondary) !important;
+    transition: var(--coder-transition) !important;
+    padding: var(--coder-space-2) var(--coder-space-3) !important;
+    font-size: var(--coder-font-size-sm) !important;
   }
   
-  .docs-main {
-    flex: 1;
-    margin-left: 280px;
-    min-height: 100vh;
+  nav[aria-label="Sidebar"] a:hover {
+    background-color: var(--coder-primary) !important;
+    color: white !important;
   }
   
-  .docs-header {
-    background: white;
-    border-bottom: 1px solid var(--compyle-gray-200);
-    padding: 1rem 2rem;
-    position: sticky;
-    top: 0;
-    z-index: 30;
-    backdrop-filter: blur(8px);
-    background-color: rgba(255, 255, 255, 0.95);
+  nav[aria-label="Sidebar"] a[aria-current="page"] {
+    background-color: var(--coder-primary) !important;
+    color: white !important;
   }
   
-  .docs-content {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 2rem;
+  /* Navigation link styles */
+  nav[aria-label="Sidebar"] a {
+    color: var(--coder-secondary) !important;
+    transition: var(--coder-transition) !important;
   }
   
-  .docs-nav-brand {
-    padding: 1rem 1.5rem;
-    border-bottom: 1px solid var(--compyle-gray-200);
+  nav[aria-label="Sidebar"] a:hover {
+    background-color: var(--coder-primary) !important;
+    color: white !important;
   }
   
-  .docs-nav-section {
-    padding: 1rem 1.5rem;
+  nav[aria-label="Sidebar"] a[aria-current="page"] {
+    background-color: var(--coder-primary) !important;
+    color: white !important;
   }
   
-  .docs-nav-title {
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--compyle-gray-500);
-    margin-bottom: 0.75rem;
+  /* Main content styles */
+  main {
+    background-color: var(--coder-content-bg) !important;
+    padding: var(--coder-space-6) var(--coder-space-8) !important;
   }
   
-  .docs-nav-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+  /* Table of Contents styles */
+  .table-of-contents {
+    background-color: var(--coder-toc-bg) !important;
+    padding: var(--coder-space-4) var(--coder-space-5) !important;
   }
   
-  .docs-nav-item {
-    margin-bottom: 0.25rem;
+  .table-of-contents h2 {
+    font-size: var(--coder-font-size-lg) !important;
+    font-weight: var(--coder-font-weight-semibold) !important;
+    margin-bottom: var(--coder-space-3) !important;
   }
   
-  .docs-nav-link {
-    display: flex;
-    align-items: center;
-    padding: 0.5rem 0.75rem;
-    text-decoration: none;
-    color: var(--compyle-gray-700);
-    border-radius: var(--compyle-border-radius);
-    transition: all 0.2s ease;
-    font-size: 0.875rem;
+  .table-of-contents a {
+    font-size: var(--coder-font-size-sm) !important;
+    line-height: var(--coder-line-height-tight) !important;
+    margin-bottom: var(--coder-space-2) !important;
+    display: block !important;
   }
   
-  .docs-nav-link:hover {
-    background-color: var(--compyle-primary-50);
-    color: var(--compyle-primary);
+  /* Header styles */
+  header {
+    background-color: var(--coder-header-bg) !important;
+    border-bottom: 1px solid var(--coder-header-border) !important;
+    padding: var(--coder-space-3) var(--coder-space-4) !important;
   }
   
-  .docs-nav-link.active {
-    background-color: var(--compyle-primary-50);
-    color: var(--compyle-primary);
-    font-weight: 500;
+  header h1 {
+    font-size: var(--coder-font-size-xl) !important;
+    font-weight: var(--coder-font-weight-semibold) !important;
+    margin: 0 !important;
   }
   
-  .docs-nav-link svg {
-    width: 1rem;
-    height: 1rem;
-    margin-right: 0.5rem;
+  /* Code block styles */
+  pre {
+    background-color: var(--coder-code-bg) !important;
+    color: var(--coder-code-text) !important;
+    padding: var(--coder-space-4) !important;
+    border-radius: var(--coder-border-radius) !important;
   }
   
-  .docs-nav-details {
-    margin-bottom: 0.5rem;
+  code {
+    background-color: var(--coder-code-bg) !important;
+    color: var(--coder-code-text) !important;
+    padding: var(--coder-space-1) var(--coder-space-2) !important;
+    border-radius: var(--coder-border-radius) !important;
+    font-size: var(--coder-font-size-sm) !important;
   }
   
-  .docs-nav-summary {
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    padding: 0.5rem 0.75rem;
-    color: var(--compyle-gray-700);
-    border-radius: var(--compyle-border-radius);
-    transition: all 0.2s ease;
-    font-size: 0.875rem;
-    font-weight: 500;
-    list-style: none;
+  /* Link styles */
+  a {
+    color: var(--coder-link-color) !important;
+    transition: var(--coder-transition) !important;
   }
   
-  .docs-nav-summary:hover {
-    background-color: var(--compyle-gray-100);
+  a:hover {
+    color: var(--coder-link-hover) !important;
   }
   
-  .docs-nav-summary::before {
-    content: '';
-    width: 0;
-    height: 0;
-    border-left: 4px solid var(--compyle-gray-400);
-    border-top: 4px solid transparent;
-    border-bottom: 4px solid transparent;
-    margin-right: 0.5rem;
-    transition: transform 0.2s ease;
+  /* Button styles */
+  button {
+    background-color: var(--coder-button-bg) !important;
+    color: var(--coder-button-text) !important;
+    padding: var(--coder-space-2) var(--coder-space-4) !important;
+    border-radius: var(--coder-border-radius) !important;
+    font-size: var(--coder-font-size-sm) !important;
+    font-weight: var(--coder-font-weight-medium) !important;
+    transition: var(--coder-transition) !important;
+    border: none !important;
+    cursor: pointer !important;
   }
   
-  .docs-nav-details[open] .docs-nav-summary::before {
-    transform: rotate(90deg);
-  }
-  
-  .docs-nav-details ul {
-    margin: 0.25rem 0 0.5rem 1.25rem;
-    padding: 0;
-    list-style: none;
-  }
-  
-  .mobile-menu-button {
-    display: none;
-    background: none;
-    border: none;
-    padding: 0.5rem;
-    cursor: pointer;
-  }
-  
-  @media (max-width: 1024px) {
-    .docs-sidebar {
-      transform: translateX(-100%);
-    }
-    
-    .docs-sidebar.mobile-open {
-      transform: translateX(0);
-    }
-    
-    .docs-main {
-      margin-left: 0;
-    }
-    
-    .mobile-menu-button {
-      display: block;
-    }
-    
-    .docs-header {
-      padding: 1rem;
-    }
-    
-    .docs-content {
-      padding: 1.5rem;
-    }
-  }
-  
-  /* Professional typography and content styling */
-  .docs-content h1 {
-    font-size: 2.25rem;
-    font-weight: 700;
-    line-height: 1.2;
-    margin: 0 0 1.5rem 0;
-    color: var(--compyle-gray-900);
-  }
-  
-  .docs-content h2 {
-    font-size: 1.5rem;
-    font-weight: 600;
-    line-height: 1.3;
-    margin: 2rem 0 1rem 0;
-    color: var(--compyle-gray-900);
-  }
-  
-  .docs-content h3 {
-    font-size: 1.25rem;
-    font-weight: 600;
-    line-height: 1.4;
-    margin: 1.5rem 0 0.75rem 0;
-    color: var(--compyle-gray-800);
-  }
-  
-  .docs-content h4 {
-    font-size: 1.125rem;
-    font-weight: 600;
-    line-height: 1.4;
-    margin: 1.25rem 0 0.5rem 0;
-    color: var(--compyle-gray-800);
-  }
-  
-  .docs-content p {
-    margin: 1rem 0;
-    color: var(--compyle-gray-700);
-  }
-  
-  .docs-content ul, .docs-content ol {
-    margin: 1rem 0;
-    padding-left: 1.5rem;
-  }
-  
-  .docs-content li {
-    margin: 0.5rem 0;
-    color: var(--compyle-gray-700);
-  }
-  
-  .docs-content code {
-    background-color: var(--compyle-gray-100);
-    padding: 0.125rem 0.25rem;
-    border-radius: 0.25rem;
-    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
-    font-size: 0.875rem;
-    color: var(--compyle-gray-800);
-  }
-  
-  .docs-content pre {
-    background-color: var(--compyle-gray-900);
-    color: var(--compyle-gray-100);
-    padding: 1rem;
-    border-radius: var(--compyle-border-radius);
-    overflow-x: auto;
-    margin: 1.5rem 0;
-  }
-  
-  .docs-content pre code {
-    background: none;
-    padding: 0;
-    color: inherit;
-  }
-  
-  /* Callout boxes */
-  .callout {
-    padding: 1rem 1.25rem;
-    border-radius: var(--compyle-border-radius);
-    margin: 1.5rem 0;
-    border-left: 4px solid;
-  }
-  
-  .callout.info {
-    background-color: #f0f9ff;
-    border-left-color: #0ea5e9;
-    color: #0c4a6e;
-  }
-  
-  .callout.warning {
-    background-color: #fffbeb;
-    border-left-color: #f59e0b;
-    color: #92400e;
-  }
-  
-  .callout.success {
-    background-color: #f0fdf4;
-    border-left-color: #22c55e;
-    color: #14532d;
-  }
-  
-  .callout.error {
-    background-color: #fef2f2;
-    border-left-color: #ef4444;
-    color: #991b1b;
-  }
-  
-  /* Button styling */
-  .button {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.75rem 1.5rem;
-    background-color: var(--compyle-primary);
-    color: white;
-    text-decoration: none;
-    border-radius: var(--compyle-border-radius);
-    font-weight: 500;
-    transition: background-color 0.2s ease;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .button:hover {
-    background-color: var(--compyle-primary-hover);
-  }
-  
-  .button.secondary {
-    background-color: transparent;
-    color: var(--compyle-primary);
-    border: 1px solid var(--compyle-primary);
-  }
-  
-  .button.secondary:hover {
-    background-color: var(--compyle-primary-50);
+  button:hover {
+    background-color: var(--coder-button-hover) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: var(--coder-shadow-lg) !important;
   }
 `}</style>
-
-<div class="docs-container">
-  <nav class="docs-sidebar" aria-label="Sidebar">
-    <div class="docs-nav-brand">
-      <div style="display: flex; align-items: center; font-weight: 600; font-size: 1.125rem; color: var(--compyle-gray-900);">
-        <img src="/logo/dark.svg" alt="Compyle" style="width: 24px; height: 24px; margin-right: 0.5rem;" />
-        Compyle Docs
-      </div>
-    </div>
-    
-    <div class="docs-nav-section">
-      <div class="docs-nav-title">Getting Started</div>
-      <ul class="docs-nav-list">
-        <li class="docs-nav-item">
-          <a href="/getting-started/index" class="docs-nav-link">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            Introduction
-          </a>
-        </li>
-        <li class="docs-nav-item">
-          <a href="/getting-started/signup" class="docs-nav-link">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
-            Sign Up & Account Setup
-          </a>
-        </li>
-        <li class="docs-nav-item">
-          <a href="/getting-started/connect-repo" class="docs-nav-link">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-            Connect Repository
-          </a>
-        </li>
-        <li class="docs-nav-item">
-          <a href="/getting-started/first-task" class="docs-nav-link">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
-            Create First Task
-          </a>
-        </li>
-        <li class="docs-nav-item">
-          <a href="/getting-started/agent-workflow-intro" class="docs-nav-link">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-            Agent Workflow
-          </a>
-        </li>
-      </ul>
-    </div>
-    
-    <div class="docs-nav-section">
-      <div class="docs-nav-title">Platform Features</div>
-      <details class="docs-nav-details">
-        <summary class="docs-nav-summary">Core Features</summary>
-        <ul class="docs-nav-list">
-          <li class="docs-nav-item">
-            <a href="/features/overview" class="docs-nav-link">Platform Overview</a>
-          </li>
-          <li class="docs-nav-item">
-            <a href="/features/custom-rules" class="docs-nav-link">Custom Rules & Patterns</a>
-          </li>
-          <li class="docs-nav-item">
-            <a href="/features/code-review" class="docs-nav-link">Code Review & Validation</a>
-          </li>
-          <li class="docs-nav-item">
-            <a href="/features/best-practices" class="docs-nav-link">Best Practices</a>
-          </li>
-        </ul>
-      </details>
-      
-      <details class="docs-nav-details">
-        <summary class="docs-nav-summary">Advanced Features</summary>
-        <ul class="docs-nav-list">
-          <li class="docs-nav-item">
-            <a href="/features/agent-workflow-deep-dive" class="docs-nav-link">Agent Workflow Deep Dive</a>
-          </li>
-          <li class="docs-nav-item">
-            <a href="/features/tasks-projects" class="docs-nav-link">Task & Project Management</a>
-          </li>
-          <li class="docs-nav-item">
-            <a href="/features/advanced" class="docs-nav-link">Advanced Configuration</a>
-          </li>
-        </ul>
-      </details>
-    </div>
-    
-    <div class="docs-nav-section">
-      <div class="docs-nav-title">API Reference</div>
-      <ul class="docs-nav-list">
-        <li class="docs-nav-item">
-          <a href="/api-reference/intro" class="docs-nav-link">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-            API Introduction
-          </a>
-        </li>
-        <li class="docs-nav-item">
-          <a href="/api-reference/auth" class="docs-nav-link">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path></svg>
-            Authentication
-          </a>
-        </li>
-        <li class="docs-nav-item">
-          <a href="/api-reference/endpoints" class="docs-nav-link">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-            Endpoints
-          </a>
-        </li>
-      </ul>
-    </div>
-    
-    <div class="docs-nav-section">
-      <div class="docs-nav-title">Resources</div>
-      <ul class="docs-nav-list">
-        <li class="docs-nav-item">
-          <a href="/changelog" class="docs-nav-link">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            Changelog
-          </a>
-        </li>
-        <li class="docs-nav-item">
-          <a href="/faq" class="docs-nav-link">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            FAQ
-          </a>
-        </li>
-        <li class="docs-nav-item">
-          <a href="/community" class="docs-nav-link">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-            Community
-          </a>
-        </li>
-        <li class="docs-nav-item">
-          <a href="/about" class="docs-nav-link">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            About
-          </a>
-        </li>
-      </ul>
-    </div>
-  </nav>
-  
-  <main class="docs-main">
-    <header class="docs-header">
-      <div style="display: flex; align-items: center; justify-content: space-between;">
-        <button class="mobile-menu-button" data-mobile-menu-button>
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 24px; height: 24px;">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-          </svg>
-        </button>
-        <div style="display: flex; align-items: center; gap: 1rem;">
-          <a href="/" style="text-decoration: none; color: var(--compyle-gray-700); font-size: 0.875rem;">Home</a>
-          <span style="color: var(--compyle-gray-400);">/</span>
-          <span style="color: var(--compyle-gray-900); font-size: 0.875rem; font-weight: 500;">Documentation</span>
-        </div>
-      </div>
-    </header>
-    
-    <div class="docs-content">
-      {children}
-    </div>
-  </main>
-</div>

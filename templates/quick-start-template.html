@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick Start | Compyle Documentation</title>
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="../documentation-styles.css">
+</head>
+<body class="documentation-theme-light">
+    <div class="documentation-container">
+        <!-- Sidebar Navigation (Included from main framework) -->
+        <aside class="documentation-sidebar">
+            <div class="sidebar-header">
+                <div class="logo-container">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6b46c1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M17 11V7a5 5 0 0 0-10 0v4M7 21h10a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-5l-5 5v6a2 2 0 0 0 2 2z"></path>
+                    </svg>
+                    <span>Compyle</span>
+                </div>
+                <div class="version-selector">
+                    <button class="version-button">
+                        <span>v1.0</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </button>
+                    <div class="version-dropdown">
+                        <a href="#" class="version-item active">v1.0</a>
+                        <a href="#" class="version-item">v0.9</a>
+                        <a href="#" class="version-item">v0.8</a>
+                    </div>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-header">
+                        <h3>Quick Start</h3>
+                        <button class="section-toggle">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </button>
+                    </div>
+                    <ul class="nav-links">
+                        <li><a href="#installation" class="nav-link active">Installation</a></li>
+                        <li><a href="#first-project" class="nav-link">First Project</a></li>
+                        <li><a href="#basic-usage" class="nav-link">Basic Usage</a></li>
+                        <li><a href="#configuration" class="nav-link">Configuration</a></li>
+                        <li><a href="#next-steps" class="nav-link">Next Steps</a></li>
+                    </ul>
+                </div>
+                <!-- Other navigation sections would be included here -->
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="documentation-main">
+            <!-- Header with search and controls -->
+            <header class="documentation-header">
+                <div class="header-actions">
+                    <button class="mobile-menu-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                    </button>
+                </div>
+                <div class="header-search">
+                    <div class="search-wrapper">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="search-icon"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        <input type="text" id="search-input" placeholder="Search documentation..." aria-label="Search">
+                    </div>
+                    <div id="search-results" class="search-results"></div>
+                </div>
+                <div class="header-controls">
+                    <button id="theme-toggle" class="theme-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="theme-icon dark"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Page Content -->
+            <div class="documentation-content">
+                <!-- Table of Contents -->
+                <div class="table-of-contents">
+                    <h3>On this page</h3>
+                    <ul>
+                        <li><a href="#installation">Installation</a></li>
+                        <li><a href="#prerequisites">Prerequisites</a></li>
+                        <li><a href="#installing-compyle">Installing Compyle</a></li>
+                        <li><a href="#first-project">First Project</a></li>
+                        <li><a href="#basic-usage">Basic Usage</a></li>
+                        <li><a href="#configuration">Configuration</a></li>
+                        <li><a href="#next-steps">Next Steps</a></li>
+                    </ul>
+                </div>
+
+                <!-- Main Documentation Content -->
+                <div class="content-main">
+                    <div class="content-header">
+                        <h1>Quick Start</h1>
+                        <p>Get up and running with Compyle in minutes</p>
+                    </div>
+
+                    <!-- Installation Section -->
+                    <section id="installation">
+                        <h2>Installation</h2>
+                        <p>Follow these steps to install Compyle on your system.</p>
+
+                        <div id="prerequisites">
+                            <h3>Prerequisites</h3>
+                            <div class="info-box">
+                                <div class="info-box-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4c1d95" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                                </div>
+                                <div class="info-box-content">
+                                    <p>Before installing Compyle, ensure you have the following:</p>
+                                    <ul>
+                                        <li>Node.js v14 or higher</li>
+                                        <li>npm v6 or higher or yarn v1.22 or higher</li>
+                                        <li>Git for version control</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="installing-compyle">
+                            <h3>Installing Compyle</h3>
+                            <p>You can install Compyle using npm or yarn:</p>
+
+                            <div class="tabs">
+                                <div class="tabs-header">
+                                    <button class="tab-button active" data-tab="npm">npm</button>
+                                    <button class="tab-button" data-tab="yarn">yarn</button>
+                                    <button class="tab-button" data-tab="pnpm">pnpm</button>
+                                </div>
+                                <div class="tabs-content">
+                                    <div id="tab-npm" class="tab-content active">
+                                        <div class="code-block">
+                                            <div class="code-header">
+                                                <span>npm</span>
+                                                <button class="copy-button">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                                    Copy
+                                                </button>
+                                            </div>
+                                            <pre><code>npm install -g compyle-cli</code></pre>
+                                        </div>
+                                    </div>
+                                    <div id="tab-yarn" class="tab-content">
+                                        <div class="code-block">
+                                            <div class="code-header">
+                                                <span>yarn</span>
+                                                <button class="copy-button">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                                    Copy
+                                                </button>
+                                            </div>
+                                            <pre><code>yarn global add compyle-cli</code></pre>
+                                        </div>
+                                    </div>
+                                    <div id="tab-pnpm" class="tab-content">
+                                        <div class="code-block">
+                                            <div class="code-header">
+                                                <span>pnpm</span>
+                                                <button class="copy-button">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                                    Copy
+                                                </button>
+                                            </div>
+                                            <pre><code>pnpm add -g compyle-cli</code></pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <p class="mt-4">Verify the installation:</p>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span>bash</span>
+                                    <button class="copy-button">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                        Copy
+                                    </button>
+                                </div>
+                                <pre><code>compyle --version</code></pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- First Project Section -->
+                    <section id="first-project" class="mt-8">
+                        <h2>First Project</h2>
+                        <p>Create your first Compyle project in seconds.</p>
+
+                        <div class="code-block">
+                            <div class="code-header">
+                                <span>bash</span>
+                                <button class="copy-button">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                    Copy
+                                </button>
+                            </div>
+                            <pre><code>compyle init my-project</code></pre>
+                        </div>
+
+                        <p class="mt-4">This will create a new directory <code>my-project</code> with the basic project structure:</p>
+                        <div class="code-block">
+                            <div class="code-header">
+                                <span>directory</span>
+                                <button class="copy-button">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                    Copy
+                                </button>
+                            </div>
+                            <pre><code>my-project/
+├── compyle.config.js
+├── src/
+│   ├── components/
+│   │   └── index.js
+│   ├── pages/
+│   │   └── index.js
+│   └── index.js
+├── package.json
+└── README.md</code></pre>
+                        </div>
+                    </section>
+
+                    <!-- Basic Usage Section -->
+                    <section id="basic-usage" class="mt-8">
+                        <h2>Basic Usage</h2>
+                        <p>Learn how to use Compyle with these basic commands.</p>
+
+                        <div class="feature-cards">
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6b46c1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                                </div>
+                                <h3>Development Server</h3>
+                                <p>Start a local development server with hot reloading.</p>
+                                <div class="code-block code-block-small">
+                                    <pre><code>compyle dev</code></pre>
+                                </div>
+                            </div>
+
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6b46c1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                                </div>
+                                <h3>Build for Production</h3>
+                                <p>Build your project for production deployment.</p>
+                                <div class="code-block code-block-small">
+                                    <pre><code>compyle build</code></pre>
+                                </div>
+                            </div>
+
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6b46c1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                                </div>
+                                <h3>Preview Build</h3>
+                                <p>Preview your production build locally.</p>
+                                <div class="code-block code-block-small">
+                                    <pre><code>compyle preview</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Configuration Section -->
+                    <section id="configuration" class="mt-8">
+                        <h2>Configuration</h2>
+                        <p>Configure Compyle using the <code>compyle.config.js</code> file.</p>
+
+                        <div class="code-block">
+                            <div class="code-header">
+                                <span>javascript</span>
+                                <button class="copy-button">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                    Copy
+                                </button>
+                            </div>
+                            <pre><code>module.exports = {
+  // Project name
+  name: 'my-project',
+  
+  // Output directory
+  output: 'dist',
+  
+  // Development server settings
+  devServer: {
+    port: 3000,
+    open: true
+  },
+  
+  // Build settings
+  build: {
+    minify: true,
+    sourcemap: process.env.NODE_ENV !== 'production'
+  },
+  
+  // Plugins
+  plugins: [
+    // Add your plugins here
+  ]
+};</code></pre>
+                        </div>
+                    </section>
+
+                    <!-- Next Steps Section -->
+                    <section id="next-steps" class="mt-8">
+                        <h2>Next Steps</h2>
+                        <p>Ready to dive deeper into Compyle?</p>
+
+                        <div class="collapsible-section">
+                            <div class="collapsible-header">
+                                <h3>Core Concepts</h3>
+                                <button class="collapsible-toggle">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                </button>
+                            </div>
+                            <div class="collapsible-content">
+                                <p>Learn the fundamental concepts of Compyle architecture and design patterns.</p>
+                                <a href="#" class="btn-link">Learn more →</a>
+                            </div>
+                        </div>
+
+                        <div class="collapsible-section">
+                            <div class="collapsible-header">
+                                <h3>API Reference</h3>
+                                <button class="collapsible-toggle">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                </button>
+                            </div>
+                            <div class="collapsible-content">
+                                <p>Explore the comprehensive API documentation for all Compyle features.</p>
+                                <a href="#" class="btn-link">View API Reference →</a>
+                            </div>
+                        </div>
+
+                        <div class="collapsible-section">
+                            <div class="collapsible-header">
+                                <h3>Tutorials</h3>
+                                <button class="collapsible-toggle">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                </button>
+                            </div>
+                            <div class="collapsible-content">
+                                <p>Follow step-by-step tutorials to build real-world applications with Compyle.</p>
+                                <a href="#" class="btn-link">Browse Tutorials →</a>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Main JavaScript -->
+    <script src="../documentation-scripts.js"></script>
+</body>
+</html>

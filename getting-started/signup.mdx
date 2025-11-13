@@ -3,9 +3,6 @@ title: "Sign Up & Account Setup - Compyle"
 description: "Learn how to create your Compyle account and set up your development environment"
 ---
 
-import "../_app.mdx";
-import "../getting-started/_app.mdx";
-
 # Sign Up & Account Setup
 
 Getting started with Compyle is quick and easy. Follow this guide to create your account and set up your development environment in just a few minutes.
@@ -20,31 +17,31 @@ Getting started with Compyle is quick and easy. Follow this guide to create your
 
 Compyle offers multiple authentication options to suit your preferences:
 
-<div className="auth-options" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 2rem 0;">
+<div className="auth-options" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', margin: '2rem 0' }}>
 
-<div className="auth-card" style="background: white; border: 1px solid var(--compyle-gray-200); border-radius: var(--compyle-border-radius); padding: 1.5rem; text-align: center; box-shadow: var(--compyle-shadow); transition: transform 0.2s ease, box-shadow 0.2s ease;">
-  <div style="font-size: 2rem; margin-bottom: 0.75rem;">🐙</div>
-  <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem;">GitHub</h3>
-  <p style="color: var(--compyle-gray-600); font-size: 0.875rem; margin-bottom: 1rem;">Quick sign-up with your GitHub account</p>
-  <button className="button" style="width: 100%; justify-content: center;">
+<div className="auth-card" style={{ background: 'white', border: '1px solid var(--compyle-gray-200)', borderRadius: 'var(--compyle-border-radius)', padding: '1.5rem', textAlign: 'center', boxShadow: 'var(--compyle-shadow)', transition: 'transform 0.2s ease, box-shadow 0.2s ease' }}>
+  <div style={{ fontSize: '2rem', marginBottom: '0.75rem' }}>🐙</div>
+  <h3 style={{ fontSize: '1rem', fontWeight: 600, marginBottom: '0.5rem' }}>GitHub</h3>
+  <p style={{ color: 'var(--compyle-gray-600)', fontSize: '0.875rem', marginBottom: '1rem' }}>Quick sign-up with your GitHub account</p>
+  <button className="button" style={{ width: '100%', justifyContent: 'center' }}>
     Continue with GitHub
   </button>
 </div>
 
-<div className="auth-card" style="background: white; border: 1px solid var(--compyle-gray-200); border-radius: var(--compyle-border-radius); padding: 1.5rem; text-align: center; box-shadow: var(--compyle-shadow); transition: transform 0.2s ease, box-shadow 0.2s ease;">
-  <div style="font-size: 2rem; margin-bottom: 0.75rem;">🔗</div>
-  <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem;">GitLab</h3>
-  <p style="color: var(--compyle-gray-600); font-size: 0.875rem; margin-bottom: 1rem;">Use your GitLab credentials</p>
-  <button className="button secondary" style="width: 100%; justify-content: center;">
+<div className="auth-card" style={{ background: 'white', border: '1px solid var(--compyle-gray-200)', borderRadius: 'var(--compyle-border-radius)', padding: '1.5rem', textAlign: 'center', boxShadow: 'var(--compyle-shadow)', transition: 'transform 0.2s ease, box-shadow 0.2s ease' }}>
+  <div style={{ fontSize: '2rem', marginBottom: '0.75rem' }}>🔗</div>
+  <h3 style={{ fontSize: '1rem', fontWeight: 600, marginBottom: '0.5rem' }}>GitLab</h3>
+  <p style={{ color: 'var(--compyle-gray-600)', fontSize: '0.875rem', marginBottom: '1rem' }}>Use your GitLab credentials</p>
+  <button className="button secondary" style={{ width: '100%', justifyContent: 'center' }}>
     Continue with GitLab
   </button>
 </div>
 
-<div className="auth-card" style="background: white; border: 1px solid var(--compyle-gray-200); border-radius: var(--compyle-border-radius); padding: 1.5rem; text-align: center; box-shadow: var(--compyle-shadow); transition: transform 0.2s ease, box-shadow 0.2s ease;">
-  <div style="font-size: 2rem; margin-bottom: 0.75rem;">📧</div>
-  <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem;">Email</h3>
-  <p style="color: var(--compyle-gray-600); font-size: 0.875rem; margin-bottom: 1rem;">Create account with email address</p>
-  <button className="button secondary" style="width: 100%; justify-content: center;">
+<div className="auth-card" style={{ background: 'white', border: '1px solid var(--compyle-gray-200)', borderRadius: 'var(--compyle-border-radius)', padding: '1.5rem', textAlign: 'center', boxShadow: 'var(--compyle-shadow)', transition: 'transform 0.2s ease, box-shadow 0.2s ease' }}>
+  <div style={{ fontSize: '2rem', marginBottom: '0.75rem' }}>📧</div>
+  <h3 style={{ fontSize: '1rem', fontWeight: 600, marginBottom: '0.5rem' }}>Email</h3>
+  <p style={{ color: 'var(--compyle-gray-600)', fontSize: '0.875rem', marginBottom: '1rem' }}>Create account with email address</p>
+  <button className="button secondary" style={{ width: '100%', justifyContent: 'center' }}>
     Sign up with Email
   </button>
 </div>
@@ -67,22 +64,22 @@ After signing up, you'll be prompted to complete your profile:
 
 <div className="setup-steps">
 
-<div class="step-card" style="background: var(--compyle-gray-50); border: 1px solid var(--compyle-gray-200); border-radius: var(--compyle-border-radius); padding: 1.5rem; margin: 1rem 0;">
-  <div style="display: flex; align-items: center; margin-bottom: 1rem;">
-    <div style="width: 2rem; height: 2rem; background: var(--compyle-primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 0.875rem; margin-right: 0.75rem;">1</div>
-    <h4 style="margin: 0; font-size: 1.125rem; font-weight: 600;">Personal Information</h4>
+<div className="step-card" style={{ background: 'var(--compyle-gray-50)', border: '1px solid var(--compyle-gray-200)', borderRadius: 'var(--compyle-border-radius)', padding: '1.5rem', margin: '1rem 0' }}>
+  <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
+    <div style={{ width: '2rem', height: '2rem', background: 'var(--compyle-primary)', color: 'white', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 600, fontSize: '0.875rem', marginRight: '0.75rem' }}>1</div>
+    <h4 style={{ margin: '0', fontSize: '1.125rem', fontWeight: 600 }}>Personal Information</h4>
   </div>
-  <ul style="margin: 0; padding-left: 1.5rem; color: var(--compyle-gray-700);">
+  <ul style={{ margin: '0', paddingLeft: '1.5rem', color: 'var(--compyle-gray-700)' }}>
     <li>Full name for team collaboration</li>
     <li>Professional role (Developer, Team Lead, etc.)</li>
     <li>Company or organization (optional)</li>
   </ul>
 </div>
 
-<div class="step-card" style="background: var(--compyle-gray-50); border: 1px solid var(--compyle-gray-200); border-radius: var(--compyle-border-radius); padding: 1.5rem; margin: 1rem 0;">
-  <div style="display: flex; align-items: center; margin-bottom: 1rem;">
-    <div style="width: 2rem; height: 2rem; background: var(--compyle-primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 0.875rem; margin-right: 0.75rem;">2</div>
-    <h4 style="margin: 0; font-size: 1.125rem; font-weight: 600;">Development Preferences</h4>
+<div className="step-card" style={{ background: 'var(--compyle-gray-50)', border: '1px solid var(--compyle-gray-200)', borderRadius: 'var(--compyle-border-radius)', padding: '1.5rem', margin: '1rem 0' }}>
+  <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
+    <div style={{ width: '2rem', height: '2rem', background: 'var(--compyle-primary)', color: 'white', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 600, fontSize: '0.875rem', marginRight: '0.75rem' }}>2</div>
+    <h4 style={{ margin: '0', fontSize: '1.125rem', fontWeight: 600 }}>Development Preferences</h4>
   </div>
   <ul style="margin: 0; padding-left: 1.5rem; color: var(--compyle-gray-700);">
     <li>Primary programming languages</li>
@@ -91,9 +88,9 @@ After signing up, you'll be prompted to complete your profile:
   </ul>
 </div>
 
-<div class="step-card" style="background: var(--compyle-gray-50); border: 1px solid var(--compyle-gray-200); border-radius: var(--compyle-border-radius); padding: 1.5rem; margin: 1rem 0;">
+<div className="step-card" style={{ background: 'var(--compyle-gray-50)', border: '1px solid var(--compyle-gray-200)', borderRadius: 'var(--compyle-border-radius)', padding: '1.5rem', margin: '1rem 0' }}>
   <div style="display: flex; align-items: center; margin-bottom: 1rem;">
-    <div style="width: 2rem; height: 2rem; background: var(--compyle-primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 0.875rem; margin-right: 0.75rem;">3</div>
+    <div style={{ width: '2rem', height: '2rem', background: 'var(--compyle-primary)', color: 'white', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 600, fontSize: '0.875rem', marginRight: '0.75rem' }}>3</div>
     <h4 style="margin: 0; font-size: 1.125rem; font-weight: 600;">Team Setup</h4>
   </div>
   <ul style="margin: 0; padding-left: 1.5rem; color: var(--compyle-gray-700);">
@@ -111,15 +108,15 @@ Compyle takes security seriously. Set up these essential security features:
 
 #### Two-Factor Authentication (2FA)
 
-<div className="security-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: var(--compyle-border-radius); padding: 2rem; margin: 1.5rem 0;">
+<div className="security-card" style={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', color: 'white', borderRadius: 'var(--compyle-border-radius)', padding: '2rem', margin: '1.5rem 0' }}>
   <div style="display: flex; align-items: center; margin-bottom: 1rem;">
-    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 2rem; height: 2rem; margin-right: 0.75rem;">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ width: '2rem', height: '2rem', marginRight: '0.75rem' }}>
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
     </svg>
-    <h3 style="margin: 0; font-size: 1.25rem; font-weight: 600;">Enhanced Security</h3>
+    <h3 style={{ margin: '0', fontSize: '1.25rem', fontWeight: 600 }}>Enhanced Security</h3>
   </div>
-  <p style="margin: 0 0 1rem 0; opacity: 0.9;">Enable 2FA to add an extra layer of protection to your account and repositories.</p>
-  <button className="button" style="background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.3);">
+  <p style={{ margin: '0 0 1rem 0', opacity: 0.9 }}>Enable 2FA to add an extra layer of protection to your account and repositories.</p>
+  <button className="button" style={{ background: 'rgba(255, 255, 255, 0.2)', border: '1px solid rgba(255, 255, 255, 0.3)' }}>
     Enable 2FA
   </button>
 </div>
@@ -143,20 +140,20 @@ Create and manage API tokens for programmatic access to Compyle:
 
 A workspace is your isolated environment for managing projects and collaborating with your team.
 
-<div className="workspace-setup" style="background: white; border: 1px solid var(--compyle-gray-200); border-radius: var(--compyle-border-radius); padding: 2rem; margin: 2rem 0; box-shadow: var(--compyle-shadow);">
+<div className="workspace-setup" style={{ background: 'white', border: '1px solid var(--compyle-gray-200)', borderRadius: 'var(--compyle-border-radius)', padding: '2rem', margin: '2rem 0', boxShadow: 'var(--compyle-shadow)' }}>
 
-<h3 style="margin-top: 0; color: var(--compyle-gray-900);">Workspace Configuration</h3>
+<h3 style={{ marginTop: '0', color: 'var(--compyle-gray-900)' }}>Workspace Configuration</h3>
 
-<div className="form-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1.5rem 0;">
+<div className="form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', margin: '1.5rem 0' }}>
 
 <div>
-  <label style="display: block; font-weight: 500; margin-bottom: 0.5rem; color: var(--compyle-gray-700);">Workspace Name</label>
-  <input type="text" placeholder="My Team Workspace" style="width: 100%; padding: 0.75rem; border: 1px solid var(--compyle-gray-300); border-radius: var(--compyle-border-radius); font-size: 0.875rem;" />
+  <label style={{ display: 'block', fontWeight: 500, marginBottom: '0.5rem', color: 'var(--compyle-gray-700)' }}>Workspace Name</label>
+  <input type="text" placeholder="My Team Workspace" style={{ width: '100%', padding: '0.75rem', border: '1px solid var(--compyle-gray-300)', borderRadius: 'var(--compyle-border-radius)', fontSize: '0.875rem' }} />
 </div>
 
 <div>
-  <label style="display: block; font-weight: 500; margin-bottom: 0.5rem; color: var(--compyle-gray-700);">Workspace Type</label>
-  <select style="width: 100%; padding: 0.75rem; border: 1px solid var(--compyle-gray-300); border-radius: var(--compyle-border-radius); font-size: 0.875rem;">
+  <label style={{ display: 'block', fontWeight: 500, marginBottom: '0.5rem', color: 'var(--compyle-gray-700)' }}>Workspace Type</label>
+  <select style={{ width: '100%', padding: '0.75rem', border: '1px solid var(--compyle-gray-300)', borderRadius: 'var(--compyle-border-radius)', fontSize: '0.875rem' }}>
     <option>Personal</option>
     <option>Team</option>
     <option>Enterprise</option>
@@ -166,8 +163,8 @@ A workspace is your isolated environment for managing projects and collaborating
 </div>
 
 <div>
-  <label style="display: block; font-weight: 500; margin-bottom: 0.5rem; color: var(--compyle-gray-700);">Description</label>
-  <textarea placeholder="Describe your workspace purpose..." rows="3" style="width: 100%; padding: 0.75rem; border: 1px solid var(--compyle-gray-300); border-radius: var(--compyle-border-radius); font-size: 0.875rem; resize: vertical;"></textarea>
+  <label style={{ display: 'block', fontWeight: 500, marginBottom: '0.5rem', color: 'var(--compyle-gray-700)' }}>Description</label>
+  <textarea placeholder="Describe your workspace purpose..." rows="3" style={{ width: '100%', padding: '0.75rem', border: '1px solid var(--compyle-gray-300)', borderRadius: 'var(--compyle-border-radius)', fontSize: '0.875rem', resize: 'vertical' }}></textarea>
 </div>
 
 </div>
@@ -176,23 +173,23 @@ A workspace is your isolated environment for managing projects and collaborating
 
 Choose the plan that best fits your needs:
 
-<div className="plans-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin: 2rem 0;">
+<div className="plans-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem', margin: '2rem 0' }}>
 
-<div className="plan-card" style="background: white; border: 2px solid var(--compyle-gray-200); border-radius: var(--compyle-border-radius); padding: 2rem; position: relative;">
-  <div style="text-align: center; margin-bottom: 1.5rem;">
-    <h3 style="margin: 0 0 0.5rem 0; color: var(--compyle-gray-900);">Starter</h3>
-    <div style="font-size: 2rem; font-weight: 700; color: var(--compyle-gray-900);">Free</div>
-    <p style="color: var(--compyle-gray-600); font-size: 0.875rem; margin: 0;">Perfect for individual developers</p>
+<div className="plan-card" style={{ background: 'white', border: '2px solid var(--compyle-gray-200)', borderRadius: 'var(--compyle-border-radius)', padding: '2rem', position: 'relative' }}>
+  <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
+    <h3 style={{ margin: '0 0 0.5rem 0', color: 'var(--compyle-gray-900)' }}>Starter</h3>
+    <div style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--compyle-gray-900)' }}>Free</div>
+    <p style={{ color: 'var(--compyle-gray-600)', fontSize: '0.875rem', margin: '0' }}>Perfect for individual developers</p>
   </div>
-  <ul style="list-style: none; padding: 0; margin: 0 0 1.5rem 0;">
-    <li style="display: flex; align-items: center; margin-bottom: 0.5rem;">
-      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 1rem; height: 1rem; color: #22c55e; margin-right: 0.5rem;">
+  <ul style={{ listStyle: 'none', padding: '0', margin: '0 0 1.5rem 0' }}>
+    <li style={{ display: 'flex', alignItems: 'center', marginBottom: '0.5rem' }}>
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ width: '1rem', height: '1rem', color: '#22c55e', marginRight: '0.5rem' }}>
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
       </svg>
       3 projects
     </li>
-    <li style="display: flex; align-items: center; margin-bottom: 0.5rem;">
-      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 1rem; height: 1rem; color: #22c55e; margin-right: 0.5rem;">
+    <li style={{ display: 'flex', alignItems: 'center', marginBottom: '0.5rem' }}>
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ width: '1rem', height: '1rem', color: '#22c55e', marginRight: '0.5rem' }}>
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
       </svg>
       Basic AI agents
@@ -204,17 +201,17 @@ Choose the plan that best fits your needs:
       Community support
     </li>
   </ul>
-  <button className="button secondary" style="width: 100%; justify-content: center;">Get Started</button>
+  <button className="button secondary" style={{ width: '100%', justifyContent: 'center' }}>Get Started</button>
 </div>
 
-<div className="plan-card featured" style="background: linear-gradient(135deg, var(--compyle-primary) 0%, var(--compyle-primary-hover) 100%); color: white; border: 2px solid var(--compyle-primary); border-radius: var(--compyle-border-radius); padding: 2rem; position: relative;">
-  <div style="position: absolute; top: -1rem; left: 50%; transform: translateX(-50%); background: #f59e0b; color: white; padding: 0.25rem 0.75rem; border-radius: 1rem; font-size: 0.75rem; font-weight: 600;">Most Popular</div>
-  <div style="text-align: center; margin-bottom: 1.5rem;">
-    <h3 style="margin: 0 0 0.5rem 0;">Professional</h3>
-    <div style="font-size: 2rem; font-weight: 700;">$29<span style="font-size: 1rem; opacity: 0.8;">/month</span></div>
-    <p style="opacity: 0.8; font-size: 0.875rem; margin: 0;">For growing development teams</p>
+<div className="plan-card featured" style={{ background: 'linear-gradient(135deg, var(--compyle-primary) 0%, var(--compyle-primary-hover) 100%)', color: 'white', border: '2px solid var(--compyle-primary)', borderRadius: 'var(--compyle-border-radius)', padding: '2rem', position: 'relative' }}>
+  <div style={{ position: 'absolute', top: '-1rem', left: '50%', transform: 'translateX(-50%)', background: '#f59e0b', color: 'white', padding: '0.25rem 0.75rem', borderRadius: '1rem', fontSize: '0.75rem', fontWeight: 600 }}>Most Popular</div>
+  <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
+    <h3 style={{ margin: '0 0 0.5rem 0' }}>Professional</h3>
+    <div style={{ fontSize: '2rem', fontWeight: 700 }}>$29<span style={{ fontSize: '1rem', opacity: 0.8 }}>/month</span></div>
+    <p style={{ opacity: 0.8, fontSize: '0.875rem', margin: '0' }}>For growing development teams</p>
   </div>
-  <ul style="list-style: none; padding: 0; margin: 0 0 1.5rem 0;">
+  <ul style={{ listStyle: 'none', padding: '0', margin: '0 0 1.5rem 0' }}>
     <li style="display: flex; align-items: center; margin-bottom: 0.5rem;">
       <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 1rem; height: 1rem; color: #22c55e; margin-right: 0.5rem;">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
@@ -240,7 +237,7 @@ Choose the plan that best fits your needs:
       Priority support
     </li>
   </ul>
-  <button className="button" style="width: 100%; justify-content: center; background: white; color: var(--compyle-primary);">Start Free Trial</button>
+  <button className="button" style={{ width: '100%', justifyContent: 'center', background: 'white', color: 'var(--compyle-primary)' }}>Start Free Trial</button>
 </div>
 
 </div>
@@ -271,21 +268,21 @@ Your account is now ready! You should receive:
 
 ### Common Issues
 
-<div className="troubleshooting-grid" style="display: grid; gap: 1rem; margin: 2rem 0;">
+<div className="troubleshooting-grid" style={{ display: 'grid', gap: '1rem', margin: '2rem 0' }}>
 
-<div className="issue-card" style="background: #fef2f2; border: 1px solid #fecaca; border-radius: var(--compyle-border-radius); padding: 1rem;">
-  <h5 style="margin: 0 0 0.5rem 0; color: #991b1b; font-size: 0.875rem; font-weight: 600;">Email verification not received</h5>
-  <p style="margin: 0; color: #991b1b; font-size: 0.875rem;">Check spam folder and whitelist @compyle.com</p>
+<div className="issue-card" style={{ background: '#fef2f2', border: '1px solid #fecaca', borderRadius: 'var(--compyle-border-radius)', padding: '1rem' }}>
+  <h5 style={{ margin: '0 0 0.5rem 0', color: '#991b1b', fontSize: '0.875rem', fontWeight: 600 }}>Email verification not received</h5>
+  <p style={{ margin: '0', color: '#991b1b', fontSize: '0.875rem' }}>Check spam folder and whitelist @compyle.com</p>
 </div>
 
-<div className="issue-card" style="background: #fef2f2; border: 1px solid #fecaca; border-radius: var(--compyle-border-radius); padding: 1rem;">
-  <h5 style="margin: 0 0 0.5rem 0; color: #991b1b; font-size: 0.875rem; font-weight: 600;">Repository connection failed</h5>
-  <p style="margin: 0; color: #991b1b; font-size: 0.875rem;">Verify GitHub/GitLab permissions and try again</p>
+<div className="issue-card" style={{ background: '#fef2f2', border: '1px solid #fecaca', borderRadius: 'var(--compyle-border-radius)', padding: '1rem' }}>
+  <h5 style={{ margin: '0 0 0.5rem 0', color: '#991b1b', fontSize: '0.875rem', fontWeight: 600 }}>Repository connection failed</h5>
+  <p style={{ margin: '0', color: '#991b1b', fontSize: '0.875rem' }}>Verify GitHub/GitLab permissions and try again</p>
 </div>
 
-<div className="issue-card" style="background: #fef2f2; border: 1px solid #fecaca; border-radius: var(--compyle-border-radius); padding: 1rem;">
-  <h5 style="margin: 0 0 0.5rem 0; color: #991b1b; font-size: 0.875rem; font-weight: 600;">IDE extension not working</h5>
-  <p style="margin: 0; color: #991b1b; font-size: 0.875rem;">Check IDE compatibility and extension permissions</p>
+<div className="issue-card" style={{ background: '#fef2f2', border: '1px solid #fecaca', borderRadius: 'var(--compyle-border-radius)', padding: '1rem' }}>
+  <h5 style={{ margin: '0 0 0.5rem 0', color: '#991b1b', fontSize: '0.875rem', fontWeight: 600 }}>IDE extension not working</h5>
+  <p style={{ margin: '0', color: '#991b1b', fontSize: '0.875rem' }}>Check IDE compatibility and extension permissions</p>
 </div>
 
 </div>

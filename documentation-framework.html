@@ -162,6 +162,15 @@
                     <h2>What is Compyle?</h2>
                     <p>Compyle is an open-source framework that simplifies the development of complex applications by providing a modular architecture, powerful components, and intuitive APIs. Whether you're building a small project or a large-scale enterprise application, Compyle has the tools you need to succeed.</p>
                     
+                    <!-- Info Box Component -->
+                    <div class="info-box info">
+                      <div class="info-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></div>
+                      <div class="info-content">
+                        <h3>Quick Start</h3>
+                        <p>New to Compyle? Check out our <a href="#quick-start">Quick Start guide</a> to begin using it in minutes.</p>
+                      </div>
+                    </div>
+                    
                     <h2>Key Features</h2>
                     <ul>
                         <li><strong>Modular Architecture</strong>: Build applications from reusable, interchangeable components</li>
@@ -171,18 +180,24 @@
                         <li><strong>Comprehensive Documentation</strong>: Extensive guides and reference materials</li>
                     </ul>
                     
-                    <div class="info-box">
-                        <div class="info-box-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <line x1="12" y1="16" x2="12" y2="12"></line>
-                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
-                            </svg>
+                    <!-- Tabs Component -->
+                    <div class="tabs">
+                      <div class="tab-buttons">
+                        <button class="tab-button active" data-tab="architecture">Architecture</button>
+                        <button class="tab-button" data-tab="components">Components</button>
+                        <button class="tab-button" data-tab="data-flow">Data Flow</button>
+                      </div>
+                      <div class="tab-contents">
+                        <div class="tab-content active" id="tab-architecture">
+                          <p>Compyle follows a modular architecture with clear separation of concerns between frontend and backend components.</p>
                         </div>
-                        <div class="info-box-content">
-                            <h3>Getting Help</h3>
-                            <p>If you need assistance or have questions, please visit our <a href="#">Community Forum</a> or join our <a href="#">Discord Server</a>.</p>
+                        <div class="tab-content" id="tab-components">
+                          <p>Key components include the core engine, API layer, and extension system that allows for customization.</p>
                         </div>
+                        <div class="tab-content" id="tab-data-flow">
+                          <p>Data flows from user input through the processing pipeline and is returned as structured responses.</p>
+                        </div>
+                      </div>
                     </div>
                     
                     <h2>Quick Start</h2>
@@ -195,12 +210,16 @@
                         <li><a href="#">Start building</a> using our components and APIs</li>
                     </ol>
                     
+                    <!-- Enhanced Code Block Component -->
                     <div class="code-block">
-                        <div class="code-header">
-                            <span class="code-language">bash</span>
-                            <button class="copy-button">Copy</button>
-                        </div>
-                        <pre><code># Install Compyle CLI
+                      <div class="code-header">
+                        <span class="code-language">bash</span>
+                        <button class="copy-button" aria-label="Copy code">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                          Copy
+                        </button>
+                      </div>
+                      <pre><code># Install Compyle CLI
 npm install -g @compyle/cli
 
 # Create a new project
@@ -213,6 +232,66 @@ cd my-project
 compyle dev</code></pre>
                     </div>
                     
+                    <!-- Warning Box Component -->
+                    <div class="info-box warning">
+                      <div class="info-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></div>
+                      <div class="info-content">
+                        <h3>Node.js Version Requirement</h3>
+                        <p>Compyle requires Node.js version 14 or higher. Please ensure you have the correct version installed.</p>
+                      </div>
+                    </div>
+                    
+                    <!-- Feature Cards -->
+                    <div class="feature-cards">
+                      <div class="feature-card">
+                        <div class="feature-icon">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 2v20M2 12h20"></path></svg>
+                        </div>
+                        <h3>Real-time Updates</h3>
+                        <p>Get live updates when changes occur in your environment.</p>
+                      </div>
+                      <div class="feature-card">
+                        <div class="feature-icon">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 17.58A5 5 0 0 0 18 8h-1.26A8 8 0 1 0 4 16.25"></path><line x1="8" y1="16" x2="8.01" y2="16"></line><line x1="8" y1="20" x2="8.01" y2="20"></line><line x1="12" y1="18" x2="12.01" y2="18"></line><line x1="12" y1="22" x2="12.01" y2="22"></line><line x1="16" y1="16" x2="16.01" y2="16"></line><line x1="16" y1="20" x2="16.01" y2="20"></line></svg>
+                        </div>
+                        <h3>Automation</h3>
+                        <p>Automate repetitive tasks with custom scripts and workflows.</p>
+                      </div>
+                      <div class="feature-card">
+                        <div class="feature-icon">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+                        </div>
+                        <h3>Integration API</h3>
+                        <p>Connect with third-party services through our comprehensive API.</p>
+                      </div>
+                    </div>
+                    
+                    <!-- Collapsible Section -->
+                    <div class="collapsible-section">
+                      <button class="collapsible-header">
+                        <span>Advanced Configuration Options</span>
+                        <svg class="collapse-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                      </button>
+                      <div class="collapsible-content">
+                        <p>The following configuration options are available for advanced users:</p>
+                        <ul>
+                          <li>Performance tuning parameters</li>
+                          <li>Custom plugin paths</li>
+                          <li>Environment-specific settings</li>
+                        </ul>
+                        <div class="code-block">
+                          <div class="code-header">
+                            <span class="code-language">json</span>
+                            <button class="copy-button" aria-label="Copy code">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                              Copy
+                            </button>
+                          </div>
+                          <pre><code>{"performance": {"cacheSize": "500MB", "workers": 4},"plugins": {"path": "/custom/plugins"}}</code></pre>
+                        </div>
+                      </div>
+                    </div>
+                    
                     <h2>Next Steps</h2>
                     <p>After setting up your project, you might want to explore:</p>
                     
@@ -221,6 +300,19 @@ compyle dev</code></pre>
                         <li><a href="#">API Reference</a>: Detailed documentation of our APIs</li>
                         <li><a href="#">Deployment Guide</a>: How to deploy your Compyle applications</li>
                     </ul>
+                    
+                    <!-- Troubleshooting Accordion Preview -->
+                    <div class="accordion">
+                      <div class="accordion-item">
+                        <button class="accordion-header">
+                          <span>Need Help?</span>
+                          <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </button>
+                        <div class="accordion-content">
+                          <p>If you need assistance or have questions, please visit our <a href="#">Community Forum</a> or join our <a href="#">Discord Server</a>.</p>
+                        </div>
+                      </div>
+                    </div>
                 </article>
             </div>
         </main>

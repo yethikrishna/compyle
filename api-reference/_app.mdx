@@ -62,7 +62,8 @@ curl -X GET "https://api.compyle.ai/v1/projects" \
 
 <div style="background: #f8fafc; border-radius: var(--compyle-border-radius); padding: 1rem; margin: 1rem 0;">
   <h5 style="margin: 0 0 0.5rem 0; font-size: 0.875rem; font-weight: 600; color: var(--compyle-gray-700);">Response Example</h5>
-  <pre style="margin: 0; font-size: 0.75rem; color: #374151;"><code>{
+  ```json
+{
   "data": [
     {
       "id": "proj_1234567890",
@@ -84,7 +85,8 @@ curl -X GET "https://api.compyle.ai/v1/projects" \
     "offset": 0,
     "has_more": false
   }
-}</code></pre>
+}
+```
 </div>
 
 </div>
@@ -100,7 +102,7 @@ curl -X GET "https://api.compyle.ai/v1/projects" \
 
 <div style="background: var(--compyle-gray-50); border-radius: var(--compyle-border-radius); padding: 1rem; margin: 1rem 0;">
   <h5 style="margin: 0 0 0.5rem 0; font-size: 0.875rem; font-weight: 600; color: var(--compyle-gray-700);">Request Body</h5>
-  <pre style="margin: 0; font-size: 0.75rem; color: #374151;"><code>{
+  <pre style="margin: 0; font-size: 0.75rem; color: #374151;"><code>\{
   "name": "string (required)",
   "description": "string (optional)",
   "repository_url": "string (optional)",
@@ -156,7 +158,8 @@ curl -X GET "https://api.compyle.ai/v1/projects" \
 
 <div style="background: #f8fafc; border-radius: var(--compyle-border-radius); padding: 1rem; margin: 1rem 0;">
   <h5 style="margin: 0 0 0.5rem 0; font-size: 0.875rem; font-weight: 600; color: var(--compyle-gray-700);">Request Example</h5>
-  <pre style="margin: 0; font-size: 0.75rem; color: #374151;"><code>{
+  ```json
+{
   "agent_type": "code_generator",
   "prompt": "Create a React component for user authentication",
   "context": {
@@ -164,20 +167,23 @@ curl -X GET "https://api.compyle.ai/v1/projects" \
     "language": "javascript",
     "framework": "react"
   }
-}</code></pre>
+}
+  ```
 </div>
 
 <div style="background: #f8fafc; border-radius: var(--compyle-border-radius); padding: 1rem; margin: 1rem 0;">
   <h5 style="margin: 0 0 0.5rem 0; font-size: 0.875rem; font-weight: 600; color: var(--compyle-gray-700);">Response Example</h5>
-  <pre style="margin: 0; font-size: 0.75rem; color: #374151;"><code>{
-  "response": "Here's a React authentication component...",
-  "code": "// Generated React component code here",
-  "confidence": 0.92,
-  "suggestions": [
-    "Consider adding error handling",
-    "Implement input validation"
-  ]
-}</code></pre>
+  ```json
+  {
+    "response": "Here's a React authentication component...",
+    "code": "// Generated React component code here",
+    "confidence": 0.92,
+    "suggestions": [
+      "Consider adding error handling",
+      "Implement input validation"
+    ]
+  }
+  ```
 </div>
 
 </div>
@@ -257,17 +263,19 @@ curl -X GET "https://api.compyle.ai/v1/projects" \
   </div>
   <p style="color: var(--compyle-gray-600); margin: 0 0 1rem 0;">The request was malformed or missing required parameters.</p>
   <div style="background: #f8fafc; border-radius: var(--compyle-border-radius); padding: 1rem;">
-    <pre style="margin: 0; font-size: 0.75rem; color: #374151;"><code>{
-  "error": {
-    "code": "BAD_REQUEST",
-    "message": "Missing required parameter: 'name'",
-    "details": {
-      "parameter": "name",
-      "expected": "string",
-      "received": "null"
+    ```json
+    {
+      "error": {
+        "code": "BAD_REQUEST",
+        "message": "Missing required parameter: 'name'",
+        "details": {
+          "parameter": "name",
+          "expected": "string",
+          "received": "null"
+        }
+      }
     }
-  }
-}</code></pre>
+    ```
   </div>
 </div>
 
@@ -278,12 +286,14 @@ curl -X GET "https://api.compyle.ai/v1/projects" \
   </div>
   <p style="color: var(--compyle-gray-600); margin: 0 0 1rem 0;">Authentication failed or token is invalid.</p>
   <div style="background: #f8fafc; border-radius: var(--compyle-border-radius); padding: 1rem;">
-    <pre style="margin: 0; font-size: 0.75rem; color: #374151;"><code>{
-  "error": {
-    "code": "UNAUTHORIZED",
-    "message": "Invalid or expired API token"
-  }
-}</code></pre>
+    ```json
+    {
+      "error": {
+        "code": "UNAUTHORIZED",
+        "message": "Invalid or expired API token"
+      }
+    }
+    ```
   </div>
 </div>
 
@@ -294,13 +304,15 @@ curl -X GET "https://api.compyle.ai/v1/projects" \
   </div>
   <p style="color: var(--compyle-gray-600); margin: 0 0 1rem 0;">You have exceeded the rate limit for your plan.</p>
   <div style="background: #f8fafc; border-radius: var(--compyle-border-radius); padding: 1rem;">
-    <pre style="margin: 0; font-size: 0.75rem; color: #374151;"><code>{
-  "error": {
-    "code": "RATE_LIMIT_EXCEEDED",
-    "message": "API rate limit exceeded",
-    "retry_after": 3600
-  }
-}</code></pre>
+    ```json
+    {
+      "error": {
+        "code": "RATE_LIMIT_EXCEEDED",
+        "message": "API rate limit exceeded",
+        "retry_after": 3600
+      }
+    }
+    ```
   </div>
 </div>
 
@@ -336,12 +348,13 @@ Set up webhooks to receive real-time notifications about events in your workspac
 
 ## SDK Usage Examples
 
-<div className="examples-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 2rem 0;">
+<div className="examples-grid">
 
-<div className="example-card" style="background: white; border: 1px solid var(--compyle-gray-200); border-radius: var(--compyle-border-radius); padding: 1.5rem;">
-  <h4 style="margin: 0 0 1rem 0; color: var(--compyle-gray-900);">JavaScript SDK</h4>
-  <div style="background: #f8fafc; border-radius: var(--compyle-border-radius); padding: 1rem;">
-    <pre style="margin: 0; font-size: 0.75rem; color: #374151;"><code>import { CompyleClient } from '@compyle/sdk';
+<div className="example-card">
+  <h4>JavaScript SDK</h4>
+  <div className="code-container">
+    ```javascript
+import { CompyleClient } from '@compyle/sdk';
 
 const client = new CompyleClient({
   apiToken: 'YOUR_API_TOKEN'
@@ -354,14 +367,16 @@ const project = await client.projects.create({
 });
 
 // Get all projects
-const projects = await client.projects.list();</code></pre>
+const projects = await client.projects.list();
+    ```
   </div>
 </div>
 
-<div className="example-card" style="background: white; border: 1px solid var(--compyle-gray-200); border-radius: var(--compyle-border-radius); padding: 1.5rem;">
-  <h4 style="margin: 0 0 1rem 0; color: var(--compyle-gray-900);">Python SDK</h4>
-  <div style="background: #f8fafc; border-radius: var(--compyle-border-radius); padding: 1rem;">
-    <pre style="margin: 0; font-size: 0.75rem; color: #374151;"><code>from compyle_sdk import CompyleClient
+<div className="example-card">
+  <h4>Python SDK</h4>
+  <div className="code-container">
+    ```python
+from compyle_sdk import CompyleClient
 
 client = CompyleClient(api_token='YOUR_API_TOKEN')
 
@@ -372,12 +387,13 @@ project = client.projects.create({
 })
 
 # List all tasks for a project
-tasks = client.tasks.list(project_id=project['id'])</code></pre>
+tasks = client.tasks.list(project_id=project['id'])
+    ```
   </div>
 </div>
 
 </div>
 
-<div className="callout info" style="margin: 2rem 0;">
-  <strong>📖 Need Help?</strong> Check out our <a href="/guides/api-examples" style="color: var(--compyle-primary);">API Examples Guide</a> for more detailed integration tutorials.
+<div className="callout info">
+  <strong>📖 Need Help?</strong> Check out our <a href="/guides/api-examples">API Examples Guide</a> for more detailed integration tutorials.
 </div>
