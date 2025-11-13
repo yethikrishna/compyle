@@ -2,22 +2,6 @@
 
 import { NavMain } from "@/components/custom/nav-main";
 import {
-  ArrowUpRight,
-  CornerUpLeft,
-  Frame,
-  GitPullRequestCreateArrow,
-  House,
-  LifeBuoy,
-  Map,
-  PieChart,
-  Send,
-  SquareTerminal,
-} from "lucide-react";
-import * as React from "react";
-// import { NavProjects } from "@/components/nav-projects";
-// import { NavSecondary } from "@/components/nav-secondary";
-// import { NavUser } from "@/components/nav-user";
-import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
@@ -26,9 +10,18 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import {
+  ArrowUpRight,
+  CornerUpLeft,
+  GitPullRequestCreateArrow,
+  House,
+  Settings,
+  SquareTerminal,
+} from "lucide-react";
 import Link from "next/link";
-import { NavUser } from "./nav-user";
+import * as React from "react";
 import { NavSecondary } from "../custom/nav-secondary";
+import { NavUser } from "./nav-user";
 
 const data = {
   user: {
@@ -54,6 +47,18 @@ const data = {
         },
       ],
     },
+    {
+      title: "Settings",
+      url: "/dashboard/settings",
+      icon: Settings,
+      isActive: true,
+      items: [
+        {
+          title: "Profile",
+          url: "/dashboard/settings/profile",
+        },
+      ],
+    },
   ],
   navSecondary: [
     {
@@ -65,23 +70,6 @@ const data = {
       title: "Compyle.ai",
       url: "https://www.compyle.ai",
       icon: ArrowUpRight,
-    },
-  ],
-  projects: [
-    {
-      name: "Design Engineering",
-      url: "#",
-      icon: Frame,
-    },
-    {
-      name: "Sales & Marketing",
-      url: "#",
-      icon: PieChart,
-    },
-    {
-      name: "Travel",
-      url: "#",
-      icon: Map,
     },
   ],
 };
