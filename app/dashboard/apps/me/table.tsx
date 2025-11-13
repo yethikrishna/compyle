@@ -7,6 +7,7 @@ import { InferSelectModel } from "drizzle-orm";
 type AppWithUpvotes = {
   app: InferSelectModel<typeof apps>;
   upvoteCount: number;
+  commentCount: number;
 };
 
 export const columns: ColumnDef<AppWithUpvotes>[] = [
@@ -17,6 +18,18 @@ export const columns: ColumnDef<AppWithUpvotes>[] = [
   {
     accessorKey: "upvoteCount",
     header: "Upvotes",
+    cell: ({ getValue }) => {
+      const count = getValue() as number;
+      return (
+        <div className="flex items-center gap-1">
+          <span className="font-medium">{count}</span>
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "commentCount",
+    header: "Comments",
     cell: ({ getValue }) => {
       const count = getValue() as number;
       return (

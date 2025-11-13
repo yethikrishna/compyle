@@ -1,5 +1,5 @@
 import { VALID_CATEGORIES, VALID_TECHNOLOGIES } from "@/data";
-import * as z from "zod";
+import z from "zod";
 
 export const createAppSchema = z.object({
   name: z
