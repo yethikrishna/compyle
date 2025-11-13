@@ -315,10 +315,6 @@ export default function AppDetailsClient({ id }: { id: string }) {
                       )}
                     </span>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Comments</span>
-                    <span className="font-semibold text-foreground">0</span>
-                  </div>
                 </div>
               </div>
             </div>
