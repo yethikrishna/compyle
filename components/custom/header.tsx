@@ -27,6 +27,8 @@ import Link from "next/link";
 import { Separator } from "../ui/separator";
 import { useSession } from "@/lib/auth-client";
 import { Spinner } from "../ui/spinner";
+import { useAuthStore } from "@/providers/auth.provider";
+import { useEffect } from "react";
 
 interface MenuItem {
   title: string;
@@ -129,6 +131,14 @@ const Header = ({
   },
 }: HeaderProps) => {
   const { data: session, isPending, error } = useSession();
+
+  const { setUser } = useAuthStore();
+
+  useEffect(() => {
+    if (!isPending && !error && session) {
+      setUser(session.user);
+    }
+  }, [error, isPending, session, setUser]);
 
   return (
     <section className="py-4">

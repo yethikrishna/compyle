@@ -1,4 +1,5 @@
 import { apps } from "@/db/schemas/app";
+import { comments } from "@/db/schemas/comment";
 import { userRoleEnum } from "@/db/schemas/enums";
 import { timestamps } from "@/db/schemas/timestamps";
 import { upvotes } from "@/db/schemas/upvote";
@@ -23,4 +24,5 @@ export const users = pgTable("user", {
 export const usersRelations = relations(users, ({ many }) => ({
   apps: many(apps),
   upvotes: many(upvotes),
+  comments: many(comments),
 }));
