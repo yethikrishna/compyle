@@ -4,9 +4,19 @@ description: "Start building with Compyle - the collaborative coding agent"
 icon: "rocket"
 ---
 
-# The coding agent that asks before it builds
+# The Coding Agent That Asks Before It Builds
 
-Keep full control. Skip the rework. Build with confidence.
+Compyle represents a paradigm shift in AI-assisted development. While traditional agents operate autonomously and often generate code that requires extensive rework, Compyle maintains human oversight throughout the entire development process.
+
+## Core Philosophy
+
+**Problem:** Autonomous AI agents make assumptions without confirmation, leading to code that doesn't align with your vision and requires significant refactoring.
+
+**Solution:** Compyle asks clarifying questions before planning, validates every change in real-time, and stops when uncertain—ensuring you maintain control while leveraging AI for implementation.
+
+<Info>
+  **See It In Action:** Visit [compyle.ai](https://www.compyle.ai) to explore interactive demonstrations of the Research → Planning → Implementation workflow.
+</Info>
 
 <Button href="https://app.compyle.ai" target="_blank">Start Free Trial</Button>
 
@@ -14,33 +24,105 @@ Keep full control. Skip the rework. Build with confidence.
   See Compyle in action
 </Card>
 
-## Why Compyle?
+## Why Choose Compyle?
+
+### The Autonomous Agent Problem
+
+<Columns>
+  <Column>
+    <h4>What Happens with Autonomous Agents</h4>
+    <ul>
+      <li><strong>Assumption-Based Development:</strong> AI makes decisions without your input</li>
+      <li><strong>Massive Code Generation:</strong> Thousands of lines created without your oversight</li>
+      <li><strong>Post-Hoc Debugging:</strong> You spend weeks fixing code you didn't write</li>
+      <li><strong>Architecture Violations:</strong> New patterns don't match your existing codebase</li>
+      <li><strong>Technical Debt:</strong> Refactoring becomes necessary before you can ship</li>
+    </ul>
+  </Column>
+  <Column>
+    <h4>How Compyle Solves This</h4>
+    <ul>
+      <li><strong>Question-First Approach:</strong> Confirms understanding before implementation</li>
+      <li><strong>Incremental Development:</strong> Small, validated changes with your review</li>
+      <li><strong>Real-Time Validation:</strong> Issues caught during development, not after</li>
+      <li><strong>Pattern Compliance:</strong> Enforces your existing architecture and conventions</li>
+      <li><strong>Production-Ready Output:</strong> Code that fits your standards from the start</li>
+    </ul>
+  </Column>
+</Columns>
+
+### Technical Comparison
 
 <CardGroup cols={3}>
-  <Card title="Other agents make decisions for you" icon="warning">
-    They guess what you mean and press forward. By the time you realize it went wrong, you're drowning in slop.
+  <Card title="Decision-Making" icon="brain">
+    <strong>Autonomous:</strong> AI decides architecture<br/>
+    <strong>Compyle:</strong> You decide, AI implements
   </Card>
-  <Card title="You lose understanding of your code" icon="eye">
-    2,000 lines of generated code you don't understand. Now you're stuck patching problems you can't debug.
+  <Card title="Code Generation" icon="code">
+    <strong>Autonomous:</strong> Bulk code generation<br/>
+    <strong>Compyle:</strong> Iterative, validated development
   </Card>
-  <Card title="Building features takes 10x longer" icon="hourglass">
-    Autonomous agents mean refactoring. Use Compyle for 0→1 that actually scales.
+  <Card title="Quality Assurance" icon="shield">
+    <strong>Autonomous:</strong> Review after completion<br/>
+    <strong>Compyle:</strong> Validation during development
   </Card>
 </CardGroup>
 
-## How Compyle Works
+## How Compyle Works: Three-Phase Development
 
-<Steps>
-  <Step title="Research">
-    Compyle gathers context about your codebase, patterns, and existing implementations. It reads your code files, understands your architecture, and studies your conventions.
-  </Step>
-  <Step title="Planning">
-    Before writing code, Compyle asks clarifying questions and creates a detailed plan. You answer focused questions. Compyle creates specifications. No surprises.
-  </Step>
-  <Step title="Implementation">
-    Compyle validates changes in real-time, stops if something doesn't align, and asks before deciding. Every change verified. Every ambiguity surfaced. You're in control.
-  </Step>
-</Steps>
+### Phase 1: Research & Analysis
+
+**Objective:** Understand your codebase, patterns, and existing architecture
+
+**What Compyle Does:**
+- Scans your repository for existing patterns and conventions
+- Analyzes your file structure and organization
+- Studies your coding style and architecture decisions
+- Identifies dependencies, frameworks, and technologies
+- Reviews existing test patterns and quality standards
+
+**Duration:** 1-5 minutes depending on repository size
+
+**Output:** `research.md` - comprehensive analysis of your codebase
+
+### Phase 2: Planning & Clarification
+
+**Objective:** Create detailed specifications with your input before implementation
+
+**What Compyle Does:**
+- Asks specific questions about your requirements
+- Proposes implementation approaches based on your codebase
+- Clarifies edge cases, error handling, and constraints
+- Creates a detailed plan for your review and approval
+
+**Duration:** 5-30 minutes (varies with complexity and your response time)
+
+**Output:** `planning.md` - detailed specification document
+
+### Phase 3: Implementation & Validation
+
+**Objective:** Build code according to specifications with real-time validation
+
+**What Compyle Does:**
+- Implements changes incrementally (not in bulk)
+- Validates each change against your rules and planning
+- Stops and asks when encountering ambiguity or conflicts
+- Creates a pull request with organized, readable code
+
+**Duration:** 5 minutes to several hours (depends on feature complexity)
+
+**Output:** Production-ready pull request with validation summary
+
+## Detailed Workflow Comparison
+
+| Step | Autonomous Agents | Compyle |
+|------|------------------|---------|
+| **Research** | Surface-level file scanning | Deep analysis of patterns, architecture, and conventions |
+| **Planning** | None - immediate implementation | Detailed Q&A creating specifications |
+| **Development** | Bulk code generation | Incremental, validated changes |
+| **Validation** | After completion | Real-time during development |
+| **Quality Control** | Manual review afterward | Built-in checks prevent issues |
+| **User Involvement** | Minimal oversight | Collaborative decision-making |
 
 ## Get Started Now
 

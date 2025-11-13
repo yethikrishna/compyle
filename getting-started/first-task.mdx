@@ -28,18 +28,60 @@ A task is a coding job you want Compyle to help with. Examples include: adding a
     - **How**: Any specific requirements or constraints
     - **Examples**: File names, existing patterns to follow
 
-    **Good example:**
+    **High-Quality Task Description Template:**
+    ```
+    [Feature Name]
+
+    OBJECTIVE:
+    [What the feature accomplishes in business terms]
+
+    TECHNICAL REQUIREMENTS:
+    - Backend: [Specific endpoints, database changes, services]
+    - Frontend: [UI components, forms, user interactions]
+    - Database: [New tables, fields, relationships]
+    - Testing: [What tests to include]
+
+    EXISTING CODE PATTERNS TO FOLLOW:
+    - Follow authentication pattern from: `src/lib/auth.js`
+    - Use component structure from: `src/components/common/`
+    - Match API response format from: `/api/users/profile`
+
+    EDGE CASES TO HANDLE:
+    - [List specific edge cases]
+
+    SUCCESS CRITERIA:
+    - [List measurable outcomes]
+    ```
+
+    **Example Task Description:**
     ```
     Add user authentication with Google OAuth
 
-    We need to let users log in with Google. When they click
-    'Sign in with Google' on the login page, they should
-    authorize with Google, then be redirected to the dashboard
-    with their info (email, name) stored.
+    OBJECTIVE:
+    Allow users to sign in using their Google accounts for improved user experience and reduced friction.
 
-    Use the existing auth pattern from POST /api/auth/login.
-    Store user info in the users table, use JWT tokens.
-    Add tests for happy path and auth failures.
+    TECHNICAL REQUIREMENTS:
+    - Frontend: Add "Sign in with Google" button on login page
+    - Backend: Implement OAuth 2.0 flow with Google
+    - Database: Store user profiles in existing users table
+    - Security: Validate OAuth tokens server-side
+
+    EXISTING PATTERNS TO FOLLOW:
+    - Use existing AuthContext from `src/contexts/AuthContext.js`
+    - Follow API structure from `/api/auth/login` endpoint
+    - Implement error handling like existing login form
+
+    EDGE CASES:
+    - Google account already linked to different email
+    - User denies Google permissions
+    - Network timeout during OAuth flow
+    - Invalid or expired Google tokens
+
+    SUCCESS CRITERIA:
+    - Users can authenticate with Google in < 5 seconds
+    - User data properly stored in database
+    - Failed auth shows helpful error messages
+    - Tests cover main flow and error scenarios
     ```
   </Step>
   <Step title="Select Repository & Branch">
@@ -60,15 +102,215 @@ A task is a coding job you want Compyle to help with. Examples include: adding a
 ## What Happens Next?
 
 <Columns>
-  <Column>
-    ### Agent Timeline
+### Detailed Process Breakdown
 
-    1. **Research Phase** - Compyle analyzes your codebase
-    2. **Planning Phase** - Compyle asks clarifying questions
-    3. **Awaiting Response** - Wait for your answers
-    4. **Implementation** - Compyle builds the feature
-    5. **Pull Request** - Code is ready for review
-  </Column>
+#### Phase 1: Repository Analysis
+When you submit your task, Compyle performs a comprehensive analysis:
+
+**Files Analyzed:**
+- Source code structure and patterns
+- Configuration files and dependencies
+- Existing test suites and quality standards
+- Documentation and README files
+- Package.json, requirements.txt, or similar dependency files
+
+**Analysis Output:**
+```markdown
+# Repository Analysis - MyApp
+
+## Project Structure
+- Framework: React 18 + TypeScript + Vite
+- State Management: Redux Toolkit + RTK Query
+- UI Library: Material-UI v5
+- Testing: Jest + React Testing Library
+- Build Tool: Vite with ESLint + Prettier
+
+## Existing Patterns Detected
+- Components follow: `src/components/[Category]/[Name].tsx`
+- API calls use: `src/services/api/[service].ts`
+- State slices: `src/store/slices/[slice].ts`
+- Routing: React Router v6 with nested routes
+- Styling: Styled-components with MUI theming
+
+## Code Quality Standards
+- ESLint: Airbnb configuration
+- Prettier: 2-space indentation, single quotes
+- Testing: 80% coverage minimum, Jest + RTL
+- TypeScript: Strict mode enabled
+- Git hooks: Pre-commit linting and tests
+
+## Dependencies
+- Production: react, @mui/material, @reduxjs/toolkit
+- Development: @types/*, jest, @testing-library/*
+```
+
+#### Phase 2: Question & Clarification
+Compyle asks targeted questions based on your task and repository analysis:
+
+**Example Questions for "Add Google OAuth Authentication":**
+
+1. **Architecture Clarification:**
+   ```
+   I see you use Redux Toolkit for state management. Should I:
+   a) Create a new auth slice following your existing pattern
+   b) Add auth state to an existing user slice
+   c) Use React Context for auth state (simpler for auth only)
+   ```
+
+2. **Technical Implementation:**
+   ```
+   Your login page is at `/login`. Should I:
+   a) Add Google sign-in button alongside existing form
+   b) Replace the current email/password form entirely
+   c) Make it a toggle option (can use either method)
+   ```
+
+3. **Data Storage:**
+   ```
+   I found your users table structure. For Google OAuth:
+   - Should I add `google_id` and `google_email` columns?
+   - Or create a separate `oauth_accounts` table for multiple providers?
+   - How should I handle existing users who might later add Google login?
+   ```
+
+4. **Error Handling:**
+   ```
+   For OAuth failures, what's your preference:
+   - Redirect back to login with error message
+   - Show inline error without redirect
+   - Log error details for debugging
+   ```
+
+#### Phase 3: Implementation Plan
+Compyle creates a detailed implementation plan:
+
+**Example Plan Structure:**
+```markdown
+# Implementation Plan: Google OAuth Authentication
+
+## Overview
+Add Google OAuth 2.0 authentication to replace or supplement existing email/password login.
+
+## Changes Required
+
+### Frontend Changes
+1. **Install Dependencies**
+   ```bash
+   npm install @google-cloud/oauth2
+   npm install @types/google__maps (if needed)
+   ```
+
+2. **Create Google OAuth Component**
+   - File: `src/components/auth/GoogleSignInButton.tsx`
+   - Follows existing Button component pattern
+   - Includes loading states and error handling
+
+3. **Update Login Page**
+   - File: `src/pages/Login.tsx`
+   - Add Google sign-in button to existing form
+   - Maintain existing email/password option
+   - Show appropriate loading/error states
+
+4. **Update Auth Context**
+   - File: `src/contexts/AuthContext.tsx`
+   - Add Google OAuth handlers
+   - Update user state management
+   - Add OAuth token validation
+
+### Backend Changes
+1. **Google OAuth Endpoint**
+   - File: `src/routes/auth.ts`
+   - Route: POST `/api/auth/google`
+   - Validate Google tokens
+   - Create or update user records
+
+2. **User Model Updates**
+   - Add Google OAuth fields to User model
+   - Handle existing user linking
+   - Update database schema
+
+3. **Authentication Middleware**
+   - File: `src/middleware/auth.ts`
+   - Handle OAuth token verification
+   - Support both traditional and OAuth tokens
+
+### Database Changes
+```sql
+ALTER TABLE users ADD COLUMN google_id VARCHAR(255) UNIQUE;
+ALTER TABLE users ADD COLUMN google_email VARCHAR(255);
+ALTER TABLE users ADD COLUMN google_name VARCHAR(255);
+
+-- Add index for faster lookups
+CREATE INDEX idx_users_google_id ON users(google_id);
+```
+
+### Testing
+1. **Unit Tests**
+   - Google OAuth component testing
+   - Auth context updates
+   - API endpoint validation
+
+2. **Integration Tests**
+   - End-to-end OAuth flow
+   - Error handling scenarios
+   - Existing user migration
+
+## Timeline
+- Research & Analysis: 2 minutes
+- Question & Planning: 5-15 minutes (varies with complexity)
+- Implementation: 15-30 minutes
+- Testing & Validation: 5-10 minutes
+
+## Success Criteria
+- [ ] Users can sign in with Google
+- [ ] Existing email/password login still works
+- [ ] OAuth tokens are validated server-side
+- [ ] User data properly stored in database
+- [ ] Tests pass with >80% coverage
+- [ ] No breaking changes to existing functionality
+```
+
+#### Phase 4: Incremental Implementation
+Compyle implements changes in phases:
+
+**Phase 1: Dependencies & Setup**
+```bash
+✓ Installing Google OAuth dependencies
+✓ Adding Google OAuth types to TypeScript config
+✓ Setting up environment variables for Google credentials
+```
+
+**Phase 2: Frontend Components**
+```typescript
+✓ Creating GoogleSignInButton component
+✓ Adding OAuth service utilities
+✓ Updating AuthContext with Google handlers
+✓ Integrating button into Login page
+```
+
+**Phase 3: Backend Implementation**
+```typescript
+✓ Adding Google OAuth API endpoint
+✓ Implementing token validation
+✓ Updating user model and database schema
+✓ Adding OAuth middleware
+```
+
+**Phase 4: Testing & Validation**
+```typescript
+✓ Unit tests for new components
+✓ Integration tests for OAuth flow
+✓ Error handling validation
+✓ Performance and security checks
+```
+
+#### Phase 5: Final Review & Delivery
+Compyle provides:
+- Organized pull request with clear commits
+- Summary of all changes made
+- Validation results and test coverage
+- Instructions for testing the new feature
+- Rollback plan if needed
   <Column>
     ### What You Should Do
 

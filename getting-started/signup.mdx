@@ -1,78 +1,298 @@
 ---
-title: "Sign Up & Account Setup"
-description: "Create your Compyle account and configure your workspace"
-icon: "user-plus"
+title: "Sign Up & Account Setup - Compyle"
+description: "Learn how to create your Compyle account and set up your development environment"
 ---
 
-# Create Your Compyle Account
+import "../_app.mdx";
+import "../getting-started/_app.mdx";
 
-Getting started with Compyle is quick and easy. Follow these steps to set up your account.
+# Sign Up & Account Setup
 
-## Creating Your Account
+Getting started with Compyle is quick and easy. Follow this guide to create your account and set up your development environment in just a few minutes.
 
-<Steps>
-  <Step title="Go to Compyle">
-    Visit [https://app.compyle.ai](https://app.compyle.ai) to access the Compyle platform.
-  </Step>
-  <Step title="Choose Authentication Method">
-    Select **GitHub OAuth** (recommended) or **Email** for authentication. GitHub OAuth connects your account and allows Compyle to access your repositories.
-  </Step>
-  <Step title="Verify Email">
-    If using email authentication, check your email for the verification link and click it to confirm your address.
-  </Step>
-  <Step title="Complete Profile Setup">
-    Add your name, avatar (optional), and timezone. These help personalize your Compyle experience.
-  </Step>
-  <Step title="Start Using Compyle">
-    Click "Create Account" and you're ready to connect your first repository and create tasks.
-  </Step>
-</Steps>
+<div className="callout info">
+  <strong>🚀 Ready to start?</strong> You'll need about 5 minutes to complete your account setup and be ready to create your first task.
+</div>
 
-## Account Settings
+## Account Creation
 
-<Columns>
-  <Column>
-    ### Manage Your Settings
+### Step 1: Choose Your Sign-Up Method
 
-    Access your account settings to configure:
-    - **Profile** - Name, email, avatar, timezone
-    - **Notifications** - Email preferences, notification settings
-    - **Security** - Password changes, session management
-    - **API Keys** - Generate and manage API tokens
-    - **Billing** - View plan, usage, and payment methods
-  </Column>
-  <Column>
-    <Warning>
-      **Store your API keys securely**
+Compyle offers multiple authentication options to suit your preferences:
 
-      Never share your API keys with anyone. Store them in a secure location like a password manager. If compromised, regenerate immediately.
+<div className="auth-options" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 2rem 0;">
 
-      See our [Privacy Policy](/privacy) for data handling details.
-    </Warning>
-  </Column>
-</Columns>
+<div className="auth-card" style="background: white; border: 1px solid var(--compyle-gray-200); border-radius: var(--compyle-border-radius); padding: 1.5rem; text-align: center; box-shadow: var(--compyle-shadow); transition: transform 0.2s ease, box-shadow 0.2s ease;">
+  <div style="font-size: 2rem; margin-bottom: 0.75rem;">🐙</div>
+  <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem;">GitHub</h3>
+  <p style="color: var(--compyle-gray-600); font-size: 0.875rem; margin-bottom: 1rem;">Quick sign-up with your GitHub account</p>
+  <button className="button" style="width: 100%; justify-content: center;">
+    Continue with GitHub
+  </button>
+</div>
+
+<div className="auth-card" style="background: white; border: 1px solid var(--compyle-gray-200); border-radius: var(--compyle-border-radius); padding: 1.5rem; text-align: center; box-shadow: var(--compyle-shadow); transition: transform 0.2s ease, box-shadow 0.2s ease;">
+  <div style="font-size: 2rem; margin-bottom: 0.75rem;">🔗</div>
+  <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem;">GitLab</h3>
+  <p style="color: var(--compyle-gray-600); font-size: 0.875rem; margin-bottom: 1rem;">Use your GitLab credentials</p>
+  <button className="button secondary" style="width: 100%; justify-content: center;">
+    Continue with GitLab
+  </button>
+</div>
+
+<div className="auth-card" style="background: white; border: 1px solid var(--compyle-gray-200); border-radius: var(--compyle-border-radius); padding: 1.5rem; text-align: center; box-shadow: var(--compyle-shadow); transition: transform 0.2s ease, box-shadow 0.2s ease;">
+  <div style="font-size: 2rem; margin-bottom: 0.75rem;">📧</div>
+  <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem;">Email</h3>
+  <p style="color: var(--compyle-gray-600); font-size: 0.875rem; margin-bottom: 1rem;">Create account with email address</p>
+  <button className="button secondary" style="width: 100%; justify-content: center;">
+    Sign up with Email
+  </button>
+</div>
+
+</div>
+
+### Step 2: Verify Your Email (Email Sign-up Only)
+
+If you choose email sign-up, you'll receive a verification email. Click the link in the email to verify your account and complete the registration process.
+
+<div className="callout warning">
+  <strong>⚠️ Didn't receive the email?</strong> Check your spam folder and make sure to whitelist emails from @compyle.com
+</div>
+
+## Initial Account Setup
+
+### Profile Configuration
+
+After signing up, you'll be prompted to complete your profile:
+
+<div className="setup-steps">
+
+<div class="step-card" style="background: var(--compyle-gray-50); border: 1px solid var(--compyle-gray-200); border-radius: var(--compyle-border-radius); padding: 1.5rem; margin: 1rem 0;">
+  <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+    <div style="width: 2rem; height: 2rem; background: var(--compyle-primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 0.875rem; margin-right: 0.75rem;">1</div>
+    <h4 style="margin: 0; font-size: 1.125rem; font-weight: 600;">Personal Information</h4>
+  </div>
+  <ul style="margin: 0; padding-left: 1.5rem; color: var(--compyle-gray-700);">
+    <li>Full name for team collaboration</li>
+    <li>Professional role (Developer, Team Lead, etc.)</li>
+    <li>Company or organization (optional)</li>
+  </ul>
+</div>
+
+<div class="step-card" style="background: var(--compyle-gray-50); border: 1px solid var(--compyle-gray-200); border-radius: var(--compyle-border-radius); padding: 1.5rem; margin: 1rem 0;">
+  <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+    <div style="width: 2rem; height: 2rem; background: var(--compyle-primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 0.875rem; margin-right: 0.75rem;">2</div>
+    <h4 style="margin: 0; font-size: 1.125rem; font-weight: 600;">Development Preferences</h4>
+  </div>
+  <ul style="margin: 0; padding-left: 1.5rem; color: var(--compyle-gray-700);">
+    <li>Primary programming languages</li>
+    <li>Framework preferences</li>
+    <li>Development environment setup</li>
+  </ul>
+</div>
+
+<div class="step-card" style="background: var(--compyle-gray-50); border: 1px solid var(--compyle-gray-200); border-radius: var(--compyle-border-radius); padding: 1.5rem; margin: 1rem 0;">
+  <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+    <div style="width: 2rem; height: 2rem; background: var(--compyle-primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 0.875rem; margin-right: 0.75rem;">3</div>
+    <h4 style="margin: 0; font-size: 1.125rem; font-weight: 600;">Team Setup</h4>
+  </div>
+  <ul style="margin: 0; padding-left: 1.5rem; color: var(--compyle-gray-700);">
+    <li>Invite team members (optional)</li>
+    <li>Set up team workspace</li>
+    <li>Configure collaboration settings</li>
+  </ul>
+</div>
+
+</div>
+
+### Security Settings
+
+Compyle takes security seriously. Set up these essential security features:
+
+#### Two-Factor Authentication (2FA)
+
+<div className="security-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: var(--compyle-border-radius); padding: 2rem; margin: 1.5rem 0;">
+  <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 2rem; height: 2rem; margin-right: 0.75rem;">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+    </svg>
+    <h3 style="margin: 0; font-size: 1.25rem; font-weight: 600;">Enhanced Security</h3>
+  </div>
+  <p style="margin: 0 0 1rem 0; opacity: 0.9;">Enable 2FA to add an extra layer of protection to your account and repositories.</p>
+  <button className="button" style="background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.3);">
+    Enable 2FA
+  </button>
+</div>
+
+#### API Token Management
+
+Create and manage API tokens for programmatic access to Compyle:
+
+```json
+{
+  "name": "Development Access",
+  "scopes": ["read", "write"],
+  "expires": "2024-12-31",
+  "created": "2024-01-15"
+}
+```
 
 ## Workspace Setup
 
-<Note>
-  Currently, Compyle supports single-user workspaces. Team collaboration features are coming soon. Stay tuned for multi-member workspace support with role-based access control.
-</Note>
+### Creating Your First Workspace
 
-Workspace settings include:
-- **Workspace name** - Identifier for your Compyle workspace
-- **Default settings** - Timezone, language, notification preferences
-- **Connected repositories** - See all connected repos and manage access
+A workspace is your isolated environment for managing projects and collaborating with your team.
 
-## Next Steps
+<div className="workspace-setup" style="background: white; border: 1px solid var(--compyle-gray-200); border-radius: var(--compyle-border-radius); padding: 2rem; margin: 2rem 0; box-shadow: var(--compyle-shadow);">
 
-<CardGroup cols={3}>
-  <Card title="Connect Your First Repository" href="./connect-repo" icon="git-branch">
-    Authorize Compyle to access your GitHub repos
-  </Card>
-  <Card title="Learn About Billing" href="./billing" icon="credit-card">
-    Understand plans, credits, and usage limits
-  </Card>
-  <Card title="Explore the Dashboard" href="../features/tasks-projects" icon="layout-dashboard">
-    Get familiar with the Compyle interface
-  </Card>
-</CardGroup>
+<h3 style="margin-top: 0; color: var(--compyle-gray-900);">Workspace Configuration</h3>
+
+<div className="form-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1.5rem 0;">
+
+<div>
+  <label style="display: block; font-weight: 500; margin-bottom: 0.5rem; color: var(--compyle-gray-700);">Workspace Name</label>
+  <input type="text" placeholder="My Team Workspace" style="width: 100%; padding: 0.75rem; border: 1px solid var(--compyle-gray-300); border-radius: var(--compyle-border-radius); font-size: 0.875rem;" />
+</div>
+
+<div>
+  <label style="display: block; font-weight: 500; margin-bottom: 0.5rem; color: var(--compyle-gray-700);">Workspace Type</label>
+  <select style="width: 100%; padding: 0.75rem; border: 1px solid var(--compyle-gray-300); border-radius: var(--compyle-border-radius); font-size: 0.875rem;">
+    <option>Personal</option>
+    <option>Team</option>
+    <option>Enterprise</option>
+  </select>
+</div>
+
+</div>
+
+<div>
+  <label style="display: block; font-weight: 500; margin-bottom: 0.5rem; color: var(--compyle-gray-700);">Description</label>
+  <textarea placeholder="Describe your workspace purpose..." rows="3" style="width: 100%; padding: 0.75rem; border: 1px solid var(--compyle-gray-300); border-radius: var(--compyle-border-radius); font-size: 0.875rem; resize: vertical;"></textarea>
+</div>
+
+</div>
+
+## Plan Selection
+
+Choose the plan that best fits your needs:
+
+<div className="plans-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin: 2rem 0;">
+
+<div className="plan-card" style="background: white; border: 2px solid var(--compyle-gray-200); border-radius: var(--compyle-border-radius); padding: 2rem; position: relative;">
+  <div style="text-align: center; margin-bottom: 1.5rem;">
+    <h3 style="margin: 0 0 0.5rem 0; color: var(--compyle-gray-900);">Starter</h3>
+    <div style="font-size: 2rem; font-weight: 700; color: var(--compyle-gray-900);">Free</div>
+    <p style="color: var(--compyle-gray-600); font-size: 0.875rem; margin: 0;">Perfect for individual developers</p>
+  </div>
+  <ul style="list-style: none; padding: 0; margin: 0 0 1.5rem 0;">
+    <li style="display: flex; align-items: center; margin-bottom: 0.5rem;">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 1rem; height: 1rem; color: #22c55e; margin-right: 0.5rem;">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+      </svg>
+      3 projects
+    </li>
+    <li style="display: flex; align-items: center; margin-bottom: 0.5rem;">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 1rem; height: 1rem; color: #22c55e; margin-right: 0.5rem;">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+      </svg>
+      Basic AI agents
+    </li>
+    <li style="display: flex; align-items: center; margin-bottom: 0.5rem;">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 1rem; height: 1rem; color: #22c55e; margin-right: 0.5rem;">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+      </svg>
+      Community support
+    </li>
+  </ul>
+  <button className="button secondary" style="width: 100%; justify-content: center;">Get Started</button>
+</div>
+
+<div className="plan-card featured" style="background: linear-gradient(135deg, var(--compyle-primary) 0%, var(--compyle-primary-hover) 100%); color: white; border: 2px solid var(--compyle-primary); border-radius: var(--compyle-border-radius); padding: 2rem; position: relative;">
+  <div style="position: absolute; top: -1rem; left: 50%; transform: translateX(-50%); background: #f59e0b; color: white; padding: 0.25rem 0.75rem; border-radius: 1rem; font-size: 0.75rem; font-weight: 600;">Most Popular</div>
+  <div style="text-align: center; margin-bottom: 1.5rem;">
+    <h3 style="margin: 0 0 0.5rem 0;">Professional</h3>
+    <div style="font-size: 2rem; font-weight: 700;">$29<span style="font-size: 1rem; opacity: 0.8;">/month</span></div>
+    <p style="opacity: 0.8; font-size: 0.875rem; margin: 0;">For growing development teams</p>
+  </div>
+  <ul style="list-style: none; padding: 0; margin: 0 0 1.5rem 0;">
+    <li style="display: flex; align-items: center; margin-bottom: 0.5rem;">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 1rem; height: 1rem; color: #22c55e; margin-right: 0.5rem;">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+      </svg>
+      Unlimited projects
+    </li>
+    <li style="display: flex; align-items: center; margin-bottom: 0.5rem;">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 1rem; height: 1rem; color: #22c55e; margin-right: 0.5rem;">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+      </svg>
+      Advanced AI agents
+    </li>
+    <li style="display: flex; align-items: center; margin-bottom: 0.5rem;">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 1rem; height: 1rem; color: #22c55e; margin-right: 0.5rem;">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+      </svg>
+      Team collaboration
+    </li>
+    <li style="display: flex; align-items: center; margin-bottom: 0.5rem;">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 1rem; height: 1rem; color: #22c55e; margin-right: 0.5rem;">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+      </svg>
+      Priority support
+    </li>
+  </ul>
+  <button className="button" style="width: 100%; justify-content: center; background: white; color: var(--compyle-primary);">Start Free Trial</button>
+</div>
+
+</div>
+
+## Verification & Next Steps
+
+### Account Verification
+
+Your account is now ready! You should receive:
+
+- ✅ **Welcome email** with getting started resources
+- ✅ **Workspace access** to create your first project
+- ✅ **API credentials** for integration setup
+- ✅ **Onboarding checklist** to guide you through next steps
+
+### Recommended Next Actions
+
+1. **Complete your profile setup** by adding your development preferences
+2. **Connect your first repository** to start using Compyle's features
+3. **Install IDE extensions** for seamless integration
+4. **Create your first task** to see Compyle in action
+
+<div className="callout success">
+  <strong>🎉 Welcome to Compyle!</strong> You're all set to start building amazing software with AI-powered development assistance.
+</div>
+
+## Troubleshooting
+
+### Common Issues
+
+<div className="troubleshooting-grid" style="display: grid; gap: 1rem; margin: 2rem 0;">
+
+<div className="issue-card" style="background: #fef2f2; border: 1px solid #fecaca; border-radius: var(--compyle-border-radius); padding: 1rem;">
+  <h5 style="margin: 0 0 0.5rem 0; color: #991b1b; font-size: 0.875rem; font-weight: 600;">Email verification not received</h5>
+  <p style="margin: 0; color: #991b1b; font-size: 0.875rem;">Check spam folder and whitelist @compyle.com</p>
+</div>
+
+<div className="issue-card" style="background: #fef2f2; border: 1px solid #fecaca; border-radius: var(--compyle-border-radius); padding: 1rem;">
+  <h5 style="margin: 0 0 0.5rem 0; color: #991b1b; font-size: 0.875rem; font-weight: 600;">Repository connection failed</h5>
+  <p style="margin: 0; color: #991b1b; font-size: 0.875rem;">Verify GitHub/GitLab permissions and try again</p>
+</div>
+
+<div className="issue-card" style="background: #fef2f2; border: 1px solid #fecaca; border-radius: var(--compyle-border-radius); padding: 1rem;">
+  <h5 style="margin: 0 0 0.5rem 0; color: #991b1b; font-size: 0.875rem; font-weight: 600;">IDE extension not working</h5>
+  <p style="margin: 0; color: #991b1b; font-size: 0.875rem;">Check IDE compatibility and extension permissions</p>
+</div>
+
+</div>
+
+### Getting Help
+
+- 📚 **[Documentation](/)** - Browse our comprehensive guides
+- 💬 **[Community Forum](/community)** - Connect with other users  
+- 🛠️ **[Support Center](/support)** - Get technical assistance
+- 📧 **[Email Support](mailto:support@compyle.com)** - Contact our team directly
