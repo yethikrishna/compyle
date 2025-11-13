@@ -44,13 +44,14 @@ export default function Signup() {
   }, [session, isPending, error, router]);
 
   const form = useForm({
-    defaultValues: { name: "", email: "", password: "" },
+    defaultValues: { name: "", email: "", username: "", password: "" },
     validators: { onSubmit: signupSchema },
     onSubmit: async ({ value }) => {
       await signUp.email(
         {
           name: value.name,
           email: value.email,
+          username: value.username,
           password: value.password,
         },
         {
@@ -139,6 +140,33 @@ export default function Signup() {
                           onChange={(e) => field.handleChange(e.target.value)}
                           aria-invalid={isInvalid}
                           placeholder="johndoe@domain.com"
+                          autoComplete="off"
+                        />
+                        {isInvalid && (
+                          <FieldError errors={field.state.meta.errors} />
+                        )}
+                      </Field>
+                    );
+                  }}
+                </form.Field>
+              </FieldGroup>
+
+              <FieldGroup>
+                <form.Field name="username">
+                  {(field) => {
+                    const isInvalid =
+                      field.state.meta.isTouched && !field.state.meta.isValid;
+                    return (
+                      <Field data-invalid={isInvalid}>
+                        <FieldLabel htmlFor={field.name}>Username</FieldLabel>
+                        <Input
+                          id={field.name}
+                          name={field.name}
+                          value={field.state.value}
+                          onBlur={field.handleBlur}
+                          onChange={(e) => field.handleChange(e.target.value)}
+                          aria-invalid={isInvalid}
+                          placeholder="johndoe"
                           autoComplete="off"
                         />
                         {isInvalid && (
