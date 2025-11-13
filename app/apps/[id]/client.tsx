@@ -36,6 +36,7 @@ import {
 import Link from "next/link";
 import { useState } from "react";
 import { toast } from "sonner";
+import AppComments from "./comments";
 
 export default function AppDetailsClient({ id }: { id: string }) {
   const [alertOpen, setAlertOpen] = useState(false);
@@ -223,81 +224,7 @@ export default function AppDetailsClient({ id }: { id: string }) {
                 </AlertDialog>
               </div>
 
-              {/* Comments Section */}
-              <div>
-                <h2 className="mb-6 text-2xl font-bold text-foreground">
-                  Comments (0)
-                </h2>
-
-                {/* Add Comment Form */}
-                {/*<div className="mb-8 rounded-lg border border-border bg-card p-4">
-                  <div className="flex gap-4">
-                    <Avatar className="h-10 w-10 flex-shrink-0">
-                      <AvatarImage src="/placeholder.svg?key=lgul8" />
-                      <AvatarFallback>You</AvatarFallback>
-                    </Avatar>
-                    <div className="flex-1">
-                      <input
-                        type="text"
-                        placeholder="Share your thoughts..."
-                        className="w-full rounded-lg border border-border bg-background px-4 py-2 text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
-                      />
-                    </div>
-                  </div>
-                </div>*/}
-
-                {/* Comments List */}
-                {/*<div className="space-y-6">
-                  {demoComments.map((comment) => (
-                    <div
-                      key={comment.id}
-                      className="border-b border-border pb-6 last:border-b-0"
-                    >
-                      <div className="flex gap-4">
-                        <Avatar className="h-10 w-10 flex-shrink-0">
-                          <AvatarImage
-                            src={comment.user.image || "/placeholder.svg"}
-                          />
-                          <AvatarFallback>
-                            {comment.user.name.charAt(0)}
-                          </AvatarFallback>
-                        </Avatar>
-
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center justify-between gap-2 mb-1">
-                            <h3 className="font-semibold text-foreground text-sm">
-                              {comment.user.name}
-                            </h3>
-                            <span className="text-xs text-muted-foreground">
-                              {comment.createdAt}
-                            </span>
-                          </div>
-                          <p className="mb-3 text-sm text-foreground text-pretty">
-                            {comment.content}
-                          </p>
-
-                          <div className="flex items-center gap-4">
-                            <AppDetailClient
-                              commentId={comment.id}
-                              initialLikes={comment.likes}
-                            />
-                            <button className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors">
-                              <MessageCircle className="h-4 w-4" />
-                              Reply
-                            </button>
-                            {comment.replies > 0 && (
-                              <button className="text-xs font-semibold text-primary hover:underline">
-                                {comment.replies}{" "}
-                                {comment.replies === 1 ? "reply" : "replies"}
-                              </button>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>*/}
-              </div>
+              <AppComments id={id} />
             </div>
 
             {/* Sidebar */}

@@ -2,6 +2,7 @@
 
 import { db } from "@/db";
 import { apps } from "@/db/schemas/app";
+import { comments } from "@/db/schemas/comment";
 import { upvotes } from "@/db/schemas/upvote";
 import { users } from "@/db/schemas/user";
 import { createAppSchema } from "@/schema/app.schema";
@@ -39,6 +40,7 @@ export async function getDashboardApps(): Promise<
   Array<{
     app: typeof apps.$inferSelect;
     upvoteCount: number;
+    commentCount: number;
   }>
 > {
   try {
@@ -47,9 +49,11 @@ export async function getDashboardApps(): Promise<
       .select({
         app: apps,
         upvoteCount: sql<number>`cast(count(${upvotes.userId}) as int)`,
+        commentCount: sql<number>`cast(count(${comments.id}) as int)`,
       })
       .from(apps)
       .leftJoin(upvotes, eq(apps.id, upvotes.appId))
+      .leftJoin(comments, eq(apps.id, comments.appId))
       .where(eq(apps.userId, user.id))
       .groupBy(apps.id);
 
