@@ -51,63 +51,105 @@
 
     <div class="main-container">
         <!-- Sidebar Navigation -->
-        <aside id="sidebar" class="sidebar">
-            <div class="sidebar-header">
-                <div class="version-selector">
-                    <select>
-                        <option>v1.0</option>
-                        <option>v1.1 (beta)</option>
-                    </select>
+    <aside id="sidebar" class="sidebar">
+        <div class="sidebar-content">
+            <!-- Version Selector -->
+            <div class="version-selector">
+                <div class="version-label">Version:</div>
+                <div class="version-dropdown">
+                    <button id="version-button" class="version-button">
+                        <span id="current-version">v1.0</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                    <div id="version-dropdown-menu" class="version-dropdown-menu">
+                        <button class="version-option active" data-version="v1.0">v1.0</button>
+                        <button class="version-option" data-version="v1.1">v1.1 (beta)</button>
+                    </div>
                 </div>
             </div>
             
-            <nav class="sidebar-nav">
-                <div class="nav-section">
-                    <div class="nav-section-header">QUICK START</div>
-                    <ul class="nav-list">
-                        <li><a href="#" class="nav-link active">Getting Started</a></li>
-                        <li><a href="#" class="nav-link">Installation</a></li>
-                        <li><a href="#" class="nav-link">First Project</a></li>
-                    </ul>
-                </div>
-                
-                <div class="nav-section">
-                    <div class="nav-section-header">CORE CONCEPTS</div>
-                    <ul class="nav-list">
-                        <li><a href="#" class="nav-link">Architecture</a></li>
-                        <li><a href="#" class="nav-link">Components</a></li>
-                        <li><a href="#" class="nav-link">Configuration</a></li>
-                        <li class="nav-dropdown">
-                            <a href="#" class="nav-link toggle-dropdown">Advanced Usage</a>
-                            <ul class="nav-dropdown-list">
-                                <li><a href="#" class="nav-link">Extending Components</a></li>
-                                <li><a href="#" class="nav-link">Custom Plugins</a></li>
-                                <li><a href="#" class="nav-link">Performance Optimization</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-                
-                <div class="nav-section">
-                    <div class="nav-section-header">API REFERENCE</div>
-                    <ul class="nav-list">
-                        <li><a href="#" class="nav-link">Client API</a></li>
-                        <li><a href="#" class="nav-link">Server API</a></li>
-                        <li><a href="#" class="nav-link">CLI Commands</a></li>
-                    </ul>
-                </div>
-                
-                <div class="nav-section">
-                    <div class="nav-section-header">GUIDES</div>
-                    <ul class="nav-list">
-                        <li><a href="#" class="nav-link">Authentication</a></li>
-                        <li><a href="#" class="nav-link">Deployment</a></li>
-                        <li><a href="#" class="nav-link">Troubleshooting</a></li>
-                        <li><a href="#" class="nav-link">FAQ</a></li>
-                    </ul>
-                </div>
+            <!-- Navigation -->
+            <nav class="main-nav">
+                <ul class="nav-list">
+                    <!-- Quick Start with Collapsible Sections -->
+                    <li class="nav-item nav-dropdown">
+                        <a href="#quick-start" class="nav-link toggle-dropdown">
+                            <span class="nav-title">Quick Start</span>
+                            <svg class="dropdown-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </a>
+                        <ul class="nav-submenu">
+                            <li><a href="#getting-started" class="nav-link">Getting Started</a></li>
+                            <li><a href="#installation" class="nav-link">Installation</a></li>
+                            <li><a href="#first-project" class="nav-link">First Project</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- Core Concepts with Detailed Collapsible Sections -->
+                    <li class="nav-item nav-dropdown">
+                        <a href="#core-concepts" class="nav-link toggle-dropdown">
+                            <span class="nav-title">Core Concepts</span>
+                            <svg class="dropdown-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </a>
+                        <ul class="nav-submenu">
+                            <li><a href="#architecture" class="nav-link">Architecture</a></li>
+                            <li><a href="#components" class="nav-link">Components</a></li>
+                            <li><a href="#configuration" class="nav-link">Configuration</a></li>
+                            <li class="nav-item nav-dropdown">
+                                <a href="#advanced-usage" class="nav-link toggle-dropdown">
+                                    <span class="nav-title">Advanced Usage</span>
+                                    <svg class="dropdown-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="6 9 12 15 18 9"></polyline>
+                                    </svg>
+                                </a>
+                                <ul class="nav-submenu">
+                                    <li><a href="#extending-components" class="nav-link">Extending Components</a></li>
+                                    <li><a href="#custom-plugins" class="nav-link">Custom Plugins</a></li>
+                                    <li><a href="#performance-optimization" class="nav-link">Performance Optimization</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    
+                    <!-- API Reference with Collapsible Sections -->
+                    <li class="nav-item nav-dropdown">
+                        <a href="#api-reference" class="nav-link toggle-dropdown">
+                            <span class="nav-title">API Reference</span>
+                            <svg class="dropdown-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </a>
+                        <ul class="nav-submenu">
+                            <li><a href="#client-api" class="nav-link">Client API</a></li>
+                            <li><a href="#server-api" class="nav-link">Server API</a></li>
+                            <li><a href="#cli-commands" class="nav-link">CLI Commands</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- Guides with Collapsible Sections -->
+                    <li class="nav-item nav-dropdown">
+                        <a href="#guides" class="nav-link toggle-dropdown">
+                            <span class="nav-title">Guides</span>
+                            <svg class="dropdown-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </a>
+                        <ul class="nav-submenu">
+                            <li><a href="#authentication" class="nav-link">Authentication</a></li>
+                            <li><a href="#deployment" class="nav-link">Deployment</a></li>
+                            <li><a href="#troubleshooting" class="nav-link">Troubleshooting</a></li>
+                            <li><a href="#faq" class="nav-link">FAQ</a></li>
+                        </ul>
+                    </li>
+                </ul>
             </nav>
-        </aside>
+        </div>
+    </aside>
 
         <!-- Main Content -->
         <main class="main-content">
