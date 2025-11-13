@@ -65,7 +65,7 @@ export default function Page() {
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Follwers</CardTitle>
+            <CardTitle className="text-sm font-medium">Followers</CardTitle>
             <Users className="text-foreground/50 size-5" />
           </CardHeader>
           <CardContent>

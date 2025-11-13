@@ -16,7 +16,7 @@ export async function sendEmailVerificationEmail({
 }: SendEmailVerificationEmailProps) {
   await resend.emails.send({
     to: [email],
-    from: `Luzin Team <auth@${process.env.NEXT_PUBLIC_EMAIL_DOMAIN}>`,
+    from: `Compyle Team <auth@${process.env.NEXT_PUBLIC_EMAIL_DOMAIN}>`,
     subject: "Compyle: Verify your email address",
     react: EmailVerificationEmailTempate({ url, name }),
   });

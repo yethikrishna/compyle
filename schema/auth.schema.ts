@@ -20,6 +20,12 @@ export const signupSchema = z.object({
     .email("Inavalid email address")
     .min(5, "Email must be at least 5 characters")
     .max(55, "Email must be at most 55 characters"),
+  username: z
+    .string()
+    .regex(
+      /^[a-z_]+$/,
+      "Username must contain only lowercase letters and underscores.",
+    ),
   password: z
     .string()
     .min(8, "Password must be at least 8 characters")
