@@ -1,14 +1,16 @@
+import { comments } from "@/db/schemas/comment";
 import { appStatusEnum } from "@/db/schemas/enums";
 import { timestamps } from "@/db/schemas/timestamps";
 import { upvotes } from "@/db/schemas/upvote";
 import { users } from "@/db/schemas/user";
+import { createId } from "@paralleldrive/cuid2";
 import { relations } from "drizzle-orm";
 import { boolean, integer, pgTable, text } from "drizzle-orm/pg-core";
 
 export const apps = pgTable("app", {
   id: text("id")
     .primaryKey()
-    .$defaultFn(() => crypto.randomUUID()),
+    .$defaultFn(() => createId()),
   name: text("name").notNull(),
   slug: text("slug").notNull().unique(),
   description: text("description").notNull(),
@@ -29,9 +31,10 @@ export const apps = pgTable("app", {
 });
 
 export const appsRelations = relations(apps, ({ one, many }) => ({
+  upvotes: many(upvotes),
+  comments: many(comments),
   user: one(users, {
     fields: [apps.userId],
     references: [users.id],
   }),
-  upvotes: many(upvotes),
 }));

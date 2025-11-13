@@ -43,6 +43,13 @@
       "when": 1762869357873,
       "tag": "0005_nostalgic_devos",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1763060989758,
+      "tag": "0006_superb_psylocke",
+      "breakpoints": true
     }
   ]
 }
