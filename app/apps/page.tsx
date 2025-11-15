@@ -1,6 +1,7 @@
 "use client";
 
 import AppCard, { AppCardProps } from "@/components/custom/app-card";
+import Footer from "@/components/custom/footer";
 import { Header } from "@/components/custom/header";
 import { Button } from "@/components/ui/button";
 import {
@@ -102,6 +103,7 @@ export default function Apps() {
           </>
         )}
       </div>
+      <Footer />
     </>
   );
 }

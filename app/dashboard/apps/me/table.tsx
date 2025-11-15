@@ -123,7 +123,7 @@ const ActionsCell = ({
 
         <DropdownMenuContent>
           <DropdownMenuItem className="cursor-pointer">
-            <Link className="flex gap-2" href={`#`}>
+            <Link className="flex gap-2" href={`/dashboard/apps/me/${app.id}`}>
               <Eye />
               View Details
             </Link>
@@ -154,7 +154,8 @@ const ActionsCell = ({
           <AlertDialogHeader>
             <AlertDialogTitle>Delete App</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone.
+              This will permanently delete this app and all associated data
+              including comments and likes. This action cannot be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
 
@@ -162,9 +163,12 @@ const ActionsCell = ({
             <AlertDialogCancel className="cursor-pointer" disabled={isDeleting}>
               Cancel
             </AlertDialogCancel>
-            <AlertDialogAction asChild>
+            <AlertDialogAction
+              className="bg-destructive text-background hover:bg-destructive/90"
+              asChild
+            >
               <Button
-                className="w-40 cursor-pointer gap-2"
+                className="cursor-pointer"
                 variant="destructive"
                 disabled={isDeleting}
                 onClick={(e) => {
@@ -173,7 +177,7 @@ const ActionsCell = ({
                   onDeleteApp(app.id);
                 }}
               >
-                Delete
+                Permanently Delete
               </Button>
             </AlertDialogAction>
           </AlertDialogFooter>

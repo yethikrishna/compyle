@@ -1,5 +1,6 @@
 import { Header } from "@/components/custom/header";
 import AppDetailsClient from "@/app/apps/[id]/client";
+import Footer from "@/components/custom/footer";
 
 export default async function AppDetails({
   params,
@@ -12,6 +13,7 @@ export default async function AppDetails({
     <>
       <Header />
       <AppDetailsClient id={id} />
+      <Footer />
     </>
   );
 }

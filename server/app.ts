@@ -216,3 +216,46 @@ export async function getPublicAppDetails({ id }: { id: string }): Promise<{
     throw new Error("Failed to fetch app");
   }
 }
+
+export async function getDashboardAppDetails({ id }: { id: string }): Promise<{
+  appDetails: typeof apps.$inferSelect;
+  upvoteCount: number;
+}> {
+  try {
+    if (!id) {
+      throw new Error("Invalid app ID");
+    }
+
+    const user = await getUserFromAuth();
+
+    const res = await db
+      .select({
+        app: apps,
+        upvoteCount: sql<number>`
+          (
+            SELECT count(*)
+            FROM ${upvotes}
+            WHERE ${upvotes.appId} = ${apps.id}
+          )
+        `,
+      })
+      .from(apps)
+      .where(and(eq(apps.id, id), eq(apps.userId, user.id)))
+      .innerJoin(users, eq(users.id, apps.userId));
+
+    if (res.length < 1) {
+      throw new Error("No app found with the provided ID");
+    }
+
+    return {
+      appDetails: res[0].app,
+      upvoteCount: res[0].upvoteCount,
+    };
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+
+    throw new Error("Failed to fetch app");
+  }
+}
