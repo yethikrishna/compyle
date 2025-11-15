@@ -1,3 +1,4 @@
+import Footer from "@/components/custom/footer";
 import { Header } from "@/components/custom/header";
 import { HomeHero } from "@/components/custom/home-hero";
 import { HomeStats } from "@/components/custom/home-stats";
@@ -10,6 +11,7 @@ export default function Home() {
         <HomeHero />
         <HomeStats />
       </div>
+      <Footer />
     </div>
   );
 }

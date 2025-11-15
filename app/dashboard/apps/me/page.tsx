@@ -71,7 +71,7 @@ export default function Page() {
   });
 
   return (
-    <div className="container w-full">
+    <div className="container w-full mt-4">
       <Link
         href="/dashboard"
         className="inline-flex items-center gap-2 text-primary hover:text-primary/80 mb-8 transition-colors"
