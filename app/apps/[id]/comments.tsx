@@ -39,7 +39,7 @@ export default function AppComments({ id }: { id: string }) {
       queryClient.invalidateQueries({ queryKey: ["app-comments", id] });
     },
     onError: () => {
-      toast.error("Failed to add comment. Please try again.");
+      toast.error("Failed to add comment.");
     },
   });
 
