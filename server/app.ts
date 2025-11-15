@@ -7,7 +7,8 @@ import { upvotes } from "@/db/schemas/upvote";
 import { users } from "@/db/schemas/user";
 import { createAppSchema } from "@/schema/app.schema";
 import { getUserFromAuth } from "@/server/user";
-import { and, eq, sql } from "drizzle-orm";
+import { AppPublishStatus } from "@/types/app";
+import { and, countDistinct, eq, sql } from "drizzle-orm";
 import { z, ZodError } from "zod";
 
 export async function createApp(
@@ -36,6 +37,61 @@ export async function createApp(
   }
 }
 
+export async function updateAppPublishStatus({
+  appId,
+  newStatus,
+}: {
+  appId: string;
+  newStatus: AppPublishStatus;
+}): Promise<boolean> {
+  try {
+    if (!appId || !newStatus) {
+      throw new Error("Invalid app ID or app status");
+    }
+
+    const user = await getUserFromAuth();
+
+    await db
+      .update(apps)
+      .set({ status: newStatus })
+      .where(and(eq(apps.id, appId), eq(apps.userId, user.id)));
+
+    return true;
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+
+    throw new Error("Failed to update app status");
+  }
+}
+
+export async function deleteApp({
+  appId,
+}: {
+  appId: string;
+}): Promise<boolean> {
+  try {
+    if (!appId) {
+      throw new Error("Invalid app ID");
+    }
+
+    const user = await getUserFromAuth();
+
+    await db
+      .delete(apps)
+      .where(and(eq(apps.id, appId), eq(apps.userId, user.id)));
+
+    return true;
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+
+    throw new Error("Failed to delete app");
+  }
+}
+
 export async function getDashboardApps(): Promise<
   Array<{
     app: typeof apps.$inferSelect;
@@ -45,11 +101,12 @@ export async function getDashboardApps(): Promise<
 > {
   try {
     const user = await getUserFromAuth();
+
     const res = await db
       .select({
         app: apps,
-        upvoteCount: sql<number>`cast(count(${upvotes.userId}) as int)`,
-        commentCount: sql<number>`cast(count(${comments.id}) as int)`,
+        upvoteCount: countDistinct(upvotes.userId),
+        commentCount: countDistinct(comments.id),
       })
       .from(apps)
       .leftJoin(upvotes, eq(apps.id, upvotes.appId))

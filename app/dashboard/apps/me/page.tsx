@@ -12,8 +12,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { getDashboardApps } from "@/server/app";
-import { useQuery } from "@tanstack/react-query";
+import { deleteApp, getDashboardApps } from "@/server/app";
+import { queryClient } from "@/utils/provider";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import {
   flexRender,
   getCoreRowModel,
@@ -21,6 +22,7 @@ import {
 } from "@tanstack/react-table";
 import { ArrowLeft, Plus } from "lucide-react";
 import Link from "next/link";
+import { toast } from "sonner";
 
 export default function Page() {
   const { isPending, data } = useQuery({
@@ -29,9 +31,41 @@ export default function Page() {
     meta: { showError: true },
   });
 
+  const deleteAppMutation = useMutation({
+    mutationFn: (appId: string) => deleteApp({ appId }),
+    onMutate: () => {
+      return toast.loading("Deleting app...");
+    },
+    onSuccess: (_, __, toastId) => {
+      toast.dismiss(toastId);
+      toast.success("App deleted successfully");
+      queryClient.invalidateQueries({ queryKey: ["me-dashboard-apps"] });
+    },
+    onError: (error, _, toastId) => {
+      toast.dismiss(toastId);
+      toast.error("Failed to delete app.");
+    },
+  });
+
+  const handleUpdateStatus = (appId: string) => {
+    // Your update status logic here
+    console.log("Updating status for app:", appId);
+    // Example: call your API to update status
+  };
+
+  const handleDeleteApp = (appId: string) => {
+    deleteAppMutation.mutate(appId);
+  };
+
+  const columnWithHandler = columns(
+    handleUpdateStatus,
+    handleDeleteApp,
+    deleteAppMutation.isPending,
+  );
+
   // eslint-disable-next-line react-hooks/incompatible-library
   const table = useReactTable({
-    columns,
+    columns: columnWithHandler,
     data: data ?? [],
     getCoreRowModel: getCoreRowModel(),
   });
@@ -81,7 +115,10 @@ export default function Page() {
             <TableBody>
               {isPending ? (
                 <TableRow>
-                  <TableCell colSpan={columns.length} className="min-h-32">
+                  <TableCell
+                    colSpan={columnWithHandler.length}
+                    className="min-h-32"
+                  >
                     <div className="w-full mx-auto">
                       <Spinner className="mx-auto" />
                     </div>
@@ -103,10 +140,10 @@ export default function Page() {
               ) : (
                 <TableRow>
                   <TableCell
-                    colSpan={columns.length}
+                    colSpan={columnWithHandler.length}
                     className="h-24 text-center text-muted-foreground"
                   >
-                    No submitted apps found found.
+                    No submitted apps found.
                   </TableCell>
                 </TableRow>
               )}

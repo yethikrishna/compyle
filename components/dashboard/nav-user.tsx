@@ -24,6 +24,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import {
   AlertDialog,
+  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
@@ -122,14 +123,19 @@ export function NavUser() {
               </AlertDialogHeader>
               <AlertDialogFooter>
                 <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <Button
-                  onClick={handleLogout}
-                  disabled={pending}
-                  className="w-40 cursor-pointer gap-2"
-                >
-                  {pending && <Spinner />}
-                  {pending ? "Loading..." : "Logout"}
-                </Button>
+                <AlertDialogAction asChild>
+                  <Button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleLogout();
+                    }}
+                    disabled={pending}
+                    className="w-40 cursor-pointer gap-2"
+                  >
+                    {pending && <Spinner />}
+                    {pending ? "Loading..." : "Logout"}
+                  </Button>
+                </AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>

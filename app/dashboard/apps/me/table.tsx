@@ -1,8 +1,29 @@
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { apps } from "@/db/schemas/app";
 import { ColumnDef } from "@tanstack/react-table";
 import clsx from "clsx";
 import { InferSelectModel } from "drizzle-orm";
+import { Ellipsis, Eye, Pencil, Trash2 } from "lucide-react";
+import Link from "next/link";
+import { useState } from "react";
 
 type AppWithUpvotes = {
   app: InferSelectModel<typeof apps>;
@@ -10,7 +31,11 @@ type AppWithUpvotes = {
   commentCount: number;
 };
 
-export const columns: ColumnDef<AppWithUpvotes>[] = [
+export const columns = (
+  onUpdateStatus: (appId: string) => void,
+  onDeleteApp: (appId: string) => void,
+  isDeleting: boolean,
+): ColumnDef<AppWithUpvotes>[] => [
   {
     accessorKey: "app.name",
     header: "App Name",
@@ -60,4 +85,100 @@ export const columns: ColumnDef<AppWithUpvotes>[] = [
       return <Badge className={colorClass}>{status}</Badge>;
     },
   },
+  {
+    header: "Actions",
+    cell: ({ row }) => {
+      const app = row.original.app;
+      return (
+        <ActionsCell
+          app={app}
+          onUpdateStatus={onUpdateStatus}
+          onDeleteApp={onDeleteApp}
+          isDeleting={isDeleting}
+        />
+      );
+    },
+  },
 ];
+
+const ActionsCell = ({
+  app,
+  onUpdateStatus,
+  onDeleteApp,
+  isDeleting,
+}: {
+  app: InferSelectModel<typeof apps>;
+  onUpdateStatus: (appId: string) => void;
+  onDeleteApp: (appId: string) => void;
+  isDeleting: boolean;
+}) => {
+  const [deleteOpen, setDeleteOpen] = useState(false);
+
+  return (
+    <>
+      <DropdownMenu>
+        <DropdownMenuTrigger className="cursor-pointer">
+          <Ellipsis className="text-muted-foreground" />
+        </DropdownMenuTrigger>
+
+        <DropdownMenuContent>
+          <DropdownMenuItem className="cursor-pointer">
+            <Link className="flex gap-2" href={`#`}>
+              <Eye />
+              View Details
+            </Link>
+          </DropdownMenuItem>
+
+          <DropdownMenuItem
+            className="cursor-pointer"
+            onClick={() => onUpdateStatus(app.id)}
+          >
+            <Pencil />
+            Update Status
+          </DropdownMenuItem>
+
+          <DropdownMenuSeparator />
+
+          <DropdownMenuItem
+            className="text-destructive cursor-pointer"
+            onClick={() => setDeleteOpen(true)}
+          >
+            <Trash2 className="mr-2 text-destructive" />
+            Delete App
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+
+      <AlertDialog open={deleteOpen} onOpenChange={setDeleteOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete App</AlertDialogTitle>
+            <AlertDialogDescription>
+              This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+
+          <AlertDialogFooter>
+            <AlertDialogCancel className="cursor-pointer" disabled={isDeleting}>
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction asChild>
+              <Button
+                className="w-40 cursor-pointer gap-2"
+                variant="destructive"
+                disabled={isDeleting}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setDeleteOpen(false);
+                  onDeleteApp(app.id);
+                }}
+              >
+                Delete
+              </Button>
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </>
+  );
+};
