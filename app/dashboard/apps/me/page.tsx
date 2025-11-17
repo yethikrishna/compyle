@@ -12,7 +12,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { deleteApp, getDashboardApps } from "@/server/app";
+import {
+  deleteApp,
+  getDashboardApps,
+  updateAppPublishStatus,
+} from "@/server/app";
+import { AppPublishStatus } from "@/types/app";
 import { queryClient } from "@/utils/provider";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import {
@@ -41,16 +46,42 @@ export default function Page() {
       toast.success("App deleted successfully");
       queryClient.invalidateQueries({ queryKey: ["me-dashboard-apps"] });
     },
-    onError: (error, _, toastId) => {
+    onError: (_, __, toastId) => {
       toast.dismiss(toastId);
       toast.error("Failed to delete app.");
     },
   });
 
-  const handleUpdateStatus = (appId: string) => {
-    // Your update status logic here
-    console.log("Updating status for app:", appId);
-    // Example: call your API to update status
+  const updatePublishStatusMutation = useMutation({
+    mutationFn: ({
+      appId,
+      newStatus,
+    }: {
+      appId: string;
+      newStatus: AppPublishStatus;
+    }) => updateAppPublishStatus({ appId, newStatus }),
+    onMutate: () => {
+      return toast.loading("Updating app status...");
+    },
+    onSuccess: (_, __, toastId) => {
+      toast.dismiss(toastId);
+      toast.success("App status updated");
+      queryClient.invalidateQueries({ queryKey: ["me-dashboard-apps"] });
+    },
+    onError: (_, __, toastId) => {
+      toast.dismiss(toastId);
+      toast.error("Failed to update app status.");
+    },
+  });
+
+  const handleUpdateStatus = ({
+    appId,
+    status,
+  }: {
+    appId: string;
+    status: AppPublishStatus;
+  }) => {
+    updatePublishStatusMutation.mutate({ appId, newStatus: status });
   };
 
   const handleDeleteApp = (appId: string) => {

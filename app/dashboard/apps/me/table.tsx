@@ -17,7 +17,15 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { apps } from "@/db/schemas/app";
+import { AppPublishStatus } from "@/types/app";
 import { ColumnDef } from "@tanstack/react-table";
 import clsx from "clsx";
 import { InferSelectModel } from "drizzle-orm";
@@ -32,7 +40,7 @@ type AppWithUpvotes = {
 };
 
 export const columns = (
-  onUpdateStatus: (appId: string) => void,
+  onUpdateStatus: (data: { appId: string; status: AppPublishStatus }) => void,
   onDeleteApp: (appId: string) => void,
   isDeleting: boolean,
 ): ColumnDef<AppWithUpvotes>[] => [
@@ -108,12 +116,20 @@ const ActionsCell = ({
   isDeleting,
 }: {
   app: InferSelectModel<typeof apps>;
-  onUpdateStatus: (appId: string) => void;
+  onUpdateStatus: (data: { appId: string; status: AppPublishStatus }) => void;
   onDeleteApp: (appId: string) => void;
   isDeleting: boolean;
 }) => {
   const [deleteOpen, setDeleteOpen] = useState(false);
+  const [statusOpen, setStatusOpen] = useState(false);
+  const [selectedStatus, setSelectedStatus] = useState<AppPublishStatus>(
+    app.status as AppPublishStatus,
+  );
 
+  const handleUpdateStatus = () => {
+    onUpdateStatus({ appId: app.id, status: selectedStatus });
+    setStatusOpen(false);
+  };
   return (
     <>
       <DropdownMenu>
@@ -131,7 +147,7 @@ const ActionsCell = ({
 
           <DropdownMenuItem
             className="cursor-pointer"
-            onClick={() => onUpdateStatus(app.id)}
+            onClick={() => setStatusOpen(true)}
           >
             <Pencil />
             Update Status
@@ -148,6 +164,57 @@ const ActionsCell = ({
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
+
+      <AlertDialog open={statusOpen} onOpenChange={setStatusOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Update App Status</AlertDialogTitle>
+            <AlertDialogDescription>
+              Change the status of &quot;{app.name}&quot;. This will affect the
+              app&apos;s visibility and availability.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+
+          <div className="py-4">
+            <label className="text-sm font-medium mb-2 block">
+              Select New Status
+            </label>
+            <Select
+              value={selectedStatus}
+              onValueChange={(value) =>
+                setSelectedStatus(value as AppPublishStatus)
+              }
+            >
+              <SelectTrigger className="w-full cursor-pointer">
+                <SelectValue placeholder="Select status" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem className="cursor-pointer" value="draft">
+                  Draft
+                </SelectItem>
+                <SelectItem className="cursor-pointer" value="published">
+                  Published
+                </SelectItem>
+                <SelectItem className="cursor-pointer" value="archived">
+                  Archived
+                </SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <AlertDialogFooter>
+            <AlertDialogCancel className="cursor-pointer">
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction
+              className="cursor-pointer"
+              onClick={handleUpdateStatus}
+            >
+              Update Status
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
 
       <AlertDialog open={deleteOpen} onOpenChange={setDeleteOpen}>
         <AlertDialogContent>
