@@ -37,7 +37,7 @@ async function scrapeLusion() {
   });
 
   console.log('Waiting for page to fully render...');
-  await page.waitForTimeout(5000);
+  await new Promise(resolve => setTimeout(resolve, 5000));
 
   // Get the HTML content
   console.log('Extracting HTML content...');
