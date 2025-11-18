@@ -1,5 +1,5 @@
 const scrape = require('website-scraper');
-const PuppeteerPlugin = require('website-scraper-puppeteer');
+const { PuppeteerPlugin } = require('website-scraper-puppeteer');
 
 const options = {
   urls: ['https://lusion.co/'],
