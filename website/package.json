@@ -1,15 +1,20 @@
 {
-  "name": "website",
+  "name": "compyle-website",
   "version": "1.0.0",
-  "description": "",
+  "description": "Compyle.ai marketing website - lusion.co inspired design",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "echo 'Static site - no build step required'",
+    "dev": "python3 -m http.server 8000 --directory public",
+    "preview": "python3 -m http.server 8000 --directory public"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["compyle", "ai", "coding-agent", "website"],
+  "author": "Compyle",
   "license": "ISC",
-  "type": "commonjs",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yethikrishna/compyle-website.git"
+  },
   "dependencies": {
     "puppeteer": "^24.30.0",
     "website-scraper": "^6.0.0",
