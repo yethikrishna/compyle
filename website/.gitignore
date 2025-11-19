@@ -1,0 +1,47 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Build outputs
+dist/
+build/
+.cache/
+
+# Environment variables
+.env
+.env.local
+.env.production
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor directories
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Temporary files
+*.tmp
+*.temp
+.temp/
+
+# Downloaded site references (keep public/ only)
+src/
+labs.lusion.co/
+www.lusion.co/
+exp-*.lusion.co/
+client-*.lusion.co/
+*-*.lusion.co/
+download-*.js
+
+# Scraper scripts (development only)
+download-lusion.js
+download-with-puppeteer.js
