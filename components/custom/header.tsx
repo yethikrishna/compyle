@@ -62,7 +62,7 @@ const Header = ({
   menu = [
     { title: "Home", url: "/" },
     { title: "Apps", url: "/apps" },
-    { title: "Competitions", url: "/competitions" },
+    // { title: "Competitions", url: "/competitions" },
     // {
     //   title: "Products",
     //   url: "#",

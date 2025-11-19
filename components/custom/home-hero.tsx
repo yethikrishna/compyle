@@ -10,13 +10,13 @@ const HomeHero = ({
   description = "Discover incredible AI-powered applications built with Compyle. From productivity tools to creative platforms, explore what builders are creating.",
   buttons = {
     primary: {
-      text: "Apps Created With Compyle",
+      text: "View Submited Apps",
       url: "/apps",
     },
-    secondary: {
-      text: "Competitions",
-      url: "/competitions",
-    },
+    // secondary: {
+    //   text: "Competitions",
+    //   url: "/competitions",
+    // },
   },
 }) => {
   return (
@@ -40,18 +40,19 @@ const HomeHero = ({
             </p>
             <div className="flex w-full flex-col justify-center gap-2 sm:flex-row lg:justify-start">
               {buttons.primary && (
-                <Button asChild className="w-full sm:w-auto">
-                  <a href={buttons.primary.url}>{buttons.primary.text}</a>
+                <Button className="w-full sm:w-auto">
+                  <Link href={buttons.primary.url}>{buttons.primary.text}</Link>
+                  <ArrowRight className="size-4" />
                 </Button>
               )}
-              {buttons.secondary && (
+              {/*{buttons.secondary && (
                 <Button asChild variant="outline" className="w-full sm:w-auto">
                   <a href={buttons.secondary.url}>
                     {buttons.secondary.text}
                     <ArrowRight className="size-4" />
                   </a>
                 </Button>
-              )}
+              )}*/}
             </div>
           </div>
           <Image

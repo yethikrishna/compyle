@@ -163,6 +163,42 @@ export async function getPublicApps(): Promise<
   }
 }
 
+export async function getPublicFeaturedApps(): Promise<
+  Array<{
+    app: typeof apps.$inferSelect;
+    upvoteCount: number;
+  }>
+> {
+  try {
+    const res = await db
+      .select({
+        app: apps,
+        upvoteCount: sql<number>`
+          (
+            SELECT count(*)
+            FROM ${upvotes}
+            WHERE ${upvotes.appId} = ${apps.id}
+          )
+        `,
+      })
+      .from(apps)
+      .where(and(eq(apps.status, "published"), eq(apps.featured, true)))
+      .limit(3);
+
+    if (!res) {
+      throw new Error("No apps found");
+    }
+
+    return res;
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+
+    throw new Error("Failed to fetch apps");
+  }
+}
+
 export async function getPublicAppDetails({ id }: { id: string }): Promise<{
   appDetails: typeof apps.$inferSelect;
   userDetails: {

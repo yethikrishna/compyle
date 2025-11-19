@@ -50,6 +50,13 @@
       "when": 1763060989758,
       "tag": "0006_superb_psylocke",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1763590796677,
+      "tag": "0007_small_captain_cross",
+      "breakpoints": true
     }
   ]
 }
