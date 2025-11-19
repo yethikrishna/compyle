@@ -22,7 +22,6 @@ export const apps = pgTable("app", {
   builtWith: text("builtWith").array().notNull().default([]),
   featured: boolean("featured").notNull().default(false),
   verified: boolean("verified").notNull().default(false),
-  likes: integer("likes").notNull().default(0),
   status: appStatusEnum("status").notNull().default("published"),
   userId: text("userId")
     .notNull()

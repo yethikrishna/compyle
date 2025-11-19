@@ -31,11 +31,11 @@ const HomeStats = ({
   ],
 }: Stats8Props) => {
   return (
-    <section className="py-20">
+    <section className="py-2 mb-12 md:py-20">
       <div className="container mx-auto">
         <div className="mt-14 grid gap-x-5 gap-y-8 justify-items-center md:justify-items-stretch md:grid-cols-2 lg:grid-cols-4">
           {stats.map((stat) => (
-            <div key={stat.id} className="flex flex-col gap-5">
+            <div key={stat.id} className="flex flex-col items-center gap-5">
               <div className="text-6xl font-bold">{stat.value}</div>
               <p>{stat.label}</p>
             </div>

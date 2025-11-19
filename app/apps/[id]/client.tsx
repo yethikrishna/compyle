@@ -130,12 +130,12 @@ export default function AppDetailsClient({ id }: { id: string }) {
         </Empty>
       )}
       {!appResult.isPending && app && (
-        <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto container px-6">
           {/*Make height resposive*/}
           <div className="w-full h-96 rounded-lg bg-linear-to-br from-primary/30 via-secondary/20 to-accent/30 mb-4 overflow-hidden group-hover:from-primary/40 group-hover:via-secondary/30 group-hover:to-accent/40 transition-all"></div>
 
-          <div className="grid gap-8 lg:grid-cols-3">
-            <div className="lg:col-span-2 space-y-8">
+          <div className="grid gap-9 lg:grid-cols-6">
+            <div className="lg:col-span-4 space-y-8">
               <div>
                 <div className="mb-4 flex items-start justify-between">
                   <div>
@@ -228,7 +228,7 @@ export default function AppDetailsClient({ id }: { id: string }) {
             </div>
 
             {/* Sidebar */}
-            <div className="space-y-6">
+            <div className="space-y-7 lg:col-span-2">
               <div className="rounded-lg border border-border bg-card p-6">
                 <div className="mb-4 text-center">
                   <div className="text-4xl font-bold text-foreground">
