@@ -52,7 +52,7 @@ const INFO = {
 export default function Footer() {
   return (
     <>
-      <Separator />
+      <Separator className="mt-24" />
       <section className="mt-12">
         <div className="container mx-auto">
           <footer>
@@ -81,7 +81,7 @@ export default function Footer() {
                 </div>
               ))}
             </div>
-            <div className="text-muted-foreground mt-24 flex flex-col justify-between gap-4 border-t pt-8 text-sm font-medium md:flex-row md:items-center">
+            <div className="text-muted-foreground mt-24 flex flex-col justify-between gap-4 border-t pt-8 text-sm font-medium md:flex-row md:items-center px-6 mb-5">
               <p>{INFO.copyright}</p>
               <ul className="flex gap-4">
                 {INFO.bottomLinks.map((link, linkIdx) => (

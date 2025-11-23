@@ -37,6 +37,43 @@ export async function createApp(
   }
 }
 
+export async function updateAppDetails(
+  values: z.infer<typeof createAppSchema>,
+  appId: string,
+) {
+  try {
+    const data = createAppSchema.parse(values);
+    const user = await getUserFromAuth();
+
+    await db
+      .update(apps)
+      .set({
+        name: data.name,
+        slug: data.slug,
+        description: data.description,
+        category: data.category,
+        builtWith: data.builtWith,
+        websiteUrl: data.websiteUrl,
+        repoUrl: data.repoUrl,
+        demoUrl: data.demoUrl,
+        status: data.status,
+      })
+      .where(and(eq(apps.id, appId), eq(apps.userId, user.id)));
+
+    return true;
+  } catch (error) {
+    if (error instanceof ZodError) {
+      throw new Error("Invalid input data");
+    }
+
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+
+    throw new Error("Failed to update app details");
+  }
+}
+
 export async function updateAppPublishStatus({
   appId,
   newStatus,

@@ -5,7 +5,7 @@ import { upvotes } from "@/db/schemas/upvote";
 import { users } from "@/db/schemas/user";
 import { createId } from "@paralleldrive/cuid2";
 import { relations } from "drizzle-orm";
-import { boolean, integer, pgTable, text } from "drizzle-orm/pg-core";
+import { boolean, pgTable, text } from "drizzle-orm/pg-core";
 
 export const apps = pgTable("app", {
   id: text("id")

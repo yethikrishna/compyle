@@ -27,9 +27,12 @@ import {
 } from "@tanstack/react-table";
 import { ArrowLeft, Plus } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 export default function Page() {
+  const router = useRouter();
+
   const { isPending, data } = useQuery({
     queryKey: ["me-dashboard-apps"],
     queryFn: getDashboardApps,
@@ -101,6 +104,10 @@ export default function Page() {
     getCoreRowModel: getCoreRowModel(),
   });
 
+  const navigateToView = (id: string) => {
+    router.push(`/dashboard/apps/me/${id}`);
+  };
+
   return (
     <div className="container w-full mt-4">
       <Link
@@ -157,7 +164,11 @@ export default function Page() {
                 </TableRow>
               ) : table.getRowModel().rows?.length ? (
                 table.getRowModel().rows.map((row) => (
-                  <TableRow key={row.id}>
+                  <TableRow
+                    className="cursor-pointer"
+                    key={row.id}
+                    onClick={() => navigateToView(row.original.app.id)}
+                  >
                     {row.getVisibleCells().map((cell) => (
                       <TableCell key={cell.id}>
                         {flexRender(

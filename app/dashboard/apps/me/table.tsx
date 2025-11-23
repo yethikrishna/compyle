@@ -130,8 +130,9 @@ const ActionsCell = ({
     onUpdateStatus({ appId: app.id, status: selectedStatus });
     setStatusOpen(false);
   };
+
   return (
-    <>
+    <div onClick={(e) => e.stopPropagation()}>
       <DropdownMenu>
         <DropdownMenuTrigger className="cursor-pointer">
           <Ellipsis className="text-muted-foreground" />
@@ -250,6 +251,6 @@ const ActionsCell = ({
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-    </>
+    </div>
   );
 };
