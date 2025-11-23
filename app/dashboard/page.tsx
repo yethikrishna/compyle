@@ -175,21 +175,11 @@ export default function Page() {
                 <CardTitle className="text-lg">Quick Actions</CardTitle>
               </CardHeader>
               <CardContent className="grid gap-3">
-                <Button className="w-full justify-start">
-                  <Plus className="mr-2 h-4 w-4" />
-                  Submit New App
-                </Button>
-                <Button variant="outline" className="w-full justify-start">
-                  <TrendingUp className="mr-2 h-4 w-4" />
-                  View Analytics
-                </Button>
-                <Button variant="outline" className="w-full justify-start">
-                  <Users className="mr-2 h-4 w-4" />
-                  Explore Community
-                </Button>
-                <Button variant="outline" className="w-full justify-start">
-                  <Rocket className="mr-2 h-4 w-4" />
-                  Featured Apps
+                <Button className="w-full justify-start" asChild>
+                  <Link href="/dashboard/apps/new">
+                    <Plus className="mr-2 h-4 w-4" />
+                    Submit New App
+                  </Link>
                 </Button>
               </CardContent>
             </Card>
