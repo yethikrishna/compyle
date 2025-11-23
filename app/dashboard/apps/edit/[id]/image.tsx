@@ -152,7 +152,7 @@ export default function NewAppImage({
       toast.dismiss(toastId);
       toast.success("Existing image deleted.");
       updateImageData(null);
-      fileInputRef.current?.click();
+      // Don't automatically open file picker - let user do it manually
     } catch {
       toast.dismiss(toastId);
       toast.error("Failed to delete existing image");
@@ -188,6 +188,7 @@ export default function NewAppImage({
               />
               <div className="mt-5 space-x-4">
                 <Button
+                  type="button"
                   onClick={handleRemoveImage}
                   variant="destructive"
                   className="cursor-pointer"
