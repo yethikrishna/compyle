@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
 import { authenticateFileServer, deleteFile } from "@/server/imagekit";
+import { ImageData } from "@/types/image";
 import {
   ImageKitAbortError,
   ImageKitInvalidRequestError,
@@ -17,19 +18,29 @@ import Image from "next/image";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
 
-interface ImageData {
-  url: string;
-  fileId: string;
-  thumbnailUrl: string;
+interface NewAppImageProps {
+  onImageDataChange: (imageData: ImageData | null) => void;
+  initialImageData?: ImageData | null;
 }
 
-export default function NewAppImage() {
-  const [imageData, setImageData] = useState<ImageData | null>(null);
+export default function NewAppImage({
+  onImageDataChange,
+  initialImageData = null,
+}: NewAppImageProps) {
+  const [imageData, setImageData] = useState<ImageData | null>(
+    initialImageData,
+  );
   const [isUploading, setIsUploading] = useState(false);
   const [progress, setProgress] = useState(0);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const abortController = new AbortController();
+
+  // Update parent component when image data changes
+  const updateImageData = (newImageData: ImageData | null) => {
+    setImageData(newImageData);
+    onImageDataChange(newImageData);
+  };
 
   const authenticator = async () => {
     try {
@@ -98,7 +109,7 @@ export default function NewAppImage() {
         return;
       }
 
-      setImageData({
+      updateImageData({
         url: uploadResponse.url,
         fileId: uploadResponse.fileId,
         thumbnailUrl: uploadResponse.thumbnailUrl,
@@ -133,7 +144,7 @@ export default function NewAppImage() {
       await deleteFile({ fileId: imageData.fileId });
       toast.dismiss(toastId);
       toast.success("Existing image deleted.");
-      setImageData(null);
+      updateImageData(null);
       fileInputRef.current?.click();
     } catch {
       toast.dismiss(toastId);

@@ -10,6 +10,7 @@ export interface AppCardProps {
   description: string;
   category: string;
   upvotes: number;
+  coverImage?: string;
 }
 
 export default function AppCard({ app }: { app: AppCardProps }) {
@@ -17,7 +18,16 @@ export default function AppCard({ app }: { app: AppCardProps }) {
     <Link href={`/apps/${app.id}`}>
       <div className="h-full p-6 rounded-lg bg-card border border-border hover:border-primary/50 transition-all hover:shadow-xl hover:shadow-primary/10 group cursor-pointer">
         {/* Image Placeholder */}
-        <div className="w-full h-40 rounded-lg bg-linear-to-br from-primary/30 via-secondary/20 to-accent/30 mb-4 overflow-hidden group-hover:from-primary/40 group-hover:via-secondary/30 group-hover:to-accent/40 transition-all"></div>
+        <div
+          className={`w-full h-40 rounded-lg mb-4 overflow-hidden ${
+            app.coverImage
+              ? "bg-cover bg-center"
+              : "bg-linear-to-br from-primary/30 via-secondary/20 to-accent/30 group-hover:from-primary/40 group-hover:via-secondary/30 group-hover:to-accent/40 transition-all"
+          }`}
+          style={
+            app.coverImage ? { backgroundImage: `url(${app.coverImage})` } : {}
+          }
+        ></div>
 
         <div className="mb-3">
           <Badge

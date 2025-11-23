@@ -1,3 +1,4 @@
+// CreateApp.tsx
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -22,6 +23,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { TECH_COLORS, VALID_CATEGORIES, VALID_TECHNOLOGIES } from "@/data";
 import { createAppSchema } from "@/schema/app.schema";
 import { createApp } from "@/server/app";
+import { ImageData } from "@/types/image";
 import { useForm } from "@tanstack/react-form";
 import { useMutation } from "@tanstack/react-query";
 import {
@@ -41,6 +43,7 @@ import NewAppImage from "./image";
 export default function CreateApp() {
   const router = useRouter();
   const [techSearch, setTechSearch] = useState("");
+  const [imageData, setImageData] = useState<ImageData | null>(null);
 
   const { mutate, isPending } = useMutation({
     mutationFn: createApp,
@@ -68,9 +71,17 @@ export default function CreateApp() {
     },
     validators: { onSubmit: createAppSchema },
     onSubmit: ({ value }) => {
+      if (!imageData) {
+        toast.error("Please upload an image for your app");
+        return;
+      }
+
       mutate({
-        ...value,
-        status: value.status as "draft" | "published",
+        values: {
+          ...value,
+          status: value.status as "draft" | "published",
+        },
+        imageData: imageData,
       });
     },
   });
@@ -510,7 +521,10 @@ export default function CreateApp() {
         </Card>
 
         {/* Image upload*/}
-        <NewAppImage />
+        <NewAppImage
+          onImageDataChange={setImageData}
+          initialImageData={imageData}
+        />
 
         {/* Publish Status */}
         <Card>
@@ -584,6 +598,7 @@ export default function CreateApp() {
                 onClick={() => {
                   form.reset();
                   setTechSearch("");
+                  setImageData(null);
                 }}
                 disabled={isPending}
               >
