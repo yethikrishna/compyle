@@ -22,8 +22,6 @@ import {
 import { Spinner } from "@/components/ui/spinner";
 import { getPublicAppDetails } from "@/server/app";
 import { checkUserUpvote, toggleUpvote } from "@/server/upvote";
-import { getInitials } from "@/utils/helpers";
-import { queryClient } from "@/utils/provider";
 import { useMutation, useQueries } from "@tanstack/react-query";
 import { format } from "date-fns";
 import {
@@ -37,6 +35,8 @@ import Link from "next/link";
 import { useState } from "react";
 import { toast } from "sonner";
 import AppComments from "./comments";
+import { queryClient } from "@/lib/provider";
+import { getInitials } from "@/lib/utils";
 
 export default function AppDetailsClient({ id }: { id: string }) {
   const [alertOpen, setAlertOpen] = useState(false);

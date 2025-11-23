@@ -12,13 +12,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { queryClient } from "@/lib/provider";
 import {
   deleteApp,
   getDashboardApps,
   updateAppPublishStatus,
 } from "@/server/app";
 import { AppPublishStatus } from "@/types/app";
-import { queryClient } from "@/utils/provider";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import {
   flexRender,

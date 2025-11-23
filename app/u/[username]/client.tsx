@@ -17,8 +17,8 @@ import {
   EmptyTitle,
 } from "@/components/ui/empty";
 import { Spinner } from "@/components/ui/spinner";
+import { getInitials } from "@/lib/utils";
 import { getPublicUserProfile } from "@/server/user";
-import { getInitials } from "@/utils/helpers";
 import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
 import { Calendar, FilePlusCorner } from "lucide-react";

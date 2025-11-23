@@ -1,5 +1,6 @@
 import { comments } from "@/db/schemas/comment";
 import { appStatusEnum } from "@/db/schemas/enums";
+import { images } from "@/db/schemas/image";
 import { timestamps } from "@/db/schemas/timestamps";
 import { upvotes } from "@/db/schemas/upvote";
 import { users } from "@/db/schemas/user";
@@ -15,6 +16,9 @@ export const apps = pgTable("app", {
   slug: text("slug").notNull().unique(),
   description: text("description").notNull(),
   coverImage: text("coverImage"),
+  coverImageId: text("coverImageId").references(() => images.id, {
+    onDelete: "set null",
+  }),
   websiteUrl: text("websiteUrl"),
   repoUrl: text("repoUrl"),
   demoUrl: text("demoUrl"),
@@ -35,5 +39,9 @@ export const appsRelations = relations(apps, ({ one, many }) => ({
   user: one(users, {
     fields: [apps.userId],
     references: [users.id],
+  }),
+  coverImageReference: one(images, {
+    fields: [apps.coverImageId],
+    references: [images.id],
   }),
 }));

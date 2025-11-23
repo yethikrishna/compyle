@@ -1,5 +1,5 @@
 import { Toaster } from "@/components/ui/sonner";
-import { Providers } from "@/utils/provider";
+import { Providers } from "@/lib/provider";
 import NextTopLoader from "nextjs-toploader";
 import "./globals.css";
 
