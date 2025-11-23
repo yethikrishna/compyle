@@ -31,6 +31,7 @@ import { TECH_COLORS, VALID_CATEGORIES, VALID_TECHNOLOGIES } from "@/data";
 import { createAppSchema } from "@/schema/app.schema";
 import { getDashboardAppDetails, updateAppDetails } from "@/server/app";
 import { AppPublishStatus } from "@/types/app";
+import { ImageData } from "@/types/image";
 import { useForm } from "@tanstack/react-form";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import {
@@ -47,11 +48,16 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import z from "zod";
+import NewAppImage from "./image";
 
 export default function EditAPpDetails({ id }: { id: string }) {
   const router = useRouter();
   const [techSearch, setTechSearch] = useState("");
   const [categoryValue, setCategoryValue] = useState("");
+  const [imageData, setImageData] = useState<ImageData | null>(null);
+  const [initialImageData, setInitialImageData] = useState<ImageData | null>(
+    null,
+  );
 
   const { isPending: isLoadingApp, data: appData } = useQuery({
     queryKey: ["dashboard-app-edit", id],
@@ -63,10 +69,12 @@ export default function EditAPpDetails({ id }: { id: string }) {
     mutationFn: ({
       values,
       appId,
+      imageData,
     }: {
       values: z.infer<typeof createAppSchema>;
       appId: string;
-    }) => updateAppDetails(values, appId),
+      imageData?: ImageData | null;
+    }) => updateAppDetails(values, appId, imageData),
     onSuccess: () => {
       toast.success("App updated successfully");
       router.push("/dashboard/apps/me");
@@ -90,7 +98,18 @@ export default function EditAPpDetails({ id }: { id: string }) {
     },
     validators: { onSubmit: createAppSchema },
     onSubmit: ({ value }) => {
-      mutate({ values: value, appId: id });
+      // Only include image data if it has changed
+      const hasImageChanged =
+        (imageData && !initialImageData) ||
+        (imageData &&
+          initialImageData &&
+          imageData.fileId !== initialImageData.fileId);
+
+      mutate({
+        values: value,
+        appId: id,
+        imageData: hasImageChanged ? imageData : undefined,
+      });
     },
   });
 
@@ -106,6 +125,17 @@ export default function EditAPpDetails({ id }: { id: string }) {
         form.setFieldValue("repoUrl", appData.appDetails.repoUrl || "");
         form.setFieldValue("demoUrl", appData.appDetails.demoUrl || "");
         form.setFieldValue("status", appData.appDetails.status || "published");
+
+        // Set the initial image data if available
+        if (appData.imageDetails) {
+          const imageData = {
+            url: appData.imageDetails.url,
+            fileId: appData.imageDetails.fileId,
+            thumbnailUrl: appData.imageDetails.thumbnailUrl,
+          };
+          setInitialImageData(imageData);
+          setImageData(imageData);
+        }
       }, 0);
     }
   }, [appData, form]);
@@ -589,6 +619,12 @@ export default function EditAPpDetails({ id }: { id: string }) {
             </CardContent>
           </Card>
 
+          {/* Image upload */}
+          <NewAppImage
+            onImageDataChange={setImageData}
+            initialImageData={initialImageData}
+          />
+
           {/* Publish Status */}
           <Card>
             <CardContent>
@@ -669,6 +705,7 @@ export default function EditAPpDetails({ id }: { id: string }) {
                   onClick={() => {
                     form.reset();
                     setTechSearch("");
+                    setImageData(initialImageData); // Reset to initial image data
                   }}
                   disabled={isSavingApp}
                 >
