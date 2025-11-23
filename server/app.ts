@@ -3,24 +3,53 @@
 import { db } from "@/db";
 import { apps } from "@/db/schemas/app";
 import { comments } from "@/db/schemas/comment";
+import { images } from "@/db/schemas/image";
 import { upvotes } from "@/db/schemas/upvote";
 import { users } from "@/db/schemas/user";
 import { createAppSchema } from "@/schema/app.schema";
 import { getUserFromAuth } from "@/server/user";
 import { AppPublishStatus } from "@/types/app";
+import { ImageData } from "@/types/image";
 import { and, countDistinct, eq, sql } from "drizzle-orm";
 import { z, ZodError } from "zod";
 
-export async function createApp(
-  values: z.infer<typeof createAppSchema>,
-): Promise<boolean> {
+export async function createApp(params: {
+  values: z.infer<typeof createAppSchema>;
+  imageData: ImageData | null;
+}): Promise<boolean> {
   try {
+    const { values, imageData } = params;
     const data = createAppSchema.parse(values);
     const user = await getUserFromAuth();
 
-    await db.insert(apps).values({
-      ...data,
-      userId: user.id,
+    // Validate image data
+    if (!imageData) {
+      throw new Error("Image data is required");
+    }
+
+    await db.transaction(async (tx) => {
+      const [insertedImage] = await tx
+        .insert(images)
+        .values({
+          url: imageData.url,
+          providerFileId: imageData.fileId,
+          thumbnailUrl: imageData.thumbnailUrl,
+        })
+        .returning({ id: images.id });
+
+      if (!insertedImage?.id) {
+        tx.rollback();
+        throw new Error("Failed to save image data");
+      }
+
+      const imageId = insertedImage.id;
+
+      await tx.insert(apps).values({
+        ...data,
+        userId: user.id,
+        coverImage: imageData.url,
+        coverImageId: imageId,
+      });
     });
 
     return true;
