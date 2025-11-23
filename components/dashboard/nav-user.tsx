@@ -17,7 +17,6 @@ import {
 } from "@/components/ui/sidebar";
 import { signOut } from "@/lib/auth-client";
 import { useAuthStore } from "@/providers/auth.provider";
-import { getInitials } from "@/utils/helpers";
 import { ChevronsUpDown, LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -34,6 +33,7 @@ import {
 } from "../ui/alert-dialog";
 import { Button } from "../ui/button";
 import { Spinner } from "../ui/spinner";
+import { getInitials } from "@/lib/utils";
 
 export function NavUser() {
   const [open, setOpen] = useState(false);

@@ -57,6 +57,13 @@
       "when": 1763590796677,
       "tag": "0007_small_captain_cross",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1763897519595,
+      "tag": "0008_vengeful_omega_sentinel",
+      "breakpoints": true
     }
   ]
 }

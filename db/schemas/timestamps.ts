@@ -6,4 +6,5 @@ export const timestamps = {
     .defaultNow()
     .notNull()
     .$onUpdate(() => new Date()),
+  deletedAt: timestamp("deletedAt", { mode: "date" }),
 };
