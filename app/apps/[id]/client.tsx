@@ -130,7 +130,7 @@ export default function AppDetailsClient({ id }: { id: string }) {
         </Empty>
       )}
       {!appResult.isPending && app && (
-        <div className="mx-auto container px-6">
+        <div className="mx-auto container px-6 md:px-16">
           {/*Make height resposive*/}
           <div className="w-full h-96 rounded-lg bg-linear-to-br from-primary/30 via-secondary/20 to-accent/30 mb-4 overflow-hidden group-hover:from-primary/40 group-hover:via-secondary/30 group-hover:to-accent/40 transition-all"></div>
 

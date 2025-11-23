@@ -36,6 +36,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
+import NewAppImage from "./image";
 
 export default function CreateApp() {
   const router = useRouter();
@@ -122,7 +123,7 @@ export default function CreateApp() {
                 </p>
               </div>
             </div>
-            <div className="pl-16 mt-2 space-y-6">
+            <div className="pl-0 lg:pl-16 mt-2 space-y-6">
               <FieldGroup>
                 <form.Field name="name">
                   {(field) => {
@@ -227,7 +228,7 @@ export default function CreateApp() {
                 </p>
               </div>
             </div>
-            <div className="pl-16 mt-2 space-y-6">
+            <div className="pl-0 lg:pl-16 mt-2 space-y-6">
               <FieldGroup>
                 <form.Field name="category">
                   {(field) => {
@@ -289,7 +290,7 @@ export default function CreateApp() {
               </div>
             </div>
 
-            <div className="pl-16 mt-2 space-y-4">
+            <div className="pl-0 lg:pl-16 mt-2 space-y-4">
               <form.Field name="builtWith">
                 {(field) => {
                   const selectedTechs = field.state.value || [];
@@ -418,7 +419,7 @@ export default function CreateApp() {
                 </p>
               </div>
             </div>
-            <div className="pl-16 mt-2 space-y-6">
+            <div className="pl-0 lg:pl-16 mt-2 space-y-6">
               <FieldGroup>
                 <form.Field name="websiteUrl">
                   {(field) => {
@@ -508,6 +509,9 @@ export default function CreateApp() {
           </CardContent>
         </Card>
 
+        {/* Image upload*/}
+        <NewAppImage />
+
         {/* Publish Status */}
         <Card>
           <CardContent>
@@ -524,7 +528,7 @@ export default function CreateApp() {
                 </p>
               </div>
             </div>
-            <div className="pl-16 mt-2 space-y-6">
+            <div className="pl-0 lg:pl-16 mt-2 space-y-6">
               <FieldGroup>
                 <form.Field name="status">
                   {(field) => {
@@ -568,7 +572,7 @@ export default function CreateApp() {
               </FieldGroup>
             </div>
           </CardContent>
-          <CardFooter className="flex flex-row pl-21">
+          <CardFooter className="flex flex-row pl-6 lg:pl-21">
             <Field
               orientation="horizontal"
               className="w-full flex justify-between"
