@@ -51,5 +51,5 @@ export const createAppSchema = z.object({
     .min(10, "URL must be at least 10 characters")
     .max(200, "URL must be at most 200 characters")
     .or(z.literal("")),
-  status: z.enum(["draft", "published", "published"], "Invalid app status"),
+  status: z.enum(["draft", "published", "archived"], "Invalid app status"),
 });

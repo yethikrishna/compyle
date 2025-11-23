@@ -26,7 +26,7 @@ import { Label } from "@/components/ui/label";
 import { Spinner } from "@/components/ui/spinner";
 import { getDashboardAppDetails } from "@/server/app";
 import { useQuery } from "@tanstack/react-query";
-import { ArrowLeft, FilePlusCorner, Trash2 } from "lucide-react";
+import { ArrowLeft, FilePlusCorner, Pencil, Trash2 } from "lucide-react";
 import Link from "next/link";
 
 export default function AppDetailsDashboard({ id }: { id: string }) {
@@ -131,6 +131,16 @@ export default function AppDetailsDashboard({ id }: { id: string }) {
             <Card>
               <CardHeader>
                 <CardTitle className="text-xl">Quick Actions</CardTitle>
+                <CardContent className="space-y-3 mt-5">
+                  <Button variant="outline" asChild>
+                    <Link
+                      href={`/dashboard/apps/edit/${id}`}
+                      className="w-full"
+                    >
+                      <Pencil /> Edit App
+                    </Link>
+                  </Button>
+                </CardContent>
               </CardHeader>
             </Card>
 
