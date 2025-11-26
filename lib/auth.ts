@@ -2,6 +2,8 @@ import { db } from "@/db";
 import { accounts, sessions, verifications } from "@/db/schemas/auth";
 import { users } from "@/db/schemas/user";
 import { sendEmailVerificationEmail } from "@/emails";
+import { env } from "@/env/server";
+import { createId } from "@paralleldrive/cuid2";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { username } from "better-auth/plugins";
@@ -30,6 +32,32 @@ export const auth = betterAuth({
         email: user.email,
         name: user.name,
       });
+    },
+  },
+  socialProviders: {
+    github: {
+      clientId: env.GITHUB_CLIENT_ID,
+      clientSecret: env.GITHUB_CLIENT_SECRET,
+    },
+  },
+  databaseHooks: {
+    user: {
+      create: {
+        before: async (user, _) => {
+          if (user.username && user.displayUsername) {
+            return { data: user };
+          } else {
+            const username = createId();
+            return {
+              data: {
+                ...user,
+                username,
+                displayUsername: username,
+              },
+            };
+          }
+        },
+      },
     },
   },
   user: {

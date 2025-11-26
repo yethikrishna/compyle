@@ -58,6 +58,7 @@ const HomeHero = ({
           <Image
             width={500}
             height={500}
+            loading="eager"
             src="/compyle.png"
             alt="Compyle landing image"
             className="max-h-96 w-full rounded-md object-cover"
