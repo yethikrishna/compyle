@@ -25,6 +25,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import SocialAuth from "./socials";
 
 export default function Signup() {
   const router = useRouter();
@@ -238,6 +239,8 @@ export default function Signup() {
               Login
             </Link>
           </p>
+
+          <SocialAuth />
         </Card>
       </div>
     </div>

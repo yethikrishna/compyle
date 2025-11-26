@@ -10,6 +10,8 @@ export const env = createEnv({
     IMAGEKIT_PRIVATE_KEY: z.string().startsWith("private_"),
     IMAGEKIT_PUBLIC_KEY: z.string().startsWith("public_"),
     IMAGEKIT_URL_ENDPOINT: z.url(),
+    GITHUB_CLIENT_ID: z.string().min(1),
+    GITHUB_CLIENT_SECRET: z.string().min(1),
   },
   experimental__runtimeEnv: process.env,
 });
