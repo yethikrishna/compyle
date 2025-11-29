@@ -175,7 +175,7 @@ export default function AppDetailsDashboard({ id }: { id: string }) {
                         <AlertDialogCancel className="cursor-pointer">
                           Cancel
                         </AlertDialogCancel>
-                        <AlertDialogAction className="bg-destructive cursor-pointer text-background hover:bg-destructive/90">
+                        <AlertDialogAction className="bg-destructive cursor-pointer text-foreground hover:bg-destructive/90">
                           Delete Permanently
                         </AlertDialogAction>
                       </AlertDialogFooter>

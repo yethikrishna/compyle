@@ -57,6 +57,10 @@ const data = {
           title: "Profile",
           url: "/dashboard/settings/profile",
         },
+        {
+          title: "Account",
+          url: "/dashboard/settings/account",
+        },
       ],
     },
   ],

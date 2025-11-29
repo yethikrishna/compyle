@@ -8,7 +8,7 @@ import AppCardSkeleton from "./app-card-skeleton";
 
 export default function HomeFeatured() {
   const { isPending, data } = useQuery({
-    queryKey: ["public-apps-featued"],
+    queryKey: ["public-apps-featured"],
     queryFn: getPublicFeaturedApps,
     meta: { showError: true },
   });

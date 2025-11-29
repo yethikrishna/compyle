@@ -45,6 +45,7 @@ export const auth = betterAuth({
       clientSecret: env.GOOGLE_CLIENT_SECRET,
     },
   },
+  account: { accountLinking: { enabled: true } },
   databaseHooks: {
     user: {
       create: {
@@ -66,6 +67,7 @@ export const auth = betterAuth({
     },
   },
   user: {
+    deleteUser: { enabled: true },
     additionalFields: {
       role: {
         type: "string",
