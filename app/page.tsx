@@ -9,7 +9,7 @@ import { HomeStats } from "@/components/custom/home-stats";
 export default function Home() {
   return (
     <div className="mx-auto w-full">
-      <div className="fixed w-full bg-background">
+      <div className="fixed w-full bg-background z-50">
         <Header />
       </div>
       <div className="px-6">
