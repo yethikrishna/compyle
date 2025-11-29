@@ -135,7 +135,7 @@ export function NavUser() {
                       handleLogout();
                     }}
                     disabled={pending}
-                    className="w-40 cursor-pointer gap-2"
+                    className="w-full sm:w-40 cursor-pointer gap-2"
                   >
                     {pending && <Spinner />}
                     {pending ? "Loading..." : "Logout"}
