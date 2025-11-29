@@ -29,6 +29,7 @@ import { useSession } from "@/lib/auth-client";
 import { Spinner } from "../ui/spinner";
 import { useAuthStore } from "@/providers/auth.provider";
 import { useEffect } from "react";
+import { ModeToggle } from "./mode-toggle";
 
 interface MenuItem {
   title: string;
@@ -62,68 +63,6 @@ const Header = ({
   menu = [
     { title: "Home", url: "/" },
     { title: "Apps", url: "/apps" },
-    // { title: "Competitions", url: "/competitions" },
-    // {
-    //   title: "Products",
-    //   url: "#",
-    //   items: [
-    //     {
-    //       title: "Blog",
-    //       description: "The latest industry news, updates, and info",
-    //       icon: <Book className="size-5 shrink-0" />,
-    //       url: "#",
-    //     },
-    //     {
-    //       title: "Company",
-    //       description: "Our mission is to innovate and empower the world",
-    //       icon: <Trees className="size-5 shrink-0" />,
-    //       url: "#",
-    //     },
-    //     {
-    //       title: "Careers",
-    //       description: "Browse job listing and discover our workspace",
-    //       icon: <Sunset className="size-5 shrink-0" />,
-    //       url: "#",
-    //     },
-    //     {
-    //       title: "Support",
-    //       description:
-    //         "Get in touch with our support team or visit our community forums",
-    //       icon: <Zap className="size-5 shrink-0" />,
-    //       url: "#",
-    //     },
-    //   ],
-    // },
-    // {
-    //   title: "Resources",
-    //   url: "#",
-    //   items: [
-    //     {
-    //       title: "Help Center",
-    //       description: "Get all the answers you need right here",
-    //       icon: <Zap className="size-5 shrink-0" />,
-    //       url: "#",
-    //     },
-    //     {
-    //       title: "Contact Us",
-    //       description: "We are here to help you with any questions you have",
-    //       icon: <Sunset className="size-5 shrink-0" />,
-    //       url: "#",
-    //     },
-    //     {
-    //       title: "Status",
-    //       description: "Check the current status of our services and APIs",
-    //       icon: <Trees className="size-5 shrink-0" />,
-    //       url: "#",
-    //     },
-    //     {
-    //       title: "Terms of Service",
-    //       description: "Our terms and conditions for using our services",
-    //       icon: <Book className="size-5 shrink-0" />,
-    //       url: "#",
-    //     },
-    //   ],
-    // },
   ],
   auth = {
     login: { title: "Login", url: "/login" },
@@ -176,22 +115,25 @@ const Header = ({
               </NavigationMenu>
             </div>
           </div>
-          {isPending && !session && <Spinner className="size-5" />}
-          {!isPending && !session && (
-            <div className="flex gap-2">
-              <Button asChild variant="outline" size="sm">
-                <Link href={auth.login.url}>{auth.login.title}</Link>
-              </Button>
+          <div className="flex items-center gap-2">
+            {isPending && !session && <Spinner className="size-5" />}
+            {!isPending && !session && (
+              <>
+                <Button asChild variant="outline" size="sm">
+                  <Link href={auth.login.url}>{auth.login.title}</Link>
+                </Button>
+                <Button asChild size="sm">
+                  <Link href={auth.signup.url}>{auth.signup.title}</Link>
+                </Button>
+              </>
+            )}
+            {!isPending && !error && session && (
               <Button asChild size="sm">
-                <Link href={auth.signup.url}>{auth.signup.title}</Link>
+                <Link href="/dashboard">Dashboard</Link>
               </Button>
-            </div>
-          )}
-          {!isPending && !error && session && (
-            <Button asChild size="sm">
-              <Link href="/dashboard">Dashboard</Link>
-            </Button>
-          )}
+            )}
+            <ModeToggle />
+          </div>
         </nav>
 
         {/* Mobile Menu */}
@@ -206,53 +148,58 @@ const Header = ({
                 <GitPullRequestCreateArrow />
               </div>
             </Link>
-            <Sheet>
-              <SheetTrigger asChild>
-                <Button variant="outline" size="icon">
-                  <Menu className="size-4" />
-                </Button>
-              </SheetTrigger>
-              <SheetContent className="overflow-y-auto">
-                <SheetHeader>
-                  <SheetTitle>
-                    <Link
-                      href="/"
-                      className="flex items-center gap-3 self-center font-medium"
+            <div className="flex items-center gap-2">
+              <ModeToggle />
+              <Sheet>
+                <SheetTrigger asChild>
+                  <Button variant="outline" size="icon">
+                    <Menu className="size-4" />
+                  </Button>
+                </SheetTrigger>
+                <SheetContent className="overflow-y-auto">
+                  <SheetHeader>
+                    <SheetTitle>
+                      <Link
+                        href="/"
+                        className="flex items-center gap-3 self-center font-medium"
+                      >
+                        <div className="bg-primary/25 flex items-center justify-center rounded-md p-1 border border-primary/50">
+                          <GitPullRequestCreateArrow />
+                        </div>
+                      </Link>
+                    </SheetTitle>
+                  </SheetHeader>
+                  <div className="flex flex-col gap-6 p-4">
+                    <Accordion
+                      type="single"
+                      collapsible
+                      className="flex w-full flex-col gap-4"
                     >
-                      <div className="bg-primary/25 flex items-center justify-center rounded-md p-1 border border-primary/50">
-                        <GitPullRequestCreateArrow />
-                      </div>
-                    </Link>
-                  </SheetTitle>
-                </SheetHeader>
-                <div className="flex flex-col gap-6 p-4">
-                  <Accordion
-                    type="single"
-                    collapsible
-                    className="flex w-full flex-col gap-4"
-                  >
-                    {menu.map((item) => renderMobileMenuItem(item))}
-                  </Accordion>
+                      {menu.map((item) => renderMobileMenuItem(item))}
+                    </Accordion>
 
-                  {isPending && !session && <Spinner className="size-5" />}
-                  {!isPending && !session && (
-                    <div className="flex flex-col gap-3">
-                      <Button asChild variant="outline">
-                        <Link href={auth.login.url}>{auth.login.title}</Link>
+                    {isPending && !session && <Spinner className="size-5" />}
+                    {!isPending && !session && (
+                      <div className="flex flex-col gap-3">
+                        <Button asChild variant="outline">
+                          <Link href={auth.login.url}>{auth.login.title}</Link>
+                        </Button>
+                        <Button asChild>
+                          <Link href={auth.signup.url}>
+                            {auth.signup.title}
+                          </Link>
+                        </Button>
+                      </div>
+                    )}
+                    {!isPending && !error && session && (
+                      <Button asChild size="sm">
+                        <Link href="/dashboard">Dashboard</Link>
                       </Button>
-                      <Button asChild>
-                        <Link href={auth.signup.url}>{auth.signup.title}</Link>
-                      </Button>
-                    </div>
-                  )}
-                  {!isPending && !error && session && (
-                    <Button asChild size="sm">
-                      <Link href="/dashboard">Dashboard</Link>
-                    </Button>
-                  )}
-                </div>
-              </SheetContent>
-            </Sheet>
+                    )}
+                  </div>
+                </SheetContent>
+              </Sheet>
+            </div>
           </div>
         </div>
       </div>
