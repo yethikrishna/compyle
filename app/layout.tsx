@@ -1,6 +1,7 @@
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { Providers } from "@/lib/provider";
+import { Analytics } from "@vercel/analytics/next";
 import NextTopLoader from "nextjs-toploader";
 import "./globals.css";
 
@@ -21,6 +22,7 @@ export default function RootLayout({
           <Providers>
             <NextTopLoader color="#0326FF" showSpinner={false} />
             <main>{children}</main>
+            <Analytics />
             <Toaster />
           </Providers>
         </ThemeProvider>
