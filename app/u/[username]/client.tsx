@@ -32,7 +32,7 @@ export default function AppDetailsClient({ username }: { username: string }) {
   });
 
   return (
-    <>
+    <div className="px-6">
       {isPending && (
         <div>
           <Spinner className="mx-auto size-6" />
@@ -91,6 +91,6 @@ export default function AppDetailsClient({ username }: { username: string }) {
           </Card>
         </div>
       )}
-    </>
+    </div>
   );
 }

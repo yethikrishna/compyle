@@ -1,6 +1,12 @@
 "use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import {
   Field,
   FieldError,
@@ -9,10 +15,15 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import {
+  changeEmail,
+  changePassword,
   deleteUser,
   getSession,
+  linkSocial,
   listAccounts,
   listSessions,
+  unlinkAccount,
+  updateUser,
 } from "@/lib/auth-client";
 import { useForm } from "@tanstack/react-form";
 import { useQueries } from "@tanstack/react-query";
@@ -21,7 +32,7 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { columns } from "./table";
 import {
   Table,
@@ -47,8 +58,22 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Trash2 } from "lucide-react";
 import { toast } from "sonner";
+import {
+  updateEmailSchema,
+  updatePasswordSchema,
+  updateUsernameSchema,
+} from "@/schema/auth.schema";
+import { queryClient } from "@/lib/provider";
 
 export default function AccountSettings() {
+  const [isUpdatingEmail, setIsUpdatingEmail] = useState(false);
+  const [isUpdatingUsername, setIsUpdatingUsername] = useState(false);
+  const [isUpdatingPassword, setIsUpdatingPassword] = useState(false);
+  const [isLinkingGoogle, setIsLinkingGoogle] = useState(false);
+  const [isLinkingGithub, setIsLinkingGithub] = useState(false);
+  const [isUnlinkingGoogle, setIsUnlinkingGoogle] = useState(false);
+  const [isUnlinkingGithub, setIsUnlinkingGithub] = useState(false);
+
   const results = useQueries({
     queries: [
       {
@@ -70,12 +95,94 @@ export default function AccountSettings() {
   });
 
   const [yourSession, allSessions, allAccounts] = results;
+  const isInitialPending = results.some((result) => result.isLoading);
 
-  console.log(allAccounts.data);
+  const emailForm = useForm({
+    defaultValues: { email: "" },
+    validators: { onSubmit: updateEmailSchema },
+    onSubmit: async ({ value }) => {
+      if (value.email === yourSession.data?.data?.user.email) {
+        toast.error("Cannot update email to the same address");
+        return;
+      }
 
-  const form = useForm({
-    defaultValues: { email: "", username: "" },
+      setIsUpdatingEmail(true);
+      const id = toast.loading("Changing email address...");
+      const { error } = await changeEmail({
+        newEmail: value.email,
+        callbackURL: "/dashboard",
+      });
+
+      toast.dismiss(id);
+      setIsUpdatingEmail(false);
+      if (error) {
+        toast.error("Failed to update email address");
+      } else {
+        queryClient.invalidateQueries({ queryKey: ["your-session"] });
+        toast.success(
+          "Email updated successfully. Check your new email inbox to verify it.",
+        );
+      }
+    },
   });
+
+  const usernameForm = useForm({
+    defaultValues: { username: "" },
+    validators: { onSubmit: updateUsernameSchema },
+    onSubmit: async ({ value }) => {
+      if (value.username === yourSession.data?.data?.user.username) {
+        toast.error("Cannot update username to the same username");
+        return;
+      }
+
+      setIsUpdatingUsername(true);
+      const id = toast.loading("Changing username...");
+      const { error } = await updateUser({
+        username: value.username,
+      });
+
+      toast.dismiss(id);
+      setIsUpdatingUsername(false);
+      if (error) {
+        toast.error("Failed to update username");
+      } else {
+        queryClient.invalidateQueries({ queryKey: ["your-session"] });
+        toast.success("Username updated successfully.");
+      }
+    },
+  });
+
+  const passwordForm = useForm({
+    defaultValues: { newPassword: "", currentPassword: "" },
+    validators: { onSubmit: updatePasswordSchema },
+    onSubmit: async ({ value }) => {
+      if (!hasCredentialsAccount) {
+        toast.error("You are currently not using email and password to login");
+      }
+
+      setIsUpdatingPassword(true);
+      const id = toast.loading("Updating password...");
+      const { error } = await changePassword({
+        newPassword: value.newPassword,
+        currentPassword: value.currentPassword,
+        revokeOtherSessions: true,
+      });
+
+      toast.dismiss(id);
+      setIsUpdatingPassword(false);
+      if (error) {
+        toast.error("Failed to change password");
+      } else {
+        queryClient.invalidateQueries({ queryKey: ["all-sessions"] });
+        toast.success("Password updated successfully.");
+      }
+    },
+  });
+
+  const hasCredentialsAccount = useMemo(() => {
+    const accounts = allAccounts.data?.data ?? [];
+    return accounts.some((account) => account.providerId === "credential");
+  }, [allAccounts.data?.data]);
 
   const tableData = useMemo(() => {
     const sessions = allSessions.data?.data ?? [];
@@ -93,10 +200,14 @@ export default function AccountSettings() {
     }));
   }, [allSessions.data?.data, yourSession.data?.data?.session.id]);
 
-  const connectedProviders = useMemo(() => {
-    const accounts = allAccounts.data?.data ?? [];
-    return new Set(accounts.map((account) => account.providerId.toLowerCase()));
-  }, [allAccounts.data?.data]);
+  // const connectedProviders = useMemo(() => {
+  //   const accounts = allAccounts.data?.data ?? [];
+  //   return new Set(accounts.map((account) => account.providerId.toLowerCase()));
+  // }, [allAccounts.data?.data]);
+
+  const connectedProviders = new Set(
+    (allAccounts.data?.data ?? []).map((a) => a.providerId.toLowerCase()),
+  );
 
   // eslint-disable-next-line react-hooks/incompatible-library
   const table = useReactTable({
@@ -110,248 +221,512 @@ export default function AccountSettings() {
 
     if (!yourSession.isPending && !yourSession.error && session) {
       setTimeout(() => {
-        form.setFieldValue("email", session.user.email);
-        form.setFieldValue("username", session.user.username!);
+        emailForm.setFieldValue("email", session.user.email);
+        usernameForm.setFieldValue("username", session.user.username!);
       }, 0);
     }
-  }, [yourSession.data, yourSession.isPending, yourSession.error, form]);
+  }, [
+    yourSession.data,
+    yourSession.isPending,
+    yourSession.error,
+    emailForm,
+    usernameForm,
+  ]);
 
   async function handleDeleteUser() {
-    const id = toast.loading("Deleting user...");
+    const id = toast.loading("Deleting user account...");
     const { error } = await deleteUser({ callbackURL: "/" });
 
     toast.dismiss(id);
     if (error) {
-      toast.error("Failed to delete user");
+      toast.error("Failed to delete user account");
     } else {
-      toast.success("User deleted successfully");
+      toast.success("User account deleted successfully");
+    }
+  }
+
+  async function handleLinkGoogle() {
+    setIsLinkingGoogle(true);
+    toast.success("Connecting to Google...");
+
+    const { error } = await linkSocial({
+      provider: "google",
+      callbackURL: "/dashboard/settings/account",
+    });
+
+    setIsLinkingGoogle(false);
+    if (error) {
+      toast.error("Failed to connect Google account");
+    }
+  }
+
+  async function handleLinkGithub() {
+    setIsLinkingGithub(true);
+    toast.success("Connecting to GitHub...");
+
+    const { error } = await linkSocial({
+      provider: "github",
+      callbackURL: "/dashboard/settings/account",
+    });
+
+    setIsLinkingGithub(false);
+    if (error) {
+      toast.error("Failed to connect GitHub account");
+    }
+  }
+
+  async function handleUnlinkGoogle() {
+    setIsUnlinkingGoogle(true);
+    toast.success("Disconnecting Google...");
+
+    setIsUnlinkingGoogle(false);
+    const { error } = await unlinkAccount({
+      providerId: "google",
+    });
+
+    if (error) {
+      toast.error("Failed to disconnect Google account");
+    } else {
+      queryClient.invalidateQueries({ queryKey: ["all-accounts"] });
+    }
+  }
+
+  async function handleUnlinkGithub() {
+    setIsUnlinkingGithub(true);
+    toast.success("Disconnecting GitHub...");
+
+    const { error } = await unlinkAccount({
+      providerId: "github",
+    });
+
+    setIsUnlinkingGithub(false);
+    if (error) {
+      toast.error("Failed to disconnect GitHub account");
+    } else {
+      queryClient.invalidateQueries({ queryKey: ["all-accounts"] });
     }
   }
 
   return (
-    <div className="container mx-auto px-6">
-      <p className="leading-none font-semibold text-xl">Account Settings</p>
-      <p className="text-muted-foreground mt-1">
-        Manage and update your account information
-      </p>
-      <Card className="mt-6">
-        <CardHeader>
-          <CardTitle className="text-2xl">Account Information</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <form
-            id="profile-settings"
-            className="space-y-6"
-            onSubmit={(e) => {
-              e.preventDefault();
-              form.handleSubmit();
-            }}
-          >
-            <FieldGroup>
-              <form.Field name="email">
-                {(field) => {
-                  const isInvalid =
-                    field.state.meta.isTouched && !field.state.meta.isValid;
-                  return (
-                    <Field data-invalid={isInvalid}>
-                      <FieldLabel htmlFor={field.name}>
-                        Email Address
-                      </FieldLabel>
-                      <Input
-                        type="email"
-                        id={field.name}
-                        name={field.name}
-                        value={field.state.value}
-                        onBlur={field.handleBlur}
-                        onChange={(e) => field.handleChange(e.target.value)}
-                        aria-invalid={isInvalid}
-                        placeholder="John Doe"
-                        autoComplete="off"
-                        className="max-w-md"
-                      />
-                      {isInvalid && (
-                        <FieldError errors={field.state.meta.errors} />
-                      )}
-                    </Field>
-                  );
+    <>
+      {isInitialPending && (
+        <div className="mt-4 w-full mx-auto">
+          <Spinner className="mx-auto size-6" />
+        </div>
+      )}
+
+      {!isInitialPending && (
+        <div className="container mx-auto px-6">
+          <p className="leading-none font-semibold text-xl">Account Settings</p>
+          <p className="text-muted-foreground mt-1">
+            Manage and update your account information
+          </p>
+          <Card className="mt-6">
+            <CardHeader>
+              <CardTitle className="text-2xl">Account Information</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <form
+                id="update-email"
+                className="space-y-6"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  emailForm.handleSubmit();
                 }}
-              </form.Field>
-            </FieldGroup>
-
-            <FieldGroup>
-              <form.Field name="username">
-                {(field) => {
-                  const isInvalid =
-                    field.state.meta.isTouched && !field.state.meta.isValid;
-                  return (
-                    <Field data-invalid={isInvalid}>
-                      <FieldLabel htmlFor={field.name}>Username</FieldLabel>
-                      <Input
-                        id={field.name}
-                        name={field.name}
-                        value={field.state.value}
-                        onBlur={field.handleBlur}
-                        onChange={(e) => field.handleChange(e.target.value)}
-                        aria-invalid={isInvalid}
-                        placeholder="johndoe"
-                        autoComplete="off"
-                        className="max-w-md"
-                      />
-                      {isInvalid && (
-                        <FieldError errors={field.state.meta.errors} />
-                      )}
-                    </Field>
-                  );
-                }}
-              </form.Field>
-            </FieldGroup>
-          </form>
-        </CardContent>
-      </Card>
-
-      <Card className="mt-10">
-        <CardHeader>
-          <CardTitle className="text-2xl">Account Connections</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <Separator />
-          <div className="flex items-center justify-between max-w-lg">
-            <p className="font-semibold text-lg tracking-tight">CREDENTIALS</p>
-            {connectedProviders.has("credential") ? (
-              <Button variant="destructive" className="w-36 cursor-pointer">
-                Disconnect
-              </Button>
-            ) : (
-              <Button className="w-36 cursor-pointer">Connect</Button>
-            )}
-          </div>
-          <Separator />
-          <div className="flex items-center justify-between max-w-lg">
-            <p className="font-semibold text-lg tracking-tight">GOOGLE</p>
-            {connectedProviders.has("google") ? (
-              <Button variant="destructive" className="w-36 cursor-pointer">
-                Disconnect
-              </Button>
-            ) : (
-              <Button className="w-36 cursor-pointer">Connect</Button>
-            )}
-          </div>
-          <Separator />
-          <div className="flex items-center justify-between max-w-lg">
-            <p className="font-semibold text-lg tracking-tight">GITHUB</p>
-            {connectedProviders.has("github") ? (
-              <Button variant="destructive" className="w-36 cursor-pointer">
-                Disconnect
-              </Button>
-            ) : (
-              <Button className="w-36 cursor-pointer">Connect</Button>
-            )}
-          </div>
-          <Separator />
-        </CardContent>
-      </Card>
-
-      <Card className="mt-10">
-        <CardHeader>
-          <CardTitle className="text-2xl">Your Sessions</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <Table>
-            <TableHeader>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <TableRow key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => (
-                    <TableHead key={header.id} className="font-semibold">
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext(),
-                          )}
-                    </TableHead>
-                  ))}
-                </TableRow>
-              ))}
-            </TableHeader>
-            <TableBody>
-              {allSessions.isPending ? (
-                <TableRow>
-                  <TableCell colSpan={columns.length} className="min-h-32">
-                    <div className="w-full mx-auto">
-                      <Spinner className="mx-auto" />
-                    </div>
-                  </TableCell>
-                </TableRow>
-              ) : table.getRowModel().rows?.length ? (
-                table.getRowModel().rows.map((row) => (
-                  <TableRow key={row.id}>
-                    {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell
-                    colSpan={columns.length}
-                    className="h-24 text-center text-muted-foreground"
-                  >
-                    No sessions found.
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </CardContent>
-      </Card>
-
-      <Card className="mt-10 bg-destructive/5">
-        <CardHeader>
-          <CardTitle className="text-2xl text-destructive">
-            Danger Zone
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <p>Delete your account</p>
-          <AlertDialog>
-            <AlertDialogTrigger asChild>
-              <Button
-                variant="destructive"
-                className="w-full max-w-md gap-2 cursor-pointer"
               >
-                <Trash2 className="h-4 w-4" />
-                Delete Account
-              </Button>
-            </AlertDialogTrigger>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>Delete Your Account?</AlertDialogTitle>
-                <AlertDialogDescription>
-                  This will permanently delete this your and all associated data
-                  including all apps, comments and upvotes. This action CANNOT
-                  be undone.
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel className="cursor-pointer">
-                  Cancel
-                </AlertDialogCancel>
-                <AlertDialogAction
-                  onClick={handleDeleteUser}
-                  className="bg-destructive cursor-pointer text-foreground hover:bg-destructive/90"
+                <FieldGroup>
+                  <emailForm.Field name="email">
+                    {(field) => {
+                      const isInvalid =
+                        field.state.meta.isTouched && !field.state.meta.isValid;
+                      return (
+                        <Field data-invalid={isInvalid}>
+                          <FieldLabel htmlFor={field.name}>
+                            Email Address
+                          </FieldLabel>
+                          <Input
+                            type="email"
+                            id={field.name}
+                            name={field.name}
+                            value={field.state.value}
+                            onBlur={field.handleBlur}
+                            onChange={(e) => field.handleChange(e.target.value)}
+                            aria-invalid={isInvalid}
+                            placeholder="johndoe@domain.com"
+                            autoComplete="off"
+                            className="max-w-md"
+                          />
+                          {isInvalid && (
+                            <FieldError errors={field.state.meta.errors} />
+                          )}
+                        </Field>
+                      );
+                    }}
+                  </emailForm.Field>
+                </FieldGroup>
+                <Button
+                  disabled={isUpdatingEmail}
+                  type="submit"
+                  form="update-email"
+                  className="w-full max-w-md gap-2 cursor-pointer"
                 >
-                  Delete Permanently
-                </AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
-        </CardContent>
-      </Card>
-    </div>
+                  {isUpdatingEmail && <Spinner />}
+                  {isUpdatingEmail ? "Loading..." : "Update Email"}
+                </Button>
+              </form>
+
+              <form
+                id="update-username"
+                className="space-y-6"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  usernameForm.handleSubmit();
+                }}
+              >
+                <FieldGroup>
+                  <usernameForm.Field name="username">
+                    {(field) => {
+                      const isInvalid =
+                        field.state.meta.isTouched && !field.state.meta.isValid;
+                      return (
+                        <Field data-invalid={isInvalid}>
+                          <FieldLabel htmlFor={field.name}>Username</FieldLabel>
+                          <Input
+                            id={field.name}
+                            name={field.name}
+                            value={field.state.value}
+                            onBlur={field.handleBlur}
+                            onChange={(e) => field.handleChange(e.target.value)}
+                            aria-invalid={isInvalid}
+                            placeholder="johndoe"
+                            autoComplete="off"
+                            className="max-w-md"
+                          />
+                          {isInvalid && (
+                            <FieldError errors={field.state.meta.errors} />
+                          )}
+                        </Field>
+                      );
+                    }}
+                  </usernameForm.Field>
+                </FieldGroup>
+                <Button
+                  disabled={isUpdatingUsername}
+                  type="submit"
+                  form="update-username"
+                  className="w-full max-w-md gap-2 cursor-pointer"
+                >
+                  {isUpdatingUsername && <Spinner />}
+                  {isUpdatingUsername ? "Loading..." : "Update Username"}
+                </Button>
+              </form>
+            </CardContent>
+          </Card>
+
+          <Card className="mt-10">
+            <CardHeader>
+              <CardTitle className="text-2xl">Update Password</CardTitle>
+              <CardDescription className="max-w-prose">
+                Changing your password will also log you out in all other
+                devices you are curently logged in,
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <form
+                id="update-password"
+                className="space-y-6"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  passwordForm.handleSubmit();
+                }}
+              >
+                <FieldGroup>
+                  <passwordForm.Field name="currentPassword">
+                    {(field) => {
+                      const isInvalid =
+                        field.state.meta.isTouched && !field.state.meta.isValid;
+                      return (
+                        <Field data-invalid={isInvalid}>
+                          <FieldLabel htmlFor={field.name}>
+                            Current Password
+                          </FieldLabel>
+                          <Input
+                            type="password"
+                            id={field.name}
+                            name={field.name}
+                            value={field.state.value}
+                            onBlur={field.handleBlur}
+                            onChange={(e) => field.handleChange(e.target.value)}
+                            aria-invalid={isInvalid}
+                            autoComplete="off"
+                            className="max-w-md"
+                          />
+                          {isInvalid && (
+                            <FieldError errors={field.state.meta.errors} />
+                          )}
+                        </Field>
+                      );
+                    }}
+                  </passwordForm.Field>
+                </FieldGroup>
+                <FieldGroup>
+                  <passwordForm.Field name="newPassword">
+                    {(field) => {
+                      const isInvalid =
+                        field.state.meta.isTouched && !field.state.meta.isValid;
+                      return (
+                        <Field data-invalid={isInvalid}>
+                          <FieldLabel htmlFor={field.name}>
+                            New Password
+                          </FieldLabel>
+                          <Input
+                            type="password"
+                            id={field.name}
+                            name={field.name}
+                            value={field.state.value}
+                            onBlur={field.handleBlur}
+                            onChange={(e) => field.handleChange(e.target.value)}
+                            aria-invalid={isInvalid}
+                            autoComplete="off"
+                            className="max-w-md"
+                          />
+                          {isInvalid && (
+                            <FieldError errors={field.state.meta.errors} />
+                          )}
+                        </Field>
+                      );
+                    }}
+                  </passwordForm.Field>
+                </FieldGroup>
+                <Button
+                  disabled={isUpdatingPassword}
+                  type="submit"
+                  form="update-password"
+                  className="w-full max-w-md gap-2 cursor-pointer"
+                >
+                  {isUpdatingPassword && <Spinner />}
+                  {isUpdatingPassword ? "Loading..." : "Update Password"}
+                </Button>
+              </form>
+            </CardContent>
+          </Card>
+
+          <Card className="mt-10">
+            <CardHeader>
+              <CardTitle className="text-2xl">Account Connections</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <Separator />
+              <div className="flex items-center justify-between max-w-lg">
+                <p className="font-semibold text-lg tracking-tight">GOOGLE</p>
+                {connectedProviders.has("google") ? (
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button
+                        variant="destructive"
+                        className="w-36 cursor-pointer"
+                        disabled={isUnlinkingGoogle}
+                      >
+                        {isUnlinkingGoogle ? (
+                          <Spinner className="mr-2" />
+                        ) : null}
+                        Disconnect
+                      </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>
+                          Disconnect Google Account?
+                        </AlertDialogTitle>
+                        <AlertDialogDescription>
+                          You will no longer be able to sign in with your Google
+                          account. You`&apos;ll need to use your email and
+                          password or another connected account.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel className="cursor-pointer">
+                          Cancel
+                        </AlertDialogCancel>
+                        <AlertDialogAction
+                          onClick={handleUnlinkGoogle}
+                          className="bg-destructive cursor-pointer text-foreground hover:bg-destructive/90"
+                        >
+                          Disconnect
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+                ) : (
+                  <Button
+                    className="w-36 cursor-pointer"
+                    disabled={isLinkingGoogle}
+                    onClick={handleLinkGoogle}
+                  >
+                    {isLinkingGoogle ? <Spinner className="mr-2" /> : null}
+                    Connect
+                  </Button>
+                )}
+              </div>
+              <Separator />
+              <div className="flex items-center justify-between max-w-lg">
+                <p className="font-semibold text-lg tracking-tight">GITHUB</p>
+                {connectedProviders.has("github") ? (
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button
+                        variant="destructive"
+                        className="w-36 cursor-pointer"
+                        disabled={isUnlinkingGithub}
+                      >
+                        {isUnlinkingGithub ? (
+                          <Spinner className="mr-2" />
+                        ) : null}
+                        Disconnect
+                      </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>
+                          Disconnect GitHub Account?
+                        </AlertDialogTitle>
+                        <AlertDialogDescription>
+                          You will no longer be able to sign in with your GitHub
+                          account. You&apos;ll need to use your email and
+                          password or another connected account.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel className="cursor-pointer">
+                          Cancel
+                        </AlertDialogCancel>
+                        <AlertDialogAction
+                          onClick={handleUnlinkGithub}
+                          className="bg-destructive cursor-pointer text-foreground hover:bg-destructive/90"
+                        >
+                          Disconnect
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+                ) : (
+                  <Button
+                    className="w-36 cursor-pointer"
+                    disabled={isLinkingGithub}
+                    onClick={handleLinkGithub}
+                  >
+                    {isLinkingGithub ? <Spinner className="mr-2" /> : null}
+                    Connect
+                  </Button>
+                )}
+              </div>
+              <Separator />
+            </CardContent>
+          </Card>
+
+          <Card className="mt-10">
+            <CardHeader>
+              <CardTitle className="text-2xl">Your Sessions</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <Table>
+                <TableHeader>
+                  {table.getHeaderGroups().map((headerGroup) => (
+                    <TableRow key={headerGroup.id}>
+                      {headerGroup.headers.map((header) => (
+                        <TableHead key={header.id} className="font-semibold">
+                          {header.isPlaceholder
+                            ? null
+                            : flexRender(
+                                header.column.columnDef.header,
+                                header.getContext(),
+                              )}
+                        </TableHead>
+                      ))}
+                    </TableRow>
+                  ))}
+                </TableHeader>
+                <TableBody>
+                  {allSessions.isPending ? (
+                    <TableRow>
+                      <TableCell colSpan={columns.length} className="min-h-32">
+                        <div className="w-full mx-auto">
+                          <Spinner className="mx-auto" />
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ) : table.getRowModel().rows?.length ? (
+                    table.getRowModel().rows.map((row) => (
+                      <TableRow key={row.id}>
+                        {row.getVisibleCells().map((cell) => (
+                          <TableCell key={cell.id}>
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext(),
+                            )}
+                          </TableCell>
+                        ))}
+                      </TableRow>
+                    ))
+                  ) : (
+                    <TableRow>
+                      <TableCell
+                        colSpan={columns.length}
+                        className="h-24 text-center text-muted-foreground"
+                      >
+                        No sessions found.
+                      </TableCell>
+                    </TableRow>
+                  )}
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Card>
+
+          <Card className="mt-10 bg-destructive/5">
+            <CardHeader>
+              <CardTitle className="text-2xl text-destructive">
+                Danger Zone
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <p>Delete your account</p>
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button
+                    variant="destructive"
+                    className="w-full max-w-md gap-2 cursor-pointer"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                    Delete Account
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Delete Your Account?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      This will permanently delete this your and all associated
+                      data including all apps, comments and upvotes. This action
+                      CANNOT be undone.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel className="cursor-pointer">
+                      Cancel
+                    </AlertDialogCancel>
+                    <AlertDialogAction
+                      onClick={handleDeleteUser}
+                      className="bg-destructive cursor-pointer text-foreground hover:bg-destructive/90"
+                    >
+                      Delete Permanently
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            </CardContent>
+          </Card>
+        </div>
+      )}
+    </>
   );
 }

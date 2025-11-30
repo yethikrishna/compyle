@@ -12,7 +12,12 @@ export const {
   sendVerificationEmail,
   deleteUser,
   signOut,
+  changeEmail,
+  updateUser,
+  linkSocial,
+  unlinkAccount,
+  changePassword,
 } = createAuthClient({
-  baseURL: process.env.BETTER_AUTH_URL!,
+  baseURL: process.env.BETTER_AUTH_URL!, // Look into this env, server client stuff
   plugins: [usernameClient()],
 });

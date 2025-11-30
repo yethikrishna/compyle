@@ -22,7 +22,7 @@ export default function SocialAuth() {
       toast.error(`Error: ${data.error.message}`);
     } else {
       setGithubLoading(false);
-      toast.success("Github signin successful.");
+      // toast.success("Github signin successful.");
     }
   }
 
@@ -35,7 +35,7 @@ export default function SocialAuth() {
       toast.error(`Error: ${data.error.message}`);
     } else {
       setGoogleLoading(false);
-      toast.success("Google signin successful.");
+      // toast.success("Google signin successful.");
     }
   }
 
