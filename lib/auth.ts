@@ -23,6 +23,7 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
     autoSignIn: false,
+    sendResetPassword: async ({}) => {},
   },
   emailVerification: {
     sendOnSignUp: true,
@@ -45,7 +46,7 @@ export const auth = betterAuth({
       clientSecret: env.GOOGLE_CLIENT_SECRET,
     },
   },
-  account: { accountLinking: { enabled: true } },
+  account: { accountLinking: { enabled: true, allowDifferentEmails: true } },
   databaseHooks: {
     user: {
       create: {
@@ -67,6 +68,7 @@ export const auth = betterAuth({
     },
   },
   user: {
+    changeEmail: { enabled: true },
     deleteUser: { enabled: true },
     additionalFields: {
       role: {
@@ -82,5 +84,18 @@ export const auth = betterAuth({
       generateId: false,
     },
   },
-  plugins: [username()],
+  plugins: [
+    username({
+      minUsernameLength: 5,
+      maxUsernameLength: 32,
+      usernameValidator: (username) => {
+        if (username === "admin") {
+          return false;
+        }
+
+        const usernameRegex = /^[a-z0-9_]{5,32}$/;
+        return usernameRegex.test(username);
+      },
+    }),
+  ],
 });
