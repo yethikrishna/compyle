@@ -59,7 +59,7 @@ export default function AppComments({ id }: { id: string }) {
 
       <div className="mb-8 rounded-lg border border-border bg-card p-4">
         <div className="flex gap-4">
-          <Avatar className="h-10 w-10 shrink-0">
+          <Avatar className="h-10 w-10 shrink-0 hidden sm:flex">
             <AvatarImage src={user?.image || undefined} />
             <AvatarFallback>{getInitials(user?.name)}</AvatarFallback>
           </Avatar>

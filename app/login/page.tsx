@@ -154,6 +154,13 @@ export default function Login() {
                   }}
                 </form.Field>
               </FieldGroup>
+
+              <Link
+                href="/forgot-password"
+                className="text-muted-foreground text-right underline w-full block"
+              >
+                Forgot password?
+              </Link>
             </form>
           </CardContent>
           <CardFooter className="flex flex-row">

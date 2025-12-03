@@ -17,6 +17,8 @@ export const {
   linkSocial,
   unlinkAccount,
   changePassword,
+  requestPasswordReset,
+  resetPassword,
 } = createAuthClient({
   baseURL: process.env.BETTER_AUTH_URL!, // Look into this env, server client stuff
   plugins: [usernameClient()],

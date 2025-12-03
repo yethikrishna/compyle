@@ -1,3 +1,4 @@
+import PasswordResetEmailTemplate from "@/emails/components/forgot-password";
 import EmailVerificationEmailTempate from "@/emails/components/verify-email";
 import { env as envClient } from "@/env/client";
 import { env as envServer } from "@/env/server";
@@ -21,5 +22,18 @@ export async function sendEmailVerificationEmail({
     from: `Compyle Team <auth@${envClient.NEXT_PUBLIC_EMAIL_DOMAIN}>`,
     subject: "Compyle: Verify your email address",
     react: EmailVerificationEmailTempate({ url, name }),
+  });
+}
+
+export async function sendPasswordResetEmail({
+  email,
+  url,
+  name,
+}: SendEmailVerificationEmailProps) {
+  await resend.emails.send({
+    to: [email],
+    from: `Compyle Team <auth@${envClient.NEXT_PUBLIC_EMAIL_DOMAIN}>`,
+    subject: "Compyle: Reset your password",
+    react: PasswordResetEmailTemplate({ url, name }),
   });
 }
