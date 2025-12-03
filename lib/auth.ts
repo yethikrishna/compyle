@@ -1,7 +1,7 @@
 import { db } from "@/db";
 import { accounts, sessions, verifications } from "@/db/schemas/auth";
 import { users } from "@/db/schemas/user";
-import { sendEmailVerificationEmail } from "@/emails";
+import { sendEmailVerificationEmail, sendPasswordResetEmail } from "@/emails";
 import { env } from "@/env/server";
 import { createId } from "@paralleldrive/cuid2";
 import { betterAuth } from "better-auth";
@@ -23,7 +23,9 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
     autoSignIn: false,
-    sendResetPassword: async ({}) => {},
+    sendResetPassword: async ({ user, url }) => {
+      await sendPasswordResetEmail({ url, email: user.email, name: user.name });
+    },
   },
   emailVerification: {
     sendOnSignUp: true,

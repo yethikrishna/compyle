@@ -38,6 +38,13 @@ export const updatePasswordSchema = z.object({
     .max(55, "Password must be at most 55 characters"),
 });
 
+export const resetPasswordSchema = z.object({
+  password: z
+    .string()
+    .min(8, "Password must be at least 8 characters")
+    .max(55, "Password must be at most 55 characters"),
+});
+
 export const signupSchema = z.object({
   name: z
     .string()
