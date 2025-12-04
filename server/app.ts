@@ -10,7 +10,7 @@ import { createAppSchema } from "@/schema/app.schema";
 import { getUserFromAuth } from "@/server/user";
 import { AppPublishStatus } from "@/types/app";
 import { ImageData } from "@/types/image";
-import { and, countDistinct, eq, sql } from "drizzle-orm";
+import { and, countDistinct, desc, eq, lt, sql } from "drizzle-orm";
 import { z, ZodError } from "zod";
 import NodeImageKit from "@imagekit/nodejs";
 import { env } from "@/env/server";
@@ -302,13 +302,24 @@ export async function getDashboardApps(): Promise<
   }
 }
 
-export async function getPublicApps(): Promise<
-  Array<{
+export async function getPublicApps({
+  limit = 15,
+  cursor,
+}: {
+  limit?: number;
+  cursor?: string; // The createdAt timestamp of the last app
+} = {}): Promise<{
+  apps: Array<{
     app: typeof apps.$inferSelect;
     upvoteCount: number;
-  }>
-> {
+  }>;
+  nextCursor: string | null;
+}> {
   try {
+    const whereConditions = cursor
+      ? and(eq(apps.status, "published"), lt(apps.createdAt, new Date(cursor)))
+      : eq(apps.status, "published");
+
     const res = await db
       .select({
         app: apps,
@@ -321,18 +332,31 @@ export async function getPublicApps(): Promise<
         `,
       })
       .from(apps)
-      .where(eq(apps.status, "published"));
+      .where(whereConditions)
+      .orderBy(desc(apps.createdAt))
+      .limit(limit + 1); // Fetch one extra to determine if there are more
 
     if (!res) {
       throw new Error("No apps found");
     }
 
-    return res;
+    // Check if there are more apps
+    const hasMore = res.length > limit;
+    const appsToReturn = hasMore ? res.slice(0, limit) : res;
+
+    // Use the last app's createdAt as the next cursor
+    const nextCursor = hasMore
+      ? appsToReturn[appsToReturn.length - 1].app.createdAt.toISOString()
+      : null;
+
+    return {
+      apps: appsToReturn,
+      nextCursor,
+    };
   } catch (error) {
     if (error instanceof Error) {
       throw new Error(error.message);
     }
-
     throw new Error("Failed to fetch apps");
   }
 }

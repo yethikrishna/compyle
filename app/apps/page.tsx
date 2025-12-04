@@ -14,16 +14,23 @@ import {
 } from "@/components/ui/empty";
 import { Spinner } from "@/components/ui/spinner";
 import { getPublicApps } from "@/server/app";
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { AppWindow, ArrowLeft, PlusCircle } from "lucide-react";
 import Link from "next/link";
 
 export default function Apps() {
-  const { isPending, data } = useQuery({
-    queryKey: ["public-apps"],
-    queryFn: getPublicApps,
-    meta: { showError: true },
-  });
+  const { data, isPending, isFetchingNextPage, hasNextPage, fetchNextPage } =
+    useInfiniteQuery({
+      queryKey: ["public-apps"],
+      queryFn: ({ pageParam }) =>
+        getPublicApps({ cursor: pageParam, limit: 30 }),
+      initialPageParam: undefined as string | undefined,
+      getNextPageParam: (lastPage) => lastPage.nextCursor,
+      meta: { showError: true },
+    });
+
+  const allApps = data?.pages.flatMap((page) => page.apps) ?? [];
+  const totalCount = allApps.length;
 
   return (
     <>
@@ -50,7 +57,7 @@ export default function Apps() {
           </div>
         )}
 
-        {!isPending && !data && (
+        {!isPending && allApps.length === 0 && (
           <Empty className="border">
             <EmptyHeader>
               <EmptyMedia variant="icon">
@@ -58,7 +65,7 @@ export default function Apps() {
               </EmptyMedia>
               <EmptyTitle>No Apps Found</EmptyTitle>
               <EmptyDescription>
-                You can be the first the submit an app
+                You can be the first to submit an app
               </EmptyDescription>
             </EmptyHeader>
             <EmptyContent>
@@ -72,24 +79,20 @@ export default function Apps() {
           </Empty>
         )}
 
-        {!isPending && data && (
+        {!isPending && allApps.length > 0 && (
           <>
             <div className="mb-8">
               <p className="text-muted-foreground">
                 Showing{" "}
                 <span className="text-foreground font-semibold">
-                  {data.length}
+                  {totalCount}
                 </span>{" "}
-                of{" "}
-                <span className="text-foreground font-semibold">
-                  {data.length}
-                </span>{" "}
-                apps
+                {hasNextPage ? "apps (more available)" : "apps"}
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {data.map((app) => {
+              {allApps.map((app) => {
                 const item: AppCardProps = {
                   id: app.app.id,
                   name: app.app.name,
@@ -101,6 +104,27 @@ export default function Apps() {
                 return <AppCard key={item.id} app={item} />;
               })}
             </div>
+
+            {hasNextPage && (
+              <div className="mt-12 flex justify-center">
+                <Button
+                  onClick={() => fetchNextPage()}
+                  disabled={isFetchingNextPage}
+                  variant="outline"
+                  size="lg"
+                  className="cursor-pointer"
+                >
+                  {isFetchingNextPage ? (
+                    <>
+                      <Spinner className="size-4" />
+                      Loading more apps...
+                    </>
+                  ) : (
+                    "Load More Apps"
+                  )}
+                </Button>
+              </div>
+            )}
           </>
         )}
       </div>
