@@ -65,3 +65,10 @@ export const signupSchema = z.object({
     .min(8, "Password must be at least 8 characters")
     .max(55, "Password must be at most 55 characters"),
 });
+
+export const updateProfileSchema = z.object({
+  name: z
+    .string()
+    .min(3, "Name must be at least 3 characters.")
+    .max(32, "Name must be at most 32 characters."),
+});
