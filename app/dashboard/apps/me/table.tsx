@@ -29,7 +29,7 @@ import { AppPublishStatus } from "@/types/app";
 import { ColumnDef } from "@tanstack/react-table";
 import clsx from "clsx";
 import { InferSelectModel } from "drizzle-orm";
-import { Ellipsis, Eye, Pencil, Trash2 } from "lucide-react";
+import { Ellipsis, Eye, Pen, Pencil, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -152,6 +152,16 @@ const ActionsCell = ({
           >
             <Pencil />
             Update Status
+          </DropdownMenuItem>
+
+          <DropdownMenuItem className="cursor-pointer">
+            <Link
+              className="flex gap-2"
+              href={`/dashboard/apps/edit/${app.id}`}
+            >
+              <Pen />
+              Edit App Details
+            </Link>
           </DropdownMenuItem>
 
           <DropdownMenuSeparator />

@@ -109,6 +109,7 @@ function NewPasswordForm() {
                         type="password"
                         id={field.name}
                         name={field.name}
+                        // Diable is no token or invalid token
                         value={field.state.value}
                         onBlur={field.handleBlur}
                         onChange={(e) => field.handleChange(e.target.value)}
