@@ -157,7 +157,7 @@ export function AppComments({ slug, id }: { slug: string; id: string }) {
         </div>
       )}
 
-      {allComments.length < 1 && (
+      {!isFetching && allComments.length < 1 && (
         <Empty className="border">
           <EmptyHeader>
             <EmptyMedia variant="icon">
