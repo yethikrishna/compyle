@@ -24,7 +24,7 @@ import { useAuthStore } from "@/store/session.store";
 import { useForm } from "@tanstack/react-form";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 export default function Signup() {
@@ -64,10 +64,11 @@ export default function Signup() {
     },
   });
 
-  if (authInfo?.session) {
-    router.push("/dashboard");
-    return null;
-  }
+  useEffect(() => {
+    if (authInfo?.session) router.replace("/dashboard");
+  }, [authInfo?.session, router]);
+
+  if (authInfo?.session) return null;
 
   if (isInitialPending) {
     return (

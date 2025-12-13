@@ -30,14 +30,18 @@ export function HomeHero() {
           </p>
           <div className="flex w-full flex-col justify-center gap-2 sm:flex-row lg:justify-start">
             {authInfo?.session ? (
-              <Button className="w-full sm:w-auto">
-                <Link href="/dashboard">Get Started</Link>
-                <ArrowRight className="size-4" />
+              <Button asChild className="w-full sm:w-auto">
+                <Link href="/dashboard">
+                  Get Started
+                  <ArrowRight className="size-4" />
+                </Link>
               </Button>
             ) : (
-              <Button className="w-full sm:w-auto">
-                <Link href="/login">Get Started</Link>
-                <ArrowRight className="size-4" />
+              <Button asChild className="w-full sm:w-auto">
+                <Link href="/login">
+                  Get Started
+                  <ArrowRight className="size-4" />
+                </Link>
               </Button>
             )}
 

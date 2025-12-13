@@ -1,5 +1,4 @@
 import { Separator } from "@/components/ui/separator";
-import { GitPullRequestCreateArrow } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -71,7 +70,11 @@ export function Footer() {
                         key={linkIdx}
                         className="hover:text-primary font-medium"
                       >
-                        <Link target="_blank" href={link.url}>
+                        <Link
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          href={link.url}
+                        >
                           {link.text}
                         </Link>
                       </li>

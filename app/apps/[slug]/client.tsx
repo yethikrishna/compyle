@@ -118,7 +118,7 @@ export function AppDetailsClient({ slug }: { slug: string }) {
             </EmptyMedia>
             <EmptyTitle>App Not Found</EmptyTitle>
             <EmptyDescription>
-              App with that ID not found. Either it doesn&apos;t exist or
+              App with that slug not found. Either it doesn&apos;t exist or
               hasn&apos;t been published yet. You can continue by submitting
               your own app or viewing other apps.
             </EmptyDescription>

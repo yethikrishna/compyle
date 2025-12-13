@@ -44,7 +44,7 @@ export function AppComments({ slug, id }: { slug: string; id: string }) {
     onSuccess: () => {
       form.reset();
       toast.success("Comment added!");
-      queryClient.invalidateQueries({ queryKey: ["app-comments", id] });
+      queryClient.invalidateQueries({ queryKey: ["app-comments", slug] });
     },
     onError: () => {
       toast.error("Failed to add comment.");
@@ -82,47 +82,50 @@ export function AppComments({ slug, id }: { slug: string; id: string }) {
                   e.preventDefault();
                   form.handleSubmit();
                 }}
-              ></form>
-              <FieldGroup>
-                <form.Field name="comment">
-                  {(field) => {
-                    const isInvalid =
-                      field.state.meta.isTouched && !field.state.meta.isValid;
-                    return (
-                      <Field data-invalid={isInvalid}>
-                        <div className="relative">
-                          <Textarea
-                            id={field.name}
-                            name={field.name}
-                            value={field.state.value}
-                            onBlur={field.handleBlur}
-                            onChange={(e) => field.handleChange(e.target.value)}
-                            aria-invalid={isInvalid}
-                            placeholder="I really like this app..."
-                            className="pr-20 min-h-[100px]"
-                          />
-                          <Button
-                            type="submit"
-                            form="comment-form"
-                            size="sm"
-                            disabled={addCommentMutation.isPending}
-                            className="absolute bottom-2 right-2 cursor-pointer"
-                          >
-                            {addCommentMutation.isPending ? (
-                              <Spinner />
-                            ) : (
-                              <ArrowUp />
-                            )}
-                          </Button>
-                        </div>
-                        {isInvalid && (
-                          <FieldError errors={field.state.meta.errors} />
-                        )}
-                      </Field>
-                    );
-                  }}
-                </form.Field>
-              </FieldGroup>
+              >
+                <FieldGroup>
+                  <form.Field name="comment">
+                    {(field) => {
+                      const isInvalid =
+                        field.state.meta.isTouched && !field.state.meta.isValid;
+                      return (
+                        <Field data-invalid={isInvalid}>
+                          <div className="relative">
+                            <Textarea
+                              id={field.name}
+                              name={field.name}
+                              value={field.state.value}
+                              onBlur={field.handleBlur}
+                              onChange={(e) =>
+                                field.handleChange(e.target.value)
+                              }
+                              aria-invalid={isInvalid}
+                              placeholder="I really like this app..."
+                              className="pr-20 min-h-[100px]"
+                            />
+                            <Button
+                              type="submit"
+                              form="comment-form"
+                              size="sm"
+                              disabled={addCommentMutation.isPending}
+                              className="absolute bottom-2 right-2 cursor-pointer"
+                            >
+                              {addCommentMutation.isPending ? (
+                                <Spinner />
+                              ) : (
+                                <ArrowUp />
+                              )}
+                            </Button>
+                          </div>
+                          {isInvalid && (
+                            <FieldError errors={field.state.meta.errors} />
+                          )}
+                        </Field>
+                      );
+                    }}
+                  </form.Field>
+                </FieldGroup>
+              </form>
             </div>
           </div>
         </div>
