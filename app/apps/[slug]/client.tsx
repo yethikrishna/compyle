@@ -151,7 +151,7 @@ export function AppDetailsClient({ slug }: { slug: string }) {
       )}
 
       {!appResult.isPending && app && (
-        <div className="mx-auto container px-6 md:px-16">
+        <div className="md:px-16">
           <div className="w-full h-96 rounded-lg mb-4 overflow-hidden border relative">
             {app.appDetails.coverImage ? (
               <Image
