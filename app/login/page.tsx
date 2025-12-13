@@ -1,6 +1,6 @@
 "use client";
 
-import { Header } from "@/components/custom/header";
+import { SocialAuth } from "@/app/signup/socials";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -18,33 +18,20 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
-import { signIn, useSession } from "@/lib/auth-client";
+import { signIn } from "@/lib/auth-client";
 import { loginSchema } from "@/schema/auth.schema";
+import { useAuthStore } from "@/store/session.store";
 import { useForm } from "@tanstack/react-form";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import SocialAuth from "../signup/socials";
 
 export default function Login() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const [hasLoggedIn, setHasLoggedIn] = useState(false);
 
-  const { data: session, isPending, error } = useSession();
-
-  useEffect(() => {
-    if (session && !isPending && !error && !hasLoggedIn) {
-      router.prefetch("/dashboard");
-      const toastId = toast.loading("Already logged in. Redirecting...");
-      const timer = setTimeout(() => {
-        toast.dismiss(toastId);
-        router.push("/dashboard");
-      }, 1500);
-      return () => clearTimeout(timer);
-    }
-  }, [session, isPending, error, router, hasLoggedIn]);
+  const { isInitialPending, authInfo } = useAuthStore();
 
   const form = useForm({
     defaultValues: { email: "", password: "" },
@@ -61,7 +48,6 @@ export default function Login() {
             setIsLoading(true);
           },
           onSuccess: () => {
-            setHasLoggedIn(true);
             setIsLoading(false);
             form.reset();
             toast.success("Login successful");
@@ -77,10 +63,25 @@ export default function Login() {
     },
   });
 
+  useEffect(() => {
+    if (authInfo?.session) router.replace("/dashboard");
+  }, [authInfo?.session, router]);
+
+  if (authInfo?.session) return null;
+
+  if (isInitialPending) {
+    return (
+      <div className="flex items-center justify-center min-h-[calc(100vh-10rem)]">
+        <div>
+          <Spinner className="mx-auto size-6" />
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div>
-      <Header />
-      <div className="mx-auto max-w-lg px-6">
+    <div className="flex items-center justify-center min-h-[calc(100vh-10rem)]">
+      <div className="max-w-md w-full">
         <Card className="md:min-w-md">
           <CardHeader className="text-center">
             <CardTitle className="text-xl">Login</CardTitle>
@@ -143,7 +144,7 @@ export default function Login() {
                           onBlur={field.handleBlur}
                           onChange={(e) => field.handleChange(e.target.value)}
                           aria-invalid={isInvalid}
-                          placeholder=""
+                          placeholder="Enter password"
                           autoComplete="off"
                         />
                         {isInvalid && (
@@ -154,13 +155,6 @@ export default function Login() {
                   }}
                 </form.Field>
               </FieldGroup>
-
-              <Link
-                href="/forgot-password"
-                className="text-muted-foreground text-right underline w-full block"
-              >
-                Forgot password?
-              </Link>
             </form>
           </CardContent>
           <CardFooter className="flex flex-row">
@@ -169,18 +163,9 @@ export default function Login() {
               className="w-full flex justify-between"
             >
               <Button
-                type="button"
-                variant="outline"
-                className="cursor-pointer"
-                onClick={() => form.reset()}
-                disabled={isLoading}
-              >
-                Cancel
-              </Button>
-              <Button
                 type="submit"
                 form="login-form"
-                className="w-40 cursor-pointer gap-2"
+                className="w-full cursor-pointer gap-2"
                 disabled={isLoading}
               >
                 {isLoading && <Spinner />}
@@ -194,6 +179,13 @@ export default function Login() {
               Signup
             </Link>
           </p>
+
+          <Link
+            href="/forgot-password"
+            className="text-muted-foreground underline w-full text-center -mt-2"
+          >
+            Forgot password?
+          </Link>
 
           <SocialAuth />
         </Card>

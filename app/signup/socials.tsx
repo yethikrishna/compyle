@@ -9,7 +9,7 @@ import { Github } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 
-export default function SocialAuth() {
+export function SocialAuth() {
   const [githubLoading, setGithubLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
 

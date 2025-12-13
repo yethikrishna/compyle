@@ -10,8 +10,8 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { Spinner } from "@/components/ui/spinner";
-import { useAuthStore } from "@/providers/auth.provider";
 import { getDashboardStats } from "@/server/dashboard";
+import { useAuthStore } from "@/store/session.store";
 import { useQuery } from "@tanstack/react-query";
 import {
   AlertCircleIcon,
@@ -33,7 +33,7 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export default function Page() {
-  const { user } = useAuthStore();
+  const { authInfo } = useAuthStore();
 
   const { isPending, data } = useQuery({
     queryKey: ["me-dashboard-stats"],
@@ -47,7 +47,7 @@ export default function Page() {
 
   return (
     <div className="space-y-6">
-      {user?.emailVerified !== true && (
+      {authInfo?.user?.emailVerified !== true && (
         <Alert variant="destructive">
           <AlertCircleIcon />
           <AlertTitle>Your email address has not been verified.</AlertTitle>

@@ -1,32 +1,24 @@
 "use client";
 
 import { Spinner } from "@/components/ui/spinner";
-import { useSession } from "@/lib/auth-client";
-import { useAuthStore } from "@/providers/auth.provider";
+import { useAuthStore } from "@/store/session.store";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { toast } from "sonner";
 
-export default function LayoutClient({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export function LayoutClient({ children }: { children: React.ReactNode }) {
   const router = useRouter();
-  const { data: session, isPending, error } = useSession();
 
-  const { setUser } = useAuthStore();
+  const { authInfo, isInitialPending } = useAuthStore();
 
   useEffect(() => {
-    if (!isPending && !error && session) {
-      setUser(session.user);
-    }
-    if (!isPending && !session) {
+    if (!isInitialPending && !authInfo?.session) {
+      toast.error("Login to access your dashboard");
       router.push("/login");
     }
-  }, [isPending, session, router, error, setUser]);
+  }, [router, authInfo?.session, isInitialPending]);
 
-  if (isPending) {
+  if (isInitialPending) {
     return (
       <div className="w-full mt-10 mx-auto">
         <Spinner className="mx-auto size-6" />
@@ -34,10 +26,5 @@ export default function LayoutClient({
     );
   }
 
-  if (error) {
-    toast.error("Unauthorized");
-    router.push("/login");
-  }
-
-  return <div className="container mx-auto">{children}</div>;
+  return <>{children}</>;
 }

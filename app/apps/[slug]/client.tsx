@@ -1,5 +1,6 @@
 "use client";
 
+import { AppComments } from "@/app/apps/[slug]/comments";
 import {
   AlertDialog,
   AlertDialogContent,
@@ -20,38 +21,43 @@ import {
   EmptyTitle,
 } from "@/components/ui/empty";
 import { Spinner } from "@/components/ui/spinner";
+import { getInitials } from "@/lib/utils";
+import { queryClient } from "@/providers/query.provider";
 import { getPublicAppDetails } from "@/server/app";
 import { checkUserUpvote, toggleUpvote } from "@/server/upvote";
+import { useAuthStore } from "@/store/session.store";
 import { useMutation, useQueries } from "@tanstack/react-query";
 import { format } from "date-fns";
 import {
+  AppWindow,
   ExternalLink,
-  FilePlusCorner,
   Github,
   Globe,
   Heart,
+  PlusCircle,
 } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { toast } from "sonner";
-import AppComments from "./comments";
-import { queryClient } from "@/lib/provider";
-import { getInitials } from "@/lib/utils";
 
-export default function AppDetailsClient({ id }: { id: string }) {
+export function AppDetailsClient({ slug }: { slug: string }) {
   const [alertOpen, setAlertOpen] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
+
+  const { authInfo, isInitialPending } = useAuthStore();
 
   const results = useQueries({
     queries: [
       {
-        queryKey: ["public-app", id],
-        queryFn: () => getPublicAppDetails({ id }),
+        queryKey: ["public-app", slug],
+        queryFn: () => getPublicAppDetails({ slug }),
         meta: { showError: true },
       },
       {
-        queryKey: ["upvote-status", id],
-        queryFn: () => checkUserUpvote({ appId: id }),
+        queryKey: ["upvote-status", slug],
+        queryFn: () => checkUserUpvote({ appSlug: slug }),
+        enabled: !isInitialPending && !!authInfo && !!authInfo.session,
       },
     ],
   });
@@ -60,16 +66,17 @@ export default function AppDetailsClient({ id }: { id: string }) {
 
   const app = appResult.data ?? null;
   const upvoteStatus = upvoteResult.data ?? { hasUpvoted: false };
+  const isUpvoteLoading = authInfo?.session ? upvoteResult.isPending : false;
 
   const upvoteMutation = useMutation({
-    mutationFn: () => toggleUpvote({ appId: id }),
+    mutationFn: () => toggleUpvote({ appSlug: slug }),
     onError: () => {
       toast.error("Failed to upvote. Please try again");
     },
     onSuccess: (result) => {
       if (result.success) {
-        queryClient.invalidateQueries({ queryKey: ["public-app", id] });
-        queryClient.invalidateQueries({ queryKey: ["upvote-status", id] });
+        queryClient.invalidateQueries({ queryKey: ["public-app", slug] });
+        queryClient.invalidateQueries({ queryKey: ["upvote-status", slug] });
 
         if (result.action === "added") {
           toast.success("Upvoted successfully!");
@@ -102,24 +109,37 @@ export default function AppDetailsClient({ id }: { id: string }) {
           <Spinner className="mx-auto size-6" />
         </div>
       )}
+
       {!appResult.isPending && !app && (
-        <Empty className="border max-w-4xl mx-auto">
+        <Empty className="border mx-auto">
           <EmptyHeader>
             <EmptyMedia variant="icon">
-              <FilePlusCorner />
+              <AppWindow />
             </EmptyMedia>
             <EmptyTitle>App Not Found</EmptyTitle>
             <EmptyDescription>
-              App with that ID not found. Either it doesn&apos;t exist or
+              App with that slug not found. Either it doesn&apos;t exist or
               hasn&apos;t been published yet. You can continue by submitting
-              your own app or viewving other apps.
+              your own app or viewing other apps.
             </EmptyDescription>
           </EmptyHeader>
           <EmptyContent>
             <div className="flex gap-2">
-              <Link href="/dashboard/apps/new">
-                <Button className="cursor-pointer">Submit App</Button>
-              </Link>
+              {authInfo?.session ? (
+                <Link href="/dashboard/apps/new">
+                  <Button className="cursor-pointer" variant="outline">
+                    <PlusCircle />
+                    Submit App
+                  </Button>
+                </Link>
+              ) : (
+                <Link href="/login">
+                  <Button className="cursor-pointer" variant="outline">
+                    <PlusCircle />
+                    Login to Submit App
+                  </Button>
+                </Link>
+              )}
               <Link href="/apps">
                 <Button className="cursor-pointer" variant="outline">
                   View All Apps
@@ -129,23 +149,25 @@ export default function AppDetailsClient({ id }: { id: string }) {
           </EmptyContent>
         </Empty>
       )}
+
       {!appResult.isPending && app && (
         <div className="mx-auto container px-6 md:px-16">
-          {/*Make height resposive*/}
-          <div
-            className={`w-full h-96 rounded-lg mb-4 overflow-hidden ${
-              app.appDetails.coverImage
-                ? "bg-cover bg-center"
-                : "bg-linear-to-br from-primary/30 via-secondary/20 to-accent/30 group-hover:from-primary/40 group-hover:via-secondary/30 group-hover:to-accent/40 transition-all"
-            }`}
-            style={
-              app.appDetails.coverImage
-                ? { backgroundImage: `url(${app.appDetails.coverImage})` }
-                : {}
-            }
-          ></div>
+          <div className="w-full h-96 rounded-lg mb-4 overflow-hidden border relative">
+            {app.appDetails.coverImage ? (
+              <Image
+                src={app.appDetails.coverImage}
+                alt={`${app.appDetails.name} cover image`}
+                fill
+                className="object-cover"
+                priority
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
+              />
+            ) : (
+              <div className="w-full h-full bg-linear-to-br from-primary/30 via-secondary/20 to-accent/30" />
+            )}
+          </div>
 
-          <div className="grid gap-9 lg:grid-cols-6">
+          <div className="grid gap-9 lg:grid-cols-6 mt-10">
             <div className="lg:col-span-4 space-y-8">
               <div>
                 <div className="mb-4 flex items-start justify-between">
@@ -235,7 +257,7 @@ export default function AppDetailsClient({ id }: { id: string }) {
                 </AlertDialog>
               </div>
 
-              <AppComments id={id} />
+              <AppComments slug={slug} id={app.appDetails.id} />
             </div>
 
             {/* Sidebar */}
@@ -247,30 +269,39 @@ export default function AppDetailsClient({ id }: { id: string }) {
                   </div>
                   <p className="text-xs text-muted-foreground mt-1">upvotes</p>
                 </div>
-                <Button
-                  disabled={upvoteResult.isPending || upvoteMutation.isPending}
-                  className="w-full cursor-pointer"
-                  onClick={handleUpvote}
-                >
-                  {upvoteResult.isPending ? (
-                    <>
-                      <Spinner className="size-4" />
-                      Loading...
-                    </>
-                  ) : upvoteMutation.isPending ? (
-                    "Updating..."
-                  ) : upvoteStatus.hasUpvoted ? (
-                    <>
-                      <Heart className="h-5 w-5 fill-current" />
-                      Upvoted
-                    </>
-                  ) : (
-                    <>
+                {authInfo?.session ? (
+                  <Button
+                    disabled={isUpvoteLoading || upvoteMutation.isPending}
+                    className="w-full cursor-pointer"
+                    onClick={handleUpvote}
+                  >
+                    {isUpvoteLoading ? (
+                      <>
+                        <Spinner className="size-4" />
+                        Loading...
+                      </>
+                    ) : upvoteMutation.isPending ? (
+                      "Updating..."
+                    ) : upvoteStatus.hasUpvoted ? (
+                      <>
+                        <Heart className="h-5 w-5 fill-current" />
+                        Upvoted
+                      </>
+                    ) : (
+                      <>
+                        <Heart className="h-5 w-5" />
+                        Upvote
+                      </>
+                    )}
+                  </Button>
+                ) : (
+                  <Link href="/login" className="w-full">
+                    <Button className="w-full cursor-pointer">
                       <Heart className="h-5 w-5" />
-                      Upvote
-                    </>
-                  )}
-                </Button>
+                      Login to Upvote
+                    </Button>
+                  </Link>
+                )}
               </div>
 
               <div className="rounded-lg border border-border bg-card p-6">
@@ -279,7 +310,17 @@ export default function AppDetailsClient({ id }: { id: string }) {
                 </p>
                 <div className="flex flex-col items-center text-center">
                   <Avatar className="mb-3 h-16 w-16">
-                    <AvatarImage src={app.userDetails.image || undefined} />
+                    {app.userDetails.image ? (
+                      <AvatarImage asChild>
+                        <Image
+                          src={app.userDetails.image}
+                          alt={app.userDetails.name}
+                          width={64}
+                          height={64}
+                          className="object-cover"
+                        />
+                      </AvatarImage>
+                    ) : null}
                     <AvatarFallback>
                       {getInitials(app.userDetails.name)}
                     </AvatarFallback>

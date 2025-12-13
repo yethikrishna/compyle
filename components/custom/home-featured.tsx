@@ -1,12 +1,12 @@
 "use client";
 
+import { AppCard } from "@/components/custom/app-card";
+import { AppCardSkeleton } from "@/components/custom/app-card-skeleton";
 import { getPublicFeaturedApps } from "@/server/app";
+import { AppCardProps } from "@/types";
 import { useQuery } from "@tanstack/react-query";
-import AppCard, { AppCardProps } from "./app-card";
-import { Zap } from "lucide-react";
-import AppCardSkeleton from "./app-card-skeleton";
 
-export default function HomeFeatured() {
+export function HomeFeatured() {
   const { isPending, data } = useQuery({
     queryKey: ["public-apps-featured"],
     queryFn: getPublicFeaturedApps,
@@ -14,9 +14,8 @@ export default function HomeFeatured() {
   });
 
   return (
-    <div className="container mx-auto px-6">
+    <div className="pt-28">
       <div className="flex gap-3 items-center mb-10">
-        <Zap className="fill-green-600 stroke-green-600 size-9" />
         <p className="text-4xl lg:text-6xl font-bold">Featured Apps</p>
       </div>
 
@@ -34,6 +33,7 @@ export default function HomeFeatured() {
             const item: AppCardProps = {
               id: app.app.id,
               name: app.app.name,
+              slug: app.app.slug,
               description: app.app.description,
               category: app.app.category,
               upvotes: app.upvoteCount,

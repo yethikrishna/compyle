@@ -12,7 +12,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { revokeSession } from "@/lib/auth-client";
-import { queryClient } from "@/lib/provider";
+import { queryClient } from "@/providers/query.provider";
 import { ColumnDef } from "@tanstack/react-table";
 import { LogOut, MapPin } from "lucide-react";
 import { toast } from "sonner";

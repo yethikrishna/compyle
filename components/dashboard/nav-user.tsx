@@ -1,6 +1,17 @@
 "use client";
 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,32 +26,21 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
+import { Spinner } from "@/components/ui/spinner";
 import { signOut } from "@/lib/auth-client";
-import { useAuthStore } from "@/providers/auth.provider";
+import { getInitials } from "@/lib/utils";
+import { useAuthStore } from "@/store/session.store";
 import { ChevronsUpDown, LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "../ui/alert-dialog";
-import { Button } from "../ui/button";
-import { Spinner } from "../ui/spinner";
-import { getInitials } from "@/lib/utils";
 
 export function NavUser() {
   const [open, setOpen] = useState(false);
   const [pending, setPending] = useState(false);
 
   const router = useRouter();
-  const { user, clearUser } = useAuthStore();
+  const { authInfo, setAuthState } = useAuthStore();
   const { isMobile } = useSidebar();
 
   async function handleLogout() {
@@ -52,7 +52,7 @@ export function NavUser() {
           toast.success("Signout successfull");
           router.push("/login");
           setPending(false);
-          clearUser();
+          setAuthState({ authInfo: null });
         },
         onError: (ctx) => {
           toast.error(ctx.error.message || "Something went wrong");
@@ -62,7 +62,7 @@ export function NavUser() {
     });
   }
 
-  if (!user) return null;
+  if (!authInfo?.user) return null;
 
   return (
     <SidebarMenu>
@@ -74,14 +74,19 @@ export function NavUser() {
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <Avatar className="h-8 w-8 rounded-lg">
-                <AvatarImage src={user.image || undefined} alt={user.name} />
+                <AvatarImage
+                  src={authInfo.user.image || undefined}
+                  alt={authInfo.user.name}
+                />
                 <AvatarFallback className="rounded-lg">
-                  {getInitials(user.name)}
+                  {getInitials(authInfo.user.name)}
                 </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-medium">{user.name}</span>
-                <span className="truncate text-xs">{user.email}</span>
+                <span className="truncate font-medium">
+                  {authInfo.user.name}
+                </span>
+                <span className="truncate text-xs">{authInfo.user.email}</span>
               </div>
               <ChevronsUpDown className="ml-auto size-4" />
             </SidebarMenuButton>
@@ -95,14 +100,21 @@ export function NavUser() {
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage src={user.image || undefined} alt={user.name} />
+                  <AvatarImage
+                    src={authInfo.user.image || undefined}
+                    alt={authInfo.user.name}
+                  />
                   <AvatarFallback className="rounded-lg">
-                    {getInitials(user.name)}
+                    {getInitials(authInfo.user.name)}
                   </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">{user.name}</span>
-                  <span className="truncate text-xs">{user.email}</span>
+                  <span className="truncate font-medium">
+                    {authInfo.user.name}
+                  </span>
+                  <span className="truncate text-xs">
+                    {authInfo.user.email}
+                  </span>
                 </div>
               </div>
             </DropdownMenuLabel>

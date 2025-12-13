@@ -1,35 +1,47 @@
 "use server";
-
 import { db } from "@/db";
+import { apps } from "@/db/schemas/app";
 import { upvotes } from "@/db/schemas/upvote";
 import { getUserFromAuth } from "@/server/user";
 import { and, eq } from "drizzle-orm";
 
 export async function toggleUpvote({
-  appId,
+  appSlug,
 }: {
-  appId: string;
+  appSlug: string;
 }): Promise<{ success: boolean; action: "removed" | "added" }> {
   try {
-    if (!appId) {
-      throw new Error("Invalid app ID");
+    if (!appSlug) {
+      throw new Error("Invalid app slug");
     }
 
     const user = await getUserFromAuth();
 
     const existingUpvote = await db
-      .select()
+      .select({ appId: apps.id })
       .from(upvotes)
-      .where(and(eq(upvotes.userId, user.id), eq(upvotes.appId, appId)));
+      .innerJoin(apps, eq(upvotes.appId, apps.id))
+      .where(and(eq(upvotes.userId, user.id), eq(apps.slug, appSlug)))
+      .limit(1);
 
     if (existingUpvote.length >= 1) {
+      const appId = existingUpvote[0].appId;
       await db
         .delete(upvotes)
         .where(and(eq(upvotes.userId, user.id), eq(upvotes.appId, appId)));
-
       return { success: true, action: "removed" };
     } else {
-      await db.insert(upvotes).values({ appId, userId: user.id });
+      const app = await db
+        .select({ id: apps.id })
+        .from(apps)
+        .where(eq(apps.slug, appSlug))
+        .limit(1);
+
+      if (!app || app.length === 0) {
+        throw new Error("App not found");
+      }
+
+      await db.insert(upvotes).values({ appId: app[0].id, userId: user.id });
       return { success: true, action: "added" };
     }
   } catch (error) {
@@ -42,13 +54,13 @@ export async function toggleUpvote({
 }
 
 export async function checkUserUpvote({
-  appId,
+  appSlug,
 }: {
-  appId: string;
+  appSlug: string;
 }): Promise<{ hasUpvoted: boolean }> {
   try {
-    if (!appId) {
-      throw new Error("Invalid app ID");
+    if (!appSlug) {
+      throw new Error("Invalid app slug");
     }
 
     const user = await getUserFromAuth();
@@ -56,13 +68,11 @@ export async function checkUserUpvote({
     const existingUpvote = await db
       .select()
       .from(upvotes)
-      .where(and(eq(upvotes.userId, user.id), eq(upvotes.appId, appId)));
+      .innerJoin(apps, eq(upvotes.appId, apps.id))
+      .where(and(eq(upvotes.userId, user.id), eq(apps.slug, appSlug)))
+      .limit(1);
 
-    if (existingUpvote.length >= 1) {
-      return { hasUpvoted: true };
-    } else {
-      return { hasUpvoted: false };
-    }
+    return { hasUpvoted: existingUpvote.length >= 1 };
   } catch (error) {
     if (error instanceof Error) {
       throw new Error(error.message);
