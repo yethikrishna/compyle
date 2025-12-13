@@ -1,6 +1,7 @@
 "use server";
 
 import { db } from "@/db";
+import { apps } from "@/db/schemas/app";
 import { comments } from "@/db/schemas/comment";
 import { users } from "@/db/schemas/user";
 import { createCommentSchema } from "@/schema/comment.schema";
@@ -41,11 +42,11 @@ export async function addComment(
 }
 
 export async function getAppComments({
-  appId,
+  appSlug,
   limit = 15,
   cursor,
 }: {
-  appId: string;
+  appSlug: string;
   limit?: number;
   cursor?: string; // The createdAt timestamp of the last comment
 }): Promise<{
@@ -64,13 +65,14 @@ export async function getAppComments({
   nextCursor: string | null;
 }> {
   try {
-    if (!appId) {
-      throw new Error("Invalid app ID");
+    if (!appSlug) {
+      throw new Error("Invalid app slug");
     }
 
+    // Build where conditions using join with apps table
     const whereConditions = cursor
-      ? and(eq(comments.appId, appId), lt(comments.createdAt, new Date(cursor)))
-      : eq(comments.appId, appId);
+      ? and(eq(apps.slug, appSlug), lt(comments.createdAt, new Date(cursor)))
+      : eq(apps.slug, appSlug);
 
     const appComments = await db
       .select({
@@ -86,8 +88,9 @@ export async function getAppComments({
         },
       })
       .from(comments)
+      .innerJoin(apps, eq(comments.appId, apps.id))
+      .innerJoin(users, eq(comments.userId, users.id))
       .where(whereConditions)
-      .innerJoin(users, eq(users.id, comments.userId))
       .orderBy(desc(comments.createdAt))
       .limit(limit + 1); // Fetch one extra to determine if there are more
 

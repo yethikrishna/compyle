@@ -91,15 +91,7 @@ export default function CreateApp() {
   );
 
   return (
-    <div className="flex-1 mt-2">
-      <Link
-        href="/dashboard"
-        className="inline-flex items-center gap-2 text-primary hover:text-primary/80 mb-8 transition-colors"
-      >
-        <ArrowLeft className="w-4 h-4" />
-        Back to Dashboard
-      </Link>
-
+    <div className="flex-1 ">
       <div className="mb-10">
         <h1 className="text-2xl lg:text-4xl font-bold mb-3 gradient-text">
           Submit New App

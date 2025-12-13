@@ -1,3 +1,4 @@
+import { LayoutClient } from "@/app/dashboard/layout.client";
 import { AppSidebar } from "@/components/dashboard/app-sidebar";
 import {
   Breadcrumb,
@@ -11,14 +12,13 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import LayoutClient from "./layout.client";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <SidebarProvider>
       <AppSidebar />
-      <SidebarInset>
-        <header className="flex h-16 shrink-0 items-center gap-2 fixed top-0 w-full bg-background z-50">
+      <SidebarInset className="m-2 ml-0 overflow-hidden rounded-xl shadow-sm">
+        <header className="flex h-16 shrink-0 items-center gap-2 bg-background">
           <div className="flex items-center gap-2 px-4 border-b w-full pb-2">
             <SidebarTrigger className="-ml-1" />
             <Separator
@@ -34,7 +34,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </Breadcrumb>
           </div>
         </header>
-        <div className="gap-4 p-4 pt-14">
+        <div className="gap-4 p-4 flex-1 overflow-auto container mx-auto">
           <LayoutClient>{children}</LayoutClient>
         </div>
       </SidebarInset>

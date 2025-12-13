@@ -1,8 +1,6 @@
 "use client";
 
-import AppCard, { AppCardProps } from "@/components/custom/app-card";
-import Footer from "@/components/custom/footer";
-import { Header } from "@/components/custom/header";
+import { AppCard } from "@/components/custom/app-card";
 import { Button } from "@/components/ui/button";
 import {
   Empty,
@@ -14,11 +12,15 @@ import {
 } from "@/components/ui/empty";
 import { Spinner } from "@/components/ui/spinner";
 import { getPublicApps } from "@/server/app";
+import { useAuthStore } from "@/store/session.store";
+import { AppCardProps } from "@/types";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { AppWindow, ArrowLeft, PlusCircle } from "lucide-react";
+import { AppWindow, PlusCircle } from "lucide-react";
 import Link from "next/link";
 
 export default function Apps() {
+  const { authInfo } = useAuthStore();
+
   const { data, isPending, isFetchingNextPage, hasNextPage, fetchNextPage } =
     useInfiniteQuery({
       queryKey: ["public-apps"],
@@ -34,101 +36,96 @@ export default function Apps() {
 
   return (
     <>
-      <Header />
-      <div className="container mx-auto px-6">
-        <div className="mb-12">
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors mb-6"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Back to Home
-          </Link>
-          <h1 className="text-4xl sm:text-6xl font-bold mb-4">Explore Apps</h1>
-          <p className="text-lg text-muted-foreground max-w-2xl">
-            Discover amazing applications built with Compyle. Browse through
-            different categories and find the perfect tool for your needs.
-          </p>
+      {isPending && (
+        <div className="w-full">
+          <Spinner className="size-6 mx-auto" />
         </div>
+      )}
 
-        {isPending && (
-          <div className="w-full">
-            <Spinner className="size-6 mx-auto" />
-          </div>
-        )}
-
-        {!isPending && allApps.length === 0 && (
-          <Empty className="border">
-            <EmptyHeader>
-              <EmptyMedia variant="icon">
-                <AppWindow />
-              </EmptyMedia>
-              <EmptyTitle>No Apps Found</EmptyTitle>
-              <EmptyDescription>
-                You can be the first to submit an app
-              </EmptyDescription>
-            </EmptyHeader>
-            <EmptyContent>
+      {!isPending && allApps.length === 0 && (
+        <Empty className="border">
+          <EmptyHeader>
+            <EmptyMedia variant="icon">
+              <AppWindow />
+            </EmptyMedia>
+            <EmptyTitle>No Apps Found</EmptyTitle>
+            <EmptyDescription>
+              You can be the first to submit an app
+            </EmptyDescription>
+          </EmptyHeader>
+          <EmptyContent>
+            {authInfo?.session ? (
               <Link href="/dashboard/apps/new">
-                <Button className="cursor-pointer" variant="outline" size="sm">
+                <Button className="cursor-pointer" variant="outline">
                   <PlusCircle />
-                  Create App
+                  Submit App
                 </Button>
               </Link>
-            </EmptyContent>
-          </Empty>
-        )}
-
-        {!isPending && allApps.length > 0 && (
-          <>
-            <div className="mb-8">
-              <p className="text-muted-foreground">
-                Showing{" "}
-                <span className="text-foreground font-semibold">
-                  {totalCount}
-                </span>{" "}
-                {hasNextPage ? "apps (more available)" : "apps"}
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {allApps.map((app) => {
-                const item: AppCardProps = {
-                  id: app.app.id,
-                  name: app.app.name,
-                  description: app.app.description,
-                  category: app.app.category,
-                  upvotes: app.upvoteCount,
-                  coverImage: app.app.coverImage || undefined,
-                };
-                return <AppCard key={item.id} app={item} />;
-              })}
-            </div>
-
-            {hasNextPage && (
-              <div className="mt-12 flex justify-center">
-                <Button
-                  onClick={() => fetchNextPage()}
-                  disabled={isFetchingNextPage}
-                  variant="outline"
-                  size="lg"
-                  className="cursor-pointer"
-                >
-                  {isFetchingNextPage ? (
-                    <>
-                      <Spinner className="size-4" />
-                      Loading more apps...
-                    </>
-                  ) : (
-                    "Load More Apps"
-                  )}
+            ) : (
+              <Link href="/login">
+                <Button className="cursor-pointer" variant="outline">
+                  <PlusCircle />
+                  Login to Submit App
                 </Button>
-              </div>
+              </Link>
             )}
-          </>
-        )}
-      </div>
-      <Footer />
+          </EmptyContent>
+        </Empty>
+      )}
+
+      {!isPending && allApps.length > 0 && (
+        <>
+          <div className="mb-8">
+            <p className="text-muted-foreground">
+              Showing{" "}
+              <span className="text-foreground font-semibold">
+                {totalCount}
+              </span>{" "}
+              of{" "}
+              <span className="text-foreground font-semibold">
+                {totalCount}
+              </span>{" "}
+              apps
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {allApps.map((app) => {
+              const item: AppCardProps = {
+                id: app.app.id,
+                name: app.app.name,
+                slug: app.app.slug,
+                description: app.app.description,
+                category: app.app.category,
+                upvotes: app.upvoteCount,
+                coverImage: app.app.coverImage || undefined,
+              };
+              return <AppCard key={item.id} app={item} />;
+            })}
+          </div>
+
+          {hasNextPage && (
+            <div className="mt-12 flex justify-center">
+              <Button
+                onClick={() => fetchNextPage()}
+                disabled={isFetchingNextPage}
+                variant="outline"
+                size="lg"
+                className="cursor-pointer"
+              >
+                {isFetchingNextPage ? (
+                  <>
+                    <Spinner className="size-4" />
+                    Loading more apps...
+                  </>
+                ) : (
+                  "Load More Apps"
+                )}
+              </Button>
+            </div>
+          )}
+        </>
+      )}
     </>
   );
 }

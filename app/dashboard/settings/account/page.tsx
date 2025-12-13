@@ -1,6 +1,18 @@
 "use client";
 
 import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+import {
   Card,
   CardContent,
   CardDescription,
@@ -14,6 +26,16 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { Separator } from "@/components/ui/separator";
+import { Spinner } from "@/components/ui/spinner";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import {
   changeEmail,
   changePassword,
@@ -25,6 +47,12 @@ import {
   unlinkAccount,
   updateUser,
 } from "@/lib/auth-client";
+import { queryClient } from "@/providers/query.provider";
+import {
+  updateEmailSchema,
+  updatePasswordSchema,
+  updateUsernameSchema,
+} from "@/schema/auth.schema";
 import { useForm } from "@tanstack/react-form";
 import { useQueries } from "@tanstack/react-query";
 import {
@@ -32,38 +60,10 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { useEffect, useMemo, useState } from "react";
-import { columns } from "./table";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Spinner } from "@/components/ui/spinner";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
 import { Trash2 } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
-import {
-  updateEmailSchema,
-  updatePasswordSchema,
-  updateUsernameSchema,
-} from "@/schema/auth.schema";
-import { queryClient } from "@/lib/provider";
+import { columns } from "./table";
 
 export default function AccountSettings() {
   const [isUpdatingEmail, setIsUpdatingEmail] = useState(false);

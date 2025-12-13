@@ -1,21 +1,13 @@
 "use client";
 
 import { Badge } from "@/components/ui/badge";
+import { AppCardProps } from "@/types";
 import { Heart } from "lucide-react";
 import Link from "next/link";
 
-export interface AppCardProps {
-  id: string;
-  name: string;
-  description: string;
-  category: string;
-  upvotes: number;
-  coverImage?: string;
-}
-
-export default function AppCard({ app }: { app: AppCardProps }) {
+export function AppCard({ app }: { app: AppCardProps }) {
   return (
-    <Link href={`/apps/${app.id}`}>
+    <Link href={`/apps/${app.slug}`}>
       <div className="h-full p-6 rounded-lg bg-card border border-border hover:border-primary/50 transition-all hover:shadow-xl hover:shadow-primary/10 group cursor-pointer">
         {/* Image Placeholder */}
         <div

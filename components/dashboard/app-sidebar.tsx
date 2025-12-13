@@ -1,6 +1,8 @@
 "use client";
 
 import { NavMain } from "@/components/custom/nav-main";
+import { NavSecondary } from "@/components/custom/nav-secondary";
+import { NavUser } from "@/components/dashboard/nav-user";
 import {
   Sidebar,
   SidebarContent,
@@ -19,16 +21,8 @@ import {
   SquareTerminal,
 } from "lucide-react";
 import Link from "next/link";
-import * as React from "react";
-import { NavSecondary } from "../custom/nav-secondary";
-import { NavUser } from "./nav-user";
 
 const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
   navMain: [
     { title: "Dashboard", url: "/dashboard", icon: House },
     {
@@ -39,7 +33,7 @@ const data = {
       items: [
         {
           title: "Your Apps",
-          url: "/dashboard/apps/me",
+          url: "/dashboard/apps",
         },
         {
           title: "Create App",

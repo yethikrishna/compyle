@@ -1,20 +1,14 @@
 "use client";
 
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+import { ModeToggle } from "@/components/custom/mode-toggle";
 import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
-  NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-  NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
+import { Separator } from "@/components/ui/separator";
 import {
   Sheet,
   SheetContent,
@@ -22,93 +16,56 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { ArrowUpRight, GitPullRequestCreateArrow, Menu } from "lucide-react";
+import { Spinner } from "@/components/ui/spinner";
+import { useAuthStore } from "@/store/session.store";
+import { ArrowUpRight, Menu } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
-import { Separator } from "../ui/separator";
-import { useSession } from "@/lib/auth-client";
-import { Spinner } from "../ui/spinner";
-import { useAuthStore } from "@/providers/auth.provider";
-import { useEffect } from "react";
-import { ModeToggle } from "./mode-toggle";
 
-interface MenuItem {
-  title: string;
-  url: string;
-  description?: string;
-  icon?: React.ReactNode;
-  items?: MenuItem[];
-}
-
-interface HeaderProps {
-  logo?: {
-    url: string;
-    src: string;
-    alt: string;
-    title: string;
-  };
-  menu?: MenuItem[];
-  auth?: {
-    login: {
-      title: string;
-      url: string;
-    };
-    signup: {
-      title: string;
-      url: string;
-    };
-  };
-}
-
-const Header = ({
-  menu = [
-    { title: "Home", url: "/" },
-    { title: "Apps", url: "/apps" },
-  ],
-  auth = {
-    login: { title: "Login", url: "/login" },
-    signup: { title: "Sign up", url: "/signup" },
-  },
-}: HeaderProps) => {
-  const { data: session, isPending, error } = useSession();
-
-  const { setUser } = useAuthStore();
-
-  useEffect(() => {
-    if (!isPending && !error && session) {
-      setUser(session.user);
-    }
-  }, [error, isPending, session, setUser]);
+export function Header() {
+  const { authInfo, isInitialPending } = useAuthStore();
 
   return (
     <section className="py-4">
       <div className="container mx-auto px-6">
         {/* Desktop Menu */}
         <nav className="hidden items-center justify-between lg:flex">
-          <div className="flex items-center gap-6">
-            {/* Logo */}
-            <Link
-              href="/"
-              className="flex items-center gap-3 self-center font-medium"
-            >
-              <div className="bg-primary/25 flex items-center justify-center rounded-md p-1 border border-primary/50">
-                <GitPullRequestCreateArrow />
-              </div>
+          <div className="flex items-center gap-16">
+            <Link href="/" className="flex items-center gap-3 font-medium">
+              <Image
+                src="/compyle.svg"
+                width={35}
+                height={35}
+                alt="Compyle.ai logo"
+                className="object-contain"
+              />
               <span className="font-semibold text-lg tracking-tighter">
                 Compyle Apps
               </span>
             </Link>
-            <div className="flex items-center">
+            <div className="flex items-center h-full">
               <NavigationMenu>
-                <NavigationMenuList>
-                  {menu.map((item) => renderMenuItem(item))}
+                <NavigationMenuList className="flex gap-6 items-center">
                   <NavigationMenuItem>
-                    <NavigationMenuLink
-                      href="https://www.compyle.ai"
-                      target="_blank"
-                      className="bg-background hover:bg-muted hover:text-accent-foreground group inline-flex h-10 w-max items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors"
-                    >
-                      Compyle.ai
-                      <ArrowUpRight className="ml-2 size-4" />
+                    <NavigationMenuLink asChild>
+                      <Link
+                        href="/apps"
+                        className="flex items-center h-full px-4"
+                      >
+                        Apps
+                      </Link>
+                    </NavigationMenuLink>
+                  </NavigationMenuItem>
+                  <NavigationMenuItem>
+                    <NavigationMenuLink asChild>
+                      <Link
+                        target="_blank"
+                        className="flex flex-row items-center gap-1 px-4"
+                        href="https://www.compyle.ai"
+                      >
+                        Compyle.ai
+                        <ArrowUpRight className="w-4 h-4" />
+                      </Link>
                     </NavigationMenuLink>
                   </NavigationMenuItem>
                 </NavigationMenuList>
@@ -116,18 +73,15 @@ const Header = ({
             </div>
           </div>
           <div className="flex items-center gap-2">
-            {isPending && !session && <Spinner className="size-5" />}
-            {!isPending && !session && (
-              <>
-                <Button asChild variant="outline" size="sm">
-                  <Link href={auth.login.url}>{auth.login.title}</Link>
-                </Button>
-                <Button asChild size="sm">
-                  <Link href={auth.signup.url}>{auth.signup.title}</Link>
-                </Button>
-              </>
+            {isInitialPending && !authInfo?.session && (
+              <Spinner className="size-5" />
             )}
-            {!isPending && !error && session && (
+            {!isInitialPending && !authInfo?.session && (
+              <Button asChild size="sm">
+                <Link href="/login">Login</Link>
+              </Button>
+            )}
+            {!isInitialPending && authInfo?.session && (
               <Button asChild size="sm">
                 <Link href="/dashboard">Dashboard</Link>
               </Button>
@@ -137,145 +91,94 @@ const Header = ({
         </nav>
 
         {/* Mobile Menu */}
-        <div className="block lg:hidden">
-          <div className="flex items-center justify-between">
-            {/* Logo */}
-            <Link
-              href="/"
-              className="flex items-center gap-3 self-center font-medium"
-            >
-              <div className="bg-primary/25 flex items-center justify-center rounded-md p-1 border border-primary/50">
-                <GitPullRequestCreateArrow />
-              </div>
+        <nav className="flex lg:hidden">
+          <div className="flex items-center justify-between w-full">
+            <Link href="/" className="flex items-center gap-3 font-medium">
+              <Image
+                src="/compyle.svg"
+                width={35}
+                height={35}
+                alt="Compyle.ai logo"
+                className="object-contain"
+              />
+              <span className="font-semibold text-lg tracking-tighter">
+                Compyle Apps
+              </span>
             </Link>
             <div className="flex items-center gap-2">
-              <ModeToggle />
-              <Sheet>
+              <Sheet modal={false}>
                 <SheetTrigger asChild>
-                  <Button variant="outline" size="icon">
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="cursor-pointer"
+                  >
                     <Menu className="size-4" />
                   </Button>
                 </SheetTrigger>
                 <SheetContent className="overflow-y-auto">
                   <SheetHeader>
                     <SheetTitle>
-                      <Link
-                        href="/"
-                        className="flex items-center gap-3 self-center font-medium"
-                      >
-                        <div className="bg-primary/25 flex items-center justify-center rounded-md p-1 border border-primary/50">
-                          <GitPullRequestCreateArrow />
-                        </div>
-                      </Link>
+                      <div className="flex items-center gap-3 font-medium">
+                        <Image
+                          src="/compyle.svg"
+                          width={35}
+                          height={35}
+                          alt="Compyle.ai logo"
+                          className="object-contain"
+                        />
+                        <span className="font-semibold text-lg tracking-tighter">
+                          Compyle Apps
+                        </span>
+                      </div>
                     </SheetTitle>
                   </SheetHeader>
-                  <div className="flex flex-col gap-6 p-4">
-                    <Accordion
-                      type="single"
-                      collapsible
-                      className="flex w-full flex-col gap-4"
-                    >
-                      {menu.map((item) => renderMobileMenuItem(item))}
-                    </Accordion>
-
-                    {isPending && !session && <Spinner className="size-5" />}
-                    {!isPending && !session && (
-                      <div className="flex flex-col gap-3">
-                        <Button asChild variant="outline">
-                          <Link href={auth.login.url}>{auth.login.title}</Link>
-                        </Button>
-                        <Button asChild>
-                          <Link href={auth.signup.url}>
-                            {auth.signup.title}
-                          </Link>
-                        </Button>
-                      </div>
+                  <div className="mx-10 space-y-4">
+                    <NavigationMenu>
+                      <NavigationMenuList className="flex flex-col items-start">
+                        <NavigationMenuItem>
+                          <NavigationMenuLink asChild>
+                            <Link
+                              href="/apps"
+                              className="flex items-center h-full"
+                            >
+                              Apps
+                            </Link>
+                          </NavigationMenuLink>
+                        </NavigationMenuItem>
+                        <NavigationMenuItem>
+                          <NavigationMenuLink asChild>
+                            <Link
+                              target="_blank"
+                              className="flex flex-row items-center gap-1"
+                              href="https://www.compyle.ai"
+                            >
+                              Compyle.ai
+                              <ArrowUpRight className="w-4 h-4" />
+                            </Link>
+                          </NavigationMenuLink>
+                        </NavigationMenuItem>
+                      </NavigationMenuList>
+                    </NavigationMenu>
+                    {!isInitialPending && !authInfo?.session && (
+                      <Button asChild size="sm" className="w-full">
+                        <Link href="/login">Login</Link>
+                      </Button>
                     )}
-                    {!isPending && !error && session && (
-                      <Button asChild size="sm">
+                    {!isInitialPending && authInfo?.session && (
+                      <Button asChild size="sm" className="w-full">
                         <Link href="/dashboard">Dashboard</Link>
                       </Button>
                     )}
                   </div>
                 </SheetContent>
               </Sheet>
+              <ModeToggle />
             </div>
           </div>
-        </div>
+        </nav>
       </div>
       <Separator className="mt-3" />
     </section>
   );
-};
-
-const renderMenuItem = (item: MenuItem) => {
-  if (item.items) {
-    return (
-      <NavigationMenuItem key={item.title}>
-        <NavigationMenuTrigger>{item.title}</NavigationMenuTrigger>
-        <NavigationMenuContent className="bg-popover text-popover-foreground">
-          {item.items.map((subItem) => (
-            <NavigationMenuLink asChild key={subItem.title} className="w-80">
-              <SubMenuLink item={subItem} />
-            </NavigationMenuLink>
-          ))}
-        </NavigationMenuContent>
-      </NavigationMenuItem>
-    );
-  }
-
-  return (
-    <NavigationMenuItem key={item.title}>
-      <NavigationMenuLink
-        href={item.url}
-        className="bg-background hover:bg-muted hover:text-accent-foreground group inline-flex h-10 w-max items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors"
-      >
-        {item.title}
-      </NavigationMenuLink>
-    </NavigationMenuItem>
-  );
-};
-
-const renderMobileMenuItem = (item: MenuItem) => {
-  if (item.items) {
-    return (
-      <AccordionItem key={item.title} value={item.title} className="border-b-0">
-        <AccordionTrigger className="text-md py-0 font-semibold hover:no-underline">
-          {item.title}
-        </AccordionTrigger>
-        <AccordionContent className="mt-2">
-          {item.items.map((subItem) => (
-            <SubMenuLink key={subItem.title} item={subItem} />
-          ))}
-        </AccordionContent>
-      </AccordionItem>
-    );
-  }
-
-  return (
-    <a key={item.title} href={item.url} className="text-md font-semibold">
-      {item.title}
-    </a>
-  );
-};
-
-const SubMenuLink = ({ item }: { item: MenuItem }) => {
-  return (
-    <a
-      className="hover:bg-muted hover:text-accent-foreground flex min-w-80 select-none flex-row gap-4 rounded-md p-3 leading-none no-underline outline-none transition-colors"
-      href={item.url}
-    >
-      <div className="text-foreground">{item.icon}</div>
-      <div>
-        <div className="text-sm font-semibold">{item.title}</div>
-        {item.description && (
-          <p className="text-muted-foreground text-sm leading-snug">
-            {item.description}
-          </p>
-        )}
-      </div>
-    </a>
-  );
-};
-
-export { Header };
+}

@@ -397,7 +397,7 @@ export async function getPublicFeaturedApps(): Promise<
   }
 }
 
-export async function getPublicAppDetails({ id }: { id: string }): Promise<{
+export async function getPublicAppDetails({ slug }: { slug: string }): Promise<{
   appDetails: typeof apps.$inferSelect;
   userDetails: {
     id: string;
@@ -408,8 +408,8 @@ export async function getPublicAppDetails({ id }: { id: string }): Promise<{
   upvoteCount: number;
 }> {
   try {
-    if (!id) {
-      throw new Error("Invalid app ID");
+    if (!slug) {
+      throw new Error("Invalid app slug");
     }
 
     const res = await db
@@ -430,11 +430,11 @@ export async function getPublicAppDetails({ id }: { id: string }): Promise<{
         `,
       })
       .from(apps)
-      .where(and(eq(apps.id, id), eq(apps.status, "published")))
+      .where(and(eq(apps.slug, slug), eq(apps.status, "published")))
       .innerJoin(users, eq(users.id, apps.userId));
 
     if (res.length < 1) {
-      throw new Error("No app found with the provided ID");
+      throw new Error("No app found with the provided slug");
     }
 
     return {

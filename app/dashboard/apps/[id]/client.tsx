@@ -84,15 +84,7 @@ export default function AppDetailsDashboard({ id }: { id: string }) {
   };
 
   return (
-    <div className="container w-full mt-4 pb-12">
-      <Link
-        href="/dashboard/apps/me"
-        className="inline-flex items-center gap-2 text-primary hover:text-primary/80 mb-8 transition-colors"
-      >
-        <ArrowLeft className="w-4 h-4" />
-        Back to Your Apps
-      </Link>
-
+    <div className="pb-12">
       {isPending && (
         <div className="mt-4">
           <Spinner className="mx-auto size-6" />

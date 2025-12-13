@@ -1,6 +1,6 @@
 "use client";
 
-import { Header } from "@/components/custom/header";
+import { SocialAuth } from "@/app/signup/socials";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -18,31 +18,20 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
-import { signUp, useSession } from "@/lib/auth-client";
+import { signUp } from "@/lib/auth-client";
 import { signupSchema } from "@/schema/auth.schema";
+import { useAuthStore } from "@/store/session.store";
 import { useForm } from "@tanstack/react-form";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
-import SocialAuth from "./socials";
 
 export default function Signup() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const { data: session, isPending, error } = useSession();
 
-  useEffect(() => {
-    if (session && !isPending && !error) {
-      router.prefetch("/dashboard");
-      const toastId = toast.loading("Logged in. Redirecting...");
-      const timer = setTimeout(() => {
-        toast.dismiss(toastId);
-        router.push("/dashboard");
-      }, 2000);
-      return () => clearTimeout(timer);
-    }
-  }, [session, isPending, error, router]);
+  const { isInitialPending, authInfo } = useAuthStore();
 
   const form = useForm({
     defaultValues: { name: "", email: "", username: "", password: "" },
@@ -75,13 +64,27 @@ export default function Signup() {
     },
   });
 
+  if (authInfo?.session) {
+    router.push("/dashboard");
+    return null;
+  }
+
+  if (isInitialPending) {
+    return (
+      <div className="flex items-center justify-center min-h-[calc(100vh-10rem)]">
+        <div>
+          <Spinner className="mx-auto size-6" />
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div>
-      <Header />
-      <div className="mx-auto max-w-lg px-6">
+    <div className="flex items-center justify-center min-h-[calc(100vh-10rem)]">
+      <div className="max-w-md w-full">
         <Card className="md:min-w-md">
           <CardHeader className="text-center">
-            <CardTitle className="text-xl">Create Your Account</CardTitle>
+            <CardTitle className="text-xl">Create Account</CardTitle>
             <CardDescription>
               Enter your info below to create an account
             </CardDescription>
@@ -195,7 +198,7 @@ export default function Signup() {
                           onBlur={field.handleBlur}
                           onChange={(e) => field.handleChange(e.target.value)}
                           aria-invalid={isInvalid}
-                          placeholder=""
+                          placeholder="Enter password"
                           autoComplete="off"
                         />
                         {isInvalid && (
