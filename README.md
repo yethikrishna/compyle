@@ -3,5 +3,5 @@
 First, run the development server:
 
 ```bash
-bun dev
+pnpm dev
 ```
