@@ -1,11 +1,6 @@
 import { LayoutClient } from "@/app/dashboard/layout.client";
 import { AppSidebar } from "@/components/dashboard/app-sidebar";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbList,
-  BreadcrumbPage,
-} from "@/components/ui/breadcrumb";
+import { Breadcrumbs } from "@/components/dashboard/breadcrumbs";
 import { Separator } from "@/components/ui/separator";
 import {
   SidebarInset,
@@ -25,13 +20,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               orientation="vertical"
               className="mr-2 data-[orientation=vertical]:h-4"
             />
-            <Breadcrumb>
-              <BreadcrumbList>
-                <BreadcrumbItem>
-                  <BreadcrumbPage>Compyle Apps</BreadcrumbPage>
-                </BreadcrumbItem>
-              </BreadcrumbList>
-            </Breadcrumb>
+            <Breadcrumbs />
           </div>
         </header>
         <div className="gap-4 p-4 flex-1 overflow-auto container mx-auto">

@@ -17,6 +17,7 @@ import { ImageIcon, Upload } from "lucide-react";
 import Image from "next/image";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
+import { Field, FieldLabel } from "@/components/ui/field";
 
 interface NewAppImageProps {
   onImageDataChange: (imageData: ImageData | null) => void;
@@ -153,23 +154,26 @@ export default function NewAppImage({
   };
 
   return (
-    <Card>
-      <CardContent>
-        <div className="flex items-start gap-4 mb-6">
-          <div className="bg-secondary/50 p-3 rounded-lg">
-            <ImageIcon className="w-6 h-6 text-foreground" />
-          </div>
-          <div>
-            <h2 className="text-lg lg:text-xl font-semibold mb-1">
-              Image or Screenshot
-            </h2>
-            <p className="text-muted-foreground text-sm">
-              Upload an image or screenshot of your app
-            </p>
-          </div>
+    <div className="w-full">
+      {/* <div className="flex items-start gap-4 mb-8">
+        <div className="bg-secondary/50 p-3 rounded-lg shrink-0">
+          <ImageIcon className="w-6 h-6 text-foreground" />
         </div>
-
-        <div className="pl-0 lg:pl-16 mt-2 space-y-6">
+        <div className="flex-1">
+          <div className="flex items-center gap-4">
+            <h3 className="text-lg lg:text-xl font-semibold whitespace-nowrap">
+              Image or Screenshot
+            </h3>
+            <div className="h-px flex-1 bg-white/80" />
+          </div>
+          <p className="text-muted-foreground text-sm mt-1">
+            Upload an image or screenshot of your app
+          </p>
+        </div>
+      </div> */}
+      <div className="mt-2 space-y-8">
+        <Field>
+          <FieldLabel>Image or Screenshot</FieldLabel>
           {imageData?.url ? (
             <div className="">
               <Image
@@ -211,18 +215,23 @@ export default function NewAppImage({
               />
             </div>
           )}
-        </div>
+          <p className="text-xs mt-2 text-white/90">
+            Upload an image or screenshot of your app
+          </p>
+        </Field>
+      </div >
 
-        {isUploading && (
-          <div className="pl-0 lg:pl-16 mt-2 w-full">
-            <div className="flex justify-between text-sm mb-1">
-              <span>Uploading...</span>
-              <span>{Math.round(progress)}%</span>
-            </div>
-            <Progress value={progress} />
+      {isUploading && (
+        <div className="mt-2 w-full">
+          <div className="flex justify-between text-sm mb-1">
+            <span>Uploading...</span>
+            <span>{Math.round(progress)}%</span>
           </div>
-        )}
-      </CardContent>
-    </Card>
+          <Progress value={progress} />
+
+        </div>
+      )
+      }
+    </div >
   );
 }

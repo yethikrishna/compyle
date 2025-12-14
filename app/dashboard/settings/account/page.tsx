@@ -65,6 +65,7 @@ import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 import { columns } from "./table";
 
+
 export default function AccountSettings() {
   const [isUpdatingEmail, setIsUpdatingEmail] = useState(false);
   const [isUpdatingUsername, setIsUpdatingUsername] = useState(false);
@@ -638,9 +639,9 @@ export default function AccountSettings() {
                           {header.isPlaceholder
                             ? null
                             : flexRender(
-                                header.column.columnDef.header,
-                                header.getContext(),
-                              )}
+                              header.column.columnDef.header,
+                              header.getContext(),
+                            )}
                         </TableHead>
                       ))}
                     </TableRow>
