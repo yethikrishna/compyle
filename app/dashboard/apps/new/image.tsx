@@ -171,7 +171,7 @@ export default function NewAppImage({
           </p>
         </div>
       </div> */}
-      <div className="pl-0 lg:pl-16 mt-2 space-y-6">
+      <div className="mt-2 space-y-8">
         <Field>
           <FieldLabel>Image or Screenshot</FieldLabel>
           {imageData?.url ? (
@@ -215,14 +215,14 @@ export default function NewAppImage({
               />
             </div>
           )}
+          <p className="text-xs mt-2 text-white/90">
+            Upload an image or screenshot of your app
+          </p>
         </Field>
-        <p className="text-xs text-muted-foreground mt-2">
-          Upload an image or screenshot of your app
-        </p>
-      </div>
+      </div >
 
       {isUploading && (
-        <div className="pl-0 lg:pl-16 mt-2 w-full">
+        <div className="mt-2 w-full">
           <div className="flex justify-between text-sm mb-1">
             <span>Uploading...</span>
             <span>{Math.round(progress)}%</span>
@@ -230,7 +230,8 @@ export default function NewAppImage({
           <Progress value={progress} />
 
         </div>
-      )}
-    </div>
+      )
+      }
+    </div >
   );
 }
