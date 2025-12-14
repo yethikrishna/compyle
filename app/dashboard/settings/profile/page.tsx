@@ -63,6 +63,7 @@ export default function ProfileSettings() {
         </div>
       )}
 
+
       {!isPending && (
         <div className="container mx-auto px-6">
           <p className="leading-none font-semibold text-xl">Profile Settings</p>

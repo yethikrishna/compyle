@@ -52,7 +52,7 @@ export const auth = betterAuth({
   databaseHooks: {
     user: {
       create: {
-        before: async (user, _) => {
+        before: async (user) => {
           if (user.username && user.displayUsername) {
             return { data: user };
           } else {

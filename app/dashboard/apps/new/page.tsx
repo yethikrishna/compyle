@@ -3,6 +3,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 import {
   Field,
   FieldContent,
@@ -34,7 +35,6 @@ import {
   LinkIcon,
   X,
 } from "lucide-react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -91,50 +91,38 @@ export default function CreateApp() {
   );
 
   return (
-    <div className="flex-1 ">
-      <div className="mb-10">
-        <h1 className="text-2xl lg:text-4xl font-bold mb-3 gradient-text">
-          Submit New App
-        </h1>
-        <p className="text-muted-foreground text-lg">
-          Launch your applications built with Compyle AI. Fill in the details
-          below to get started.
-        </p>
-      </div>
-
+    <div className="flex-1 p-4 md:p-8 pt-6">
       <form
         id="create-app-form"
-        className="max-w-4xl space-y-8"
+        className="max-w-4xl space-y-8 mx-auto"
         onSubmit={(e) => {
           e.preventDefault();
           form.handleSubmit();
         }}
       >
-        {/* Basic Information */}
+        <div className="mb-10">
+          <h2 className="text-xl lg:text-2xl font-bold mb-3 gradient-text">
+            Submit New App
+          </h2>
+          <p className="text-muted-foreground text-lg">
+            Launch your applications built with Compyle AI. Fill in the details
+            below to get started.
+          </p>
+        </div>
+
         <Card>
-          <CardContent>
-            <div className="flex items-start gap-4 mb-6">
-              <div className="bg-secondary/50 p-3 rounded-lg">
-                <FileText className="w-6 h-6 text-foreground" />
-              </div>
-              <div>
-                <h2 className="text-lg lg:text-xl font-semibold mb-1">
-                  Basic Information
-                </h2>
-                <p className="text-muted-foreground text-sm">
-                  Tell us more about your app
-                </p>
-              </div>
-            </div>
-            <div className="pl-0 lg:pl-16 mt-2 space-y-6">
+          <CardContent className="my-5">
+            <div className="space-y-8">
+              {/* App Name */}
               <FieldGroup>
                 <form.Field name="name">
                   {(field) => {
                     const isInvalid =
                       field.state.meta.isTouched && !field.state.meta.isValid;
+
                     return (
                       <Field data-invalid={isInvalid}>
-                        <FieldLabel htmlFor={field.name}>App Name</FieldLabel>
+                        <FieldLabel htmlFor={field.name}>App Name *</FieldLabel>
                         <Input
                           id={field.name}
                           name={field.name}
@@ -153,14 +141,17 @@ export default function CreateApp() {
                   }}
                 </form.Field>
               </FieldGroup>
+
+              {/* App Slug */}
               <FieldGroup>
                 <form.Field name="slug">
                   {(field) => {
                     const isInvalid =
                       field.state.meta.isTouched && !field.state.meta.isValid;
+
                     return (
                       <Field data-invalid={isInvalid}>
-                        <FieldLabel htmlFor={field.name}>App Slug</FieldLabel>
+                        <FieldLabel htmlFor={field.name}>App Slug *</FieldLabel>
                         <Input
                           id={field.name}
                           name={field.name}
@@ -174,7 +165,7 @@ export default function CreateApp() {
                         {isInvalid && (
                           <FieldError errors={field.state.meta.errors} />
                         )}
-                        <p className="text-xs text-muted-foreground mt-1">
+                        <p className="text-xs text-white/90 mt-1">
                           Use only lowercase letters and underscores
                         </p>
                       </Field>
@@ -182,15 +173,18 @@ export default function CreateApp() {
                   }}
                 </form.Field>
               </FieldGroup>
+
+              {/* Description */}
               <FieldGroup>
                 <form.Field name="description">
                   {(field) => {
                     const isInvalid =
                       field.state.meta.isTouched && !field.state.meta.isValid;
+
                     return (
                       <Field data-invalid={isInvalid}>
                         <FieldLabel htmlFor={field.name}>
-                          Description
+                          Description *
                         </FieldLabel>
                         <Textarea
                           id={field.name}
@@ -211,27 +205,7 @@ export default function CreateApp() {
                   }}
                 </form.Field>
               </FieldGroup>
-            </div>
-          </CardContent>
-        </Card>
 
-        {/* Category */}
-        <Card>
-          <CardContent>
-            <div className="flex items-start gap-4 mb-6">
-              <div className="bg-secondary/50 p-3 rounded-lg">
-                <Layers className="w-6 h-6 text-foreground" />
-              </div>
-              <div>
-                <h2 className="text-lg lg:text-xl font-semibold mb-1">
-                  Category
-                </h2>
-                <p className="text-muted-foreground text-sm">
-                  Select the primary category for your app
-                </p>
-              </div>
-            </div>
-            <div className="pl-0 lg:pl-16 mt-2 space-y-6">
               <FieldGroup>
                 <form.Field name="category">
                   {(field) => {
@@ -241,7 +215,7 @@ export default function CreateApp() {
                       <Field orientation="vertical" data-invalid={isInvalid}>
                         <FieldContent>
                           <FieldLabel htmlFor="category-select">
-                            Select Category
+                            Select Category *
                           </FieldLabel>
                           {isInvalid && (
                             <FieldError errors={field.state.meta.errors} />
@@ -272,28 +246,7 @@ export default function CreateApp() {
                   }}
                 </form.Field>
               </FieldGroup>
-            </div>
-          </CardContent>
-        </Card>
 
-        {/* Built With */}
-        <Card>
-          <CardContent>
-            <div className="flex items-start gap-4 mb-6">
-              <div className="bg-secondary/50 p-3 rounded-lg">
-                <Layers className="w-6 h-6 text-foreground" />
-              </div>
-              <div>
-                <h2 className="text-lg lg:text-xl font-semibold mb-1">
-                  Built With
-                </h2>
-                <p className="text-muted-foreground text-sm">
-                  Select the technologies and frameworks used in your app
-                </p>
-              </div>
-            </div>
-
-            <div className="pl-0 lg:pl-16 mt-2 space-y-4">
               <form.Field name="builtWith">
                 {(field) => {
                   const selectedTechs = field.state.value || [];
@@ -348,7 +301,7 @@ export default function CreateApp() {
                       {/* Search Input */}
                       <div className="space-y-2">
                         <FieldLabel htmlFor="tech-search">
-                          Search Technologies
+                          Search Technologies *
                         </FieldLabel>
                         <Input
                           id="tech-search"
@@ -396,7 +349,7 @@ export default function CreateApp() {
                       {isInvalid && (
                         <FieldError errors={field.state.meta.errors} />
                       )}
-                      <p className="text-xs text-muted-foreground mt-2">
+                      <p className="text-xs mt-2 text-white/90">
                         Click on technologies to add them. Select at least one
                         technology.
                       </p>
@@ -404,25 +357,7 @@ export default function CreateApp() {
                   );
                 }}
               </form.Field>
-            </div>
-          </CardContent>
-        </Card>
 
-        {/* Links */}
-        <Card>
-          <CardContent>
-            <div className="flex items-start gap-4 mb-6">
-              <div className="bg-secondary/50 p-3 rounded-lg">
-                <LinkIcon className="w-6 h-6 text-foreground" />
-              </div>
-              <div>
-                <h2 className="text-lg lg:text-xl font-semibold mb-1">Links</h2>
-                <p className="text-muted-foreground text-sm">
-                  Provide links to your app (optional)
-                </p>
-              </div>
-            </div>
-            <div className="pl-0 lg:pl-16 mt-2 space-y-6">
               <FieldGroup>
                 <form.Field name="websiteUrl">
                   {(field) => {
@@ -508,33 +443,12 @@ export default function CreateApp() {
                   }}
                 </form.Field>
               </FieldGroup>
-            </div>
-          </CardContent>
-        </Card>
 
-        {/* Image upload*/}
-        <NewAppImage
-          onImageDataChange={setImageData}
-          initialImageData={imageData}
-        />
+              <NewAppImage
+                onImageDataChange={setImageData}
+                initialImageData={imageData}
+              />
 
-        {/* Publish Status */}
-        <Card>
-          <CardContent>
-            <div className="flex items-start gap-4 mb-6">
-              <div className="bg-secondary/50 p-3 rounded-lg">
-                <BookCheck className="w-6 h-6 text-foreground" />
-              </div>
-              <div>
-                <h2 className="text-lg lg:text-xl font-semibold mb-1">
-                  Publish Status
-                </h2>
-                <p className="text-muted-foreground text-sm">
-                  Whether to publish your app or just create a draft.
-                </p>
-              </div>
-            </div>
-            <div className="pl-0 lg:pl-16 mt-2 space-y-6">
               <FieldGroup>
                 <form.Field name="status">
                   {(field) => {
@@ -571,6 +485,9 @@ export default function CreateApp() {
                             </SelectItem>
                           </SelectContent>
                         </Select>
+                        <p className="text-xs mt-2 text-white/90">
+                          Whether to publish your app or just create a draft.
+                        </p>
                       </Field>
                     );
                   }}
@@ -578,7 +495,7 @@ export default function CreateApp() {
               </FieldGroup>
             </div>
           </CardContent>
-          <CardFooter className="flex flex-row pl-6 lg:pl-21">
+          <CardFooter className="flex flex-row pl-6 lg:pl-21 pt-4 pb-6 bg-secondary/5">
             <Field
               orientation="horizontal"
               className="w-full flex justify-between"
