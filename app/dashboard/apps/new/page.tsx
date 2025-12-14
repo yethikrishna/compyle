@@ -3,6 +3,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 import {
   Field,
   FieldContent,
@@ -34,7 +35,6 @@ import {
   LinkIcon,
   X,
 } from "lucide-react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -92,54 +92,54 @@ export default function CreateApp() {
 
   return (
     <div className="flex-1 mt-2">
-      <Link
-        href="/dashboard"
-        className="inline-flex items-center gap-2 text-primary hover:text-primary/80 mb-8 transition-colors"
-      >
-        <ArrowLeft className="w-4 h-4" />
-        Back to Dashboard
-      </Link>
-
-      <div className="mb-10">
-        <h1 className="text-2xl lg:text-4xl font-bold mb-3 gradient-text">
-          Submit New App
-        </h1>
-        <p className="text-muted-foreground text-lg">
-          Launch your applications built with Compyle AI. Fill in the details
-          below to get started.
-        </p>
-      </div>
-
       <form
         id="create-app-form"
-        className="max-w-4xl space-y-8"
+        className="max-w-4xform l space-y-8 mx-auto"
         onSubmit={(e) => {
           e.preventDefault();
           form.handleSubmit();
         }}
       >
-        {/* Basic Information */}
         <Card>
           <CardContent>
-            <div className="flex items-start gap-4 mb-6">
-              <div className="bg-secondary/50 p-3 rounded-lg">
+            <div className="mb-10">
+              <h2 className="text-xl lg:text-2xl font-bold mb-3 gradient-text">
+                Submit New App
+              </h2>
+              <p className="text-muted-foreground text-lg">
+                Launch your applications built with Compyle AI. Fill in the details below
+                to get started.
+              </p>
+            </div>
+
+          </CardContent>
+          <CardContent className="my-5">
+            {/* <div className="flex items-start gap-4 mb-8">
+              <div className="bg-secondary/50 p-3 rounded-lg shrink-0">
                 <FileText className="w-6 h-6 text-foreground" />
               </div>
-              <div>
-                <h2 className="text-lg lg:text-xl font-semibold mb-1">
-                  Basic Information
-                </h2>
-                <p className="text-muted-foreground text-sm">
+              <div className="flex-1">
+                <div className="flex items-center gap-4">
+                  <h3 className="text-lg lg:text-xl font-semibold whitespace-nowrap">
+                    Basic Information
+                  </h3>
+                  <div className="h-px flex-1 bg-white/80" />
+                </div>
+                <p className="text-muted-foreground text-sm mt-1">
                   Tell us more about your app
                 </p>
               </div>
-            </div>
-            <div className="pl-0 lg:pl-16 mt-2 space-y-6">
+            </div> */}
+
+            {/* Form Fields */}
+            <div className="pl-0 lg:pl-16 space-y-6">
+              {/* App Name */}
               <FieldGroup>
                 <form.Field name="name">
                   {(field) => {
                     const isInvalid =
                       field.state.meta.isTouched && !field.state.meta.isValid;
+
                     return (
                       <Field data-invalid={isInvalid}>
                         <FieldLabel htmlFor={field.name}>App Name</FieldLabel>
@@ -161,11 +161,14 @@ export default function CreateApp() {
                   }}
                 </form.Field>
               </FieldGroup>
+
+              {/* App Slug */}
               <FieldGroup>
                 <form.Field name="slug">
                   {(field) => {
                     const isInvalid =
                       field.state.meta.isTouched && !field.state.meta.isValid;
+
                     return (
                       <Field data-invalid={isInvalid}>
                         <FieldLabel htmlFor={field.name}>App Slug</FieldLabel>
@@ -190,16 +193,17 @@ export default function CreateApp() {
                   }}
                 </form.Field>
               </FieldGroup>
+
+              {/* Description */}
               <FieldGroup>
                 <form.Field name="description">
                   {(field) => {
                     const isInvalid =
                       field.state.meta.isTouched && !field.state.meta.isValid;
+
                     return (
                       <Field data-invalid={isInvalid}>
-                        <FieldLabel htmlFor={field.name}>
-                          Description
-                        </FieldLabel>
+                        <FieldLabel htmlFor={field.name}>Description</FieldLabel>
                         <Textarea
                           id={field.name}
                           name={field.name}
@@ -220,25 +224,25 @@ export default function CreateApp() {
                 </form.Field>
               </FieldGroup>
             </div>
+            {/* Section Separator (before next section) */}
           </CardContent>
-        </Card>
-
-        {/* Category */}
-        <Card>
-          <CardContent>
-            <div className="flex items-start gap-4 mb-6">
-              <div className="bg-secondary/50 p-3 rounded-lg">
+          <CardContent className="my-5">
+            {/* <div className="flex items-start gap-4 mb-8">
+              <div className="bg-secondary/50 p-3 rounded-lg shrink-0">
                 <Layers className="w-6 h-6 text-foreground" />
               </div>
-              <div>
-                <h2 className="text-lg lg:text-xl font-semibold mb-1">
-                  Category
-                </h2>
-                <p className="text-muted-foreground text-sm">
+              <div className="flex-1">
+                <div className="flex items-center gap-4">
+                  <h3 className="text-lg lg:text-xl font-semibold whitespace-nowrap">
+                    Category
+                  </h3>
+                  <div className="h-px flex-1 bg-white/80" />
+                </div>
+                <p className="text-muted-foreground text-sm mt-1">
                   Select the primary category for your app
                 </p>
               </div>
-            </div>
+            </div> */}
             <div className="pl-0 lg:pl-16 mt-2 space-y-6">
               <FieldGroup>
                 <form.Field name="category">
@@ -281,25 +285,28 @@ export default function CreateApp() {
                 </form.Field>
               </FieldGroup>
             </div>
-          </CardContent>
-        </Card>
 
-        {/* Built With */}
-        <Card>
-          <CardContent>
-            <div className="flex items-start gap-4 mb-6">
-              <div className="bg-secondary/50 p-3 rounded-lg">
+          </CardContent>
+          <CardContent className="my-5">
+            {/* =========================
+               Built With Section
+               ========================= */}
+            {/* <div className="flex items-start gap-4 mb-8">
+              <div className="bg-secondary/50 p-3 rounded-lg shrink-0">
                 <Layers className="w-6 h-6 text-foreground" />
               </div>
-              <div>
-                <h2 className="text-lg lg:text-xl font-semibold mb-1">
-                  Built With
-                </h2>
-                <p className="text-muted-foreground text-sm">
+              <div className="flex-1">
+                <div className="flex items-center gap-4">
+                  <h3 className="text-lg lg:text-xl font-semibold whitespace-nowrap">
+                    Built With
+                  </h3>
+                  <div className="h-px flex-1 bg-white/80" />
+                </div>
+                <p className="text-muted-foreground text-sm mt-1">
                   Select the technologies and frameworks used in your app
                 </p>
               </div>
-            </div>
+            </div> */}
 
             <div className="pl-0 lg:pl-16 mt-2 space-y-4">
               <form.Field name="builtWith">
@@ -381,11 +388,10 @@ export default function CreateApp() {
                                   type="button"
                                   onClick={() => addTech(tech)}
                                   disabled={isSelected}
-                                  className={`px-3 py-2 rounded-lg border transition-all font-medium text-sm text-left ${
-                                    isSelected
-                                      ? "opacity-50 cursor-not-allowed bg-muted"
-                                      : "hover:scale-105 bg-muted/10 text-muted-foreground border-border hover:border-primary/50"
-                                  }`}
+                                  className={`px-3 py-2 rounded-lg border transition-all font-medium text-sm text-left ${isSelected
+                                    ? "opacity-50 cursor-not-allowed bg-muted"
+                                    : "hover:scale-105 bg-muted/10 text-muted-foreground border-border hover:border-primary/50"
+                                    }`}
                                 >
                                   {tech}
                                   {isSelected && " ✓"}
@@ -414,22 +420,26 @@ export default function CreateApp() {
               </form.Field>
             </div>
           </CardContent>
-        </Card>
-
-        {/* Links */}
-        <Card>
-          <CardContent>
-            <div className="flex items-start gap-4 mb-6">
-              <div className="bg-secondary/50 p-3 rounded-lg">
+          <CardContent className="my-5">
+            {/* =========================
+               Links Section
+               ========================= */}
+            {/* <div className="flex items-start gap-4 mb-8">
+              <div className="bg-secondary/50 p-3 rounded-lg shrink-0">
                 <LinkIcon className="w-6 h-6 text-foreground" />
               </div>
-              <div>
-                <h2 className="text-lg lg:text-xl font-semibold mb-1">Links</h2>
-                <p className="text-muted-foreground text-sm">
+              <div className="flex-1">
+                <div className="flex items-center gap-4">
+                  <h3 className="text-lg lg:text-xl font-semibold whitespace-nowrap">
+                    Links
+                  </h3>
+                  <div className="h-px flex-1 bg-white/80" />
+                </div>
+                <p className="text-muted-foreground text-sm mt-1">
                   Provide links to your app (optional)
                 </p>
               </div>
-            </div>
+            </div> */}
             <div className="pl-0 lg:pl-16 mt-2 space-y-6">
               <FieldGroup>
                 <form.Field name="websiteUrl">
@@ -518,26 +528,29 @@ export default function CreateApp() {
               </FieldGroup>
             </div>
           </CardContent>
-        </Card>
+          <CardContent className="my-5">
+            <NewAppImage
+              onImageDataChange={setImageData}
+              initialImageData={imageData}
+            />
+          </CardContent>
 
-        {/* Image upload*/}
-        <NewAppImage
-          onImageDataChange={setImageData}
-          initialImageData={imageData}
-        />
-
-        {/* Publish Status */}
-        <Card>
-          <CardContent>
-            <div className="flex items-start gap-4 mb-6">
-              <div className="bg-secondary/50 p-3 rounded-lg">
+          <CardContent className="my-5">
+            {/* =========================
+               Publish Status Section
+               ========================= */}
+            <div className="flex items-start gap-4 mb-8">
+              <div className="bg-secondary/50 p-3 rounded-lg shrink-0">
                 <BookCheck className="w-6 h-6 text-foreground" />
               </div>
-              <div>
-                <h2 className="text-lg lg:text-xl font-semibold mb-1">
-                  Publish Status
-                </h2>
-                <p className="text-muted-foreground text-sm">
+              <div className="flex-1">
+                <div className="flex items-center gap-4">
+                  <h3 className="text-lg lg:text-xl font-semibold whitespace-nowrap">
+                    Publish Status
+                  </h3>
+                  <div className="h-px flex-1 bg-white/80" />
+                </div>
+                <p className="text-muted-foreground text-sm mt-1">
                   Whether to publish your app or just create a draft.
                 </p>
               </div>
@@ -586,37 +599,37 @@ export default function CreateApp() {
               </FieldGroup>
             </div>
           </CardContent>
-          <CardFooter className="flex flex-row pl-6 lg:pl-21">
-            <Field
-              orientation="horizontal"
-              className="w-full flex justify-between"
-            >
-              <Button
-                type="button"
-                variant="outline"
-                className="cursor-pointer"
-                onClick={() => {
-                  form.reset();
-                  setTechSearch("");
-                  setImageData(null);
-                }}
-                disabled={isPending}
-              >
-                Cancel
-              </Button>
-              <Button
-                type="submit"
-                form="create-app-form"
-                className="w-40 cursor-pointer gap-2"
-                disabled={isPending}
-              >
-                {isPending && <Spinner />}
-                {isPending ? "Loading..." : "Submit App"}
-              </Button>
-            </Field>
-          </CardFooter>
         </Card>
+        <CardFooter className="flex flex-row pl-6 lg:pl-21 pt-4 pb-6 bg-secondary/5">
+          <Field
+            orientation="horizontal"
+            className="w-full flex justify-between"
+          >
+            <Button
+              type="button"
+              variant="outline"
+              className="cursor-pointer"
+              onClick={() => {
+                form.reset();
+                setTechSearch("");
+                setImageData(null);
+              }}
+              disabled={isPending}
+            >
+              Cancel
+            </Button>
+            <Button
+              type="submit"
+              form="create-app-form"
+              className="w-40 cursor-pointer gap-2"
+              disabled={isPending}
+            >
+              {isPending && <Spinner />}
+              {isPending ? "Loading..." : "Submit App"}
+            </Button>
+          </Field>
+        </CardFooter>
       </form>
-    </div>
+    </div >
   );
 }
