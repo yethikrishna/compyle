@@ -24,7 +24,7 @@ export function HomeHero() {
             Apps Built With Compyle.ai
           </h1>
           <p className="text-muted-foreground mb-8 max-w-xl lg:text-xl">
-            Discover incredible AI-powered applications built with Compyle. From
+            Discover incredible applications built with Compyle. From
             productivity tools to creative platforms, explore what builders are
             creating.
           </p>
