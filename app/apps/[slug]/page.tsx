@@ -13,16 +13,16 @@ export async function generateMetadata({
     const data = await getPublicAppDetails({ slug });
 
     return {
-      title: data.appDetails.name,
+      title: `${data.appDetails.name} | Compyle Apps`,
       description: data.appDetails.description,
       openGraph: {
-        title: data.appDetails.name,
+        title: `${data.appDetails.name} | Compyle Apps`,
         description: data.appDetails.description,
         images: [{ url: data.appDetails.coverImage || "" }],
       },
       twitter: {
         card: "summary_large_image",
-        title: data.appDetails.name,
+        title: `${data.appDetails.name} | Compyle Apps`,
         description: data.appDetails.description,
         images: [{ url: data.appDetails.coverImage || "" }],
       },
