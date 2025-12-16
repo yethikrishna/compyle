@@ -15,11 +15,11 @@ import {
 import {
   ArrowUpRight,
   CornerUpLeft,
-  GitPullRequestCreateArrow,
   House,
   Settings,
   SquareTerminal,
 } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
 const data = {
@@ -80,9 +80,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
               <Link href="/">
-                <div className="bg-primary/25 flex items-center justify-center rounded-md p-1 border border-primary/50">
-                  <GitPullRequestCreateArrow />
-                </div>
+                <Image
+                  src="/compyle.svg"
+                  width={35}
+                  height={35}
+                  alt="Compyle.ai logo"
+                  className="object-contain"
+                />
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-medium">Compyle Apps</span>
                   <span className="truncate text-xs">User Dashboard</span>

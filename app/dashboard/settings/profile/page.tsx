@@ -9,6 +9,7 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { Separator } from "@/components/ui/separator";
 import { Spinner } from "@/components/ui/spinner";
 import { updateUser, useSession } from "@/lib/auth-client";
 import { updateProfileSchema } from "@/schema/auth.schema";
@@ -63,18 +64,14 @@ export default function ProfileSettings() {
         </div>
       )}
 
-
       {!isPending && (
-        <div className="container mx-auto px-6">
-          <p className="leading-none font-semibold text-xl">Profile Settings</p>
-          <p className="text-muted-foreground mt-1">
-            Update your general profile information
-          </p>
-          <Card className="mt-6">
-            <CardHeader>
+        <div className="w-full">
+          <Separator />
+          <Card className="mt-2 border-none bg-background max-w-lg">
+            <CardHeader className="p-0">
               <CardTitle className="text-2xl">Profile Information</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-6">
+            <CardContent className="space-y-6 p-0">
               <form
                 id="update-profile"
                 className="space-y-6"
@@ -127,51 +124,5 @@ export default function ProfileSettings() {
         </div>
       )}
     </>
-    // <div className="container mx-auto px-6">
-    //   <Card className="max-w-4xl mx-auto">
-    //     <CardHeader>
-    //       <CardTitle>Profile Settings</CardTitle>
-    //       <CardDescription>Update your profile details</CardDescription>
-    //     </CardHeader>
-    //     <CardContent>
-    //       <form
-    //         id="profile-settings"
-    //         className="space-y-6"
-    //         onSubmit={(e) => {
-    //           e.preventDefault();
-    //           form.handleSubmit();
-    //         }}
-    //       >
-    //         <FieldGroup>
-    //           <form.Field name="name">
-    //             {(field) => {
-    //               const isInvalid =
-    //                 field.state.meta.isTouched && !field.state.meta.isValid;
-    //               return (
-    //                 <Field data-invalid={isInvalid}>
-    //                   <FieldLabel htmlFor={field.name}>Full Name</FieldLabel>
-    //                   <Input
-    //                     id={field.name}
-    //                     name={field.name}
-    //                     value={field.state.value}
-    //                     onBlur={field.handleBlur}
-    //                     onChange={(e) => field.handleChange(e.target.value)}
-    //                     aria-invalid={isInvalid}
-    //                     placeholder="John Doe"
-    //                     autoComplete="off"
-    //                     className="max-w-md"
-    //                   />
-    //                   {isInvalid && (
-    //                     <FieldError errors={field.state.meta.errors} />
-    //                   )}
-    //                 </Field>
-    //               );
-    //             }}
-    //           </form.Field>
-    //         </FieldGroup>
-    //       </form>
-    //     </CardContent>
-    //   </Card>
-    // </div>
   );
 }

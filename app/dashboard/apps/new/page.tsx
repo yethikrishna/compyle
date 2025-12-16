@@ -1,9 +1,14 @@
-// CreateApp.tsx
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import {
   Field,
   FieldContent,
@@ -27,14 +32,7 @@ import { createApp } from "@/server/app";
 import { ImageData } from "@/types/image";
 import { useForm } from "@tanstack/react-form";
 import { useMutation } from "@tanstack/react-query";
-import {
-  ArrowLeft,
-  BookCheck,
-  FileText,
-  Layers,
-  LinkIcon,
-  X,
-} from "lucide-react";
+import { X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -91,441 +89,434 @@ export default function CreateApp() {
   );
 
   return (
-    <div className="flex-1 p-4 md:p-8 pt-6">
-      <form
-        id="create-app-form"
-        className="max-w-4xl space-y-8 mx-auto"
-        onSubmit={(e) => {
-          e.preventDefault();
-          form.handleSubmit();
-        }}
-      >
-        <div className="mb-10">
-          <h2 className="text-xl lg:text-2xl font-bold mb-3 gradient-text">
-            Submit New App
-          </h2>
-          <p className="text-muted-foreground text-lg">
+    <form
+      id="create-app-form"
+      className="max-w-4xl space-y-8 mx-auto"
+      onSubmit={(e) => {
+        e.preventDefault();
+        form.handleSubmit();
+      }}
+    >
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-xl"> Submit New App</CardTitle>
+          <CardDescription>
             Launch your applications built with Compyle AI. Fill in the details
             below to get started.
-          </p>
-        </div>
-
-        <Card>
-          <CardContent className="my-5">
-            <div className="space-y-8">
-              {/* App Name */}
-              <FieldGroup>
-                <form.Field name="name">
-                  {(field) => {
-                    const isInvalid =
-                      field.state.meta.isTouched && !field.state.meta.isValid;
-
-                    return (
-                      <Field data-invalid={isInvalid}>
-                        <FieldLabel htmlFor={field.name}>App Name *</FieldLabel>
-                        <Input
-                          id={field.name}
-                          name={field.name}
-                          value={field.state.value}
-                          onBlur={field.handleBlur}
-                          onChange={(e) => field.handleChange(e.target.value)}
-                          aria-invalid={isInvalid}
-                          placeholder="Amazing App"
-                          autoComplete="off"
-                        />
-                        {isInvalid && (
-                          <FieldError errors={field.state.meta.errors} />
-                        )}
-                      </Field>
-                    );
-                  }}
-                </form.Field>
-              </FieldGroup>
-
-              {/* App Slug */}
-              <FieldGroup>
-                <form.Field name="slug">
-                  {(field) => {
-                    const isInvalid =
-                      field.state.meta.isTouched && !field.state.meta.isValid;
-
-                    return (
-                      <Field data-invalid={isInvalid}>
-                        <FieldLabel htmlFor={field.name}>App Slug *</FieldLabel>
-                        <Input
-                          id={field.name}
-                          name={field.name}
-                          value={field.state.value}
-                          onBlur={field.handleBlur}
-                          onChange={(e) => field.handleChange(e.target.value)}
-                          aria-invalid={isInvalid}
-                          placeholder="amazing_app"
-                          autoComplete="off"
-                        />
-                        {isInvalid && (
-                          <FieldError errors={field.state.meta.errors} />
-                        )}
-                        <p className="text-xs text-white/90 mt-1">
-                          Use only lowercase letters and underscores
-                        </p>
-                      </Field>
-                    );
-                  }}
-                </form.Field>
-              </FieldGroup>
-
-              {/* Description */}
-              <FieldGroup>
-                <form.Field name="description">
-                  {(field) => {
-                    const isInvalid =
-                      field.state.meta.isTouched && !field.state.meta.isValid;
-
-                    return (
-                      <Field data-invalid={isInvalid}>
-                        <FieldLabel htmlFor={field.name}>
-                          Description *
-                        </FieldLabel>
-                        <Textarea
-                          id={field.name}
-                          name={field.name}
-                          value={field.state.value}
-                          onBlur={field.handleBlur}
-                          onChange={(e) => field.handleChange(e.target.value)}
-                          aria-invalid={isInvalid}
-                          autoComplete="off"
-                          className="min-h-24"
-                          placeholder="Describe what your app does, its key features, and who it's for..."
-                        />
-                        {isInvalid && (
-                          <FieldError errors={field.state.meta.errors} />
-                        )}
-                      </Field>
-                    );
-                  }}
-                </form.Field>
-              </FieldGroup>
-
-              <FieldGroup>
-                <form.Field name="category">
-                  {(field) => {
-                    const isInvalid =
-                      field.state.meta.isTouched && !field.state.meta.isValid;
-                    return (
-                      <Field orientation="vertical" data-invalid={isInvalid}>
-                        <FieldContent>
-                          <FieldLabel htmlFor="category-select">
-                            Select Category *
-                          </FieldLabel>
-                          {isInvalid && (
-                            <FieldError errors={field.state.meta.errors} />
-                          )}
-                        </FieldContent>
-                        <Select
-                          name={field.name}
-                          value={field.state.value}
-                          onValueChange={field.handleChange}
-                        >
-                          <SelectTrigger
-                            id="category-select"
-                            aria-invalid={isInvalid}
-                            className="w-full"
-                          >
-                            <SelectValue placeholder="Choose a category..." />
-                          </SelectTrigger>
-                          <SelectContent position="item-aligned">
-                            {VALID_CATEGORIES.map((cat) => (
-                              <SelectItem key={cat} value={cat}>
-                                {cat}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </Field>
-                    );
-                  }}
-                </form.Field>
-              </FieldGroup>
-
-              <form.Field name="builtWith">
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="my-5">
+          <div className="space-y-8">
+            {/* App Name */}
+            <FieldGroup>
+              <form.Field name="name">
                 {(field) => {
-                  const selectedTechs = field.state.value || [];
                   const isInvalid =
                     field.state.meta.isTouched && !field.state.meta.isValid;
 
-                  const addTech = (tech: string) => {
-                    if (!selectedTechs.includes(tech)) {
-                      field.handleChange([...selectedTechs, tech]);
-                      setTechSearch("");
-                    }
-                  };
-
-                  const removeTech = (tech: string) => {
-                    field.handleChange(selectedTechs.filter((t) => t !== tech));
-                  };
-
                   return (
                     <Field data-invalid={isInvalid}>
-                      {/* Selected Technologies Display */}
-                      {selectedTechs.length > 0 && (
-                        <div className="mb-4">
-                          <p className="text-sm font-medium mb-2">
-                            Selected Technologies ({selectedTechs.length})
-                          </p>
-                          <div className="flex flex-wrap gap-2">
-                            {selectedTechs.map((tech) => {
-                              const colorClass =
-                                TECH_COLORS[tech] ||
-                                "bg-primary/20 text-primary border-primary/50";
-                              return (
-                                <div
-                                  key={tech}
-                                  className={`px-3 py-1.5 rounded-lg border font-medium text-sm flex items-center gap-2 ${colorClass}`}
-                                >
-                                  {tech}
-                                  <button
-                                    type="button"
-                                    onClick={() => removeTech(tech)}
-                                    className="hover:opacity-70 transition-opacity"
-                                    aria-label={`Remove ${tech}`}
-                                  >
-                                    <X className="w-3.5 h-3.5 cursor-pointer" />
-                                  </button>
-                                </div>
-                              );
-                            })}
-                          </div>
-                        </div>
-                      )}
-
-                      {/* Search Input */}
-                      <div className="space-y-2">
-                        <FieldLabel htmlFor="tech-search">
-                          Search Technologies *
-                        </FieldLabel>
-                        <Input
-                          id="tech-search"
-                          type="text"
-                          value={techSearch}
-                          onChange={(e) => setTechSearch(e.target.value)}
-                          placeholder="Search for technologies..."
-                          autoComplete="off"
-                        />
-                      </div>
-
-                      {/* Technology Selection Grid */}
-                      <div className="mt-4 max-h-64 overflow-y-auto border rounded-lg p-4">
-                        {filteredTechnologies.length > 0 ? (
-                          <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-                            {filteredTechnologies.map((tech) => {
-                              const isSelected = selectedTechs.includes(tech);
-
-                              return (
-                                <button
-                                  key={tech}
-                                  type="button"
-                                  onClick={() => addTech(tech)}
-                                  disabled={isSelected}
-                                  className={`px-3 py-2 rounded-lg border transition-all font-medium text-sm text-left ${
-                                    isSelected
-                                      ? "opacity-50 cursor-not-allowed bg-muted"
-                                      : "hover:scale-105 bg-muted/10 text-muted-foreground border-border hover:border-primary/50"
-                                  }`}
-                                >
-                                  {tech}
-                                  {isSelected && " ✓"}
-                                </button>
-                              );
-                            })}
-                          </div>
-                        ) : (
-                          <p className="text-center text-muted-foreground py-8">
-                            No technologies found matching &quot;{techSearch}
-                            &quot;
-                          </p>
-                        )}
-                      </div>
-
+                      <FieldLabel htmlFor={field.name}>App Name *</FieldLabel>
+                      <Input
+                        id={field.name}
+                        name={field.name}
+                        value={field.state.value}
+                        onBlur={field.handleBlur}
+                        onChange={(e) => field.handleChange(e.target.value)}
+                        aria-invalid={isInvalid}
+                        placeholder="Amazing App"
+                        autoComplete="off"
+                      />
                       {isInvalid && (
                         <FieldError errors={field.state.meta.errors} />
                       )}
-                      <p className="text-xs mt-2 text-white/90">
-                        Click on technologies to add them. Select at least one
-                        technology.
+                    </Field>
+                  );
+                }}
+              </form.Field>
+            </FieldGroup>
+
+            {/* App Slug */}
+            <FieldGroup>
+              <form.Field name="slug">
+                {(field) => {
+                  const isInvalid =
+                    field.state.meta.isTouched && !field.state.meta.isValid;
+
+                  return (
+                    <Field data-invalid={isInvalid}>
+                      <FieldLabel htmlFor={field.name}>App Slug *</FieldLabel>
+                      <Input
+                        id={field.name}
+                        name={field.name}
+                        value={field.state.value}
+                        onBlur={field.handleBlur}
+                        onChange={(e) => field.handleChange(e.target.value)}
+                        aria-invalid={isInvalid}
+                        placeholder="amazing_app"
+                        autoComplete="off"
+                      />
+                      {isInvalid && (
+                        <FieldError errors={field.state.meta.errors} />
+                      )}
+                      <p className="text-xs text-white/90 mt-1">
+                        Use only lowercase letters and underscores
                       </p>
                     </Field>
                   );
                 }}
               </form.Field>
+            </FieldGroup>
 
-              <FieldGroup>
-                <form.Field name="websiteUrl">
-                  {(field) => {
-                    const isInvalid =
-                      field.state.meta.isTouched && !field.state.meta.isValid;
-                    return (
-                      <Field data-invalid={isInvalid}>
-                        <FieldLabel htmlFor={field.name}>
-                          Website URL
-                        </FieldLabel>
-                        <Input
-                          type="url"
-                          id={field.name}
-                          name={field.name}
-                          value={field.state.value}
-                          onBlur={field.handleBlur}
-                          onChange={(e) => field.handleChange(e.target.value)}
-                          aria-invalid={isInvalid}
-                          placeholder="https://amazingapp.com"
-                          autoComplete="off"
-                        />
-                        {isInvalid && (
-                          <FieldError errors={field.state.meta.errors} />
-                        )}
-                      </Field>
-                    );
-                  }}
-                </form.Field>
-              </FieldGroup>
-              <FieldGroup>
-                <form.Field name="repoUrl">
-                  {(field) => {
-                    const isInvalid =
-                      field.state.meta.isTouched && !field.state.meta.isValid;
-                    return (
-                      <Field data-invalid={isInvalid}>
-                        <FieldLabel htmlFor={field.name}>
-                          Repository URL
-                        </FieldLabel>
-                        <Input
-                          type="url"
-                          id={field.name}
-                          name={field.name}
-                          value={field.state.value}
-                          onBlur={field.handleBlur}
-                          onChange={(e) => field.handleChange(e.target.value)}
-                          aria-invalid={isInvalid}
-                          placeholder="https://github.com/username/repo"
-                          autoComplete="off"
-                        />
-                        {isInvalid && (
-                          <FieldError errors={field.state.meta.errors} />
-                        )}
-                      </Field>
-                    );
-                  }}
-                </form.Field>
-              </FieldGroup>
-              <FieldGroup>
-                <form.Field name="demoUrl">
-                  {(field) => {
-                    const isInvalid =
-                      field.state.meta.isTouched && !field.state.meta.isValid;
-                    return (
-                      <Field data-invalid={isInvalid}>
-                        <FieldLabel htmlFor={field.name}>Demo URL</FieldLabel>
-                        <Input
-                          type="url"
-                          id={field.name}
-                          name={field.name}
-                          value={field.state.value}
-                          onBlur={field.handleBlur}
-                          onChange={(e) => field.handleChange(e.target.value)}
-                          aria-invalid={isInvalid}
-                          placeholder="https://demo.amazingapp.com"
-                          autoComplete="off"
-                        />
-                        {isInvalid && (
-                          <FieldError errors={field.state.meta.errors} />
-                        )}
-                      </Field>
-                    );
-                  }}
-                </form.Field>
-              </FieldGroup>
+            {/* Description */}
+            <FieldGroup>
+              <form.Field name="description">
+                {(field) => {
+                  const isInvalid =
+                    field.state.meta.isTouched && !field.state.meta.isValid;
 
-              <NewAppImage
-                onImageDataChange={setImageData}
-                initialImageData={imageData}
-              />
-
-              <FieldGroup>
-                <form.Field name="status">
-                  {(field) => {
-                    const isInvalid =
-                      field.state.meta.isTouched && !field.state.meta.isValid;
-                    return (
-                      <Field orientation="vertical" data-invalid={isInvalid}>
-                        <FieldContent>
-                          <FieldLabel htmlFor="form-tanstack-select-status">
-                            Select Status
-                          </FieldLabel>
-                          {isInvalid && (
-                            <FieldError errors={field.state.meta.errors} />
-                          )}
-                        </FieldContent>
-                        <Select
-                          name={field.name}
-                          value={field.state.value}
-                          onValueChange={field.handleChange}
-                        >
-                          <SelectTrigger
-                            id="form-tanstack-select-status"
-                            aria-invalid={isInvalid}
-                            className="w-full"
-                          >
-                            <SelectValue placeholder="Select" />
-                          </SelectTrigger>
-                          <SelectContent position="item-aligned">
-                            <SelectItem value="published">
-                              Published (Published Immediately)
-                            </SelectItem>
-                            <SelectItem value="draft">
-                              Draft (Save for Later)
-                            </SelectItem>
-                          </SelectContent>
-                        </Select>
-                        <p className="text-xs mt-2 text-white/90">
-                          Whether to publish your app or just create a draft.
-                        </p>
-                      </Field>
-                    );
-                  }}
-                </form.Field>
-              </FieldGroup>
-            </div>
-          </CardContent>
-          <CardFooter className="flex flex-row pl-6 lg:pl-21 pt-4 pb-6 bg-secondary/5">
-            <Field
-              orientation="horizontal"
-              className="w-full flex justify-between"
-            >
-              <Button
-                type="button"
-                variant="outline"
-                className="cursor-pointer"
-                onClick={() => {
-                  form.reset();
-                  setTechSearch("");
-                  setImageData(null);
+                  return (
+                    <Field data-invalid={isInvalid}>
+                      <FieldLabel htmlFor={field.name}>
+                        Description *
+                      </FieldLabel>
+                      <Textarea
+                        id={field.name}
+                        name={field.name}
+                        value={field.state.value}
+                        onBlur={field.handleBlur}
+                        onChange={(e) => field.handleChange(e.target.value)}
+                        aria-invalid={isInvalid}
+                        autoComplete="off"
+                        className="min-h-24"
+                        placeholder="Describe what your app does, its key features, and who it's for..."
+                      />
+                      {isInvalid && (
+                        <FieldError errors={field.state.meta.errors} />
+                      )}
+                    </Field>
+                  );
                 }}
-                disabled={isPending}
-              >
-                Cancel
-              </Button>
-              <Button
-                type="submit"
-                form="create-app-form"
-                className="w-40 cursor-pointer gap-2"
-                disabled={isPending}
-              >
-                {isPending && <Spinner />}
-                {isPending ? "Loading..." : "Submit App"}
-              </Button>
-            </Field>
-          </CardFooter>
-        </Card>
-      </form>
-    </div>
+              </form.Field>
+            </FieldGroup>
+
+            <FieldGroup>
+              <form.Field name="category">
+                {(field) => {
+                  const isInvalid =
+                    field.state.meta.isTouched && !field.state.meta.isValid;
+                  return (
+                    <Field orientation="vertical" data-invalid={isInvalid}>
+                      <FieldContent>
+                        <FieldLabel htmlFor="category-select">
+                          Select Category *
+                        </FieldLabel>
+                        {isInvalid && (
+                          <FieldError errors={field.state.meta.errors} />
+                        )}
+                      </FieldContent>
+                      <Select
+                        name={field.name}
+                        value={field.state.value}
+                        onValueChange={field.handleChange}
+                      >
+                        <SelectTrigger
+                          id="category-select"
+                          aria-invalid={isInvalid}
+                          className="w-full"
+                        >
+                          <SelectValue placeholder="Choose a category..." />
+                        </SelectTrigger>
+                        <SelectContent position="item-aligned">
+                          {VALID_CATEGORIES.map((cat) => (
+                            <SelectItem key={cat} value={cat}>
+                              {cat}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </Field>
+                  );
+                }}
+              </form.Field>
+            </FieldGroup>
+
+            <form.Field name="builtWith">
+              {(field) => {
+                const selectedTechs = field.state.value || [];
+                const isInvalid =
+                  field.state.meta.isTouched && !field.state.meta.isValid;
+
+                const addTech = (tech: string) => {
+                  if (!selectedTechs.includes(tech)) {
+                    field.handleChange([...selectedTechs, tech]);
+                    setTechSearch("");
+                  }
+                };
+
+                const removeTech = (tech: string) => {
+                  field.handleChange(selectedTechs.filter((t) => t !== tech));
+                };
+
+                return (
+                  <Field data-invalid={isInvalid}>
+                    {/* Selected Technologies Display */}
+                    {selectedTechs.length > 0 && (
+                      <div className="mb-4">
+                        <p className="text-sm font-medium mb-2">
+                          Selected Technologies ({selectedTechs.length})
+                        </p>
+                        <div className="flex flex-wrap gap-2">
+                          {selectedTechs.map((tech) => {
+                            const colorClass =
+                              TECH_COLORS[tech] ||
+                              "bg-primary/20 text-primary border-primary/50";
+                            return (
+                              <div
+                                key={tech}
+                                className={`px-3 py-1.5 rounded-lg border font-medium text-sm flex items-center gap-2 ${colorClass}`}
+                              >
+                                {tech}
+                                <button
+                                  type="button"
+                                  onClick={() => removeTech(tech)}
+                                  className="hover:opacity-70 transition-opacity"
+                                  aria-label={`Remove ${tech}`}
+                                >
+                                  <X className="w-3.5 h-3.5 cursor-pointer" />
+                                </button>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Search Input */}
+                    <div className="space-y-2">
+                      <FieldLabel htmlFor="tech-search">
+                        Search Technologies *
+                      </FieldLabel>
+                      <Input
+                        id="tech-search"
+                        type="text"
+                        value={techSearch}
+                        onChange={(e) => setTechSearch(e.target.value)}
+                        placeholder="Search for technologies..."
+                        autoComplete="off"
+                      />
+                    </div>
+
+                    {/* Technology Selection Grid */}
+                    <div className="mt-4 max-h-64 overflow-y-auto border rounded-lg p-4">
+                      {filteredTechnologies.length > 0 ? (
+                        <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+                          {filteredTechnologies.map((tech) => {
+                            const isSelected = selectedTechs.includes(tech);
+
+                            return (
+                              <button
+                                key={tech}
+                                type="button"
+                                onClick={() => addTech(tech)}
+                                disabled={isSelected}
+                                className={`px-3 py-2 rounded-lg border transition-all font-medium text-sm text-left ${
+                                  isSelected
+                                    ? "opacity-50 cursor-not-allowed bg-muted"
+                                    : "hover:scale-105 bg-muted/10 text-muted-foreground border-border hover:border-primary/50"
+                                }`}
+                              >
+                                {tech}
+                                {isSelected && " ✓"}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      ) : (
+                        <p className="text-center text-muted-foreground py-8">
+                          No technologies found matching &quot;{techSearch}
+                          &quot;
+                        </p>
+                      )}
+                    </div>
+
+                    {isInvalid && (
+                      <FieldError errors={field.state.meta.errors} />
+                    )}
+                    <p className="text-xs mt-2 text-white/90">
+                      Click on technologies to add them. Select at least one
+                      technology.
+                    </p>
+                  </Field>
+                );
+              }}
+            </form.Field>
+
+            <FieldGroup>
+              <form.Field name="websiteUrl">
+                {(field) => {
+                  const isInvalid =
+                    field.state.meta.isTouched && !field.state.meta.isValid;
+                  return (
+                    <Field data-invalid={isInvalid}>
+                      <FieldLabel htmlFor={field.name}>Website URL</FieldLabel>
+                      <Input
+                        type="url"
+                        id={field.name}
+                        name={field.name}
+                        value={field.state.value}
+                        onBlur={field.handleBlur}
+                        onChange={(e) => field.handleChange(e.target.value)}
+                        aria-invalid={isInvalid}
+                        placeholder="https://amazingapp.com"
+                        autoComplete="off"
+                      />
+                      {isInvalid && (
+                        <FieldError errors={field.state.meta.errors} />
+                      )}
+                    </Field>
+                  );
+                }}
+              </form.Field>
+            </FieldGroup>
+            <FieldGroup>
+              <form.Field name="repoUrl">
+                {(field) => {
+                  const isInvalid =
+                    field.state.meta.isTouched && !field.state.meta.isValid;
+                  return (
+                    <Field data-invalid={isInvalid}>
+                      <FieldLabel htmlFor={field.name}>
+                        Repository URL
+                      </FieldLabel>
+                      <Input
+                        type="url"
+                        id={field.name}
+                        name={field.name}
+                        value={field.state.value}
+                        onBlur={field.handleBlur}
+                        onChange={(e) => field.handleChange(e.target.value)}
+                        aria-invalid={isInvalid}
+                        placeholder="https://github.com/username/repo"
+                        autoComplete="off"
+                      />
+                      {isInvalid && (
+                        <FieldError errors={field.state.meta.errors} />
+                      )}
+                    </Field>
+                  );
+                }}
+              </form.Field>
+            </FieldGroup>
+            <FieldGroup>
+              <form.Field name="demoUrl">
+                {(field) => {
+                  const isInvalid =
+                    field.state.meta.isTouched && !field.state.meta.isValid;
+                  return (
+                    <Field data-invalid={isInvalid}>
+                      <FieldLabel htmlFor={field.name}>Demo URL</FieldLabel>
+                      <Input
+                        type="url"
+                        id={field.name}
+                        name={field.name}
+                        value={field.state.value}
+                        onBlur={field.handleBlur}
+                        onChange={(e) => field.handleChange(e.target.value)}
+                        aria-invalid={isInvalid}
+                        placeholder="https://demo.amazingapp.com"
+                        autoComplete="off"
+                      />
+                      {isInvalid && (
+                        <FieldError errors={field.state.meta.errors} />
+                      )}
+                    </Field>
+                  );
+                }}
+              </form.Field>
+            </FieldGroup>
+
+            <NewAppImage
+              onImageDataChange={setImageData}
+              initialImageData={imageData}
+            />
+
+            <FieldGroup>
+              <form.Field name="status">
+                {(field) => {
+                  const isInvalid =
+                    field.state.meta.isTouched && !field.state.meta.isValid;
+                  return (
+                    <Field orientation="vertical" data-invalid={isInvalid}>
+                      <FieldContent>
+                        <FieldLabel htmlFor="form-tanstack-select-status">
+                          Select Status
+                        </FieldLabel>
+                        {isInvalid && (
+                          <FieldError errors={field.state.meta.errors} />
+                        )}
+                      </FieldContent>
+                      <Select
+                        name={field.name}
+                        value={field.state.value}
+                        onValueChange={field.handleChange}
+                      >
+                        <SelectTrigger
+                          id="form-tanstack-select-status"
+                          aria-invalid={isInvalid}
+                          className="w-full"
+                        >
+                          <SelectValue placeholder="Select" />
+                        </SelectTrigger>
+                        <SelectContent position="item-aligned">
+                          <SelectItem value="published">
+                            Published (Published Immediately)
+                          </SelectItem>
+                          <SelectItem value="draft">
+                            Draft (Save for Later)
+                          </SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <p className="text-xs mt-2 text-white/90">
+                        Whether to publish your app or just create a draft.
+                      </p>
+                    </Field>
+                  );
+                }}
+              </form.Field>
+            </FieldGroup>
+          </div>
+        </CardContent>
+        <CardFooter className="flex flex-row">
+          <Field
+            orientation="horizontal"
+            className="w-full flex justify-between"
+          >
+            <Button
+              type="button"
+              variant="outline"
+              className="cursor-pointer"
+              onClick={() => {
+                form.reset();
+                setTechSearch("");
+                setImageData(null);
+              }}
+              disabled={isPending}
+            >
+              Cancel
+            </Button>
+            <Button
+              type="submit"
+              form="create-app-form"
+              className="w-40 cursor-pointer gap-2"
+              disabled={isPending}
+            >
+              {isPending && <Spinner />}
+              {isPending ? "Loading..." : "Submit App"}
+            </Button>
+          </Field>
+        </CardFooter>
+      </Card>
+    </form>
   );
 }

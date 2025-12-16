@@ -110,7 +110,7 @@ export default function Page() {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold">Your Apps</h1>
+      <h1 className="text-2xl font-bold">Your Apps</h1>
       <div className="mt-5 flex justify-end">
         <Link
           href="/dashboard/apps/new"
@@ -120,7 +120,7 @@ export default function Page() {
         </Link>
       </div>
 
-      <Card className="mt-10">
+      <Card className="mt-10 bg-background">
         <CardContent>
           <Table>
             <TableHeader>

@@ -233,7 +233,7 @@ export default function Signup() {
                 disabled={isLoading}
               >
                 {isLoading && <Spinner />}
-                {isLoading ? "Loading..." : "Continue"}
+                {isLoading ? "Loading..." : "Signup"}
               </Button>
             </Field>
           </CardFooter>

@@ -13,9 +13,19 @@ export function SocialAuth() {
   const [githubLoading, setGithubLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
 
+  // await authClient.signIn.social({
+  //   provider: "google", // or "github"
+  //   callbackURL: "/dashboard",
+  //   errorCallbackURL: "/error",         // optional: where to go if something goes wrong
+  //   newUserCallbackURL: "/welcome",     // optional: for newly registered users
+  // });
+
   async function signInWithGithub() {
     setGithubLoading(true);
-    const data = await signIn.social({ provider: "github" });
+    const data = await signIn.social({
+      provider: "github",
+      callbackURL: "/dashboard",
+    });
 
     if (data.error) {
       setGithubLoading(false);
@@ -28,7 +38,10 @@ export function SocialAuth() {
 
   async function signInWithGoogle() {
     setGoogleLoading(true);
-    const data = await signIn.social({ provider: "google" });
+    const data = await signIn.social({
+      provider: "google",
+      callbackURL: "/dashboard",
+    });
 
     if (data.error) {
       setGoogleLoading(false);

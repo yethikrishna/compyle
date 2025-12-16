@@ -1,6 +1,5 @@
 "use client";
 
-import { Header } from "@/components/custom/header";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -18,27 +17,35 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
+import { env } from "@/env/client";
 import { requestPasswordReset } from "@/lib/auth-client";
 import { updateEmailSchema } from "@/schema/auth.schema";
+import { useAuthStore } from "@/store/session.store";
 import { useForm } from "@tanstack/react-form";
-import { useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { env } from "@/env/client";
 
 export default function ForgotPassword() {
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+
+  const { isInitialPending, authInfo } = useAuthStore();
 
   const form = useForm({
     defaultValues: { email: "" },
     validators: { onSubmit: updateEmailSchema },
     onSubmit: async ({ value }) => {
       setIsLoading(true);
+
       const { error } = await requestPasswordReset({
         email: value.email,
         redirectTo: `${env.NEXT_PUBLIC_BETTER_AUTH_URL}/new-password`,
       });
 
       setIsLoading(false);
+
       if (error) {
         toast.error("Failed to send password reset email");
         form.reset();
@@ -48,10 +55,25 @@ export default function ForgotPassword() {
     },
   });
 
+  useEffect(() => {
+    if (authInfo?.session) router.replace("/dashboard");
+  }, [authInfo?.session, router]);
+
+  if (authInfo?.session) return null;
+
+  if (isInitialPending) {
+    return (
+      <div className="flex items-center justify-center min-h-[calc(100vh-10rem)]">
+        <div>
+          <Spinner className="mx-auto size-6" />
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div>
-      <Header />
-      <div className="mx-auto max-w-lg px-6">
+    <div className="flex items-center justify-center min-h-[calc(100vh-10rem)]">
+      <div className="max-w-md w-full">
         <Card className="md:min-w-md">
           <CardHeader className="text-center">
             <CardTitle className="text-xl">Forgot Password</CardTitle>
@@ -59,9 +81,10 @@ export default function ForgotPassword() {
               Enter your email address to reset your password
             </CardDescription>
           </CardHeader>
+
           <CardContent>
             <form
-              id="forgot-password"
+              id="forgot-password-form"
               className="space-y-6"
               onSubmit={(e) => {
                 e.preventDefault();
@@ -73,6 +96,7 @@ export default function ForgotPassword() {
                   {(field) => {
                     const isInvalid =
                       field.state.meta.isTouched && !field.state.meta.isValid;
+
                     return (
                       <Field data-invalid={isInvalid}>
                         <FieldLabel htmlFor={field.name}>
@@ -99,24 +123,16 @@ export default function ForgotPassword() {
               </FieldGroup>
             </form>
           </CardContent>
+
           <CardFooter className="flex flex-row">
             <Field
               orientation="horizontal"
               className="w-full flex justify-between"
             >
               <Button
-                type="button"
-                variant="outline"
-                className="cursor-pointer"
-                onClick={() => form.reset()}
-                disabled={isLoading}
-              >
-                Cancel
-              </Button>
-              <Button
                 type="submit"
-                form="forgot-password"
-                className="w-40 cursor-pointer gap-2"
+                form="forgot-password-form"
+                className="w-full cursor-pointer gap-2"
                 disabled={isLoading}
               >
                 {isLoading && <Spinner />}
@@ -124,6 +140,13 @@ export default function ForgotPassword() {
               </Button>
             </Field>
           </CardFooter>
+
+          <p className="text-center text-muted-foreground">
+            Remembered your password?{" "}
+            <Link href="/login" className="underline">
+              Login
+            </Link>
+          </p>
         </Card>
       </div>
     </div>

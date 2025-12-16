@@ -169,7 +169,7 @@ export default function Login() {
                 disabled={isLoading}
               >
                 {isLoading && <Spinner />}
-                {isLoading ? "Loading..." : "Continue"}
+                {isLoading ? "Loading..." : "Login"}
               </Button>
             </Field>
           </CardFooter>

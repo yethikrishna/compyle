@@ -136,10 +136,7 @@ export default function Page() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="pb-4">
-                <ChartContainer
-                  config={chartConfig}
-                  className="h-[200px] w-full"
-                >
+                <ChartContainer config={chartConfig} className="h-50 w-full">
                   <BarChart accessibilityLayer data={chartData}>
                     <CartesianGrid vertical={false} />
                     <XAxis
