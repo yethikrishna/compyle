@@ -2,9 +2,9 @@
 const nextSitemapConfig = {
   siteUrl: "https://compyle.tracepanic.com",
   changefreq: "weekly",
-  priority: "0.5",
+  priority: 0.5,
   generateIndexSitemap: false,
-  exclude: ["/icon0.svg", "icon1.png"],
+  exclude: ["/icon.png", "/apple-icon.png", "/manifest.json"],
 };
 
 export default nextSitemapConfig;
