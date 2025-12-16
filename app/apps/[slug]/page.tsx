@@ -5,20 +5,12 @@ import type { Metadata } from "next";
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-  const { slug } = params;
+  const { slug } = await params;
 
   try {
     const data = await getPublicAppDetails({ slug });
-
-    if (!data) {
-      return {
-        title: "App Not Found",
-        description: "This app does not exist",
-        robots: { index: false },
-      };
-    }
 
     return {
       title: data.appDetails.name,
