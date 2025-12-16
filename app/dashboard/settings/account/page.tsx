@@ -355,15 +355,20 @@ export default function AccountSettings() {
                             autoComplete="off"
                             className="max-w-md"
                           />
-                          <FieldDescription className="max-w-md text-destructive">
-                            Your email address has not been verified. Please
-                            click{" "}
-                            <Link href="/verify-email" className="text-primary">
-                              here
-                            </Link>{" "}
-                            to verify your email and avoid getting restricted on
-                            some actions across the app.
-                          </FieldDescription>
+                          {!yourSession.data?.data?.user.emailVerified && (
+                            <FieldDescription className="max-w-md text-destructive">
+                              Your email address has not been verified. Please
+                              click{" "}
+                              <Link
+                                href="/verify-email"
+                                className="text-primary"
+                              >
+                                here
+                              </Link>{" "}
+                              to verify your email and avoid getting restricted
+                              on some actions across the app.
+                            </FieldDescription>
+                          )}
                           {isInvalid && (
                             <FieldError errors={field.state.meta.errors} />
                           )}

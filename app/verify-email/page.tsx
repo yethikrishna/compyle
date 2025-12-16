@@ -1,6 +1,5 @@
 "use client";
 
-import { Header } from "@/components/custom/header";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
