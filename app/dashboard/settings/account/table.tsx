@@ -132,37 +132,6 @@ export const columns: ColumnDef<SessionTable>[] = [
     },
   },
   {
-    accessorKey: "expiresAt",
-    header: "Expires",
-    cell: ({ row }) => {
-      const expiresAt = row.original.expiresAt;
-      const now = new Date();
-      const diffMs = expiresAt.getTime() - now.getTime();
-      const diffDays = Math.floor(diffMs / 86400000);
-      const diffHours = Math.floor(diffMs / 3600000);
-
-      let expiresIn = "";
-      if (diffMs < 0) expiresIn = "Expired";
-      else if (diffHours < 24) expiresIn = `In ${diffHours}h`;
-      else expiresIn = `In ${diffDays}d`;
-
-      const isExpiringSoon = diffHours < 24 && diffHours > 0;
-
-      return (
-        <div>
-          <div
-            className={`font-medium ${isExpiringSoon ? "text-orange-600" : ""}`}
-          >
-            {expiresIn}
-          </div>
-          <div className="text-sm text-muted-foreground">
-            {expiresAt.toLocaleDateString()}
-          </div>
-        </div>
-      );
-    },
-  },
-  {
     id: "actions",
     header: "Actions",
     cell: ({ row }) => {
@@ -191,7 +160,11 @@ export const columns: ColumnDef<SessionTable>[] = [
               disabled={isCurrent}
               className="text-destructive hover:text-destructive cursor-pointer"
             >
-              <LogOut className="h-4 w-4 mr-2" />
+              {isCurrent ? (
+                <MapPin className="h-4 w-4 mr-2" />
+              ) : (
+                <LogOut className="h-4 w-4 mr-2" />
+              )}
               {isCurrent ? "Current" : "Revoke"}
             </Button>
           </AlertDialogTrigger>

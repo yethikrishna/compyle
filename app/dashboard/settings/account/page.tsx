@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/card";
 import {
   Field,
+  FieldDescription,
   FieldError,
   FieldGroup,
   FieldLabel,
@@ -64,7 +65,7 @@ import { Trash2 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 import { columns } from "./table";
-
+import Link from "next/link";
 
 export default function AccountSettings() {
   const [isUpdatingEmail, setIsUpdatingEmail] = useState(false);
@@ -317,16 +318,13 @@ export default function AccountSettings() {
       )}
 
       {!isInitialPending && (
-        <div className="container mx-auto px-6">
-          <p className="leading-none font-semibold text-xl">Account Settings</p>
-          <p className="text-muted-foreground mt-1">
-            Manage and update your account information
-          </p>
-          <Card className="mt-6">
-            <CardHeader>
+        <div className="w-full">
+          <Separator />
+          <Card className="mt-2 border-none bg-background max-w-lg">
+            <CardHeader className="p-0">
               <CardTitle className="text-2xl">Account Information</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-6">
+            <CardContent className="space-y-6 p-0">
               <form
                 id="update-email"
                 className="space-y-6"
@@ -357,6 +355,20 @@ export default function AccountSettings() {
                             autoComplete="off"
                             className="max-w-md"
                           />
+                          {!yourSession.data?.data?.user.emailVerified && (
+                            <FieldDescription className="max-w-md text-destructive">
+                              Your email address has not been verified. Please
+                              click{" "}
+                              <Link
+                                href="/verify-email"
+                                className="text-primary"
+                              >
+                                here
+                              </Link>{" "}
+                              to verify your email and avoid getting restricted
+                              on some actions across the app.
+                            </FieldDescription>
+                          )}
                           {isInvalid && (
                             <FieldError errors={field.state.meta.errors} />
                           )}
@@ -424,15 +436,16 @@ export default function AccountSettings() {
             </CardContent>
           </Card>
 
-          <Card className="mt-10">
-            <CardHeader>
+          <Separator className="mt-8" />
+          <Card className="mt-2 border-none bg-background max-w-lg">
+            <CardHeader className="p-0">
               <CardTitle className="text-2xl">Update Password</CardTitle>
               <CardDescription className="max-w-prose">
                 Changing your password will also log you out in all other
                 devices you are curently logged in,
               </CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="p-0">
               <form
                 id="update-password"
                 className="space-y-6"
@@ -460,6 +473,7 @@ export default function AccountSettings() {
                             onChange={(e) => field.handleChange(e.target.value)}
                             aria-invalid={isInvalid}
                             autoComplete="off"
+                            placeholder="Enter password"
                             className="max-w-md"
                           />
                           {isInvalid && (
@@ -489,6 +503,7 @@ export default function AccountSettings() {
                             onChange={(e) => field.handleChange(e.target.value)}
                             aria-invalid={isInvalid}
                             autoComplete="off"
+                            placeholder="Enter password"
                             className="max-w-md"
                           />
                           {isInvalid && (
@@ -512,19 +527,20 @@ export default function AccountSettings() {
             </CardContent>
           </Card>
 
-          <Card className="mt-10">
-            <CardHeader>
+          <Separator className="mt-8" />
+          <Card className="mt-2 border-none bg-background max-w-lg">
+            <CardHeader className="p-0">
               <CardTitle className="text-2xl">Account Connections</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <Separator />
-              <div className="flex items-center justify-between max-w-lg">
+            <CardContent className="space-y-4 p-0">
+              <div className="flex items-center justify-between max-w-md">
                 <p className="font-semibold text-lg tracking-tight">GOOGLE</p>
                 {connectedProviders.has("google") ? (
                   <AlertDialog>
                     <AlertDialogTrigger asChild>
                       <Button
                         variant="destructive"
+                        size="sm"
                         className="w-36 cursor-pointer"
                         disabled={isUnlinkingGoogle}
                       >
@@ -560,6 +576,7 @@ export default function AccountSettings() {
                   </AlertDialog>
                 ) : (
                   <Button
+                    size="sm"
                     className="w-36 cursor-pointer"
                     disabled={isLinkingGoogle}
                     onClick={handleLinkGoogle}
@@ -569,14 +586,14 @@ export default function AccountSettings() {
                   </Button>
                 )}
               </div>
-              <Separator />
-              <div className="flex items-center justify-between max-w-lg">
+              <div className="flex items-center justify-between max-w-md">
                 <p className="font-semibold text-lg tracking-tight">GITHUB</p>
                 {connectedProviders.has("github") ? (
                   <AlertDialog>
                     <AlertDialogTrigger asChild>
                       <Button
                         variant="destructive"
+                        size="sm"
                         className="w-36 cursor-pointer"
                         disabled={isUnlinkingGithub}
                       >
@@ -612,6 +629,7 @@ export default function AccountSettings() {
                   </AlertDialog>
                 ) : (
                   <Button
+                    size="sm"
                     className="w-36 cursor-pointer"
                     disabled={isLinkingGithub}
                     onClick={handleLinkGithub}
@@ -621,15 +639,15 @@ export default function AccountSettings() {
                   </Button>
                 )}
               </div>
-              <Separator />
             </CardContent>
           </Card>
 
-          <Card className="mt-10">
-            <CardHeader>
+          <Separator className="mt-8" />
+          <Card className="mt-2 border-none bg-background">
+            <CardHeader className="p-0">
               <CardTitle className="text-2xl">Your Sessions</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="-mt-2 border rounded-xl p-3">
               <Table>
                 <TableHeader>
                   {table.getHeaderGroups().map((headerGroup) => (
@@ -639,9 +657,9 @@ export default function AccountSettings() {
                           {header.isPlaceholder
                             ? null
                             : flexRender(
-                              header.column.columnDef.header,
-                              header.getContext(),
-                            )}
+                                header.column.columnDef.header,
+                                header.getContext(),
+                              )}
                         </TableHead>
                       ))}
                     </TableRow>
@@ -684,14 +702,36 @@ export default function AccountSettings() {
             </CardContent>
           </Card>
 
-          <Card className="mt-10 bg-destructive/5">
+          <Card className="mt-10 border-destructive/40 bg-destructive/5">
             <CardHeader>
               <CardTitle className="text-2xl text-destructive">
                 Danger Zone
               </CardTitle>
+              <CardDescription className="text-destructive/80">
+                Irreversible and permanent actions
+              </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <p>Delete your account</p>
+
+            <CardContent className="space-y-6">
+              <div className="space-y-2 text-sm text-muted-foreground">
+                <p>
+                  Deleting your account permanently removes your access and data
+                  from our systems. This action is <strong>final</strong> and
+                  cannot be undone.
+                </p>
+
+                <ul className="list-disc pl-5 space-y-1">
+                  <li>Your profile and account information will be deleted</li>
+                  <li>
+                    All apps, projects, and associated metadata will be removed
+                  </li>
+                  <li>
+                    Comments, upvotes, and activity history will be erased
+                  </li>
+                  <li>You will be immediately signed out on all devices</li>
+                </ul>
+              </div>
+
               <AlertDialog>
                 <AlertDialogTrigger asChild>
                   <Button
@@ -699,27 +739,49 @@ export default function AccountSettings() {
                     className="w-full max-w-md gap-2 cursor-pointer"
                   >
                     <Trash2 className="h-4 w-4" />
-                    Delete Account
+                    Delete Account Permanently
                   </Button>
                 </AlertDialogTrigger>
+
                 <AlertDialogContent>
                   <AlertDialogHeader>
-                    <AlertDialogTitle>Delete Your Account?</AlertDialogTitle>
-                    <AlertDialogDescription>
-                      This will permanently delete this your and all associated
-                      data including all apps, comments and upvotes. This action
-                      CANNOT be undone.
+                    <AlertDialogTitle>
+                      Are you absolutely sure?
+                    </AlertDialogTitle>
+
+                    <AlertDialogDescription className="space-y-3">
+                      <p>
+                        This will permanently delete your account and all
+                        associated data. There is no recovery option.
+                      </p>
+
+                      <p className="font-medium text-foreground">
+                        Once confirmed:
+                      </p>
+
+                      <ul className="list-disc pl-5 space-y-1">
+                        <li>You will lose access immediately</li>
+                        <li>All content and activity will be erased</li>
+                        <li>Support cannot restore your account</li>
+                      </ul>
+
+                      <p className="pt-2 text-sm">
+                        If you’re unsure, consider signing out or contacting
+                        support instead.
+                      </p>
                     </AlertDialogDescription>
                   </AlertDialogHeader>
+
                   <AlertDialogFooter>
                     <AlertDialogCancel className="cursor-pointer">
                       Cancel
                     </AlertDialogCancel>
+
                     <AlertDialogAction
                       onClick={handleDeleteUser}
-                      className="bg-destructive cursor-pointer text-foreground hover:bg-destructive/90"
+                      className="bg-destructive text-foreground hover:bg-destructive/90 cursor-pointer"
                     >
-                      Delete Permanently
+                      Yes, delete my account
                     </AlertDialogAction>
                   </AlertDialogFooter>
                 </AlertDialogContent>
