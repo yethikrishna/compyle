@@ -19,7 +19,7 @@ export function AuthProvider({
     refetchOnReconnect: true,
     refetchOnMount: true,
     staleTime: 0,
-    refetchInterval: 3000,
+    refetchInterval: 30000,
   });
 
   useEffect(() => {
