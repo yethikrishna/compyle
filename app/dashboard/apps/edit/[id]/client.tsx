@@ -145,15 +145,6 @@ export default function EditAPpDetails({ id }: { id: string }) {
 
   return (
     <div className="flex-1">
-      <div className="mb-10">
-        <h1 className="text-2xl lg:text-4xl font-bold mb-3 gradient-text">
-          Edit App
-        </h1>
-        <p className="text-muted-foreground text-lg">
-          Update the details for your application.
-        </p>
-      </div>
-
       {isLoadingApp && (
         <div className="mt-4">
           <Spinner className="mx-auto size-6" />
@@ -198,6 +189,14 @@ export default function EditAPpDetails({ id }: { id: string }) {
         >
           {/* Basic Information */}
           <Card>
+            <div className="mb-10">
+              <h1 className="text-2xl lg:text-4xl font-bold mb-3 gradient-text">
+                Edit App
+              </h1>
+              <p className="text-muted-foreground text-lg">
+                Update the details for your application.
+              </p>
+            </div>
             <CardContent>
               <div className="flex items-start gap-4 mb-6">
                 <div className="bg-secondary/50 p-3 rounded-lg">
@@ -298,12 +297,12 @@ export default function EditAPpDetails({ id }: { id: string }) {
                   </form.Field>
                 </FieldGroup>
               </div>
-            </CardContent>
-          </Card>
+              {/*</CardContent>
+          </Card>*/}
 
-          {/* Category */}
-          <Card>
-            <CardContent>
+              {/* Category */}
+              {/*<Card>
+            <CardContent>*/}
               <div className="flex items-start gap-4 mb-6">
                 <div className="bg-secondary/50 p-3 rounded-lg">
                   <Layers className="w-6 h-6 text-foreground" />
@@ -367,12 +366,12 @@ export default function EditAPpDetails({ id }: { id: string }) {
                   </form.Field>
                 </FieldGroup>
               </div>
-            </CardContent>
-          </Card>
+              {/*</CardContent>
+          </Card>*/}
 
-          {/* Built With */}
-          <Card>
-            <CardContent>
+              {/* Built With */}
+              {/*<Card>
+            <CardContent>*/}
               <div className="flex items-start gap-4 mb-6">
                 <div className="bg-secondary/50 p-3 rounded-lg">
                   <Layers className="w-6 h-6 text-foreground" />
@@ -501,12 +500,12 @@ export default function EditAPpDetails({ id }: { id: string }) {
                   }}
                 </form.Field>
               </div>
-            </CardContent>
-          </Card>
+              {/*</CardContent>
+          </Card>*/}
 
-          {/* Links */}
-          <Card>
-            <CardContent>
+              {/* Links */}
+              {/*<Card>
+            <CardContent>*/}
               <div className="flex items-start gap-4 mb-6">
                 <div className="bg-secondary/50 p-3 rounded-lg">
                   <LinkIcon className="w-6 h-6 text-foreground" />
@@ -607,18 +606,18 @@ export default function EditAPpDetails({ id }: { id: string }) {
                   </form.Field>
                 </FieldGroup>
               </div>
-            </CardContent>
-          </Card>
+              {/*</CardContent>
+          </Card>*/}
 
-          {/* Image upload */}
-          <NewAppImage
-            onImageDataChange={setImageData}
-            initialImageData={initialImageData}
-          />
+              {/* Image upload */}
+              <NewAppImage
+                onImageDataChange={setImageData}
+                initialImageData={initialImageData}
+              />
 
-          {/* Publish Status */}
-          <Card>
-            <CardContent>
+              {/* Publish Status */}
+              {/*<Card>
+            <CardContent>*/}
               <div className="flex items-start gap-4 mb-6">
                 <div className="bg-secondary/50 p-3 rounded-lg">
                   <BookCheck className="w-6 h-6 text-foreground" />
@@ -683,36 +682,36 @@ export default function EditAPpDetails({ id }: { id: string }) {
                   </form.Field>
                 </FieldGroup>
               </div>
+              <CardFooter className="flex flex-row pl-21">
+                <Field
+                  orientation="horizontal"
+                  className="w-full flex justify-between"
+                >
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="cursor-pointer"
+                    onClick={() => {
+                      form.reset();
+                      setTechSearch("");
+                      setImageData(initialImageData); // Reset to initial image data
+                    }}
+                    disabled={isSavingApp}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    type="submit"
+                    form="edit-app-form"
+                    className="w-40 cursor-pointer gap-2"
+                    disabled={isSavingApp}
+                  >
+                    {isSavingApp && <Spinner />}
+                    {isSavingApp ? "Saving..." : "Save Changes"}
+                  </Button>
+                </Field>
+              </CardFooter>
             </CardContent>
-            <CardFooter className="flex flex-row pl-21">
-              <Field
-                orientation="horizontal"
-                className="w-full flex justify-between"
-              >
-                <Button
-                  type="button"
-                  variant="outline"
-                  className="cursor-pointer"
-                  onClick={() => {
-                    form.reset();
-                    setTechSearch("");
-                    setImageData(initialImageData); // Reset to initial image data
-                  }}
-                  disabled={isSavingApp}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  type="submit"
-                  form="edit-app-form"
-                  className="w-40 cursor-pointer gap-2"
-                  disabled={isSavingApp}
-                >
-                  {isSavingApp && <Spinner />}
-                  {isSavingApp ? "Saving..." : "Save Changes"}
-                </Button>
-              </Field>
-            </CardFooter>
           </Card>
         </form>
       )}

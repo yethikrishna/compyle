@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
 import { authenticateFileServer, deleteFile } from "@/server/imagekit";
@@ -160,7 +159,8 @@ export default function NewAppImage({
   };
 
   return (
-    <CardContent>
+    // <CardContent>
+    <>
       <div className="flex items-start gap-4 mb-6">
         <div className="bg-secondary/50 p-3 rounded-lg">
           <ImageIcon className="w-6 h-6 text-foreground" />
@@ -229,6 +229,6 @@ export default function NewAppImage({
           <Progress value={progress} />
         </div>
       )}
-    </CardContent>
+    </>
   );
 }
