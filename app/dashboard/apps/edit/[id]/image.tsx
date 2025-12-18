@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
 import { authenticateFileServer, deleteFile } from "@/server/imagekit";
@@ -12,7 +13,7 @@ import {
   ImageKitUploadNetworkError,
   upload,
 } from "@imagekit/react";
-import { ImageIcon, Upload } from "lucide-react";
+import { Upload } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
@@ -151,7 +152,6 @@ export default function NewAppImage({
       toast.dismiss(toastId);
       toast.success("Existing image deleted.");
       updateImageData(null);
-      // Don't automatically open file picker - let user do it manually
     } catch {
       toast.dismiss(toastId);
       toast.error("Failed to delete existing image");
@@ -159,69 +159,60 @@ export default function NewAppImage({
   };
 
   return (
-    // <CardContent>
-    <>
-      <div className="flex items-start gap-4 mb-6">
-        <div className="bg-secondary/50 p-3 rounded-lg">
-          <ImageIcon className="w-6 h-6 text-foreground" />
-        </div>
-        <div>
-          <h2 className="text-lg lg:text-xl font-semibold mb-1">
-            Image or Screenshot
-          </h2>
-          <p className="text-muted-foreground text-sm">
+    <div className="w-full">
+      <div className="mt-2 space-y-8">
+        <Field>
+          <FieldLabel>Image or Screenshot</FieldLabel>
+          {imageData?.url ? (
+            <div className="">
+              <Image
+                src={imageData.url}
+                width={160}
+                height={90}
+                alt="App image"
+                className="w-full max-w-md rounded-lg border object-cover"
+              />
+              <div className="mt-5 space-x-4">
+                <Button
+                  type="button"
+                  onClick={handleRemoveImage}
+                  variant="destructive"
+                  className="cursor-pointer"
+                >
+                  Remove Image
+                </Button>
+              </div>
+            </div>
+          ) : (
+            <div
+              onClick={handleFileSelect}
+              className="border-2 border-dashed rounded-lg p-8 text-center cursor-pointer hover:border-primary/50 transition-colors"
+            >
+              <Upload className="w-8 h-8 mx-auto mb-4 text-muted-foreground" />
+              <p className="text-sm text-muted-foreground mb-2">
+                Click to upload an image
+              </p>
+              <p className="text-xs text-muted-foreground">
+                PNG, JPG, JPEG up to 5MB
+              </p>
+              <Input
+                ref={fileInputRef}
+                type="file"
+                accept="image/png, image/jpeg, image/jpg"
+                className="hidden"
+                disabled={isUploading}
+                onChange={handleFileChange}
+              />
+            </div>
+          )}
+          <p className="text-xs mt-2 text-muted-foreground">
             Upload an image or screenshot of your app
           </p>
-        </div>
-      </div>
-
-      <div className="pl-0 lg:pl-16 mt-2 space-y-6">
-        {imageData?.url ? (
-          <div className="">
-            <Image
-              src={imageData.url}
-              width={160}
-              height={90}
-              alt="App image"
-              className="w-full max-w-md rounded-lg border object-cover"
-            />
-            <div className="mt-5 space-x-4">
-              <Button
-                type="button"
-                onClick={handleRemoveImage}
-                variant="destructive"
-                className="cursor-pointer"
-              >
-                Remove Image
-              </Button>
-            </div>
-          </div>
-        ) : (
-          <div
-            onClick={handleFileSelect}
-            className="border-2 border-dashed rounded-lg p-8 text-center cursor-pointer hover:border-primary/50 transition-colors"
-          >
-            <Upload className="w-8 h-8 mx-auto mb-4 text-muted-foreground" />
-            <p className="text-sm text-muted-foreground mb-2">
-              Click to upload an image
-            </p>
-            <p className="text-xs text-muted-foreground">
-              PNG, JPG, JPEG up to 5MB
-            </p>
-            <Input
-              ref={fileInputRef}
-              type="file"
-              accept="image/png, image/jpeg, image/jpg"
-              className="hidden"
-              disabled={isUploading}
-              onChange={handleFileChange}
-            />
-          </div>
-        )}
+        </Field>
       </div>
 
       {isUploading && (
-        <div className="pl-0 lg:pl-16 mt-2 w-full">
+        <div className="mt-2 w-full">
           <div className="flex justify-between text-sm mb-1">
             <span>Uploading...</span>
             <span>{Math.round(progress)}%</span>
@@ -229,6 +220,6 @@ export default function NewAppImage({
           <Progress value={progress} />
         </div>
       )}
-    </>
+    </div>
   );
 }
