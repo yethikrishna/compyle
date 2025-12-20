@@ -186,11 +186,20 @@ export default function AppDetailsDashboard({ id }: { id: string }) {
                   <CardTitle className="text-sm font-medium">Status</CardTitle>
                   <Clock className="text-foreground/50 size-5" />
                 </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold">0</div>
-                  <p className="text-muted-foreground text-xs">
-                    +0% from last month
-                  </p>
+                <CardContent className="mt-auto">
+                  {data.appDetails.status === "draft" && (
+                    <Badge className="rounded-xs" variant="outline">
+                      DRAFT
+                    </Badge>
+                  )}
+                  {data.appDetails.status === "published" && (
+                    <Badge className="rounded-xs">PUBLISHED</Badge>
+                  )}
+                  {data.appDetails.status === "archived" && (
+                    <Badge className="rounded-xs" variant="destructive">
+                      ARCHIVED
+                    </Badge>
+                  )}
                 </CardContent>
               </Card>
             </div>
