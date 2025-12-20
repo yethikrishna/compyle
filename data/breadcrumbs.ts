@@ -15,6 +15,12 @@ export const DASHBOARD_BREADCRUMBS: Record<
     { label: "Create App", href: "/dashboard/apps/new" },
   ],
 
+  "/dashboard/apps/[id]": [
+    { label: "Dashboard", href: "/dashboard" },
+    { label: "Apps", href: "/dashboard/apps" },
+    { label: "App Details", href: "/dashboard/apps/[id]" },
+  ],
+
   "/dashboard/settings/account": [
     { label: "Dashboard", href: "/dashboard" },
     { label: "Settings", href: "/dashboard/settings" },

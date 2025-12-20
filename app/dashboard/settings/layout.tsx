@@ -6,14 +6,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const section = pathname.split("/").pop();
 
+  if (section === "profile") {
+    return <div className="flex w-full">{children}</div>;
+  }
+
   let title = "";
   let description = "";
-
-  if (section === "profile") {
-    title = "Profile Settings";
-    description =
-      "Update your personal information, avatar, and public profile details.";
-  }
 
   if (section === "account") {
     title = "Account Settings";
