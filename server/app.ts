@@ -3,17 +3,16 @@
 import { db } from "@/db";
 import { apps } from "@/db/schemas/app";
 import { comments } from "@/db/schemas/comment";
-import { images } from "@/db/schemas/image";
 import { upvotes } from "@/db/schemas/upvote";
 import { users } from "@/db/schemas/user";
 import { createAppSchema } from "@/schema/app.schema";
 import { getUserFromAuth } from "@/server/user";
 import { AppPublishStatus } from "@/types/app";
-import { ImageData } from "@/types/image";
 import { and, countDistinct, desc, eq, lt, sql } from "drizzle-orm";
 import { z, ZodError } from "zod";
 import NodeImageKit from "@imagekit/nodejs";
 import { env } from "@/env/server";
+import { ImageData } from "@/types";
 
 const imagekitClient = new NodeImageKit({
   privateKey: env.IMAGEKIT_PRIVATE_KEY,
@@ -28,34 +27,15 @@ export async function createApp(params: {
     const data = createAppSchema.parse(values);
     const user = await getUserFromAuth();
 
-    // Validate image data
-    if (!imageData) {
+    if (!imageData || !imageData.imageProviderFileId) {
       throw new Error("Image data is required");
     }
 
-    await db.transaction(async (tx) => {
-      const [insertedImage] = await tx
-        .insert(images)
-        .values({
-          url: imageData.url,
-          providerFileId: imageData.fileId,
-          thumbnailUrl: imageData.thumbnailUrl,
-        })
-        .returning({ id: images.id });
-
-      if (!insertedImage?.id) {
-        tx.rollback();
-        throw new Error("Failed to save image data");
-      }
-
-      const imageId = insertedImage.id;
-
-      await tx.insert(apps).values({
-        ...data,
-        userId: user.id,
-        coverImage: imageData.url,
-        coverImageId: imageId,
-      });
+    await db.insert(apps).values({
+      ...data,
+      userId: user.id,
+      image: imageData.image,
+      imageProviderFileId: imageData.imageProviderFileId,
     });
 
     return true;
@@ -81,11 +61,10 @@ export async function updateAppDetails(
     const data = createAppSchema.parse(values);
     const user = await getUserFromAuth();
 
-    // Get the current app details to check for existing image
     const [currentApp] = await db
       .select({
-        coverImageId: apps.coverImageId,
-        coverImage: apps.coverImage,
+        image: apps.image,
+        imageProviderFileId: apps.imageProviderFileId,
       })
       .from(apps)
       .where(and(eq(apps.id, appId), eq(apps.userId, user.id)));
@@ -96,73 +75,36 @@ export async function updateAppDetails(
       );
     }
 
-    await db.transaction(async (tx) => {
-      let newImageId = currentApp.coverImageId;
-      let newCoverImage = currentApp.coverImage;
+    let image = currentApp.image;
+    let imageProviderFileId = currentApp.imageProviderFileId;
 
-      // If new image data is provided
-      if (imageData) {
-        // Delete old image from ImageKit if it exists
-        if (currentApp.coverImageId) {
-          const [oldImage] = await tx
-            .select({
-              providerFileId: images.providerFileId,
-            })
-            .from(images)
-            .where(eq(images.id, currentApp.coverImageId!));
-
-          if (oldImage?.providerFileId) {
-            try {
-              await imagekitClient.files.delete(oldImage.providerFileId);
-            } catch (error) {
-              console.error("Failed to delete old image from ImageKit:", error);
-              // Continue with the transaction even if ImageKit deletion fails
-            }
-          }
-
-          // Delete old image record from database
-          await tx
-            .delete(images)
-            .where(eq(images.id, currentApp.coverImageId!));
-        }
-
-        // Insert new image record
-        const [insertedImage] = await tx
-          .insert(images)
-          .values({
-            url: imageData.url,
-            providerFileId: imageData.fileId,
-            thumbnailUrl: imageData.thumbnailUrl,
-          })
-          .returning({ id: images.id });
-
-        if (!insertedImage?.id) {
-          tx.rollback();
-          throw new Error("Failed to save new image data");
-        }
-
-        newImageId = insertedImage.id;
-        newCoverImage = imageData.url;
+    if (imageData && imageData.imageProviderFileId) {
+      try {
+        await imagekitClient.files.delete(imageProviderFileId);
+      } catch (error) {
+        console.error("Failed to delete old image from ImageKit:", error);
       }
 
-      // Update app details
-      await tx
-        .update(apps)
-        .set({
-          name: data.name,
-          slug: data.slug,
-          description: data.description,
-          category: data.category,
-          builtWith: data.builtWith,
-          websiteUrl: data.websiteUrl,
-          repoUrl: data.repoUrl,
-          demoUrl: data.demoUrl,
-          status: data.status,
-          coverImage: newCoverImage,
-          coverImageId: newImageId,
-        })
-        .where(and(eq(apps.id, appId), eq(apps.userId, user.id)));
-    });
+      image = imageData.image;
+      imageProviderFileId = imageData.imageProviderFileId;
+    }
+
+    await db
+      .update(apps)
+      .set({
+        name: data.name,
+        slug: data.slug,
+        description: data.description,
+        category: data.category,
+        builtWith: data.builtWith,
+        websiteUrl: data.websiteUrl,
+        repoUrl: data.repoUrl,
+        demoUrl: data.demoUrl,
+        status: data.status,
+        image,
+        imageProviderFileId,
+      })
+      .where(and(eq(apps.id, appId), eq(apps.userId, user.id)));
 
     return true;
   } catch (error) {
@@ -219,42 +161,28 @@ export async function deleteApp({
 
     const user = await getUserFromAuth();
 
-    // Get app details before deletion to delete associated image
     const [appToDelete] = await db
       .select({
-        coverImageId: apps.coverImageId,
+        imageProviderFileId: apps.imageProviderFileId,
       })
       .from(apps)
       .where(and(eq(apps.id, appId), eq(apps.userId, user.id)));
 
-    await db.transaction(async (tx) => {
-      // Delete the app
-      await tx
-        .delete(apps)
-        .where(and(eq(apps.id, appId), eq(apps.userId, user.id)));
+    if (!appToDelete) {
+      throw new Error(
+        "App not found or you don't have permission to delete it",
+      );
+    }
 
-      // Delete associated image if it exists
-      if (appToDelete?.coverImageId) {
-        const [imageToDelete] = await tx
-          .select({
-            providerFileId: images.providerFileId,
-          })
-          .from(images)
-          .where(eq(images.id, appToDelete.coverImageId!));
+    await db
+      .delete(apps)
+      .where(and(eq(apps.id, appId), eq(apps.userId, user.id)));
 
-        if (imageToDelete?.providerFileId) {
-          try {
-            await imagekitClient.files.delete(imageToDelete.providerFileId);
-          } catch (error) {
-            console.error("Failed to delete image from ImageKit:", error);
-            // Continue with the transaction even if ImageKit deletion fails
-          }
-        }
-
-        // Delete image record from database
-        await tx.delete(images).where(eq(images.id, appToDelete.coverImageId!));
-      }
-    });
+    try {
+      await imagekitClient.files.delete(appToDelete.imageProviderFileId);
+    } catch (error) {
+      console.error("Failed to delete image from ImageKit:", error);
+    }
 
     return true;
   } catch (error) {
@@ -469,7 +397,7 @@ export async function getPublicAppSEODetails({
       .select({
         name: apps.name,
         description: apps.description,
-        image: apps.coverImage,
+        image: apps.image,
       })
       .from(apps)
       .where(and(eq(apps.slug, slug), eq(apps.status, "published")));
@@ -491,11 +419,6 @@ export async function getPublicAppSEODetails({
 export async function getDashboardAppDetails({ id }: { id: string }): Promise<{
   appDetails: typeof apps.$inferSelect;
   upvoteCount: number;
-  imageDetails?: {
-    url: string;
-    fileId: string;
-    thumbnailUrl: string;
-  } | null;
 }> {
   try {
     if (!id) {
@@ -514,34 +437,18 @@ export async function getDashboardAppDetails({ id }: { id: string }): Promise<{
             WHERE ${upvotes.appId} = ${apps.id}
           )
         `,
-        image: {
-          url: images.url,
-          providerFileId: images.providerFileId,
-          thumbnailUrl: images.thumbnailUrl,
-        },
       })
       .from(apps)
       .where(and(eq(apps.id, id), eq(apps.userId, user.id)))
-      .leftJoin(images, eq(images.id, apps.coverImageId))
       .innerJoin(users, eq(users.id, apps.userId));
 
     if (res.length < 1) {
       throw new Error("No app found with the provided ID");
     }
 
-    const imageDetails =
-      res[0].image && res[0].image.url
-        ? {
-            url: res[0].image.url,
-            fileId: res[0].image.providerFileId || "",
-            thumbnailUrl: res[0].image.thumbnailUrl || res[0].image.url,
-          }
-        : null;
-
     return {
       appDetails: res[0].app,
       upvoteCount: res[0].upvoteCount,
-      imageDetails,
     };
   } catch (error) {
     if (error instanceof Error) {

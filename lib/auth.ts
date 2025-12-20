@@ -79,6 +79,19 @@ export const auth = betterAuth({
         defaultValue: "user",
         input: false,
       },
+      imageProviderFileId: {
+        type: "string",
+        required: false,
+        defaultValue: null,
+        input: true,
+      },
+      about: {
+        type: "string",
+        required: false,
+        defaultValue:
+          "Building with Compyle AI. Sharing ideas and learning from the community.",
+        input: true,
+      },
     },
   },
   advanced: {

@@ -52,8 +52,8 @@ import { VALID_CATEGORIES, VALID_TECHNOLOGIES } from "@/data";
 import { cn } from "@/lib/utils";
 import { createAppSchema } from "@/schema/app.schema";
 import { getDashboardAppDetails, updateAppDetails } from "@/server/app";
+import { ImageData } from "@/types";
 import { AppPublishStatus } from "@/types/app";
-import { ImageData } from "@/types/image";
 import { useForm } from "@tanstack/react-form";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { Check, ChevronsUpDown, FilePlusCorner, X } from "lucide-react";
@@ -114,7 +114,8 @@ export default function EditAppDetails({ id }: { id: string }) {
         (imageData && !initialImageData) ||
         (imageData &&
           initialImageData &&
-          imageData.fileId !== initialImageData.fileId);
+          imageData.imageProviderFileId !==
+            initialImageData.imageProviderFileId);
 
       mutate({
         values: value,
@@ -137,11 +138,10 @@ export default function EditAppDetails({ id }: { id: string }) {
         form.setFieldValue("demoUrl", appData.appDetails.demoUrl || "");
         form.setFieldValue("status", appData.appDetails.status || "published");
 
-        if (appData.imageDetails) {
-          const imageData = {
-            url: appData.imageDetails.url,
-            fileId: appData.imageDetails.fileId,
-            thumbnailUrl: appData.imageDetails.thumbnailUrl,
+        if (appData.appDetails.imageProviderFileId) {
+          const imageData: ImageData = {
+            image: appData.appDetails.image,
+            imageProviderFileId: appData.appDetails.imageProviderFileId,
           };
           setInitialImageData(imageData);
           setImageData(imageData);

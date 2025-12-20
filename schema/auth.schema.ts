@@ -71,4 +71,8 @@ export const updateProfileSchema = z.object({
     .string()
     .min(3, "Name must be at least 3 characters.")
     .max(32, "Name must be at most 32 characters."),
+  about: z
+    .string()
+    .min(5, "About must be at least 5 characters")
+    .max(500, "About must be at most 500 characters"),
 });

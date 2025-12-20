@@ -98,7 +98,7 @@ export default function Apps() {
                 description: app.app.description,
                 category: app.app.category,
                 upvotes: app.upvoteCount,
-                coverImage: app.app.coverImage || undefined,
+                image: app.app.image || undefined,
               };
               return <AppCard key={item.id} app={item} />;
             })}

@@ -6,7 +6,7 @@ import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
 import { authenticateFileServer, deleteFile } from "@/server/imagekit";
-import { ImageData } from "@/types/image";
+import { ImageData } from "@/types";
 import {
   ImageKitAbortError,
   ImageKitInvalidRequestError,
@@ -22,12 +22,13 @@ import { toast } from "sonner";
 interface ImageUploaderProps {
   onImageDataChange: (imageData: ImageData | null) => void;
   initialImageData?: ImageData | null;
-  totalImages?: 1;
+  type?: "app" | "profile";
 }
 
 export function ImageUploader({
   onImageDataChange,
   initialImageData = null,
+  type = "app",
 }: ImageUploaderProps) {
   const [progress, setProgress] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
@@ -44,10 +45,13 @@ export function ImageUploader({
     setImageData(initialImageData ?? null);
   }, [initialImageData]);
 
-  // Update parent component when image data changes
   const updateImageData = (newImageData: ImageData | null) => {
     setImageData(newImageData);
     onImageDataChange(newImageData);
+  };
+
+  const isOAuthImage = (data: ImageData | null): boolean => {
+    return !!(data?.image && !data?.imageProviderFileId);
   };
 
   const authenticator = async () => {
@@ -83,7 +87,6 @@ export function ImageUploader({
       return;
     }
 
-    // Prevent race conditions
     if (isProcessingRef.current || isUploading) {
       toast.error("Please wait for the current operation to complete");
       return;
@@ -106,7 +109,6 @@ export function ImageUploader({
     setIsUploading(true);
     setProgress(0);
 
-    // Create new abort controller for this upload
     abortControllerRef.current = new AbortController();
 
     try {
@@ -126,7 +128,7 @@ export function ImageUploader({
       const uploadResponse = await upload({
         ...authParams,
         file,
-        folder: "/compyle/apps",
+        folder: type === "app" ? "/compyle/apps" : "/compyle/profile",
         fileName: file.name,
         onProgress: (event) => {
           setProgress(Math.round((event.loaded / event.total) * 100));
@@ -146,9 +148,8 @@ export function ImageUploader({
       }
 
       updateImageData({
-        url: uploadResponse.url,
-        fileId: uploadResponse.fileId,
-        thumbnailUrl: uploadResponse.thumbnailUrl,
+        image: uploadResponse.url,
+        imageProviderFileId: uploadResponse.fileId,
       });
       toast.success("Image uploaded successfully");
     } catch (error) {
@@ -186,10 +187,18 @@ export function ImageUploader({
     }
 
     isProcessingRef.current = true;
+
+    if (isOAuthImage(imageData)) {
+      updateImageData(null);
+      toast.success("Image removed successfully");
+      isProcessingRef.current = false;
+      return;
+    }
+
     const toastId = toast.loading("Deleting image...");
 
     try {
-      await deleteFile({ fileId: imageData.fileId });
+      await deleteFile({ fileId: imageData.imageProviderFileId! });
       toast.dismiss(toastId);
       toast.success("Image deleted successfully");
       updateImageData(null);
@@ -210,7 +219,7 @@ export function ImageUploader({
   return (
     <Card className="p-2 -mt-3">
       <CardContent className="p-2">
-        {!imageData?.url && !isUploading && (
+        {!imageData?.image && !isUploading && (
           <div
             onClick={handleFileSelect}
             className="border-2 border-dashed rounded-lg p-8 text-center cursor-pointer hover:border-primary/50 transition-colors"
@@ -233,7 +242,7 @@ export function ImageUploader({
           </div>
         )}
 
-        {(imageData?.url || isUploading) && (
+        {(imageData?.image || isUploading) && (
           <div className="border-2 border-dashed rounded-lg p-8 text-center hover:border-destructive/50 transition-colors">
             <CircleOff className="w-8 h-8 mx-auto mb-4 text-muted-foreground" />
             <p className="text-sm text-muted-foreground mb-2">
@@ -272,16 +281,16 @@ export function ImageUploader({
           </div>
         )}
 
-        {imageData?.url && (
+        {imageData?.image && (
           <>
             <div className="flex flex-row gap-4 justify-between mt-4 border p-4 rounded-xl">
               <div className="shrink-0">
                 <Image
-                  src={imageData!.url}
+                  src={imageData!.image}
                   width={120}
                   height={120}
                   alt="App image"
-                  className="w-36 h-24 rounded-lg border object-cover hover:opacity-90 transition-opacity"
+                  className="w-36 h-24 rounded-lg border object-cover hover:opacity-90 transition-opacity cursor-pointer"
                   onClick={handleFullScreen}
                 />
               </div>
@@ -313,7 +322,7 @@ export function ImageUploader({
                 <DialogTitle className="sr-only">Full Screen Image</DialogTitle>
                 <div className="relative w-full h-full flex items-center justify-center p-4">
                   <Image
-                    src={imageData!.url}
+                    src={imageData!.image}
                     fill
                     priority
                     sizes="95vw 95vh"

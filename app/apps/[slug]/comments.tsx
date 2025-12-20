@@ -101,7 +101,7 @@ export function AppComments({ slug, id }: { slug: string; id: string }) {
                               }
                               aria-invalid={isInvalid}
                               placeholder="I really like this app..."
-                              className="pr-20 min-h-[100px]"
+                              className="pr-20 min-h-24"
                             />
                             <Button
                               type="submit"

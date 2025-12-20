@@ -3,7 +3,6 @@
 import { db } from "@/db";
 import { users } from "@/db/schemas/user";
 import { auth } from "@/lib/auth";
-import { ActualUser } from "@/types/user";
 import { User } from "better-auth";
 import { eq } from "drizzle-orm";
 import { headers } from "next/headers";
@@ -29,7 +28,7 @@ export async function getPublicUserProfile({
   username,
 }: {
   username: string;
-}): Promise<ActualUser> {
+}): Promise<User> {
   try {
     if (!username) {
       throw new Error("Invalid username");
