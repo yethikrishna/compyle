@@ -32,12 +32,13 @@ export default function AppDetailsClient({ username }: { username: string }) {
   });
 
   return (
-    <div className="px-6">
+    <>
       {isPending && (
         <div>
           <Spinner className="mx-auto size-6" />
         </div>
       )}
+
       {!isPending && !data && (
         <Empty className="border max-w-4xl mx-auto">
           <EmptyHeader>
@@ -64,6 +65,7 @@ export default function AppDetailsClient({ username }: { username: string }) {
           </EmptyContent>
         </Empty>
       )}
+
       {!isPending && data && (
         <div className="container mx-auto">
           <Card className="max-w-6xl mx-auto">
@@ -74,6 +76,7 @@ export default function AppDetailsClient({ username }: { username: string }) {
               </Avatar>
               <div>
                 <CardTitle className="text-2xl mt-4">{data.name}</CardTitle>
+                {/*@ts-expect-error: username property exists at runtime*/}
                 <CardDescription>{data.username}</CardDescription>
                 <div className="flex items-center gap-3 mt-8">
                   <Calendar className="h-5 w-5 text-foreground/50 shrink-0" />
@@ -91,6 +94,6 @@ export default function AppDetailsClient({ username }: { username: string }) {
           </Card>
         </div>
       )}
-    </div>
+    </>
   );
 }

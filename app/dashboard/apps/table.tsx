@@ -27,9 +27,8 @@ import {
 import { apps } from "@/db/schemas/app";
 import { AppPublishStatus } from "@/types/app";
 import { ColumnDef } from "@tanstack/react-table";
-import clsx from "clsx";
 import { InferSelectModel } from "drizzle-orm";
-import { Ellipsis, Eye, Pen, Pencil, Trash2 } from "lucide-react";
+import { Edit, Ellipsis, Eye, RefreshCw, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -78,19 +77,25 @@ export const columns = (
     cell: ({ getValue }) => {
       const status = getValue() as string;
 
-      const colorClass = clsx(
-        "uppercase px-2 py-1 text-xs font-medium rounded-md",
-        {
-          "bg-gray-100 text-gray-800 border border-gray-300":
-            status === "draft",
-          "bg-green-100 text-green-800 border border-green-300":
-            status === "published",
-          "bg-red-100 text-red-800 border border-red-300":
-            status === "archived",
-        },
-      );
+      if (status === "draft") {
+        return (
+          <Badge className="rounded-xs" variant="outline">
+            DRAFT
+          </Badge>
+        );
+      }
 
-      return <Badge className={colorClass}>{status}</Badge>;
+      if (status === "published") {
+        return <Badge className="rounded-xs">PUBLISHED</Badge>;
+      }
+
+      if (status === "archived") {
+        return (
+          <Badge className="rounded-xs" variant="destructive">
+            ARCHIVED
+          </Badge>
+        );
+      }
     },
   },
   {
@@ -150,7 +155,7 @@ const ActionsCell = ({
             className="cursor-pointer"
             onClick={() => setStatusOpen(true)}
           >
-            <Pencil />
+            <RefreshCw />
             Update Status
           </DropdownMenuItem>
 
@@ -159,7 +164,7 @@ const ActionsCell = ({
               className="flex gap-2"
               href={`/dashboard/apps/edit/${app.id}`}
             >
-              <Pen />
+              <Edit />
               Edit App Details
             </Link>
           </DropdownMenuItem>

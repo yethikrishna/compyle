@@ -1,0 +1,1 @@
+ALTER TABLE "user" ADD COLUMN "about" text DEFAULT 'Building with Compyle AI. Sharing ideas and learning from the community.' NOT NULL;

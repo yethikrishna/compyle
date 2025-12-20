@@ -121,13 +121,13 @@ export default function AppDetailsDashboard({ id }: { id: string }) {
         <div className="grid lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 space-y-6">
             {/* Cover Image Card */}
-            {data.imageDetails && (
+            {data.appDetails.image && (
               <Card>
                 <CardContent className="p-6">
                   <Label className="text-lg mb-3 block">COVER IMAGE</Label>
                   <div className="relative aspect-video rounded-lg overflow-hidden border">
                     <Image
-                      src={data.imageDetails.url}
+                      src={data.appDetails.image}
                       alt={data.appDetails.name}
                       fill
                       className="object-cover"

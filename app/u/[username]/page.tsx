@@ -1,5 +1,4 @@
 import AppDetailsClient from "@/app/u/[username]/client";
-import { Header } from "@/components/custom/header";
 
 export default async function UserDetails({
   params,
@@ -10,7 +9,6 @@ export default async function UserDetails({
 
   return (
     <>
-      <Header />
       <AppDetailsClient username={username} />
     </>
   );

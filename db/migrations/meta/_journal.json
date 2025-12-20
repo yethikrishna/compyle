@@ -64,6 +64,41 @@
       "when": 1763897519595,
       "tag": "0008_vengeful_omega_sentinel",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1766228039258,
+      "tag": "0009_loose_lady_ursula",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1766237518163,
+      "tag": "0010_useful_quicksilver",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1766238264349,
+      "tag": "0011_remarkable_lady_mastermind",
+      "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "7",
+      "when": 1766238319460,
+      "tag": "0012_bouncy_white_tiger",
+      "breakpoints": true
+    },
+    {
+      "idx": 13,
+      "version": "7",
+      "when": 1766238804308,
+      "tag": "0013_abnormal_leopardon",
+      "breakpoints": true
     }
   ]
 }

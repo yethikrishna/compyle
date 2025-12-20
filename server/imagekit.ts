@@ -38,7 +38,7 @@ export async function authenticateFileServer(): Promise<{
 export async function deleteFile({
   fileId,
 }: {
-  fileId: string;
+  fileId: string | undefined;
 }): Promise<void> {
   try {
     if (!fileId) {

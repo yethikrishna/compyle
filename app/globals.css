@@ -114,8 +114,8 @@
 
 @layer base {
   * {
-    font-family: var(--font-sans), sans-serif;
     @apply border-border outline-ring/50;
+    font-family: var(--font-sans), sans-serif;
   }
 
   /* Only apply theme transitions to body and major layout elements */
@@ -168,6 +168,7 @@
     height: 0;
   }
 }
+
 @keyframes theme-fade {
   0% {
     opacity: 1;

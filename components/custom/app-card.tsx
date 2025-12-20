@@ -12,13 +12,11 @@ export function AppCard({ app }: { app: AppCardProps }) {
         {/* Image Placeholder */}
         <div
           className={`w-full h-40 rounded-lg mb-4 overflow-hidden ${
-            app.coverImage
+            app.image
               ? "bg-cover bg-center"
               : "bg-linear-to-br from-primary/30 via-secondary/20 to-accent/30 group-hover:from-primary/40 group-hover:via-secondary/30 group-hover:to-accent/40 transition-all"
           }`}
-          style={
-            app.coverImage ? { backgroundImage: `url(${app.coverImage})` } : {}
-          }
+          style={app.image ? { backgroundImage: `url(${app.image})` } : {}}
         ></div>
 
         <div className="mb-3">
