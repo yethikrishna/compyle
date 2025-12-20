@@ -1,17 +1,9 @@
 "use client";
 
 import { AppComments } from "@/app/apps/[slug]/comments";
-import {
-  AlertDialog,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Empty,
   EmptyContent,
@@ -20,6 +12,7 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from "@/components/ui/empty";
+import { Separator } from "@/components/ui/separator";
 import { Spinner } from "@/components/ui/spinner";
 import { getInitials } from "@/lib/utils";
 import { queryClient } from "@/providers/query.provider";
@@ -38,13 +31,9 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
 import { toast } from "sonner";
 
 export function AppDetailsClient({ slug }: { slug: string }) {
-  const [alertOpen, setAlertOpen] = useState(false);
-  const [alertMessage, setAlertMessage] = useState("");
-
   const { authInfo, isInitialPending } = useAuthStore();
 
   const results = useQueries({
@@ -93,14 +82,11 @@ export function AppDetailsClient({ slug }: { slug: string }) {
     upvoteMutation.mutate();
   };
 
-  const handleLinksButtonClick = (url: string | null, message: string) => {
-    if (url) {
-      window.open(url, "_blank");
-    } else {
-      setAlertMessage(message);
-      setAlertOpen(true);
-    }
-  };
+  const hasAnyLinks =
+    app &&
+    (app.appDetails.demoUrl ||
+      app.appDetails.websiteUrl ||
+      app.appDetails.repoUrl);
 
   return (
     <>
@@ -198,64 +184,48 @@ export function AppDetailsClient({ slug }: { slug: string }) {
                 </div>
               </div>
 
-              <div className="flex flex-wrap gap-3 border-t border-b border-border py-6">
-                <Button
-                  variant="default"
-                  size="sm"
-                  className="gap-2 cursor-pointer"
-                  onClick={() =>
-                    handleLinksButtonClick(
-                      app.appDetails.demoUrl,
-                      "Demo URL is not available.",
-                    )
-                  }
-                >
-                  <Globe className="h-4 w-4" />
-                  View Demo
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="gap-2 cursor-pointer"
-                  onClick={() =>
-                    handleLinksButtonClick(
-                      app.appDetails.websiteUrl,
-                      "Website URL is not available.",
-                    )
-                  }
-                >
-                  <ExternalLink className="h-4 w-4" />
-                  Visit Site
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="gap-2 cursor-pointer"
-                  onClick={() =>
-                    handleLinksButtonClick(
-                      app.appDetails.repoUrl,
-                      "Repository URL is not available.",
-                    )
-                  }
-                >
-                  <Github className="h-4 w-4" />
-                  Source Code
-                </Button>
+              {hasAnyLinks && (
+                <div className="flex flex-wrap gap-3 border-t border-b border-border py-6">
+                  {app.appDetails.demoUrl && (
+                    <Link
+                      className={buttonVariants({ size: "sm" })}
+                      href={app.appDetails.demoUrl}
+                      target="_blank"
+                    >
+                      <Globe className="h-4 w-4" />
+                      View Demo
+                    </Link>
+                  )}
+                  {app.appDetails.websiteUrl && (
+                    <Link
+                      className={buttonVariants({
+                        size: "sm",
+                        variant: "outline",
+                      })}
+                      href={app.appDetails.websiteUrl}
+                      target="_blank"
+                    >
+                      <ExternalLink className="h-4 w-4" />
+                      Visit Site
+                    </Link>
+                  )}
+                  {app.appDetails.repoUrl && (
+                    <Link
+                      className={buttonVariants({
+                        size: "sm",
+                        variant: "outline",
+                      })}
+                      href={app.appDetails.repoUrl}
+                      target="_blank"
+                    >
+                      <Github className="h-4 w-4" />
+                      Source Code
+                    </Link>
+                  )}
+                </div>
+              )}
 
-                <AlertDialog open={alertOpen} onOpenChange={setAlertOpen}>
-                  <AlertDialogContent>
-                    <AlertDialogHeader>
-                      <AlertDialogTitle>Link Unavailable</AlertDialogTitle>
-                      <AlertDialogDescription>
-                        {alertMessage}
-                      </AlertDialogDescription>
-                    </AlertDialogHeader>
-                    <AlertDialogFooter>
-                      <Button onClick={() => setAlertOpen(false)}>Close</Button>
-                    </AlertDialogFooter>
-                  </AlertDialogContent>
-                </AlertDialog>
-              </div>
+              {!hasAnyLinks && <Separator />}
 
               <AppComments slug={slug} id={app.appDetails.id} />
             </div>
