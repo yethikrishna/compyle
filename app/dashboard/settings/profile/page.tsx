@@ -35,13 +35,11 @@ export default function ProfileSettings() {
     defaultValues: { name: "", about: "" },
     validators: { onSubmit: updateProfileSchema },
     onSubmit: async ({ value }) => {
-      if (value.name === data?.user.name) {
-        toast.error("Cannot update name to the same name");
-        return;
-      }
+      const nameUnchanged = value.name === data?.user.name;
+      const aboutUnchanged = value.about === data?.user.about;
 
-      if (value.about === data?.user.about) {
-        toast.error("Cannot update about to the same about");
+      if (nameUnchanged && aboutUnchanged) {
+        toast.error("No changes to update");
         return;
       }
 
@@ -71,6 +69,13 @@ export default function ProfileSettings() {
 
         if (!data.user.image) {
           setInitialImageData(null);
+        } else {
+          setInitialImageData({
+            image: data.user.image,
+            imageProviderFileId: data.user.imageProviderFileId as
+              | string
+              | undefined,
+          });
         }
 
         setInitialImageData({
