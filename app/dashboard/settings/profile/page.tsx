@@ -2,7 +2,14 @@
 
 import { ImageUploader } from "@/components/custom/image";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import {
   Field,
   FieldError,
@@ -10,7 +17,6 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { Separator } from "@/components/ui/separator";
 import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
 import { updateUser, useSession } from "@/lib/auth-client";
@@ -23,7 +29,6 @@ import { toast } from "sonner";
 
 export default function ProfileSettings() {
   const [isUpdating, setIsUpdating] = useState(false);
-  const [isUpdatingImage, setIsUpdatingImage] = useState(false);
   const [imageData, setImageData] = useState<ImageData | null>(null);
   const [initialImageData, setInitialImageData] = useState<ImageData | null>(
     null,
@@ -37,8 +42,13 @@ export default function ProfileSettings() {
     onSubmit: async ({ value }) => {
       const nameUnchanged = value.name === data?.user.name;
       const aboutUnchanged = value.about === data?.user.about;
+      const imageChanged =
+        imageData?.image !== initialImageData?.image ||
+        imageData?.imageProviderFileId !==
+          initialImageData?.imageProviderFileId;
 
-      if (nameUnchanged && aboutUnchanged) {
+      // Check if nothing has changed
+      if (nameUnchanged && aboutUnchanged && !imageChanged) {
         toast.error("No changes to update");
         return;
       }
@@ -48,6 +58,8 @@ export default function ProfileSettings() {
       const { error } = await updateUser({
         name: value.name,
         about: value.about,
+        image: imageData?.image ?? null,
+        imageProviderFileId: imageData?.imageProviderFileId ?? null,
       });
 
       toast.dismiss(id);
@@ -56,7 +68,11 @@ export default function ProfileSettings() {
         toast.error("Failed to update profile");
       } else {
         refetch();
+        setInitialImageData(imageData);
         toast.success("Profile updated successfully.");
+        queryClient.invalidateQueries({
+          queryKey: ["user-global-auth-session"],
+        });
       }
     },
   });
@@ -69,55 +85,20 @@ export default function ProfileSettings() {
 
         if (!data.user.image) {
           setInitialImageData(null);
+          setImageData(null);
         } else {
-          setInitialImageData({
-            image: data.user.image,
+          const imageInfo = {
+            image: data.user.image as string,
             imageProviderFileId: data.user.imageProviderFileId as
               | string
               | undefined,
-          });
+          };
+          setInitialImageData(imageInfo);
+          setImageData(imageInfo);
         }
-
-        setInitialImageData({
-          image: data.user.image as string,
-          imageProviderFileId: data.user.imageProviderFileId as
-            | string
-            | undefined,
-        });
       }, 0);
     }
   }, [data, error, form, isPending]);
-
-  const handleUpdateImage = async () => {
-    const hasChanged =
-      imageData?.image !== initialImageData?.image ||
-      imageData?.imageProviderFileId !== initialImageData?.imageProviderFileId;
-
-    if (!hasChanged) {
-      toast.error("Image hasn't changed");
-      return;
-    }
-
-    setIsUpdatingImage(true);
-    const id = toast.loading("Updating avatar...");
-
-    const { error } = await updateUser({
-      image: imageData?.image ?? null,
-      imageProviderFileId: imageData?.imageProviderFileId ?? null,
-    });
-
-    toast.dismiss(id);
-    setIsUpdatingImage(false);
-
-    if (error) {
-      toast.error("Failed to update avatar");
-    } else {
-      setInitialImageData(imageData);
-      refetch();
-      queryClient.invalidateQueries({ queryKey: ["user-global-auth-session"] });
-      toast.success("Avatar updated successfully.");
-    }
-  };
 
   return (
     <>
@@ -128,21 +109,24 @@ export default function ProfileSettings() {
       )}
 
       {!isPending && (
-        <div className="w-full">
-          <Separator />
-          <Card className="mt-2 border-none bg-background max-w-lg">
-            <CardHeader className="p-0">
-              <CardTitle className="text-2xl">Profile Information</CardTitle>
+        <form
+          id="update-profile"
+          className="space-y-6 w-full"
+          onSubmit={(e) => {
+            e.preventDefault();
+            form.handleSubmit();
+          }}
+        >
+          <Card className="w-full max-w-3xl mx-auto">
+            <CardHeader>
+              <CardTitle className="text-xl">Update Profile</CardTitle>
+              <CardDescription>
+                Update your personal information, avatar, and public profile
+                details.
+              </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-6 p-0">
-              <form
-                id="update-profile"
-                className="space-y-6"
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  form.handleSubmit();
-                }}
-              >
+            <CardContent>
+              <div className="space-y-6">
                 <FieldGroup>
                   <form.Field name="name">
                     {(field) => {
@@ -151,7 +135,7 @@ export default function ProfileSettings() {
                       return (
                         <Field data-invalid={isInvalid}>
                           <FieldLabel htmlFor={field.name}>
-                            Full Name
+                            Full Name *
                           </FieldLabel>
                           <Input
                             id={field.name}
@@ -162,7 +146,6 @@ export default function ProfileSettings() {
                             aria-invalid={isInvalid}
                             placeholder="John Doe"
                             autoComplete="off"
-                            className="max-w-md"
                           />
                           {isInvalid && (
                             <FieldError errors={field.state.meta.errors} />
@@ -171,14 +154,16 @@ export default function ProfileSettings() {
                       );
                     }}
                   </form.Field>
+                </FieldGroup>
 
+                <FieldGroup>
                   <form.Field name="about">
                     {(field) => {
                       const isInvalid =
                         field.state.meta.isTouched && !field.state.meta.isValid;
                       return (
                         <Field data-invalid={isInvalid}>
-                          <FieldLabel htmlFor={field.name}>About</FieldLabel>
+                          <FieldLabel htmlFor={field.name}>About *</FieldLabel>
                           <Textarea
                             id={field.name}
                             name={field.name}
@@ -187,7 +172,7 @@ export default function ProfileSettings() {
                             onChange={(e) => field.handleChange(e.target.value)}
                             aria-invalid={isInvalid}
                             placeholder="My about information..."
-                            className="pr-20 min-h-24 max-w-md"
+                            className="min-h-24"
                           />
                           {isInvalid && (
                             <FieldError errors={field.state.meta.errors} />
@@ -196,48 +181,39 @@ export default function ProfileSettings() {
                       );
                     }}
                   </form.Field>
-
-                  <Button
-                    disabled={isUpdating}
-                    type="submit"
-                    form="update-profile"
-                    className="w-full max-w-md gap-2 cursor-pointer"
-                  >
-                    {isUpdating && <Spinner />}
-                    {isUpdating ? "Loading..." : "Update Profile"}
-                  </Button>
                 </FieldGroup>
-              </form>
+
+                <FieldGroup>
+                  <Field>
+                    <FieldLabel className="mb-4">Your Avatar</FieldLabel>
+                    <ImageUploader
+                      type="profile"
+                      onImageDataChange={setImageData}
+                      initialImageData={initialImageData}
+                    />
+                  </Field>
+                </FieldGroup>
+              </div>
             </CardContent>
-          </Card>
-
-          <Separator className="mt-8" />
-          <Card className="mt-2 border-none bg-background max-w-2xl">
-            <CardHeader className="p-0">
-              <CardTitle className="text-2xl">Avatar</CardTitle>
-              <CardContent className="p-0 mt-4">
-                <Field>
-                  <FieldLabel className="mb-3">Your Avatar</FieldLabel>
-                  <ImageUploader
-                    type="profile"
-                    onImageDataChange={setImageData}
-                    initialImageData={initialImageData}
-                  />
-                </Field>
-
+            <CardFooter className="flex flex-row">
+              <Field
+                orientation="horizontal"
+                className="w-full flex justify-between"
+              >
+                <div></div>
                 <Button
-                  onClick={handleUpdateImage}
-                  disabled={isUpdatingImage}
-                  type="button"
-                  className="w-full max-w-md gap-2 cursor-pointer mt-6"
+                  disabled={isUpdating}
+                  type="submit"
+                  form="update-profile"
+                  className="w-40 gap-2 cursor-pointer"
                 >
-                  {isUpdatingImage && <Spinner />}
-                  {isUpdatingImage ? "Loading..." : "Update Avatar"}
+                  {isUpdating && <Spinner />}
+                  {isUpdating ? "Loading..." : "Update Profile"}
                 </Button>
-              </CardContent>
-            </CardHeader>
+              </Field>
+            </CardFooter>
           </Card>
-        </div>
+        </form>
       )}
     </>
   );
