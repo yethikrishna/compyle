@@ -59,20 +59,3 @@ export const VALID_TECHNOLOGIES = [
   "Chakra UI",
   "shadcn/ui",
 ] as const;
-
-export const TECH_COLORS: Record<string, string> = {
-  TypeScript: "bg-blue-500/20 text-blue-300 border-blue-500/50",
-  JavaScript: "bg-yellow-500/20 text-yellow-300 border-yellow-500/50",
-  React: "bg-cyan-500/20 text-cyan-300 border-cyan-500/50",
-  "Next.js": "bg-gray-500/20 text-gray-300 border-gray-500/50",
-  "Vue.js": "bg-green-500/20 text-green-300 border-green-500/50",
-  Angular: "bg-red-500/20 text-red-300 border-red-500/50",
-  Python: "bg-blue-400/20 text-blue-200 border-blue-400/50",
-  "Node.js": "bg-green-600/20 text-green-300 border-green-600/50",
-  Django: "bg-green-700/20 text-green-300 border-green-700/50",
-  PostgreSQL: "bg-blue-600/20 text-blue-300 border-blue-600/50",
-  MongoDB: "bg-green-500/20 text-green-300 border-green-500/50",
-  Docker: "bg-blue-400/20 text-blue-300 border-blue-400/50",
-  AWS: "bg-orange-500/20 text-orange-300 border-orange-500/50",
-  "Tailwind CSS": "bg-cyan-400/20 text-cyan-300 border-cyan-400/50",
-};
