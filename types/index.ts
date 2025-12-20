@@ -1,3 +1,5 @@
+import { Session, User } from "better-auth";
+
 export type AppCardProps = {
   id: string;
   name: string;
@@ -8,7 +10,12 @@ export type AppCardProps = {
   image?: string;
 };
 
-export interface ImageData {
+export type ImageData = {
   image: string;
   imageProviderFileId?: string;
-}
+};
+
+export type AuthInfo = {
+  user: User;
+  session: Session;
+};

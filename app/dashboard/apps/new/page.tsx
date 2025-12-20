@@ -44,7 +44,7 @@ import { VALID_CATEGORIES, VALID_TECHNOLOGIES } from "@/data";
 import { cn } from "@/lib/utils";
 import { createAppSchema } from "@/schema/app.schema";
 import { createApp } from "@/server/app";
-import { ImageData } from "@/types/image";
+import { ImageData } from "@/types";
 import { useForm } from "@tanstack/react-form";
 import { useMutation } from "@tanstack/react-query";
 import { Check, ChevronsUpDown, X } from "lucide-react";
