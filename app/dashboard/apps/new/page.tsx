@@ -441,10 +441,13 @@ export default function CreateApp() {
               </form.Field>
             </FieldGroup>
 
-            <ImageUploader
-              onImageDataChange={setImageData}
-              initialImageData={imageData}
-            />
+            <FieldGroup>
+              <FieldLabel>Upload Image</FieldLabel>
+              <ImageUploader
+                onImageDataChange={setImageData}
+                initialImageData={imageData}
+              />
+            </FieldGroup>
 
             <FieldGroup>
               <form.Field name="status">

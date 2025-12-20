@@ -75,7 +75,7 @@ export default function EditAppDetails({ id }: { id: string }) {
     }) => updateAppDetails(values, appId, imageData),
     onSuccess: () => {
       toast.success("App updated successfully");
-      router.push("/dashboard/apps/me");
+      router.push("/dashboard/apps");
     },
     onError: (error) => {
       toast.error(error.message || "Failed to update app");
@@ -166,7 +166,7 @@ export default function EditAppDetails({ id }: { id: string }) {
             <Link href="/dashboard/apps/new">
               <Button className="cursor-pointer">Submit App</Button>
             </Link>
-            <Link href="/dashboard/apps/me">
+            <Link href="/dashboard/apps">
               <Button className="cursor-pointer" variant="outline">
                 View All Apps
               </Button>
@@ -337,91 +337,9 @@ export default function EditAppDetails({ id }: { id: string }) {
                 const isInvalid =
                   field.state.meta.isTouched && !field.state.meta.isValid;
 
-          {/* Image upload */}
-          <ImageUploader
-            onImageDataChange={setImageData}
-            initialImageData={initialImageData}
-          />
-
-          {/* Publish Status */}
-          <Card>
-            <CardContent>
-              <div className="flex items-start gap-4 mb-6">
-                <div className="bg-secondary/50 p-3 rounded-lg">
-                  <BookCheck className="w-6 h-6 text-foreground" />
-                </div>
-                <div>
-                  <h2 className="text-lg lg:text-xl font-semibold mb-1">
-                    Publish Status
-                  </h2>
-                  <p className="text-muted-foreground text-sm">
-                    Whether to publish your app or just create a draft.
-                  </p>
-                </div>
-              </div>
-              <div className="pl-16 mt-2 space-y-6">
-                <FieldGroup>
-                  <form.Field name="status">
-                    {(field) => {
-                      const isInvalid =
-                        field.state.meta.isTouched && !field.state.meta.isValid;
-                      return (
-                        <Field orientation="vertical" data-invalid={isInvalid}>
-                          <FieldContent>
-                            <FieldLabel htmlFor="form-tanstack-select-status">
-                              Select Status
-                            </FieldLabel>
-                            {isInvalid && (
-                              <FieldError errors={field.state.meta.errors} />
-                            )}
-                          </FieldContent>
-                          <Select
-                            name={field.name}
-                            value={field.state.value || "published"}
-                            onValueChange={(value) =>
-                              field.handleChange(value as AppPublishStatus)
-                            }
-                          >
-                            <SelectTrigger
-                              id="form-tanstack-select-status"
-                              aria-invalid={isInvalid}
-                              className="w-full cursor-pointer"
-                            >
-                              <SelectValue placeholder="Select" />
-                            </SelectTrigger>
-                            <SelectContent position="item-aligned">
-                              <SelectItem
-                                className="cursor-pointer"
-                                value="published"
-                              >
-                                Published (Published Immediately)
-                              </SelectItem>
-                              <SelectItem
-                                className="cursor-pointer"
-                                value="draft"
-                              >
-                                Draft (Save for Later)
-                              </SelectItem>
-                            </SelectContent>
-                          </Select>
-                        </Field>
-                      );
-                    }}
-                  </form.Field>
-                </FieldGroup>
-              </div>
-            </CardContent>
-            <CardFooter className="flex flex-row pl-21">
-              <Field
-                orientation="horizontal"
-                className="w-full flex justify-between"
-              >
-                <Button
-                  type="button"
-                  variant="outline"
-                  className="cursor-pointer"
-                  onClick={() => {
-                    form.reset();
+                const addTech = (tech: string) => {
+                  if (!selectedTechs.includes(tech)) {
+                    field.handleChange([...selectedTechs, tech]);
                     setTechSearch("");
                   }
                 };
@@ -614,10 +532,13 @@ export default function EditAppDetails({ id }: { id: string }) {
             </FieldGroup>
 
             {/* Image Upload */}
-            <NewAppImage
-              onImageDataChange={setImageData}
-              initialImageData={initialImageData}
-            />
+            <FieldGroup>
+              <FieldLabel>Upload Image</FieldLabel>
+              <ImageUploader
+                onImageDataChange={setImageData}
+                initialImageData={initialImageData}
+              />
+            </FieldGroup>
 
             {/* Publish Status */}
             <FieldGroup>

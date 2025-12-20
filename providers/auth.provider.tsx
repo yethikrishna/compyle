@@ -20,6 +20,7 @@ export function AuthProvider({
     refetchOnMount: true,
     staleTime: 0,
     refetchInterval: 30000,
+    retry: false,
   });
 
   useEffect(() => {

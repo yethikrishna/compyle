@@ -1,7 +1,8 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Field, FieldLabel } from "@/components/ui/field";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
 import { authenticateFileServer, deleteFile } from "@/server/imagekit";
@@ -13,14 +14,12 @@ import {
   ImageKitUploadNetworkError,
   upload,
 } from "@imagekit/react";
-import { Trash2, Upload, X, Maximize2 } from "lucide-react";
+import { CircleOff, Maximize2, Trash2, Upload, X } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
-import { Button } from "../ui/button";
-import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 
-interface NewAppImageProps {
+interface ImageUploaderProps {
   onImageDataChange: (imageData: ImageData | null) => void;
   initialImageData?: ImageData | null;
   totalImages?: 1;
@@ -29,7 +28,7 @@ interface NewAppImageProps {
 export function ImageUploader({
   onImageDataChange,
   initialImageData = null,
-}: NewAppImageProps) {
+}: ImageUploaderProps) {
   const [progress, setProgress] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
   const [imageData, setImageData] = useState<ImageData | null>(
@@ -204,126 +203,21 @@ export function ImageUploader({
     setShowFullScreen(true);
   };
 
-  // State 1: No image uploaded
-  if (!imageData?.url && !isUploading) {
-    return (
-      <div className="w-full">
-        <div className="mt-2 space-y-8">
-          <Field>
-            <FieldLabel>Image or Screenshot</FieldLabel>
-            <div
-              onClick={handleFileSelect}
-              className="border-2 border-dashed rounded-lg p-8 text-center cursor-pointer hover:border-primary/50 transition-colors"
-            >
-              <Upload className="w-8 h-8 mx-auto mb-4 text-muted-foreground" />
-              <p className="text-sm text-muted-foreground mb-2">
-                Click to upload an image
-              </p>
-              <p className="text-xs text-muted-foreground">
-                PNG, JPG, JPEG up to 5MB
-              </p>
-              <Input
-                ref={fileInputRef}
-                type="file"
-                accept="image/png, image/jpeg, image/jpg"
-                className="hidden"
-                disabled={isUploading}
-                onChange={handleFileChange}
-              />
-            </div>
-          </Field>
-        </div>
-      </div>
-    );
-  }
-
-  // State 2: Upload in progress
-  if (isUploading) {
-    return (
-      <div className="w-full">
-        <div className="mt-2 space-y-8">
-          <Field>
-            <FieldLabel>Image or Screenshot</FieldLabel>
-            <Card>
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <p className="font-medium">Uploading image...</p>
-                  <Button
-                    type="button"
-                    size="icon-sm"
-                    variant="destructive"
-                    className="cursor-pointer"
-                    onClick={handleCancelUpload}
-                  >
-                    <X className="h-4 w-4" />
-                  </Button>
-                </div>
-                <div className="flex items-center gap-4">
-                  <Progress value={progress} className="flex-1" />
-                  <span className="text-sm font-medium min-w-[3rem] text-right">
-                    {progress}%
-                  </span>
-                </div>
-              </CardContent>
-            </Card>
-            <Input
-              ref={fileInputRef}
-              type="file"
-              accept="image/png, image/jpeg, image/jpg"
-              className="hidden"
-              disabled={isUploading}
-              onChange={handleFileChange}
-            />
-          </Field>
-        </div>
-      </div>
-    );
-  }
-
-  // State 3: Image uploaded
   return (
-    <>
-      <div className="w-full">
-        <div className="mt-2 space-y-8">
-          <Field>
-            <FieldLabel>Image or Screenshot</FieldLabel>
-            <Card>
-              <CardContent className="p-5">
-                <div className="flex flex-row gap-4 justify-between">
-                  <div className="flex-shrink-0">
-                    <Image
-                      src={imageData!.url}
-                      width={120}
-                      height={120}
-                      alt="App image"
-                      className="w-[120px] h-[120px] rounded-lg border object-cover cursor-pointer hover:opacity-90 transition-opacity"
-                      onClick={handleFullScreen}
-                    />
-                  </div>
-                  <div className="flex gap-2">
-                    <Button
-                      type="button"
-                      size="icon-sm"
-                      variant="outline"
-                      className="cursor-pointer"
-                      onClick={handleFullScreen}
-                    >
-                      <Maximize2 className="h-4 w-4" />
-                    </Button>
-                    <Button
-                      type="button"
-                      size="icon-sm"
-                      variant="destructive"
-                      className="cursor-pointer"
-                      onClick={handleRemoveImage}
-                      disabled={isProcessingRef.current}
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+    <Card className="p-2 -mt-3">
+      <CardContent className="p-2">
+        {!imageData?.url && !isUploading && (
+          <div
+            onClick={handleFileSelect}
+            className="border-2 border-dashed rounded-lg p-8 text-center cursor-pointer hover:border-primary/50 transition-colors"
+          >
+            <Upload className="w-8 h-8 mx-auto mb-4 text-muted-foreground" />
+            <p className="text-sm text-muted-foreground mb-2">
+              Click to upload an image
+            </p>
+            <p className="text-xs text-muted-foreground">
+              PNG, JPG, JPEG up to 5MB
+            </p>
             <Input
               ref={fileInputRef}
               type="file"
@@ -331,25 +225,103 @@ export function ImageUploader({
               className="hidden"
               disabled={isUploading}
               onChange={handleFileChange}
-            />
-          </Field>
-        </div>
-      </div>
-
-      <Dialog open={showFullScreen} onOpenChange={setShowFullScreen}>
-        <DialogContent className="p-2 max-w-[95vw]! w-[95vw]! h-[95vh]">
-          <DialogTitle className="sr-only">Full Screen Image</DialogTitle>
-          <div className="relative w-full h-full flex items-center justify-center p-4">
-            <Image
-              src={imageData!.url}
-              width={1200}
-              height={1200}
-              alt="App image fullscreen"
-              className="max-w-full max-h-full object-contain rounded-lg"
             />
           </div>
-        </DialogContent>
-      </Dialog>
-    </>
+        )}
+
+        {(imageData?.url || isUploading) && (
+          <div className="border-2 border-dashed rounded-lg p-8 text-center hover:border-destructive/50 transition-colors">
+            <CircleOff className="w-8 h-8 mx-auto mb-4 text-muted-foreground" />
+            <p className="text-sm text-muted-foreground mb-2">
+              Only 1 image is allowed for upload
+            </p>
+            <p className="text-xs text-muted-foreground">
+              PNG, JPG, JPEG up to 5MB
+            </p>
+          </div>
+        )}
+
+        {isUploading && (
+          <div className="mt-4 border p-4 rounded-xl">
+            <div className="flex flex-row gap-4 justify-between">
+              <div className="shrink-0">
+                <div className="w-36 h-24 rounded-lg bg-linear-to-br from-primary/30 via-secondary/20 to-accent/30" />
+              </div>
+              <div className="flex gap-2">
+                <Button
+                  type="button"
+                  size="icon-sm"
+                  variant="destructive"
+                  className="cursor-pointer"
+                  onClick={handleCancelUpload}
+                >
+                  <X className="h-4 w-4" />
+                </Button>
+              </div>
+            </div>
+            <div className="flex items-center gap-4 mt-3">
+              <Progress value={progress} className="flex-1" />
+              <span className="text-sm font-medium min-w-12 text-right">
+                {progress}%
+              </span>
+            </div>
+          </div>
+        )}
+
+        {imageData?.url && (
+          <>
+            <div className="flex flex-row gap-4 justify-between mt-4 border p-4 rounded-xl">
+              <div className="shrink-0">
+                <Image
+                  src={imageData!.url}
+                  width={120}
+                  height={120}
+                  alt="App image"
+                  className="w-36 h-24 rounded-lg border object-cover hover:opacity-90 transition-opacity"
+                  onClick={handleFullScreen}
+                />
+              </div>
+              <div className="flex gap-2">
+                <Button
+                  type="button"
+                  size="icon-sm"
+                  variant="outline"
+                  className="cursor-pointer"
+                  onClick={handleFullScreen}
+                >
+                  <Maximize2 className="h-4 w-4" />
+                </Button>
+                <Button
+                  type="button"
+                  size="icon-sm"
+                  variant="destructive"
+                  className="cursor-pointer"
+                  onClick={handleRemoveImage}
+                  disabled={isProcessingRef.current}
+                >
+                  <Trash2 className="h-4 w-4" />
+                </Button>
+              </div>
+            </div>
+
+            <Dialog open={showFullScreen} onOpenChange={setShowFullScreen}>
+              <DialogContent className="p-2 max-w-[98vw]! w-[98vw]! h-[98vh]">
+                <DialogTitle className="sr-only">Full Screen Image</DialogTitle>
+                <div className="relative w-full h-full flex items-center justify-center p-4">
+                  <Image
+                    src={imageData!.url}
+                    fill
+                    priority
+                    sizes="95vw 95vh"
+                    alt="App image fullscreen"
+                    className="max-w-full max-h-full object-contain rounded-lg"
+                  />
+                </div>
+              </DialogContent>
+            </Dialog>
+          </>
+        )}
+      </CardContent>
+    </Card>
   );
 }
