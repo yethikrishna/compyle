@@ -113,7 +113,11 @@ export function ImageUploader({
       const authParams = await authenticator();
 
       if (!authParams) {
-        toast.error("Failed to authenticate upload server");
+        setIsUploading(false);
+        setProgress(0);
+        abortControllerRef.current = null;
+        isProcessingRef.current = false;
+        event.target.value = "";
         return;
       }
 
@@ -297,7 +301,7 @@ export function ImageUploader({
                   variant="destructive"
                   className="cursor-pointer"
                   onClick={handleRemoveImage}
-                  disabled={isProcessingRef.current}
+                  disabled={isUploading}
                 >
                   <Trash2 className="h-4 w-4" />
                 </Button>

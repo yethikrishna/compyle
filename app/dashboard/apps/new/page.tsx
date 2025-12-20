@@ -100,7 +100,7 @@ export default function CreateApp() {
   });
 
   return (
-    <div
+    <form
       id="create-app-form"
       onSubmit={(e) => {
         e.preventDefault();
@@ -524,6 +524,6 @@ export default function CreateApp() {
           </Field>
         </CardFooter>
       </Card>
-    </div>
+    </form>
   );
 }

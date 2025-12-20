@@ -140,7 +140,7 @@ const ActionsCell = ({
 
         <DropdownMenuContent>
           <DropdownMenuItem className="cursor-pointer">
-            <Link className="flex gap-2" href={`/dashboard/apps/me/${app.id}`}>
+            <Link className="flex gap-2" href={`/dashboard/apps/${app.id}`}>
               <Eye />
               View Details
             </Link>
