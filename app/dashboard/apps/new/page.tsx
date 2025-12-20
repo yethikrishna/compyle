@@ -61,7 +61,7 @@ export default function CreateApp() {
     mutationFn: createApp,
     onSuccess: () => {
       toast.success("App submitted successfully");
-      router.push("/dashboard/apps/me");
+      router.push("/dashboard/apps");
     },
     onError: (error) => {
       toast.error(error.message || "Failed to submit app");
