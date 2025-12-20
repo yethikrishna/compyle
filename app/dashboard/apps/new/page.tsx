@@ -1,5 +1,6 @@
 "use client";
 
+import { ImageUploader } from "@/components/custom/image";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -10,6 +11,14 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
+import {
   Field,
   FieldContent,
   FieldError,
@@ -17,6 +26,11 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import {
   Select,
   SelectContent,
@@ -26,22 +40,22 @@ import {
 } from "@/components/ui/select";
 import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
-import { TECH_COLORS, VALID_CATEGORIES, VALID_TECHNOLOGIES } from "@/data";
+import { VALID_CATEGORIES, VALID_TECHNOLOGIES } from "@/data";
+import { cn } from "@/lib/utils";
 import { createAppSchema } from "@/schema/app.schema";
 import { createApp } from "@/server/app";
 import { ImageData } from "@/types/image";
 import { useForm } from "@tanstack/react-form";
 import { useMutation } from "@tanstack/react-query";
-import { X } from "lucide-react";
+import { Check, ChevronsUpDown, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
-import NewAppImage from "./image";
 
 export default function CreateApp() {
   const router = useRouter();
-  const [techSearch, setTechSearch] = useState("");
   const [imageData, setImageData] = useState<ImageData | null>(null);
+  const [comboboxOpen, setComboboxOpen] = useState(false);
 
   const { mutate, isPending } = useMutation({
     mutationFn: createApp,
@@ -67,13 +81,14 @@ export default function CreateApp() {
       demoUrl: "",
       status: "published",
     },
-    validators: { onSubmit: createAppSchema },
+    validators: {
+      onSubmit: createAppSchema,
+    },
     onSubmit: ({ value }) => {
       if (!imageData) {
         toast.error("Please upload an image for your app");
         return;
       }
-
       mutate({
         values: {
           ...value,
@@ -84,40 +99,34 @@ export default function CreateApp() {
     },
   });
 
-  const filteredTechnologies = VALID_TECHNOLOGIES.filter((tech) =>
-    tech.toLowerCase().includes(techSearch.toLowerCase()),
-  );
-
   return (
     <form
       id="create-app-form"
-      className="max-w-4xl space-y-8 mx-auto"
       onSubmit={(e) => {
         e.preventDefault();
         form.handleSubmit();
       }}
     >
-      <Card>
+      <Card className="w-full max-w-3xl mx-auto">
         <CardHeader>
-          <CardTitle className="text-xl"> Submit New App</CardTitle>
+          <CardTitle className="text-xl">Submit New App</CardTitle>
           <CardDescription>
             Launch your applications built with Compyle AI. Fill in the details
             below to get started.
           </CardDescription>
         </CardHeader>
-        <CardContent className="my-5">
-          <div className="space-y-8">
-            {/* App Name */}
+        <CardContent>
+          <div className="space-y-6">
             <FieldGroup>
               <form.Field name="name">
                 {(field) => {
                   const isInvalid =
                     field.state.meta.isTouched && !field.state.meta.isValid;
-
                   return (
                     <Field data-invalid={isInvalid}>
                       <FieldLabel htmlFor={field.name}>App Name *</FieldLabel>
                       <Input
+                        type="text"
                         id={field.name}
                         name={field.name}
                         value={field.state.value}
@@ -136,17 +145,16 @@ export default function CreateApp() {
               </form.Field>
             </FieldGroup>
 
-            {/* App Slug */}
             <FieldGroup>
               <form.Field name="slug">
                 {(field) => {
                   const isInvalid =
                     field.state.meta.isTouched && !field.state.meta.isValid;
-
                   return (
                     <Field data-invalid={isInvalid}>
                       <FieldLabel htmlFor={field.name}>App Slug *</FieldLabel>
                       <Input
+                        type="text"
                         id={field.name}
                         name={field.name}
                         value={field.state.value}
@@ -159,7 +167,7 @@ export default function CreateApp() {
                       {isInvalid && (
                         <FieldError errors={field.state.meta.errors} />
                       )}
-                      <p className="text-xs text-white/90 mt-1">
+                      <p className="text-xs mt-2 text-muted-foreground">
                         Use only lowercase letters and underscores
                       </p>
                     </Field>
@@ -168,13 +176,11 @@ export default function CreateApp() {
               </form.Field>
             </FieldGroup>
 
-            {/* Description */}
             <FieldGroup>
               <form.Field name="description">
                 {(field) => {
                   const isInvalid =
                     field.state.meta.isTouched && !field.state.meta.isValid;
-
                   return (
                     <Field data-invalid={isInvalid}>
                       <FieldLabel htmlFor={field.name}>
@@ -247,105 +253,102 @@ export default function CreateApp() {
                 const isInvalid =
                   field.state.meta.isTouched && !field.state.meta.isValid;
 
-                const addTech = (tech: string) => {
-                  if (!selectedTechs.includes(tech)) {
-                    field.handleChange([...selectedTechs, tech]);
-                    setTechSearch("");
-                  }
-                };
-
                 const removeTech = (tech: string) => {
                   field.handleChange(selectedTechs.filter((t) => t !== tech));
                 };
 
+                const addTech = (tech: string) => {
+                  if (!selectedTechs.includes(tech)) {
+                    field.handleChange([...selectedTechs, tech]);
+                  }
+                };
+
                 return (
                   <Field data-invalid={isInvalid}>
-                    {/* Selected Technologies Display */}
+                    <FieldLabel>Built With *</FieldLabel>
+
                     {selectedTechs.length > 0 && (
-                      <div className="mb-4">
+                      <div className="mb-4 p-4 border rounded-lg bg-muted/50">
                         <p className="text-sm font-medium mb-2">
                           Selected Technologies ({selectedTechs.length})
                         </p>
                         <div className="flex flex-wrap gap-2">
-                          {selectedTechs.map((tech) => {
-                            const colorClass =
-                              TECH_COLORS[tech] ||
-                              "bg-primary/20 text-primary border-primary/50";
-                            return (
-                              <div
-                                key={tech}
-                                className={`px-3 py-1.5 rounded-lg border font-medium text-sm flex items-center gap-2 ${colorClass}`}
+                          {selectedTechs.map((tech) => (
+                            <div
+                              key={tech}
+                              className="px-3 py-1.5 rounded-lg border bg-background font-medium text-sm flex items-center gap-2"
+                            >
+                              {tech}
+                              <button
+                                type="button"
+                                onClick={() => removeTech(tech)}
+                                className="hover:opacity-70 transition-opacity"
+                                aria-label={`Remove ${tech}`}
                               >
-                                {tech}
-                                <button
-                                  type="button"
-                                  onClick={() => removeTech(tech)}
-                                  className="hover:opacity-70 transition-opacity"
-                                  aria-label={`Remove ${tech}`}
-                                >
-                                  <X className="w-3.5 h-3.5 cursor-pointer" />
-                                </button>
-                              </div>
-                            );
-                          })}
+                                <X className="w-3.5 h-3.5 cursor-pointer" />
+                              </button>
+                            </div>
+                          ))}
                         </div>
                       </div>
                     )}
 
-                    {/* Search Input */}
-                    <div className="space-y-2">
-                      <FieldLabel htmlFor="tech-search">
-                        Search Technologies *
-                      </FieldLabel>
-                      <Input
-                        id="tech-search"
-                        type="text"
-                        value={techSearch}
-                        onChange={(e) => setTechSearch(e.target.value)}
-                        placeholder="Search for technologies..."
-                        autoComplete="off"
-                      />
-                    </div>
-
-                    {/* Technology Selection Grid */}
-                    <div className="mt-4 max-h-64 overflow-y-auto border rounded-lg p-4">
-                      {filteredTechnologies.length > 0 ? (
-                        <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-                          {filteredTechnologies.map((tech) => {
-                            const isSelected = selectedTechs.includes(tech);
-
-                            return (
-                              <button
-                                key={tech}
-                                type="button"
-                                onClick={() => addTech(tech)}
-                                disabled={isSelected}
-                                className={`px-3 py-2 rounded-lg border transition-all font-medium text-sm text-left ${
-                                  isSelected
-                                    ? "opacity-50 cursor-not-allowed bg-muted"
-                                    : "hover:scale-105 bg-muted/10 text-muted-foreground border-border hover:border-primary/50"
-                                }`}
-                              >
-                                {tech}
-                                {isSelected && " ✓"}
-                              </button>
-                            );
-                          })}
-                        </div>
-                      ) : (
-                        <p className="text-center text-muted-foreground py-8">
-                          No technologies found matching &quot;{techSearch}
-                          &quot;
-                        </p>
-                      )}
-                    </div>
+                    <Popover open={comboboxOpen} onOpenChange={setComboboxOpen}>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          role="combobox"
+                          aria-expanded={comboboxOpen}
+                          className="w-full justify-between"
+                        >
+                          Select technologies...
+                          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-full p-0" align="start">
+                        <Command>
+                          <CommandInput placeholder="Search technologies..." />
+                          <CommandList>
+                            <CommandEmpty>No technology found.</CommandEmpty>
+                            <CommandGroup>
+                              {VALID_TECHNOLOGIES.map((tech) => (
+                                <CommandItem
+                                  key={tech}
+                                  value={tech}
+                                  onSelect={(currentValue) => {
+                                    const technology = VALID_TECHNOLOGIES.find(
+                                      (t) =>
+                                        t.toLowerCase() ===
+                                        currentValue.toLowerCase(),
+                                    );
+                                    if (technology) {
+                                      addTech(technology);
+                                      setComboboxOpen(false);
+                                    }
+                                  }}
+                                >
+                                  <Check
+                                    className={cn(
+                                      "mr-2 h-4 w-4",
+                                      selectedTechs.includes(tech)
+                                        ? "opacity-100"
+                                        : "opacity-0",
+                                    )}
+                                  />
+                                  {tech}
+                                </CommandItem>
+                              ))}
+                            </CommandGroup>
+                          </CommandList>
+                        </Command>
+                      </PopoverContent>
+                    </Popover>
 
                     {isInvalid && (
                       <FieldError errors={field.state.meta.errors} />
                     )}
-                    <p className="text-xs mt-2 text-white/90">
-                      Click on technologies to add them. Select at least one
-                      technology.
+                    <p className="text-xs mt-2 text-muted-foreground">
+                      Select at least one technology your app is built with.
                     </p>
                   </Field>
                 );
@@ -379,6 +382,7 @@ export default function CreateApp() {
                 }}
               </form.Field>
             </FieldGroup>
+
             <FieldGroup>
               <form.Field name="repoUrl">
                 {(field) => {
@@ -408,6 +412,7 @@ export default function CreateApp() {
                 }}
               </form.Field>
             </FieldGroup>
+
             <FieldGroup>
               <form.Field name="demoUrl">
                 {(field) => {
@@ -436,10 +441,13 @@ export default function CreateApp() {
               </form.Field>
             </FieldGroup>
 
-            <NewAppImage
-              onImageDataChange={setImageData}
-              initialImageData={imageData}
-            />
+            <FieldGroup>
+              <FieldLabel>Upload Image</FieldLabel>
+              <ImageUploader
+                onImageDataChange={setImageData}
+                initialImageData={imageData}
+              />
+            </FieldGroup>
 
             <FieldGroup>
               <form.Field name="status">
@@ -477,7 +485,7 @@ export default function CreateApp() {
                           </SelectItem>
                         </SelectContent>
                       </Select>
-                      <p className="text-xs mt-2 text-white/90">
+                      <p className="text-xs mt-2 text-muted-foreground">
                         Whether to publish your app or just create a draft.
                       </p>
                     </Field>
@@ -498,7 +506,6 @@ export default function CreateApp() {
               className="cursor-pointer"
               onClick={() => {
                 form.reset();
-                setTechSearch("");
                 setImageData(null);
               }}
               disabled={isPending}

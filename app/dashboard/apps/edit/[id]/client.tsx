@@ -1,5 +1,6 @@
 "use client";
 
+import { ImageUploader } from "@/components/custom/image";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -47,7 +48,6 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import z from "zod";
-import NewAppImage from "./image";
 
 export default function EditAppDetails({ id }: { id: string }) {
   const router = useRouter();
@@ -75,7 +75,7 @@ export default function EditAppDetails({ id }: { id: string }) {
     }) => updateAppDetails(values, appId, imageData),
     onSuccess: () => {
       toast.success("App updated successfully");
-      router.push("/dashboard/apps/me");
+      router.push("/dashboard/apps");
     },
     onError: (error) => {
       toast.error(error.message || "Failed to update app");
@@ -166,7 +166,7 @@ export default function EditAppDetails({ id }: { id: string }) {
             <Link href="/dashboard/apps/new">
               <Button className="cursor-pointer">Submit App</Button>
             </Link>
-            <Link href="/dashboard/apps/me">
+            <Link href="/dashboard/apps">
               <Button className="cursor-pointer" variant="outline">
                 View All Apps
               </Button>
@@ -532,10 +532,13 @@ export default function EditAppDetails({ id }: { id: string }) {
             </FieldGroup>
 
             {/* Image Upload */}
-            <NewAppImage
-              onImageDataChange={setImageData}
-              initialImageData={initialImageData}
-            />
+            <FieldGroup>
+              <FieldLabel>Upload Image</FieldLabel>
+              <ImageUploader
+                onImageDataChange={setImageData}
+                initialImageData={initialImageData}
+              />
+            </FieldGroup>
 
             {/* Publish Status */}
             <FieldGroup>

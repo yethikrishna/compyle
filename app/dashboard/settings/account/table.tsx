@@ -102,7 +102,7 @@ export const columns: ColumnDef<SessionTable>[] = [
   },
   {
     accessorKey: "lastSignIn",
-    header: "Last Activity", // Not actually last activity but rather last time the account signed in
+    header: "Last Login", // Not actually last activity but rather last time the account signed in
     cell: ({ row }) => {
       const date = row.original.lastSignIn;
       const now = new Date();

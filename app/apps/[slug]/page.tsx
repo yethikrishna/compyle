@@ -1,5 +1,5 @@
 import { AppDetailsClient } from "@/app/apps/[slug]/client";
-import { getPublicAppDetails } from "@/server/app";
+import { getPublicAppSEODetails } from "@/server/app";
 import type { Metadata } from "next";
 
 export async function generateMetadata({
@@ -10,21 +10,21 @@ export async function generateMetadata({
   const { slug } = await params;
 
   try {
-    const data = await getPublicAppDetails({ slug });
+    const data = await getPublicAppSEODetails({ slug });
 
     return {
-      title: `${data.appDetails.name} | Compyle Apps`,
-      description: data.appDetails.description,
+      title: `${data.name} | Compyle Apps`,
+      description: data.description,
       openGraph: {
-        title: `${data.appDetails.name} | Compyle Apps`,
-        description: data.appDetails.description,
-        images: [{ url: data.appDetails.coverImage || "" }],
+        title: `${data.name} | Compyle Apps`,
+        description: data.description,
+        images: [{ url: data.image || "" }],
       },
       twitter: {
         card: "summary_large_image",
-        title: `${data.appDetails.name} | Compyle Apps`,
-        description: data.appDetails.description,
-        images: [{ url: data.appDetails.coverImage || "" }],
+        title: `${data.name} | Compyle Apps`,
+        description: data.description,
+        images: [{ url: data.image || "" }],
       },
     };
   } catch {

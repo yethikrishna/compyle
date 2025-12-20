@@ -451,6 +451,43 @@ export async function getPublicAppDetails({ slug }: { slug: string }): Promise<{
   }
 }
 
+export async function getPublicAppSEODetails({
+  slug,
+}: {
+  slug: string;
+}): Promise<{
+  name: string;
+  description: string;
+  image: string | null;
+}> {
+  try {
+    if (!slug) {
+      throw new Error("Invalid app slug");
+    }
+
+    const res = await db
+      .select({
+        name: apps.name,
+        description: apps.description,
+        image: apps.coverImage,
+      })
+      .from(apps)
+      .where(and(eq(apps.slug, slug), eq(apps.status, "published")));
+
+    if (res.length < 1) {
+      throw new Error("No app found with the provided slug");
+    }
+
+    return res[0];
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+
+    throw new Error("Failed to fetch app");
+  }
+}
+
 export async function getDashboardAppDetails({ id }: { id: string }): Promise<{
   appDetails: typeof apps.$inferSelect;
   upvoteCount: number;

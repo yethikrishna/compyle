@@ -27,7 +27,6 @@ import { Spinner } from "@/components/ui/spinner";
 import { deleteApp, getDashboardAppDetails } from "@/server/app";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import {
-  ArrowLeft,
   Calendar,
   CheckCircle,
   ExternalLink,
@@ -108,7 +107,7 @@ export default function AppDetailsDashboard({ id }: { id: string }) {
               <Link href="/dashboard/apps/new">
                 <Button className="cursor-pointer">Submit App</Button>
               </Link>
-              <Link href="/dashboard/apps/me">
+              <Link href="/dashboard/apps">
                 <Button className="cursor-pointer" variant="outline">
                   View All Apps
                 </Button>
