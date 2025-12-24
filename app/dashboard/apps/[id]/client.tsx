@@ -209,13 +209,18 @@ export default function AppDetailsDashboard({ id }: { id: string }) {
           <div className="grid grid-cols-1 lg:grid-cols-6 gap-9 mt-10">
             <div className="lg:col-span-4 space-y-6">
               <div className="relative aspect-video rounded-lg overflow-hidden border">
-                <Image
-                  src={data.appDetails.image}
-                  alt={data.appDetails.name}
-                  fill
-                  priority
-                  className="object-cover"
-                />
+                {data.appDetails.image ? (
+                  <Image
+                    src={data.appDetails.image}
+                    alt={`${data.appDetails.name} cover image`}
+                    fill
+                    priority
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-linear-to-br from-primary/30 via-secondary/20 to-accent/30" />
+                )}
               </div>
               <div>
                 <p className="font-semibold">DESCRIPTION</p>

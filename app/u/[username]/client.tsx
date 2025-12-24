@@ -72,7 +72,7 @@ export default function AppDetailsClient({ username }: { username: string }) {
 
       {!isPending && data && (
         <div>
-          <div className="flex flex-col md:flex-row gap-8 md:gap-12 items-start">
+          <div className="flex flex-row gap-8 md:gap-12 items-start">
             <div className="shrink-0">
               <div className="relative w-20 h-20 md:w-24 md:h-24 rounded-2xl overflow-hidden ring-2 ring-border/50 shadow-lg bg-muted">
                 <Avatar className="w-full h-full rounded-none">
@@ -95,9 +95,11 @@ export default function AppDetailsClient({ username }: { username: string }) {
                   </h1>
                 </div>
 
-                <p className="text-muted-foreground mb-4">u/{data.username}</p>
+                <p className="text-muted-foreground mb-2 text-sm">
+                  u/{data.username}
+                </p>
 
-                <div className="flex flex-col gap-2 mb-6">
+                <div className="flex flex-col gap-2">
                   <div className="flex items-center gap-2 text-sm text-muted-foreground">
                     <CalendarDays className="w-4 h-4 shrink-0" />
                     <span>Joined {format(data.createdAt, "MMMM yyyy")}</span>
@@ -107,7 +109,7 @@ export default function AppDetailsClient({ username }: { username: string }) {
             </div>
           </div>
 
-          <div>
+          <div className="mt-5">
             <p className="text-sm leading-relaxed text-muted-foreground max-w-prose mt-2">
               {data.about}
             </p>
