@@ -80,7 +80,9 @@ export async function updateAppDetails(
 
     if (imageData && imageData.imageProviderFileId) {
       try {
-        await imagekitClient.files.delete(imageProviderFileId);
+        if (imageProviderFileId) {
+          await imagekitClient.files.delete(imageProviderFileId);
+        }
       } catch (error) {
         console.error("Failed to delete old image from ImageKit:", error);
       }
@@ -179,7 +181,9 @@ export async function deleteApp({
       .where(and(eq(apps.id, appId), eq(apps.userId, user.id)));
 
     try {
-      await imagekitClient.files.delete(appToDelete.imageProviderFileId);
+      if (appToDelete.imageProviderFileId) {
+        await imagekitClient.files.delete(appToDelete.imageProviderFileId);
+      }
     } catch (error) {
       console.error("Failed to delete image from ImageKit:", error);
     }

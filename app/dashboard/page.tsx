@@ -28,7 +28,7 @@ import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
 const chartConfig = {
   upvotes: {
     label: "Upvotes",
-    color: "hsl(var(--chart-1))",
+    color: "hsl(var(--chart-1))", // Doesnt work, I have set the color directly in the bar
   },
 } satisfies ChartConfig;
 
@@ -128,15 +128,18 @@ export default function Page() {
           </div>
 
           <div className="grid gap-6 lg:grid-cols-3">
-            <Card className="lg:col-span-2">
+            <Card className="lg:col-span-2 min-w-0">
               <CardHeader className="pb-4">
                 <CardTitle className="text-base flex items-center gap-2">
                   <TrendingUp className="h-4 w-4 text-primary" />
                   Upvotes Over Time
                 </CardTitle>
               </CardHeader>
-              <CardContent className="pb-4">
-                <ChartContainer config={chartConfig} className="h-52 w-full">
+              <CardContent className="pb-4 overflow-x-auto">
+                <ChartContainer
+                  config={chartConfig}
+                  className="h-52 w-full min-w-72"
+                >
                   <BarChart accessibilityLayer data={chartData}>
                     <CartesianGrid vertical={false} />
                     <XAxis
@@ -157,17 +160,13 @@ export default function Page() {
                       cursor={false}
                       content={<ChartTooltipContent hideLabel />}
                     />
-                    <Bar
-                      dataKey="upvotes"
-                      fill="var(--color-upvotes)"
-                      radius={4}
-                    />
+                    <Bar dataKey="upvotes" fill="var(--chart-4)" radius={4} />
                   </BarChart>
                 </ChartContainer>
               </CardContent>
             </Card>
 
-            <Card>
+            <Card className="min-w-0">
               <CardHeader>
                 <CardTitle className="text-lg">Quick Actions</CardTitle>
               </CardHeader>

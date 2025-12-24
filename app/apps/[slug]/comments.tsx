@@ -202,7 +202,7 @@ export function AppComments({ slug, id }: { slug: string; id: string }) {
         {allComments.map((comment) => (
           <div
             key={comment.id}
-            className="border-b border-border pb-6 last:border-b-0"
+            className="border-b border-border pb-1 last:border-b-0"
           >
             <div className="flex gap-4">
               <Link href={`/u/${comment.user.username}`}>
