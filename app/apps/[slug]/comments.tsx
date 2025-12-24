@@ -235,7 +235,7 @@ export function AppComments({ slug, id }: { slug: string; id: string }) {
                           <AlertDialogHeader>
                             <AlertDialogTitle>Delete Comment</AlertDialogTitle>
                             <AlertDialogDescription>
-                              Are your sure you want to permanently delete this
+                              Are you sure you want to permanently delete this
                               comment?
                             </AlertDialogDescription>
                           </AlertDialogHeader>

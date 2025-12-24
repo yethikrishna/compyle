@@ -257,6 +257,7 @@ export async function getAppCommentsAdmin({
           eq(comments.appId, appId),
           eq(apps.userId, user.id),
           lt(comments.createdAt, new Date(cursor)),
+          isNull(comments.deletedAt),
         )
       : and(
           eq(comments.appId, appId),

@@ -12,14 +12,16 @@ export const comments = pgTable("comment", {
     .$defaultFn(() => createId()),
   content: text("content").notNull(),
   deleter: commentDeleterEnum("deleter"),
-  deleteReason: text(""),
+  deleteReason: text("deleteReason"),
   userId: text("userId")
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
   appId: text("appId")
     .notNull()
     .references(() => apps.id, { onDelete: "cascade" }),
-  deletedByUserId: text("deletedByUserId").references(() => users.id),
+  deletedByUserId: text("deletedByUserId").references(() => users.id, {
+    onDelete: "set null",
+  }),
   ...timestamps,
 });
 

@@ -133,7 +133,7 @@ export function AppComments({ appId }: { appId: string }) {
             </EmptyMedia>
             <EmptyTitle>No Comments Found</EmptyTitle>
             <EmptyDescription>
-              You can be the first to add a comment
+              No comments have been posted on this app yet
             </EmptyDescription>
           </EmptyHeader>
         </Empty>
@@ -207,7 +207,7 @@ export function AppComments({ appId }: { appId: string }) {
           <AlertDialogHeader>
             <AlertDialogTitle>Delete Comment</AlertDialogTitle>
             <AlertDialogDescription>
-              Are your sure you want to permanently delete this comment?
+              Are you sure you want to permanently delete this comment?
             </AlertDialogDescription>
           </AlertDialogHeader>
 
@@ -232,7 +232,7 @@ export function AppComments({ appId }: { appId: string }) {
               </SelectContent>
             </Select>
             {showError && (
-              <p className="text-sm text-red-500 mt-2">
+              <p className="text-sm text-destructive mt-2">
                 Please select a reason before deleting
               </p>
             )}
