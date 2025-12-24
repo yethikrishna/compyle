@@ -138,7 +138,10 @@ export default function EditAppDetails({ id }: { id: string }) {
         form.setFieldValue("demoUrl", appData.appDetails.demoUrl || "");
         form.setFieldValue("status", appData.appDetails.status || "published");
 
-        if (appData.appDetails.imageProviderFileId) {
+        if (
+          appData.appDetails.imageProviderFileId &&
+          appData.appDetails.image
+        ) {
           const imageData: ImageData = {
             image: appData.appDetails.image,
             imageProviderFileId: appData.appDetails.imageProviderFileId,
