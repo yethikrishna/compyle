@@ -35,11 +35,25 @@ import {
   tagline,
 } from "../styles";
 
+/**
+ * Props for the email verification template.
+ * @property name - The recipient's display name
+ * @property url - The email verification URL
+ */
 interface EmailVerificationEmailTemplateProps {
   name: string;
   url: string;
 }
 
+/**
+ * Email verification template component.
+ * Renders a branded welcome email with a verification button and feature highlights.
+ *
+ * @param props - The template properties
+ * @param props.name - The recipient's name for personalization
+ * @param props.url - The email verification URL
+ * @returns React Email component for email verification
+ */
 export default function EmailVerificationEmailTemplate({
   name,
   url,

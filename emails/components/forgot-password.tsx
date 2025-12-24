@@ -35,11 +35,25 @@ import {
   tagline,
 } from "../styles";
 
+/**
+ * Props for the password reset email template.
+ * @property name - The recipient's display name
+ * @property url - The password reset URL
+ */
 interface PasswordResetEmailTemplateProps {
   name: string;
   url: string;
 }
 
+/**
+ * Password reset email template component.
+ * Renders a branded email with a password reset button and security information.
+ *
+ * @param props - The template properties
+ * @param props.name - The recipient's name for personalization
+ * @param props.url - The password reset URL (expires in 24 hours)
+ * @returns React Email component for password reset
+ */
 export default function PasswordResetEmailTemplate({
   name,
   url,
