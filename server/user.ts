@@ -28,15 +28,26 @@ export async function getPublicUserProfile({
   username,
 }: {
   username: string;
-}): Promise<User> {
+}): Promise<{
+  name: string;
+  about: string;
+  image: string | null;
+  username: string;
+  createdAt: Date;
+}> {
   try {
     if (!username) {
       throw new Error("Invalid username");
     }
 
-    // Filter out user data dont return sensitive info
     const res = await db
-      .select()
+      .select({
+        name: users.name,
+        about: users.about,
+        image: users.image,
+        username: users.username,
+        createdAt: users.createdAt,
+      })
       .from(users)
       .where(eq(users.username, username));
 

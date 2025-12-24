@@ -325,6 +325,47 @@ export async function getPublicFeaturedApps(): Promise<
   }
 }
 
+export async function getPublicUserApps({
+  username,
+}: {
+  username: string;
+}): Promise<
+  Array<{
+    app: typeof apps.$inferSelect;
+    upvoteCount: number;
+  }>
+> {
+  if (!username) {
+    throw new Error("Invalid username");
+  }
+
+  try {
+    const res = await db
+      .select({
+        app: apps,
+        upvoteCount: sql<number>`
+          (
+            SELECT count(*)
+            FROM ${upvotes}
+            WHERE ${upvotes.appId} = ${apps.id}
+          )
+        `,
+      })
+      .from(apps)
+      .innerJoin(users, eq(users.id, apps.userId))
+      .where(and(eq(users.username, username), eq(apps.status, "published")))
+      .limit(3);
+
+    return res;
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+
+    throw new Error("Failed to fetch apps");
+  }
+}
+
 export async function getPublicAppDetails({ slug }: { slug: string }): Promise<{
   appDetails: typeof apps.$inferSelect;
   userDetails: {

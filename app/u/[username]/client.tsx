@@ -1,13 +1,9 @@
 "use client";
 
+import { AppCard } from "@/components/custom/app-card";
+import { AppCardSkeleton } from "@/components/custom/app-card-skeleton";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import {
   Empty,
   EmptyContent,
@@ -18,10 +14,12 @@ import {
 } from "@/components/ui/empty";
 import { Spinner } from "@/components/ui/spinner";
 import { getInitials } from "@/lib/utils";
+import { getPublicUserApps } from "@/server/app";
 import { getPublicUserProfile } from "@/server/user";
+import { AppCardProps } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
-import { Calendar, FilePlusCorner } from "lucide-react";
+import { CalendarDays, FilePlusCorner } from "lucide-react";
 import Link from "next/link";
 
 export default function AppDetailsClient({ username }: { username: string }) {
@@ -29,6 +27,12 @@ export default function AppDetailsClient({ username }: { username: string }) {
     queryKey: ["public-user", username],
     queryFn: () => getPublicUserProfile({ username }),
     meta: { showError: true },
+  });
+
+  const { isPending: isAppsPending, data: appData } = useQuery({
+    queryKey: ["public-user-apps", username],
+    queryFn: () => getPublicUserApps({ username }),
+    enabled: !!data,
   });
 
   return (
@@ -40,7 +44,7 @@ export default function AppDetailsClient({ username }: { username: string }) {
       )}
 
       {!isPending && !data && (
-        <Empty className="border max-w-4xl mx-auto">
+        <Empty className="border">
           <EmptyHeader>
             <EmptyMedia variant="icon">
               <FilePlusCorner />
@@ -67,31 +71,76 @@ export default function AppDetailsClient({ username }: { username: string }) {
       )}
 
       {!isPending && data && (
-        <div className="container mx-auto">
-          <Card className="max-w-6xl mx-auto">
-            <CardHeader className="flex flex-row gap-5">
-              <Avatar className="size-20">
-                <AvatarImage src={data.image || undefined} />
-                <AvatarFallback>{getInitials(data.name)}</AvatarFallback>
-              </Avatar>
-              <div>
-                <CardTitle className="text-2xl mt-4">{data.name}</CardTitle>
-                {/*@ts-expect-error: username property exists at runtime*/}
-                <CardDescription>{data.username}</CardDescription>
-                <div className="flex items-center gap-3 mt-8">
-                  <Calendar className="h-5 w-5 text-foreground/50 shrink-0" />
-                  <div>
-                    <p className="text-xs uppercase text-foreground/50 tracking-wide">
-                      Joined
-                    </p>
-                    <p className="font-medium">
-                      {format(new Date(data.createdAt), "MMM d, yyyy")}
-                    </p>
+        <div>
+          <div className="flex flex-col md:flex-row gap-8 md:gap-12 items-start">
+            <div className="shrink-0">
+              <div className="relative w-20 h-20 md:w-24 md:h-24 rounded-2xl overflow-hidden ring-2 ring-border/50 shadow-lg bg-muted">
+                <Avatar className="w-full h-full rounded-none">
+                  <AvatarImage
+                    src={data.image || undefined}
+                    className="object-cover"
+                  />
+                  <AvatarFallback className="rounded-none text-4xl font-semibold">
+                    {getInitials(data.name)}
+                  </AvatarFallback>
+                </Avatar>
+              </div>
+            </div>
+
+            <div>
+              <div className="flex-1 min-w-0">
+                <div className="flex flex-wrap items-baseline">
+                  <h1 className="text-2xl font-bold text-foreground">
+                    {data.name}
+                  </h1>
+                </div>
+
+                <p className="text-muted-foreground mb-4">u/{data.username}</p>
+
+                <div className="flex flex-col gap-2 mb-6">
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <CalendarDays className="w-4 h-4 shrink-0" />
+                    <span>Joined {format(data.createdAt, "MMMM yyyy")}</span>
                   </div>
                 </div>
               </div>
-            </CardHeader>
-          </Card>
+            </div>
+          </div>
+
+          <div>
+            <p className="text-sm leading-relaxed text-muted-foreground max-w-prose mt-2">
+              {data.about}
+            </p>
+          </div>
+
+          <div className="mt-10">
+            <p className="text-2xl font-bold mb-4">Published Apps</p>
+
+            {isAppsPending && (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {Array.from({ length: 3 }).map((_, i) => (
+                  <AppCardSkeleton key={i} />
+                ))}
+              </div>
+            )}
+
+            {!isAppsPending && appData && (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {appData.map((app) => {
+                  const item: AppCardProps = {
+                    id: app.app.id,
+                    name: app.app.name,
+                    slug: app.app.slug,
+                    description: app.app.description,
+                    category: app.app.category,
+                    upvotes: app.upvoteCount,
+                    image: app.app.image || undefined,
+                  };
+                  return <AppCard key={item.id} app={item} />;
+                })}
+              </div>
+            )}
+          </div>
         </div>
       )}
     </>
