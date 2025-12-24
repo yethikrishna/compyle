@@ -6,3 +6,7 @@ export const appStatusEnum = pgEnum("AppStatus", [
   "archived",
   "published",
 ]);
+export const commentDeleterEnum = pgEnum("CommentDeleter", [
+  "author",
+  "appOwner",
+]);

@@ -1,3 +1,4 @@
+import { DELETE_COMMENT_REASON } from "@/data";
 import { Session, User } from "better-auth";
 
 export type AppCardProps = {
@@ -19,3 +20,5 @@ export type AuthInfo = {
   user: User;
   session: Session;
 };
+
+export type DeleteCommentReason = (typeof DELETE_COMMENT_REASON)[number];

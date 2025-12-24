@@ -25,7 +25,7 @@ export default function Apps() {
     useInfiniteQuery({
       queryKey: ["public-apps"],
       queryFn: ({ pageParam }) =>
-        getPublicApps({ cursor: pageParam, limit: 30 }),
+        getPublicApps({ cursor: pageParam, limit: 15 }),
       initialPageParam: undefined as string | undefined,
       getNextPageParam: (lastPage) => lastPage.nextCursor,
       meta: { showError: true },
