@@ -12,6 +12,28 @@ import {
   Section,
   Text,
 } from "@react-email/components";
+import {
+  button,
+  buttonContainer,
+  container,
+  content,
+  footer,
+  footerLink,
+  footerLinks,
+  footerText,
+  header,
+  heading,
+  hr,
+  legalLink,
+  legalLinks,
+  link,
+  logoImage,
+  main,
+  paragraph,
+  socialLink,
+  socialSection,
+  tagline,
+} from "../styles";
 
 interface EmailVerificationEmailTemplateProps {
   name: string;
@@ -143,83 +165,6 @@ export default function EmailVerificationEmailTemplate({
   );
 }
 
-const main = {
-  backgroundColor: "#f6f9fc",
-  fontFamily:
-    '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Ubuntu, sans-serif',
-};
-
-const container = {
-  backgroundColor: "#ffffff",
-  margin: "0 auto",
-  padding: "0",
-  maxWidth: "600px",
-  borderRadius: "8px",
-  boxShadow: "0 2px 8px rgba(0, 0, 0, 0.05)",
-};
-
-const header = {
-  background: "linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%)",
-  padding: "32px 40px",
-  borderRadius: "8px 8px 0 0",
-};
-
-const logoImage = {
-  margin: "0 auto",
-  display: "block",
-};
-
-const tagline = {
-  color: "rgba(255, 255, 255, 0.9)",
-  fontSize: "14px",
-  fontWeight: "500",
-  margin: "12px 0 0",
-  textAlign: "center" as const,
-  letterSpacing: "0.5px",
-};
-
-const content = {
-  padding: "40px",
-};
-
-const heading = {
-  color: "#1a1a1a",
-  fontSize: "24px",
-  fontWeight: "600",
-  margin: "0 0 24px",
-  textAlign: "center" as const,
-};
-
-const paragraph = {
-  color: "#4a5568",
-  fontSize: "16px",
-  lineHeight: "26px",
-  margin: "0 0 16px",
-};
-
-const buttonContainer = {
-  textAlign: "center" as const,
-  margin: "32px 0",
-};
-
-const button = {
-  backgroundColor: "#4F46E5",
-  borderRadius: "6px",
-  color: "#ffffff",
-  fontSize: "16px",
-  fontWeight: "600",
-  textDecoration: "none",
-  textAlign: "center" as const,
-  padding: "14px 32px",
-  display: "inline-block",
-};
-
-const link = {
-  color: "#4F46E5",
-  fontSize: "14px",
-  wordBreak: "break-all" as const,
-};
-
 const featuresSection = {
   backgroundColor: "#f8fafc",
   borderRadius: "6px",
@@ -239,58 +184,4 @@ const featureItem = {
   fontSize: "14px",
   lineHeight: "24px",
   margin: "0",
-};
-
-const hr = {
-  borderColor: "#e5e7eb",
-  margin: "0",
-};
-
-const footer = {
-  padding: "24px 40px",
-};
-
-const footerText = {
-  color: "#9ca3af",
-  fontSize: "13px",
-  lineHeight: "22px",
-  margin: "0 0 8px",
-  textAlign: "center" as const,
-};
-
-const footerLinks = {
-  color: "#9ca3af",
-  fontSize: "13px",
-  margin: "16px 0 0",
-  textAlign: "center" as const,
-};
-
-const footerLink = {
-  color: "#4F46E5",
-  textDecoration: "none",
-};
-
-const socialSection = {
-  textAlign: "center" as const,
-  margin: "16px 0",
-};
-
-const socialLink = {
-  color: "#4F46E5",
-  fontSize: "13px",
-  fontWeight: "600",
-  textDecoration: "none",
-  margin: "0 12px",
-};
-
-const legalLinks = {
-  color: "#9ca3af",
-  fontSize: "11px",
-  margin: "12px 0 0",
-  textAlign: "center" as const,
-};
-
-const legalLink = {
-  color: "#9ca3af",
-  textDecoration: "none",
 };
