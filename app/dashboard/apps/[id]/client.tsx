@@ -1,5 +1,6 @@
 "use client";
 
+import { AppComments } from "@/app/dashboard/apps/[id]/comments";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -212,6 +213,7 @@ export default function AppDetailsDashboard({ id }: { id: string }) {
                   src={data.appDetails.image}
                   alt={data.appDetails.name}
                   fill
+                  priority
                   className="object-cover"
                 />
               </div>
@@ -235,6 +237,12 @@ export default function AppDetailsDashboard({ id }: { id: string }) {
                   ))}
                 </div>
               </div>
+
+              {data.appDetails && (
+                <div className="mt-20">
+                  <AppComments appId={id} />
+                </div>
+              )}
             </div>
 
             <div className="lg:col-span-2">

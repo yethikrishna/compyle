@@ -1,10 +1,18 @@
 "use client";
 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { Field, FieldError, FieldGroup } from "@/components/ui/field";
-import { Spinner } from "@/components/ui/spinner";
-import { Textarea } from "@/components/ui/textarea";
 import {
   Empty,
   EmptyContent,
@@ -13,22 +21,25 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from "@/components/ui/empty";
+import { Field, FieldError, FieldGroup } from "@/components/ui/field";
+import { Spinner } from "@/components/ui/spinner";
+import { Textarea } from "@/components/ui/textarea";
 import { getInitials } from "@/lib/utils";
 import { queryClient } from "@/providers/query.provider";
 import { createCommentSchema } from "@/schema/comment.schema";
-import { addComment, getAppComments } from "@/server/comment";
+import { addComment, deleteOwnComment, getAppComments } from "@/server/comment";
 import { useAuthStore } from "@/store/session.store";
 import { useForm } from "@tanstack/react-form";
 import { useInfiniteQuery, useMutation } from "@tanstack/react-query";
 import { format } from "date-fns";
-import { ArrowUp, MessageSquare, UserPlus } from "lucide-react";
+import { ArrowUp, MessageSquare, Trash2, UserPlus } from "lucide-react";
 import Link from "next/link";
 import { toast } from "sonner";
 
 export function AppComments({ slug, id }: { slug: string; id: string }) {
   const { authInfo } = useAuthStore();
 
-  const { data, isFetching, isFetchingNextPage, hasNextPage, fetchNextPage } =
+  const { data, isPending, isFetchingNextPage, hasNextPage, fetchNextPage } =
     useInfiniteQuery({
       queryKey: ["app-comments", slug],
       queryFn: ({ pageParam }) =>
@@ -48,6 +59,22 @@ export function AppComments({ slug, id }: { slug: string; id: string }) {
     },
     onError: () => {
       toast.error("Failed to add comment.");
+    },
+  });
+
+  const deleteCommentMutation = useMutation({
+    mutationFn: (commentId: string) => deleteOwnComment({ commentId }),
+    onMutate: () => {
+      return toast.loading("Deleting comment...");
+    },
+    onSuccess: (_, __, toastId) => {
+      toast.dismiss(toastId);
+      toast.success("Comment deleted successfully");
+      queryClient.invalidateQueries({ queryKey: ["app-comments", slug] });
+    },
+    onError: (_, __, toastId) => {
+      toast.dismiss(toastId);
+      toast.error("Failed to delete comment.");
     },
   });
 
@@ -151,13 +178,13 @@ export function AppComments({ slug, id }: { slug: string; id: string }) {
         </Empty>
       )}
 
-      {isFetching && !isFetchingNextPage && (
+      {isPending && !isFetchingNextPage && (
         <div>
           <Spinner className="mx-auto size-6" />
         </div>
       )}
 
-      {!isFetching && allComments.length < 1 && (
+      {!isPending && allComments.length < 1 && (
         <Empty className="border">
           <EmptyHeader>
             <EmptyMedia variant="icon">
@@ -195,9 +222,46 @@ export function AppComments({ slug, id }: { slug: string; id: string }) {
                   >
                     {comment.user.name}
                   </Link>
-                  <span className="text-xs text-muted-foreground">
-                    {format(new Date(comment.createdAt), "MMM d, yyyy")}
-                  </span>
+                  <div className="flex gap-3 items-center">
+                    <span className="text-xs text-muted-foreground">
+                      {format(new Date(comment.createdAt), "MMM d, yyyy")}
+                    </span>
+                    {comment.user.id === authInfo?.user.id && (
+                      <AlertDialog>
+                        <AlertDialogTrigger className="cursor-pointer">
+                          <Trash2 className="text-destructive size-4" />
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle>Delete Comment</AlertDialogTitle>
+                            <AlertDialogDescription>
+                              Are your sure you want to permanently delete this
+                              comment?
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel className="cursor-pointer">
+                              Cancel
+                            </AlertDialogCancel>
+                            <AlertDialogAction
+                              className="bg-destructive text-foreground hover:bg-destructive/90"
+                              asChild
+                            >
+                              <Button
+                                className="cursor-pointer"
+                                variant="destructive"
+                                onClick={() =>
+                                  deleteCommentMutation.mutate(comment.id)
+                                }
+                              >
+                                Delete Comment
+                              </Button>
+                            </AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
+                    )}
+                  </div>
                 </div>
                 <p className="mb-3 text-sm text-foreground/75 text-pretty">
                   {comment.content}

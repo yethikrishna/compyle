@@ -30,5 +30,10 @@ export const users = pgTable("user", {
 export const usersRelations = relations(users, ({ many }) => ({
   apps: many(apps),
   upvotes: many(upvotes),
-  comments: many(comments),
+  commentsAuthored: many(comments, {
+    relationName: "commentAuthor",
+  }),
+  commentsDeleted: many(comments, {
+    relationName: "commentDeleter",
+  }),
 }));

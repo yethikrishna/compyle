@@ -247,7 +247,7 @@ const ActionsCell = ({
               Cancel
             </AlertDialogCancel>
             <AlertDialogAction
-              className="bg-destructive text-background hover:bg-destructive/90"
+              className="bg-destructive text-foreground hover:bg-destructive/90"
               asChild
             >
               <Button

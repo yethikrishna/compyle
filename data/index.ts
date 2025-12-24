@@ -59,3 +59,10 @@ export const VALID_TECHNOLOGIES = [
   "Chakra UI",
   "shadcn/ui",
 ] as const;
+
+export const DELETE_COMMENT_REASON = [
+  "Spam",
+  "Off-topic",
+  "Inappropriate",
+  "Other",
+] as const;
