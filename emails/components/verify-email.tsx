@@ -6,8 +6,8 @@ interface EmailVerificationEmailTempateProps {
 }
 
 export default function EmailVerificationEmailTempate({
-  name,
-  url,
+  name = "Trace Panic",
+  url = "http://localhost:3000/url",
 }: EmailVerificationEmailTempateProps) {
   return (
     <Html lang="en">
