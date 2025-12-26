@@ -23,10 +23,12 @@ export async function GET(request: NextRequest) {
     const result = await permanentlyDeleteOldComments(token);
 
     return NextResponse.json(result);
-  } catch {
+  } catch (error) {
+    console.error("Cron job execution failed:", error);
     return NextResponse.json(
       { error: "Failed to execute cron job" },
       { status: 500 },
     );
+  }
   }
 }
