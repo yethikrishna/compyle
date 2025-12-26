@@ -20,6 +20,12 @@ export async function GET(request: NextRequest) {
     }
 
     const token = authHeader.split(" ")[1];
+    if (!token) {
+      return NextResponse.json(
+        { error: "Missing or invalid authorization header" },
+        { status: 401 },
+      );
+    }
     const result = await permanentlyDeleteOldComments(token);
 
     return NextResponse.json(result);
