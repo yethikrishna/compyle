@@ -16,6 +16,7 @@ export const env = createEnv({
     GOOGLE_CLIENT_SECRET: z.string().min(1),
     UPSTASH_REDIS_REST_URL: z.url(),
     UPSTASH_REDIS_REST_TOKEN: z.string().min(1),
+    CRON_SECRET: z.string().min(1),
   },
   experimental__runtimeEnv: process.env,
 });
