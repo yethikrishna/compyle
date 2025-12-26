@@ -4,6 +4,7 @@ import { db } from "@/db";
 import { apps } from "@/db/schemas/app";
 import { comments } from "@/db/schemas/comment";
 import { users } from "@/db/schemas/user";
+import { env } from "@/env/server";
 import { createCommentSchema } from "@/schema/comment.schema";
 import { getUserFromAuth } from "@/server/user";
 import { and, desc, eq, isNotNull, isNull, lt } from "drizzle-orm";
@@ -543,5 +544,51 @@ export async function getUserDeletedCommentsDashboard(): Promise<
     }
 
     throw new Error("Failed to fetch deleted comments");
+  }
+}
+
+export async function permanentlyDeleteOldComments(
+  cronSecret: string,
+): Promise<{
+  success: boolean;
+  count: number;
+  message: string;
+}> {
+  try {
+    const validSecret = env.CRON_SECRET;
+
+    if (!validSecret) {
+      throw new Error("CRON_SECRET not configured");
+    }
+
+    if (cronSecret !== validSecret) {
+      throw new Error("Unauthorized: Invalid cron secret");
+    }
+
+    const thirtyDaysAgo = new Date();
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+    const result = await db
+      .delete(comments)
+      .where(
+        and(
+          isNotNull(comments.deletedAt),
+          isNotNull(comments.deleter),
+          lt(comments.deletedAt, thirtyDaysAgo),
+        ),
+      )
+      .returning({ id: comments.id });
+
+    return {
+      success: true,
+      count: result.length,
+      message: `Successfully deleted ${result.length} comments older than 30 days`,
+    };
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+
+    throw new Error("Failed to delete old comments");
   }
 }

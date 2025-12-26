@@ -256,7 +256,7 @@ export default function Page() {
                   Deleted comments are retained for 30 days
                 </AlertTitle>
                 <AlertDescription>
-                  Comments deleted by your or the app publisher are kept for 30
+                  Comments deleted by you or the app publisher are kept for 30
                   days to help resolve disputes such as spam allegations or
                   inappropriate content. After 30 days, they are permanently
                   removed from our system.
