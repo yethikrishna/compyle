@@ -26,8 +26,8 @@ export async function GET(request: NextRequest) {
         { status: 401 },
       );
     }
-    const result = await permanentlyDeleteOldComments(token);
 
+    const result = await permanentlyDeleteOldComments(token);
     return NextResponse.json(result);
   } catch (error) {
     console.error("Cron job execution failed:", error);
@@ -35,6 +35,5 @@ export async function GET(request: NextRequest) {
       { error: "Failed to execute cron job" },
       { status: 500 },
     );
-  }
   }
 }
