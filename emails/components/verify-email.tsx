@@ -17,6 +17,9 @@ import {
   buttonContainer,
   container,
   content,
+  featureItem,
+  featuresSection,
+  featuresTitle,
   footer,
   footerLink,
   footerLinks,
@@ -35,28 +38,14 @@ import {
   tagline,
 } from "../styles";
 
-/**
- * Props for the email verification template.
- * @property name - The recipient's display name
- * @property url - The email verification URL
- */
 interface EmailVerificationEmailTemplateProps {
   name: string;
   url: string;
 }
 
-/**
- * Email verification template component.
- * Renders a branded welcome email with a verification button and feature highlights.
- *
- * @param props - The template properties
- * @param props.name - The recipient's name for personalization
- * @param props.url - The email verification URL
- * @returns React Email component for email verification
- */
 export default function EmailVerificationEmailTemplate({
-  name,
-  url,
+  name = "Trace Panic",
+  url = "http://localhost:3000/url",
 }: EmailVerificationEmailTemplateProps) {
   return (
     <Html lang="en">
@@ -67,7 +56,7 @@ export default function EmailVerificationEmailTemplate({
           {/* Header */}
           <Section style={header}>
             <Img
-              src="https://compyle.tracepanic.com/compyle.svg"
+              src="https://compyle.ai/compyle.svg"
               width="140"
               height="40"
               alt="Compyle"
@@ -142,12 +131,12 @@ export default function EmailVerificationEmailTemplate({
               reserved.
             </Text>
             <Text style={footerLinks}>
-              <Link href="https://compyle.tracepanic.com" style={footerLink}>
+              <Link href="https://compyle.ai" style={footerLink}>
                 Visit Compyle
               </Link>
               {" • "}
               <Link
-                href="https://compyle.tracepanic.com/apps"
+                href="https://compyle.ai/apps"
                 style={footerLink}
               >
                 Browse Apps
@@ -178,24 +167,3 @@ export default function EmailVerificationEmailTemplate({
     </Html>
   );
 }
-
-const featuresSection = {
-  backgroundColor: "#f8fafc",
-  borderRadius: "6px",
-  padding: "20px 24px",
-  marginTop: "24px",
-};
-
-const featuresTitle = {
-  color: "#1a1a1a",
-  fontSize: "14px",
-  fontWeight: "600",
-  margin: "0 0 12px",
-};
-
-const featureItem = {
-  color: "#4a5568",
-  fontSize: "14px",
-  lineHeight: "24px",
-  margin: "0",
-};

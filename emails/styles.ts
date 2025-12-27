@@ -154,3 +154,43 @@ export const legalLink = {
   color: "#9ca3af",
   textDecoration: "none",
 };
+
+/** Warning box container - yellow background for alerts */
+export const warningBox = {
+  backgroundColor: "#FEF3C7",
+  borderRadius: "6px",
+  padding: "16px",
+  marginTop: "24px",
+};
+
+/** Warning text inside warning box */
+export const warningText = {
+  color: "#92400E",
+  fontSize: "14px",
+  margin: "0",
+  textAlign: "center" as const,
+};
+
+/** Features section container - light gray background */
+export const featuresSection = {
+  backgroundColor: "#f8fafc",
+  borderRadius: "6px",
+  padding: "20px 24px",
+  marginTop: "24px",
+};
+
+/** Features section title */
+export const featuresTitle = {
+  color: "#1a1a1a",
+  fontSize: "14px",
+  fontWeight: "600",
+  margin: "0 0 12px",
+};
+
+/** Individual feature item text */
+export const featureItem = {
+  color: "#4a5568",
+  fontSize: "14px",
+  lineHeight: "24px",
+  margin: "0",
+};

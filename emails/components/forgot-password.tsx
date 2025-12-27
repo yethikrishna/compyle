@@ -33,30 +33,18 @@ import {
   socialLink,
   socialSection,
   tagline,
+  warningBox,
+  warningText,
 } from "../styles";
 
-/**
- * Props for the password reset email template.
- * @property name - The recipient's display name
- * @property url - The password reset URL
- */
 interface PasswordResetEmailTemplateProps {
   name: string;
   url: string;
 }
 
-/**
- * Password reset email template component.
- * Renders a branded email with a password reset button and security information.
- *
- * @param props - The template properties
- * @param props.name - The recipient's name for personalization
- * @param props.url - The password reset URL (expires in 24 hours)
- * @returns React Email component for password reset
- */
 export default function PasswordResetEmailTemplate({
-  name,
-  url,
+  name = "Trace Panic",
+  url = "http://localhost:3000/url",
 }: PasswordResetEmailTemplateProps) {
   return (
     <Html lang="en">
@@ -67,7 +55,7 @@ export default function PasswordResetEmailTemplate({
           {/* Header */}
           <Section style={header}>
             <Img
-              src="https://compyle.tracepanic.com/compyle.svg"
+              src="https://compyle.ai/compyle.svg"
               width="140"
               height="40"
               alt="Compyle"
@@ -101,7 +89,7 @@ export default function PasswordResetEmailTemplate({
 
             <Section style={warningBox}>
               <Text style={warningText}>
-                ⏰ This link will expire in 24 hours for security reasons.
+                ⏰ This link will expire in 1 hour for security reasons.
               </Text>
             </Section>
           </Section>
@@ -136,12 +124,12 @@ export default function PasswordResetEmailTemplate({
               reserved.
             </Text>
             <Text style={footerLinks}>
-              <Link href="https://compyle.tracepanic.com" style={footerLink}>
+              <Link href="https://compyle.ai" style={footerLink}>
                 Visit Compyle
               </Link>
               {" • "}
               <Link
-                href="https://compyle.tracepanic.com/apps"
+                href="https://compyle.ai/apps"
                 style={footerLink}
               >
                 Browse Apps
@@ -172,17 +160,3 @@ export default function PasswordResetEmailTemplate({
     </Html>
   );
 }
-
-const warningBox = {
-  backgroundColor: "#FEF3C7",
-  borderRadius: "6px",
-  padding: "16px",
-  marginTop: "24px",
-};
-
-const warningText = {
-  color: "#92400E",
-  fontSize: "14px",
-  margin: "0",
-  textAlign: "center" as const,
-};
